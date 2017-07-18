@@ -4,9 +4,7 @@
   "description": "",
   "main": "gulpfile.js",
   "scripts": {
-    "serve": "gulp serve",
-    "build": "gulp build",
-    "jshint": "gulp lint"
+    "test": "echo 'for test'"
   },
   "author": "wangw",
   "license": "ISC",
