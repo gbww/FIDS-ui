@@ -1,0 +1,191 @@
+@charset "UTF-8";
+
+html, body {
+  min-height: 100%;
+  height: 100%;
+  background-color: #000000;
+}
+
+body {
+  font-family: "MicrosoftYaHei", "Microsoft YaHei", Helvetica, Arial;
+  font-size: 14px;
+  line-height: 1.5;
+  color: $body-font-color;
+  margin: 0;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*:focus{
+  outline: none;
+}
+
+ul, li {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+a {
+  color: #3F4A56;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:link, a:visited, a:hover, a:active{
+  text-decoration: none;
+  outline: none;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  >div{
+    height: 100%;
+  }
+}
+
+.main-wrapper {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  padding-left: 200px;
+  overflow: hidden;
+  background-color: #e1e9ee;
+  zoom: 1;
+  @include transition(padding-left 0.7s ease-in-out);
+  .main{
+    width: 100%;
+    height: 100%;
+    padding-top: 50px;
+    >div{
+      height: 100%;
+      overflow: auto;
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+      &::-webkit-scrollbar-button    {
+        height: 0;
+      }
+      &::-webkit-scrollbar-track     {
+        background: #ccc;
+      }
+      &::-webkit-scrollbar-track-piece {
+        background: #ccc;
+      }
+      &::-webkit-scrollbar-thumb{
+        background-color: #aaa;
+        border-radius: 8px;
+      }
+      &::-webkit-scrollbar-corner {
+      }
+      &::-webkit-scrollbar-resizer  {
+      }
+      >div{
+        @include flex(flex, column);
+        padding: 15px;
+        min-height: 100%;
+      }
+    }
+  }
+}
+
+input, select, textarea{
+  @include box-shadow(inset 0 1px 1px rgba(0,0,0,0.075));
+  &:focus{
+    border-color: #66afe9;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  }
+}
+
+select::-ms-expand{
+  display: none;
+}
+select{
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  padding-right: 8px;
+  background-origin: content-box;
+  background-image: url(./images/arrow-down.svg);
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+input {
+  outline: none;
+  border: 1px solid $border-color;
+  &:focus, &:hover{
+    outline: none;
+  }
+}
+
+input[type="file"]{
+  border: 0;
+  @include box-shadow(none);
+  &:focus{
+    @include box-shadow(none);
+  }
+}
+input[type="checkbox"], input[type="radio"]{
+  &+label, &+span{
+    margin-left: 5px;
+    vertical-align: middle;
+    font-weight: initial;
+    cursor: pointer;
+  }
+}
+
+.input {
+  width: 240px;
+  height:32px;
+  padding: 6px 12px;
+  border-radius: 3px;
+  color: #999;
+  &.search {
+    vertical-align: middle;
+    padding-left: 25px;
+    background-image: url(./images/search_glyph.png);
+    background-repeat: no-repeat;
+    background-position: 3% 55%;
+  }
+}
+
+.pt, .pt-2{
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #FFFFFF;
+  color: #555;
+  @include box-shadow(3px 4px 8px rgba(0, 0, 0, 0.1), -3px -1px 8px rgba(0, 0, 0, 0.1));
+}
+.pt{
+  margin-bottom: 30px;
+}
+.pt-2{
+  flex: 1 0 auto;
+  -webkit-flex: 1 0 auto;
+  -moz-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+}
+
+.toolbar{
+  padding: 0;
+  margin-bottom: 15px;
+  color: #555;
+}

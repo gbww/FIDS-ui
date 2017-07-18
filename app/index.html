@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, width=device-width">
+  <meta name="fragment" content="!">
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+  <title>CONDUCTOR</title>
+  <base href="/"/>
+  <!-- build:css styles/app.css -->
+  <!-- inject:app:css -->
+  <!-- endinject -->
+  <!-- endbuild -->
+
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="../bower_components/angular-ui-select/dist/select.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+  <!-- build:css({.tmp/app,app}) main.css -->
+  <link rel="stylesheet" href="main.css">
+  <!-- endbuild -->
+
+</head>
+<body ng-app="com.app">
+<app-layout></app-layout>
+
+<div class="overlay" ng-show="loading">
+  <div class="spinner"><i></i></div>
+</div>
+
+<!-- build:js scripts/vendor.js -->
+<!-- bower:js -->
+<script src="../bower_components/angular/angular.js" charset="utf-8"></script>
+<script src="../bower_components/angular-sanitize/angular-sanitize.js" charset="utf-8"></script>
+<script src="../bower_components/angular-resource/angular-resource.js" charset="utf-8"></script>
+<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js" charset="utf-8"></script>
+<script src="../bower_components/angular-cookies/angular-cookies.js" charset="utf-8"></script>
+<script src="../bower_components/angular-ui-select/dist/select.js" charset="utf-8"></script>
+<script src="../bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
+<script src="../bower_components/bootstrap-sass/assets/javascripts/bootstrap.js" charset="utf-8"></script>
+<script src="../bower_components/angular-messages/angular-messages.js" charset="utf-8"></script>
+<script src="../bower_components/angular-ui-router/release/angular-ui-router.js" charset="utf-8"></script>
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({app,.tmp}) scripts/main.js -->
+<!-- inject:app:js -->
+<script src="app.js" charset="utf-8"></script>
+<script src="configs/config.js" charset="utf-8"></script>
+<script src="configs/router.js" charset="utf-8"></script>
+<script src="configs/run.js" charset="utf-8"></script>
+<script src="configs/service.js" charset="utf-8"></script>
+<script src="constants/api.js" charset="utf-8"></script>
+<script src="controllers/dashboard/dashboard.controller.js" charset="utf-8"></script>
+<script src="controllers/dashboard/dashboard.route.js" charset="utf-8"></script>
+<script src="controllers/login/edit-password/editPassward.controller.js" charset="utf-8"></script>
+<script src="controllers/login/login.controller.js" charset="utf-8"></script>
+<script src="controllers/login/login.directive.js" charset="utf-8"></script>
+<script src="controllers/login/login.route.js" charset="utf-8"></script>
+<script src="controllers/login/login.service.js" charset="utf-8"></script>
+<script src="controllers/manage/child1/child1.controller.js" charset="utf-8"></script>
+<script src="controllers/manage/child2/child2.controller.js" charset="utf-8"></script>
+<script src="controllers/manage/manage.route.js" charset="utf-8"></script>
+<script src="controllers/notFound/notFound.route.js" charset="utf-8"></script>
+<script src="controllers/shared/dialog/dialog.js" charset="utf-8"></script>
+<script src="controllers/welcome/pageScroll.directive.js" charset="utf-8"></script>
+<script src="controllers/welcome/welcome.controller.js" charset="utf-8"></script>
+<script src="controllers/welcome/welcome.route.js" charset="utf-8"></script>
+<script src="directive/breadCrumb/breadCrumb.directive.js" charset="utf-8"></script>
+<script src="directive/layout-header/header.js" charset="utf-8"></script>
+<script src="directive/layout-header/layoutHeader.directive.js" charset="utf-8"></script>
+<script src="directive/layout-menu/layoutMenu.directive.js" charset="utf-8"></script>
+<script src="directive/layout-menu/menu.js" charset="utf-8"></script>
+<script src="directive/layout/_layout.js" charset="utf-8"></script>
+<script src="directive/layout/layout.directive.js" charset="utf-8"></script>
+<script src="directive/validator/regExp.directive.js" charset="utf-8"></script>
+<!-- endinject -->
+<!-- endbuild -->
+
+<!-- build:js({app,.tmp/shadow}) scripts/templates.js -->
+<!-- <script src="templates.js" charset="utf-8"></script>
+<!-- endbuild -->
+</body>
+</html>
+

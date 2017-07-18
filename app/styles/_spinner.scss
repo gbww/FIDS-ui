@@ -1,0 +1,75 @@
+.overlay{
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255,255,255,0.3);
+  z-index: 100000;
+  .spinner {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    margin-left: -25px;
+  }
+}
+
+.overlay .spinner, .loading {
+  &:after {
+    content: 'loading';
+    font-weight: 600;
+    font-size: 16px;
+    color: #757b8d;
+    vertical-align: middle;
+    @include text-shadow(1px 1px 0 #fff);
+  }
+  i{
+    display: inline-block;
+    margin-right: 8px;
+    width: 35px;
+    height: 35px;
+    vertical-align: middle;
+    background-color: transparent;
+    border-radius: 50%;
+    border: 6px solid $blue-color;
+    border-right-color: transparent!important;
+    -webkit-animation: rotating 0.8s infinite ease-in-out;
+    animation: rotating 0.8s infinite ease-in-out;
+  }
+}
+
+.loading {
+  position: relative;
+  display: block;
+  top: 40%;
+  left: 50%;
+  text-align: center;
+  @include translate(-50%, -50%);
+  &.top {
+    margin-top: 40px;
+  }
+  &:after {
+    font-size: 12px;
+    font-weight: default;
+    @include text-shadow(none);
+  }
+  i {
+    width: 24px;
+    height: 24px;
+    border-width: 4px;
+    border-color: #c23531;
+    border-right-color: transparent;
+  }
+}
+
+
+@keyframes rotating {
+  0% { @include rotate(0)  }
+  100% { @include rotate(360deg)  }
+}
+
+@-webkit-keyframes rotating {
+  0% { @include rotate(0)  }
+  100% { @include rotate(360deg)  }
+}

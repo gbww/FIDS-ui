@@ -1,0 +1,138 @@
+// 这里写本页中特有的部分
+@import "variables";
+.p-login {
+  height: 100%;
+  background-color: #119E95;
+  background: url(./images/login/bg.svg) no-repeat center center;
+  background-size: cover;
+  .login-form {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    width: 290px;
+    height: 400px;
+    background-color: #fff;
+    border-radius: 5px;
+    padding-top: 30px;
+    overflow: hidden;
+    box-shadow: 0 0 7px rgba(42, 105, 105, 0.65);
+    .form-group{
+      margin-bottom: 20px;
+    }
+    .login-logo{
+      text-align: center;
+      height: 50px;
+      line-height: 50px;
+      i{
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        background: url(./images/logo.svg) no-repeat 0 0;
+      }
+      span{
+        display: inline-block;
+        font-family: -webkit-pictograph;
+        font-size: 20px;
+        font-weight: bold;
+        vertical-align: middle;
+        margin-top: -40px;
+      }
+    }
+    form{
+      padding: 30px;
+    }
+    .input-box {
+      display: flex;
+      display: -ms-flex;
+      display: -webkit-flex;
+      display: -moz-flex;
+      width: 100%;
+      height: 32px;
+      line-height: 32px;
+      background-color: #E7ECF0;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      text-align: left;
+      align-items: center;
+      &:hover{
+        border: 1px solid #119E95;
+      }
+      i{
+        display: inline-block;
+        width: 16px;
+        height: 14px;
+        margin: 0 7px;
+      }
+      i.user-icon{
+        background: url(./images/icon-new.svg) no-repeat -15px -1px;
+      }
+      i.pwd-icon{
+        background: url(./images/icon-new.svg) no-repeat -1px -1px;
+      }
+      input{
+        outline: 0;
+        border: none;
+        border-radius: 2px;
+        width: 100%;
+        height: 100%;
+        text-indent: 4px;
+        background-color: transparent;
+        box-shadow: none;
+        -webkit-box-shadow: none;
+        &:focus, &:hover, &:active{
+          outline: 0;
+          box-shadow: none;
+          -webkit-box-shadow: none;
+        }
+      }
+    }
+    #preserve{
+      outline: 0;
+      &:hover, &:focus{
+        outline: 0;
+      }
+      +label{
+        font-weight: 400;
+        vertical-align: top;
+        margin: 0;
+        cursor: pointer;
+      }
+    }
+    .error-message {
+      line-height: 1em;
+      color: red;
+      padding-left: 20px;
+      background: url(./images/icon.svg) no-repeat 0px -361px;
+    }
+
+    .btn-login {
+      width: 100%;
+      height: 32px;
+      line-height: 32px;
+      text-align: center;
+      font-size: 16px;
+      color: #fff;
+      border: none;
+      border-radius: 2px;
+      background-color: #119E95;
+      background: -moz-linear-gradient(left, #119E95, #39B3EF);
+      background: -webkit-linear-gradient(left, #119E95, #39B3EF);
+      background: -o-linear-gradient(left, #119E95, #39B3EF);
+      filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#119E95, endColorstr=#39B3EF);
+      &:focus, &:hover{
+        box-shadow: 0 3px 5px rgba(30, 179, 186, 0.5);
+      }
+    }
+  }
+  .login-footer{
+    position: absolute;
+    bottom: 0;
+    height: 80px;
+    width: 100%;
+    background: url(./images/login/wave.svg) no-repeat center center;
+    background-size: cover;
+  }
+}

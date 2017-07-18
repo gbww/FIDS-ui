@@ -1,0 +1,1 @@
+// 定义的提示框方法，在controller中注入dialog服务使用

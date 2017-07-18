@@ -1,0 +1,23 @@
+.bread-crumb{
+  margin-bottom: 15px;
+  a{
+    color: #999;
+    &:hover{
+      color: $blue-color;
+    }
+  }
+  >span{
+    color: #999;
+    &:after{
+      content: '\/';
+      display: inline-block;
+      width: 16px;
+      margin-left: 8px;
+    }
+  }
+  >span:last-child{
+    &:after{
+      display: none;
+    }
+  }
+}

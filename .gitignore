@@ -1,0 +1,9 @@
+bower_components/
+node_modules/
+.tmp/
+dist/
+tasks/
+.DS_Store
+.idea/
+*.bak
+.sass-cache/*

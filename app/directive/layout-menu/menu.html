@@ -1,0 +1,32 @@
+<nav class="navbar">
+  <div class="navbar-head">
+    <i></i>
+    <span>Logo</span>
+  </div>
+  <div class="navbar-section">
+    <ul class="navbar-items" accordion-menu>
+      <li ng-class="{'active': vm.isDashboardActive}">
+        <a title="概况" ui-sref="app.dashboard">
+          <i class="icon icon-overview"></i>
+          <span>概况</span>
+        </a>
+      </li>
+
+      <li ng-class="{'active open': vm.isManageActive, 'has-secondary': true}" role-auth="">
+        <a>
+          <i class="icon icon-log"></i>
+          <span>管理</span>
+          <i class="fa fa-chevron-down"></i>
+        </a>
+        <ul>
+          <li ng-class="{'active': vm.isManageChild1Active}" role-auth="">
+            <a ui-sref="app.manage.child1"><span>child1</span></a>
+          </li>
+          <li ng-class="{'active': vm.isManageChild2Active}">
+            <a ui-sref="app.manage.child2"><span>child2</span></a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,7 @@
+<div class="bread-crumb">
+  <span ng-repeat="option in linkData track by $index" ng-if="!$last">
+  	<span ng-if="!option.url">{{option.name}}</span>
+    <a href ng-if="option.url" ng-click="go(option.url, option.params)">{{option.name}}</a>
+  </span>
+  <span>{{linkData[linkData.length -1].name}}</span>
+</div>

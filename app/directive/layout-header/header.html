@@ -1,0 +1,26 @@
+<div class="header">
+  <div class="header-tool">
+    <div class="tool-item">
+      <div class="dropdown-toggle" data-toggle="dropdown">
+        <span>project</span>
+        <i class="caret"></i>
+      </div>
+      <ul class="dropdown-menu">
+        <li ng-repeat="project in ['project', 'project-test1'] track by $index">
+          <a href>{{ project }}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="account">
+  	<div class="dropdown-toggle" data-toggle="dropdown">
+  		<span title="{{vm.currentUser}}" ng-bind="vm.currentUser"></span>
+  		<i class="caret"></i>
+  	</div>
+  	<ul class="dropdown-menu">
+  		<li><a href="javascript:void(0)" ng-click="vm.logout()">退出</a></li>
+  		<li><a href="javascript:void(0)">修改密码</a></li>
+      <li><a href="javascript:void(0)">帮助</a></li>
+  	</ul>
+  </div>
+</div>

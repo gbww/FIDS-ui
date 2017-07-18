@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="290px"
+	 height="84.667px" viewBox="0 0 290 84.667" enable-background="new 0 0 290 84.667" xml:space="preserve">
+<g id="图层_2">
+</g>
+<g id="图层_3">
+</g>
+<g id="图层_1">
+	<g>
+		<defs>
+			<path id="SVGID_9_" d="M289.75,79.861c0,2.734-2.262,4.556-5.052,4.556H4.802c-2.79,0-5.052-1.822-5.052-4.556v-386.096
+				c0-2.734,2.262-5.347,5.052-5.347h279.895c2.79,0,5.052,2.614,5.052,5.347V79.861z"/>
+		</defs>
+		<clipPath id="SVGID_1_">
+			<use xlink:href="#SVGID_9_"  overflow="visible"/>
+		</clipPath>
+		<linearGradient id="SVGID_3_" gradientUnits="userSpaceOnUse" x1="-53.2988" y1="101.7773" x2="240.629" y2="101.7773">
+			<stop  offset="0" style="stop-color:#119E95;stop-opacity:0.2"/>
+			<stop  offset="0.2203" style="stop-color:#17A1A3;stop-opacity:0.222"/>
+			<stop  offset="0.6384" style="stop-color:#28AAC9;stop-opacity:0.2638"/>
+			<stop  offset="1" style="stop-color:#39B3EF;stop-opacity:0.3"/>
+		</linearGradient>
+		<path clip-path="url(#SVGID_1_)" fill="url(#SVGID_3_)" fill-opacity="0.9" d="M-53.299,69.815c0,0,78.9-35.418,98.603-9.92
+			s67.617,18.42,93.383,18.92c23.18,0.45,71.174,5.66,93.972,14.5c30.744,11.922-35.795,59.576-58.529,59.576
+			S40.757,140.891,4.383,124.392S-53.299,69.815-53.299,69.815z"/>
+		<linearGradient id="SVGID_4_" gradientUnits="userSpaceOnUse" x1="-33.3433" y1="74.1309" x2="370.2157" y2="74.1309">
+			<stop  offset="0" style="stop-color:#119E95;stop-opacity:0.4"/>
+			<stop  offset="0.2203" style="stop-color:#17A1A3;stop-opacity:0.4661"/>
+			<stop  offset="0.6384" style="stop-color:#28AAC9;stop-opacity:0.5915"/>
+			<stop  offset="1" style="stop-color:#39B3EF;stop-opacity:0.7"/>
+		</linearGradient>
+		<path clip-path="url(#SVGID_1_)" fill="url(#SVGID_4_)" fill-opacity="0.9" d="M347.416,19.896c-15.156-6-51.531-23.999-78.811,0
+			c-27.281,23.999-42.437,44.998-69.718,43.498c-27.281-1.5-57.168-26.079-97.586-23.079c-37.618,2.792-60.475,43.62-131.527,41.167
+			c-20.208-0.698,62.397,53.909,116.959,58.408S374.697,123.39,370.15,90.392S347.416,19.896,347.416,19.896z"/>
+		<linearGradient id="SVGID_5_" gradientUnits="userSpaceOnUse" x1="-49.5401" y1="108.4868" x2="405.0074" y2="108.4868">
+			<stop  offset="0" style="stop-color:#119E95;stop-opacity:0.3"/>
+			<stop  offset="0.2203" style="stop-color:#17A1A3;stop-opacity:0.278"/>
+			<stop  offset="0.6384" style="stop-color:#28AAC9;stop-opacity:0.2362"/>
+			<stop  offset="1" style="stop-color:#39B3EF;stop-opacity:0.2"/>
+		</linearGradient>
+		<path clip-path="url(#SVGID_1_)" fill="url(#SVGID_5_)" fill-opacity="0.9" d="M364.086,61.894
+			c-22.734-14.999-66.687-16.499-93.967,1.5c-27.281,17.999-53.046-11.999-78.811-14.999c-25.765-3-48.499,11.999-100.03,16.499
+			s-125.795-14.999-137.92-1.5s13.64,89.995,80.327,100.495c66.687,10.499,371.323,6,371.323-25.499S364.086,61.894,364.086,61.894z
+			"/>
+	</g>
+</g>
+<g id="图层_4">
+</g>
+</svg>

@@ -1,0 +1,77 @@
+.header {
+  position: absolute;
+  top: 0;
+  left: 200px;
+  right: 0;
+  border: none;
+  background-color: #FFFFFF;
+  height: 50px;
+  line-height: 50px;
+  transition: left 0.7s ease-in-out;
+  @include box-shadow(0 1px 0 rgba(188,202,210,0.4));
+  .header-tool{
+    float: left;
+    .tool-item{
+      display: inline-block;
+      position: relative;
+      padding-right: 15px;
+      margin-right: 15px;
+      &:first-child {
+        margin-left: 15px;
+      }
+      &:not(:first-child){
+        margin-left: -3px;
+      }
+      &:after{
+        content: '';
+        position: absolute;
+        right: 0px;
+        top: 30%;
+        width: 1px;
+        height: 40%;
+        background-color: #ddd;
+      }
+      .dropdown-toggle{
+        cursor: pointer;
+        span{
+          display: inline-block;
+          vertical-align: middle;
+          max-width: 120px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+  }
+
+  .account {
+    position: relative;
+    float: right;
+    margin-right: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    .dropdown-toggle{
+      span{
+        display: inline-block;
+        max-width: 140px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+      }
+    }
+    .dropdown-menu{
+      left: inherit;
+      right: 0;
+      li{
+        margin: 10px 0;
+        a:hover{
+          color: $blue-color;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
