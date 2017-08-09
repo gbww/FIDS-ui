@@ -1,3 +1,65 @@
 @charset "utf-8";
 
 // 这里对bootstrap中的样式进行重定义
+
+.modal {
+	.modal-dialog {
+		margin-top: 150px;
+	}
+	.modal-header {
+		h4 {
+			margin: 0;
+		}
+	}
+	&.right {
+		.modal-dialog {
+			position: fixed;
+			width: 320px;
+			top: 0;
+			bottom: 0;
+			margin: 0;
+			@include translate(0, 0);
+			.modal-content {
+				height: 100%;
+				overflow: hidden;
+			}
+			.modal-header {
+				height: 50px;
+				padding: 8px 10px;
+				h3 {
+					height: 35px;
+					line-height: inherit;
+					font-size: 22px;
+				}
+				.close {
+					margin-top: 3px;
+				}
+			}
+			.modal-body {
+				position: absolute;
+				top: 50px;
+				bottom: 60px;
+				width: 100%;
+				padding: 15px 15px 18px;
+				overflow-y: auto;
+			}
+			.modal-footer {
+				position: absolute;
+				height: 60px;
+				width: 100%;
+				bottom: 0;
+			}
+		}
+		&.fade .modal-dialog {
+			right: -320px;
+	    @include transition(right 0.3s ease-in-out);
+		}
+		&.fade.in .modal-dialog {
+			right: 0;
+		}
+	}
+
+	select.form-control{
+	  background-image: url(./images/arrow-down.svg);
+	}
+}

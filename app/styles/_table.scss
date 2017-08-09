@@ -1,0 +1,163 @@
+.pt-table{
+  font-size: 13px;
+  font-weight: 400;
+  width: 100%;
+  cursor: inherit;
+  table-layout: fixed;
+  border: 1px solid $table-border-color;
+  thead{
+    tr{
+      background-color: #e5ebef;
+      border-bottom: 1px solid $table-border-color;
+      outline: none;
+      th{
+        color: $thead-font-color;
+        padding: 3px 5px;
+        font-size: 13px;
+        cursor: pointer;
+        font-weight: inherit;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        .fa.fa-sort{
+          margin-left: 7px;
+          &.fa-sort-asc{
+            vertical-align: bottom;
+          }
+          &.fa-sort-desc{
+            vertical-align: top;
+          }
+        }
+        input[type="checkbox"]:focus{
+          outline: none;
+        }
+      }
+    }
+  }
+  tbody{
+    background-color: transparent;
+    tr{
+      outline: none;
+      color: #FFFFFF;
+      border-bottom: 1px solid $table-border-color;
+      &:nth-child(2n){
+        background-color: #fbfcfd;
+      }
+      &:nth-child(2n-1){
+        background-color: #ffffff;
+      }
+      &.clickabld{
+        cursor: pointer;
+      }
+      &:hover{
+        background-color: #d4eefb;
+      }
+      td{
+        font-size: 12px;
+        padding: 3px 5px;
+        outline: none;
+        word-break: break-all;
+        word-wrap: break-word;
+        color: $tbody-font-color;
+        &.nowrap{
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .fa{
+          position: relative;
+          font-size: 14px;
+          margin-right: 5px;
+          cursor: pointer;
+        }
+        >a{
+          color: $blue-color;
+          &:hover{
+            color: $hover-blue-color;
+          }
+          &:focus{
+            color: $blue-color;
+          }
+        }
+        input[type="checkbox"]:focus{
+          outline: none;
+        }
+      }
+    }
+    td.dropdown-col{
+      .btn-group{
+        border: 1px solid $table-border-color;
+        border-radius: 4px;
+        .btn{
+          margin: 0;
+        }
+        .btn-default{
+          color: inherit;
+          background-color: transparent;
+          border-right: 1px solid $table-border-color;
+          &:link, &:visited, &:hover, &:active {
+            outline: none;
+          }
+          &:hover{
+            color: $blue-color;
+          }
+          +.dropdown-toggle{
+            color: inherit;
+            background-color: transparent;
+          }
+        }
+      }
+      .dropdown-menu{
+        min-width: 93px;
+        li{
+          a{
+            color: inherit;
+            padding: 3px 8px;
+          }
+          a:hover{
+            color: $blue-color;
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+}
+
+.form-table {
+  font-size: 13px;
+  font-weight: 400;
+  width: 100%;
+  cursor: inherit;
+  table-layout: fixed;
+  border: 1px solid $table-border-color;
+  margin-bottom: 10px;
+  tr {
+    td {
+      padding: 3px 8px;
+      border-right: 1px solid $table-border-color;
+      border-bottom: 1px solid $table-border-color;
+    }
+
+    td.item-title {
+      width: 15%;
+      text-align: center;
+      background-color: #f8f8f8;
+      select {
+        background-color: #f8f8f8;
+      }
+      &+td {
+        width: 35%;
+        input:not([type="checkbox"]):not([type="radio"]), select {
+          display: inline-block;
+          width: 100%;
+          padding: 3px 8px;
+        }
+        textarea {
+          height: initial;
+          width: 100%;
+        }
+      }
+    }
+  }
+}

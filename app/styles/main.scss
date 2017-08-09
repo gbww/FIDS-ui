@@ -7,9 +7,9 @@
 @import "../../bower_components/font-awesome/scss/font-awesome.scss";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 // endbower
+@import "mixin";
 @import "bootstrap";
 
-@import "mixin";
 @import "header";
 @import "navbar";
 
@@ -18,3 +18,7 @@
 @import "breadCrumb";
 @import "spinner";
 @import "button";
+@import "table";
+@import "tab";
+
+@import "ztree";

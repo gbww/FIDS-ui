@@ -8,5 +8,6 @@ angular.module('com.app', [
   'ui.router',   // 第三方的路由访问器
   'ui.bootstrap', // 第三方界面库
   'ngMessages',
-  'ui.select'
+  'ui.select',
+  'toastr'
 ]);

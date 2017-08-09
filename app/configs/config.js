@@ -22,7 +22,7 @@ angular.module('com.app').config(function($httpProvider) {
 
 	    responseError: function (response) {
         // 如果是被取消导致
-        if(response.config.timeout && response.config.timeout.isGloballyCancelled){
+        if(response.config && response.config.timeout && response.config.timeout.isGloballyCancelled){
           $rootScope.loading = false;
           return $q.defer().promise;
         }

@@ -6,7 +6,7 @@ angular.module('com.app').directive('layoutMenu', function LayoutMenu() {
     templateUrl: 'directive/layout-menu/menu.html',
     controller: 'LayoutMenuController as vm'
   };
-}).directive('accordionMenu', function () {
+}).directive('accordionMenu', function ($timeout) {
     return {
         restrict: 'EA',
         link: function (scope, element, attrs) {
@@ -15,11 +15,23 @@ angular.module('com.app').directive('layoutMenu', function LayoutMenu() {
                 var navbarStatus = sessionStorage.getItem('navbarStatus');
                 event.stopPropagation();
                 if (!navbarStatus || navbarStatus === 'normal') {
-                    $(this).siblings().removeClass('open').find('ul').slideUp();
+                    $(this).siblings().removeClass('open').find('ul').slideUp(function () {
+                        if (!$(this).parent().hasClass('active')) {
+                            $(this).removeAttr('style')
+                        }
+                    });
                     if ($(this).hasClass('open')) {
-                        $(this).removeClass('open').find('ul').slideUp();
+                        $(this).removeClass('open').find('ul').slideUp(function () {
+                            if (!$(this).parent().hasClass('active')) {
+                                $(this).removeAttr('style')
+                            }
+                        });
                     } else {
-                        $(this).addClass('open').find('ul').slideDown();
+                        $(this).addClass('open').find('ul').slideDown(function () {
+                            if ($(this).parent().hasClass('active')) {
+                                $(this).removeAttr('style')
+                            }
+                        });
                     }
                 }
             }).hover(function (event) {
@@ -38,6 +50,11 @@ angular.module('com.app').directive('layoutMenu', function LayoutMenu() {
             })
 
             element.children('li').find("ul a").click(function (event) {
+                var _self = this;
+                $timeout(function () {
+                    if ($(_self).parent().hasClass('active'))
+                    $(_self).parents('.navbar-items').find('ul').removeAttr('style');
+                }, 100);
                 event.stopPropagation()
             })
 

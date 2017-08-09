@@ -7,26 +7,40 @@
     <ul class="navbar-items" accordion-menu>
       <li ng-class="{'active': vm.isDashboardActive}">
         <a title="概况" ui-sref="app.dashboard">
-          <i class="icon icon-overview"></i>
+          <i class="fa fa-home icon"></i>
           <span>概况</span>
         </a>
       </li>
 
-      <li ng-class="{'active open': vm.isManageActive, 'has-secondary': true}" role-auth="">
+      <li ng-class="{'active open': vm.isBusinessActive, 'has-secondary': true}" role-auth="">
         <a>
-          <i class="icon icon-log"></i>
-          <span>管理</span>
-          <i class="fa fa-chevron-down"></i>
+          <i class="fa fa-user icon"></i>
+          <span>业务管理</span>
+          <i class="fa fa-chevron-down chevron"></i>
         </a>
         <ul>
-          <li ng-class="{'active': vm.isManageChild1Active}" role-auth="">
-            <a ui-sref="app.manage.child1"><span>child1</span></a>
-          </li>
-          <li ng-class="{'active': vm.isManageChild2Active}">
-            <a ui-sref="app.manage.child2"><span>child2</span></a>
+          <li ng-class="{'active': vm.isBusinessContractActive}" role-auth="">
+            <a ui-sref="app.business.contract"><span>合同</span></a>
           </li>
         </ul>
       </li>
+
+      <li ng-class="{'active open': vm.isPrivilegeActive, 'has-secondary': true}" role-auth="">
+        <a>
+          <i class="fa fa-user icon"></i>
+          <span>用户管理</span>
+          <i class="fa fa-chevron-down chevron"></i>
+        </a>
+        <ul>
+          <li ng-class="{'active': vm.isPrivilegeUserActive}" role-auth="">
+            <a ui-sref="app.privilege.user"><span>用户</span></a>
+          </li>
+          <li ng-class="{'active': vm.isPrivilegeRoleActive}">
+            <a ui-sref="app.privilege.role"><span>角色</span></a>
+          </li>
+        </ul>
+      </li>
+
     </ul>
   </div>
 </nav>

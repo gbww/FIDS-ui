@@ -1,15 +1,19 @@
 <div class="dashboard-list">
 	<div>
-		<div class="bread-crumb">
-			<span><span>a</span></span>
-			<span><a href>b</a></span>
-			<span><a href>c</a></span>
-		</div>
+	  <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
 		<div class="pt-2">
-			<div class="toolbar">
-				<label>请输入您的姓名：</label>
-				<input class="input search" ng-model="vm.name">
-				<div id="name-echo">Hello, {{vm.name}}!</div>
+			<div class="clearfix">
+				<div class="col-sm-6 col-md-6">
+					<div class="box">
+						<p class="text-center">待评审项目</p>
+					</div>
+				</div>
+
+				<div class="col-sm-6 com-md-6">
+					<div class="box">
+						<p class="text-center">待检测样品</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

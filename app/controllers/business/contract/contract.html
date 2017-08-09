@@ -1,0 +1,63 @@
+<div class="business-contract-list">
+	<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+	<div class="pt-2">
+		<div class="toolbar">
+			<button class="btn btn-default-dark" ng-click="vm.create()">
+				<i class="fa fa-plus"></i>
+				<span>合同登记</span>
+			</button>
+		</div>
+
+		<table class="pt-table">
+			<thead>
+				<tr>
+					<th>委托单编号</th>
+					<th>登记日期</th>
+					<th>检验类别</th>
+					<th>委托单位</th>
+					<th>项目名称</th>
+					<th>费用</th>
+					<th>样品数量</th>
+					<th style="width:140px">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-if="vm.loading">
+					<td colspan="8" class="text-center"><i class="fa fa-pluse fa-spinner"></i></td>
+				</tr>
+				<tr ng-if="!vm.loading && vm.contracts.length === 0">
+					<td colspan="8" class="text-center"><span>暂无委托单</span></td>
+				</tr>
+				<tr ng-repeat="contract in vm.contracts track by $index" ng-if="!vm.loading">
+					<td>
+						<a href ng-click="vm.goDetail(contract.id)">{{ contract.id }}</a>
+					</td>
+					<td>{{ contract.creation_time | date:'yyyy-MM-dd'}}</td>
+					<td>{{ contract.inspect_type }}</td>
+					<td>{{ contract.entrust_company }}</td>
+					<td>{{ contract.project_name }}</td>
+					<td>{{ contract.charge }}</td>
+					<td>{{ contract.sample_count }}</td>
+					<td class="dropdown-col">
+						<div class="btn-group">
+							<button class="btn btn-default" ng-click="vm.edit()">
+								<i class="fa fa-edit"></i><span>编辑</span>
+							</button>
+							<button class="btn dropdown-toggle" data-toggle="dropdown">
+								<i class="caret"></i>
+							</button>
+							<ul class="dropdown-menu">
+								<li ng-click="vm.judge(contract.id)">
+									<a href><i class="fa fa-trash"></i><span>发起评审</span></a>
+								</li>
+								<li ng-click="vm.delete()">
+									<a href><i class="fa fa-trash"></i><span>删除</span></a>
+								</li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

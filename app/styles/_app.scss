@@ -3,7 +3,8 @@
 // 这里定义仅用在当前应用中的样式，但页面特有的样式不要定义在这里
 
 // inject:page:scss
-@import "../controllers/welcome/welcome.scss";
+@import "../controllers/privilege/privilege.scss";
 @import "../controllers/login/login.scss";
 @import "../controllers/dashboard/dashboard.scss";
+@import "../controllers/business/contract/detail/detail.scss";
 // endinject

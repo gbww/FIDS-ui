@@ -9,42 +9,6 @@
   line-height: 50px;
   transition: left 0.7s ease-in-out;
   @include box-shadow(0 1px 0 rgba(188,202,210,0.4));
-  .header-tool{
-    float: left;
-    .tool-item{
-      display: inline-block;
-      position: relative;
-      padding-right: 15px;
-      margin-right: 15px;
-      &:first-child {
-        margin-left: 15px;
-      }
-      &:not(:first-child){
-        margin-left: -3px;
-      }
-      &:after{
-        content: '';
-        position: absolute;
-        right: 0px;
-        top: 30%;
-        width: 1px;
-        height: 40%;
-        background-color: #ddd;
-      }
-      .dropdown-toggle{
-        cursor: pointer;
-        span{
-          display: inline-block;
-          vertical-align: middle;
-          max-width: 120px;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-      }
-    }
-
-  }
 
   .account {
     position: relative;

@@ -1,0 +1,16 @@
+<div class="modal-header">
+	<div class="close" ng-click="vm.cancel()">&times;</div>
+	<h4>发起合同评审</h4>
+</div>
+<div class="modal-body">
+	<form>
+		<div class="form-group">
+			<p>选择评审员</p>
+			<select class="form-control" ng-model="vm.t" ng-options="option for option in ['张三', '李四']"></select>
+		</div>
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default-dark" ng-click="vm.ok()">确认</button>
+	<button class="btn btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

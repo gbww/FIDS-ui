@@ -1,4 +1,8 @@
 // 这里写本页中特有的部分
-.c-HomeIndex {
-
+.dashboard-list {
+	.box {
+		border: 1px solid $border-color;
+		border-radius: 5px;
+		@include box-shadow(inset 0 0 3px $border-color);
+	}
 }

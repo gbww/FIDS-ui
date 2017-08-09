@@ -1,0 +1,62 @@
+.tab{
+  @include flex(flex, column);
+  flex: 1 0 auto;
+  -webkit-flex: 1 0 auto;
+  -moz-flex: 1 0 auto;
+  -ms-flex: 1 0 auto;
+  .tab-items{
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+    &:after{
+      content: '';
+      display: block;
+      clear: both;
+    }
+    li{
+      border-top: 3px solid transparent;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+      float: left;
+      &.active{
+        border-top: 3px solid $blue-color;
+        background-color: #FFFFFF;
+        @include box-shadow(0 5px 0 #fff, -3px 0 8px rgba(0, 0, 0, 0.1), 3px 0 8px rgba(0, 0, 0, 0.1));
+        a{
+          color: $blue-color;
+        }
+      }
+      &:hover a{
+        color: $blue-color;
+      }
+      &:focus{
+        outline: none;
+      }
+      a{
+        color: #555;
+        background-color: transparent;
+        padding: 5px 20px;
+        display: block;
+        cursor: pointer;
+      }
+    }
+  }
+  .tab-content{
+    flex: 1 0 auto;
+    -webkit-flex: 1 0 auto;
+    -moz-flex: 1 0 auto;
+    -ms-flex: 1 0 auto;
+    background-color: #FFFFFF;
+    padding: 10px;
+    border-radius: 5px;
+    @include box-shadow(3px 4px 8px rgba(0, 0, 0, 0.1), -3px -1px 8px rgba(0, 0, 0, 0.1));
+    &:after{
+      content: '';
+      clear: both;
+      display: block;
+    }
+    >div, >form{
+      //@include animation(slideInBottom 0.6s ease-in-out);
+    }
+  }
+}
