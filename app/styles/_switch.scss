@@ -1,0 +1,88 @@
+.switch-title{
+  margin-right: 20px;
+}
+.switch{
+  position: relative;
+  outline: none;
+  height: 24px;
+  line-height: 24px;
+  display: inline-block;
+  margin-right: 3px;
+  vertical-align: middle;
+  &:focus{
+    outline: none;
+  }
+  input{
+    display: none;
+    +label{
+      cursor: pointer;
+      margin: 0;
+      display: block;
+      height: 24px;
+      width: 45px;
+      border-radius: 16px;
+      background-color: #ccc;
+      transition: all 0.5s;
+      -webkit-transition: all 0.5s;
+      &:before{
+        content: "";
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        width: 22px;
+        height: 22px;
+        background-color: #FFFFFF;
+        border-radius: 50%;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        transform: translateX(0px);
+        -webkit-transform: translateX(0px);
+      }
+    }
+    +label+span{
+      position: absolute;
+      display: block;
+      top: 0;
+      right: 0px;
+      width: 45px;
+      font-size: 10px;
+      &:before{
+        content: '关';
+        position: absolute;
+        display: block;
+        left: 6px;
+        top: 0;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+      }
+      &:after{
+        content: '开';
+        position: absolute;
+        display: block;
+        top: 0;
+        right: 6px;
+        color: #FFFFFF;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+      }
+    }
+  }
+  input:checked{
+    +label{
+      background-color: $blue-color;
+      transition: all 0.5s;
+      &:before{
+        transform: translateX(21px);
+        -webkit-transform: translateX(21px);
+      }
+    }
+    +label+span{
+        &:before{
+          color: #FFFFFF;
+        }
+        &:after{
+          color: $body-font-color;
+        }
+      }
+  }
+}

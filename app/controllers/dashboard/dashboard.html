@@ -6,12 +6,66 @@
 				<div class="col-sm-6 col-md-6">
 					<div class="box">
 						<p class="text-center">待评审项目</p>
+						<div class="table-wrapper">
+							<table class="border-table">
+								<thead>
+									<tr>
+										<th style="width:25%">合同编号</th>
+										<th style="width:30%">项目名称</th>
+										<th style="width:20%">合同金额</th>
+										<th style="width:25%">登记时间</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-if="vm.judgeLoading">
+										<td colspan="4" class="text-center"><i class="fa fa-spinner fa-pulse"></i></td>
+									</tr>
+									<tr ng-if="!vm.judgeLoading && vm.judgeContracts.length === 0">
+										<td colspan="4" class="text-center">暂无待评审项目</td>
+									</tr>
+									<tr ng-repeat="item in vm.judgeContracts track by $index" ng-if="!vm.judgeLoading">
+										<td>
+											<a href ng-click="vm.goContract(item.id)">{{ item.id }}</a>
+										</td>
+										<td>{{ item.project_name }}</td>
+										<td>{{ item.charge }}</td>
+										<td>{{ item.creation_time }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 
 				<div class="col-sm-6 com-md-6">
 					<div class="box">
 						<p class="text-center">待检测样品</p>
+						<div class="table-wrapper">
+							<table class="border-table">
+								<thead>
+									<tr>
+										<th>样品名称</th>
+										<th>类型</th>
+										<th>接样时间</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-if="vm.sampleLoading">
+										<td colspan="3" class="text-center"><i class="fa fa-spinner fa-pulse"></i></td>
+									</tr>
+									<tr ng-if="!vm.sampleLoading && vm.samples.length === 0">
+										<td colspan="3" class="text-center">暂无待检测样品</td>
+									</tr>
+									<tr ng-repeat="item in vm.samples track by $index" ng-if="!vm.sampleLoading">
+										<td>
+											<a href>{{ item.id }}</a>
+										</td>
+										<td>{{ item.project_name }}</td>
+										<td>{{ item.creation_time }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>

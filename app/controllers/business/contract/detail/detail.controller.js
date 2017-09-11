@@ -1,109 +1,55 @@
 'use strict';
 
-angular.module('com.app').controller('BusinessContractDetailCtrl', function ($scope, $stateParams, $state, api, id, contract) {
+angular.module('com.app').controller('ContractDetailCtrl', function ($rootScope, $scope, $state, $stateParams, api, toastr, ContractService) {
   var vm = this;
 
-  vm.type = $stateParams.type;
 
   var businessBC = api.breadCrumbMap.business;
   var detail = angular.copy(businessBC.contract.detail);
-  if (vm.type == 'create') {
-  	detail.name = '合同登记';
-  } else {
-  	detail.name = '合同详情';
-  }
+
   vm.breadCrumbArr = [businessBC.root, businessBC.contract.root, detail];
 
-
-  vm.tab = 'order';
-  vm.shift = function (tab) {
-    vm.tab = tab;
-    if (tab == 'inspection') {
-      vm.tree = $.fn.zTree.init(angular.element("#inspectTree"), setting, vm.treeData);
-    }
-  }
-  vm.entrust_version = 'singleVersion';
-  vm.getReportType = 'self';
-
-  if (vm.type == 'create') {
-    vm.contract = {
-      id: id,
-      sample_type: 'food'
-    }
-  } else {
-    vm.contract = angular.merge(contract, {
-      sample_type: 'food'
+  $rootScope.loading = true;
+  vm.getContractInfo = function () {
+    var contractId = $stateParams.id;
+    ContractService.getContractInfo(contractId).then(function (response) {
+      $rootScope.loading = false;
+      if (response.data.success) {
+        $scope.$broadcast('contractInfo', response.data.entity);
+      } else {
+        toastr.error(response.data.message);
+      }
+    }).catch(function (err) {
+      $rootScope.loading = false;
+      toastr.error(err.data.message);
     });
   }
 
-  vm.sample_produce_date = '生产日期';
+  $scope.$on('refreshContract', vm.getContractInfo);
 
 
-  vm.checkNode = function (event, treeId, treeNode) {
-  }
-
-  vm.contextMenu = function (event, treeId, treeNode) {
-    if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
-      vm.tree.cancelSelectedNode();
-      vm.showRMenu("root", event.clientX, event.clientY);
-    } else if (treeNode && !treeNode.noR) {
-      vm.tree.selectNode(treeNode);
-      vm.showRMenu("node", event.clientX, event.clientY);
-    }
-  }
-  vm.showRMenu = function (type, x, y) {
-    x += document.body.scrollLeft;
-    y += document.body.scrollTop;
-    $('.context-menu').css({
-      top: y + 'px',
-      left: x + 'px'
-    }).show();
-  }
-
-  var setting = {
-    check: {
-      enable: true
-    },
-    edit: {
-      enable: true,
-      showRemoveBtn: false,
-      showRenameBtn: false,
-      drag: {
-
-      },
-    },
-    callback: {
-      onCheck: vm.checkNode,
-      onRightClick: vm.contextMenu
+  vm.goTab = function (tab) {
+    if (tab == 'info') {
+      $state.go('app.business.contract.detail.info');
+    } else if (tab == 'comment') {
+      $state.go('app.business.contract.detail.comment');
+    } else if (tab == 'ci') {
+      $state.go('app.business.contract.detail.ci');
+    } else if (tab == 'sample') {
+      $state.go('app.business.contract.detail.sample');
     }
   }
 
-  vm.treeData = [
-    {name: '项目总表', open: true, children: [
-      {name: '苏州食药局', children: [
-        {name: '膨化食品', children: [
-          {name: '薯片'}
-        ]},
-        {name: '肉类食品', children: [
-          {name: '牛肉'}
-        ]}
-      ]},
-      {name: '2016国抽', children: [
-        {name: 'test1'},
-        {name: 'test2'}
-      ]},
-      {name: '2017国抽', children: [
-        {name: 'test1'},
-        {name: 'test2'}
-      ]}
-    ]}
-  ];
-
-  $("body").bind('mousedown', function (event) {
-    if ($(event.target).parents(".context-menu").length == 0) {
-        $(".context-menu").hide();
-      }
+  $scope.$on('$stateChangeSuccess', function() {
+    if ($state.includes('app.business.contract.detail.info')) {
+      vm.tab = 'info';
+    } else if ($state.includes('app.business.contract.detail.comment')) {
+      vm.tab = 'comment';
+    } else if ($state.includes('app.business.contract.detail.ci')) {
+      vm.tab = 'ci';
+    } else if ($state.includes('app.business.contract.detail.sample')) {
+      vm.tab = 'sample';
+    }
   })
-
 
 });

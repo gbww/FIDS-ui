@@ -11,46 +11,78 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider.state('app.business.contract', {
 		url: '/contract',
 		templateUrl: 'controllers/business/contract/contract.html',
-		controller: 'BusinessContractCtrl as vm'
+		controller: 'ContractCtrl as vm'
+	});
+
+	$stateProvider.state('app.business.contract.create', {
+		url: '/create',
+		views: {
+			'@app.business': {
+				templateUrl: 'controllers/business/contract/create/create.html',
+				controller: 'ContractCreateCtrl as vm'
+			}
+		},
 	});
 
 	$stateProvider.state('app.business.contract.detail', {
-		url: '/:type/:id',
+		url: '/:id',
 		views: {
 			'@app.business': {
 				templateUrl: 'controllers/business/contract/detail/detail.html',
-				controller: 'BusinessContractDetailCtrl as vm'
+				controller: 'ContractDetailCtrl as vm'
 			}
 		},
-		resolve: {
-			id: ['$stateParams', function ($stateParams) {
-				var type = $stateParams.type;
-				var contract_id = $stateParams.id;
-				if (type == 'create') {
-					return (Math.random() * 100000).toFixed(0)
-				} else {
-					return contract_id;
-				}
-			}],
-			contract: ['$rootScope', '$q', '$stateParams', 'ContractService', function ($rootScope, $q, $stateParams, ContractService) {
-				var defered = $q.defer();
-				var type = $stateParams.type;
-				var contract_id = $stateParams.id;
-				if (type == 'create') {
-					defered.resolve(null);
-				} else {
-					$rootScope.loading = true;
-					ContractService.getContractInfo(contract_id).then(function (response) {
-						$rootScope.loading = false;
-						defered.resolve(response.data.contractList[0]);
-					}).catch(function () {
-						$rootScope.loading = false;
-						defered.reject();
-					});
-				}
-				return defered.promise;
-			}]
-		}
+		abstract: true
+	});
+
+	$stateProvider.state('app.business.contract.detail.info', {
+		url: '/info',
+		templateUrl: 'controllers/business/contract/detail/info/info.html',
+		controller: 'ContractDetailInfoCtrl as vm'
+	});
+
+	$stateProvider.state('app.business.contract.detail.ci', {
+		url: '/ci',
+		templateUrl: 'controllers/business/contract/detail/ci/ci.html',
+		controller: 'ContractDetailCiCtrl as vm'
+	});
+
+	$stateProvider.state('app.business.contract.detail.comment', {
+		url: '/comment',
+		templateUrl: 'controllers/business/contract/detail/comment/comment.html',
+		controller: 'ContractDetailCommentCtrl as vm'
+	});
+
+	$stateProvider.state('app.business.contract.detail.sample', {
+		url: '/sample',
+		templateUrl: 'controllers/business/contract/detail/sample/sample.html',
+		controller: 'ContractDetailSampleCtrl as vm'
+	});
+
+
+	$stateProvider.state('app.business.checkItem', {
+		url: '/checkItem',
+		templateUrl: 'controllers/business/checkItem/checkItem.html',
+		controller: 'CheckItemCtrl as vm'
+	});
+
+	$stateProvider.state('app.business.checkItem.list', {
+		url: '/list',
+		templateUrl: 'controllers/business/checkItem/list/list.html',
+		controller: 'CheckItemListCtrl as vm'
+	});
+
+	$stateProvider.state('app.business.checkItem.manage', {
+		url: '/manage',
+		templateUrl: 'controllers/business/checkItem/manage/manage.html',
+		controller: 'CheckItemManageCtrl as vm'
+	});
+
+
+	$stateProvider.state('app.business.inspection', {
+		url: '/inspection',
+		templateUrl: 'controllers/business/inspection/inspection.html',
+		controller: 'BusinessInspectionCtrl as vm'
 	});
 
 });

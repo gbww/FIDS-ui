@@ -1,0 +1,32 @@
+<div class="modal-header">
+	<div class="close" ng-click="vm.cancel()">&times;</div>
+	<h4>修改部门</h4>
+</div>
+
+<div class="modal-body">
+	<form name="organizationEdit" class="form-horizontal">
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">部门名称</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="name" ng-model="vm.organization.name" required ng-minlenght="2" ng-maxlength="30" ng-pattern="/^[\u4e00-\u9fa5_\-a-zA-Z0-9]+$/">
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="organizationEdit.name.$dirty" ng-messages="organizationEdit.name.$error">
+				<label class="error-messages" ng-message="minlength"><i></i>长度至少2位</label>
+				<label class="error-messages" ng-message="maxlength"><i></i>长度至多30位</label>
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+				<label class="error-messages" ng-message="pattern"><i></i>由中文、数字、字母、中横线和下划线组成</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">描述</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="description" ng-model="vm.organization.description">
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-default-dark" ng-disabled="organizationEdit.$invalid" ng-click="vm.ok()">确认</button>
+	<button class="btn btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

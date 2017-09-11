@@ -1,0 +1,21 @@
+{
+	"inspections": [{
+		"contract_id": 123456,
+		"name": "硌",
+		"method": "GB-T 5009.29-192",
+		"unit": "ug/kg",
+		"standard": "0.01",
+		"summary": null,
+		"department": "检测一部",
+		"inspector": "张三"
+	}, {
+		"contract_id": 123456,
+		"name": "硌",
+		"method": "GB-T 5009.29-192",
+		"unit": "ug/kg",
+		"standard": "0.01",
+		"summary": null,
+		"department": "检测一部",
+		"inspector": "李四"
+	}]
+}

@@ -1,0 +1,276 @@
+<div class="business-contract-list">
+	<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+	<div class="pt-2">
+		<form name="createForm" novalidate>
+			<table class="form-table">
+				<tr>
+					<td class="item-title">
+						<span class="item-required">样品编号</span>
+					</td>
+					<td>
+						<input class="input" name="sample_id" ng-model="vm.contract.sampleId" required>
+					</td>
+					<td class="item-title">
+						<span class="item-required">协议编号</span>
+					</td>
+					<td>
+						<input class="input" name="protocol_id" ng-model="vm.contract.protocolId" required>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span class="item-required">样品名称</span>
+					</td>
+					<td>
+						<input class="input" name="sample_name" ng-model="vm.contract.sampleName" required>
+					</td>
+					<td class="item-title">
+						<span>加工工艺</span>
+					</td>
+					<td>
+						<input class="input" name="process_technology" ng-model="vm.contract.processTechnology">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>质量等级</span>
+					</td>
+					<td>
+						<input class="input" name="quality_level" ng-model="vm.contract.qualityLevel">
+					</td>
+					<td class="item-title">
+						<span>规格数量</span>
+					</td>
+					<td>
+						<input class="input" name="specification_quantity" ng-model="vm.contract.specificationQuantity">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>生产日期或批号</span>
+					</td>
+					<td>
+						<input type="date" class="input" name="product_date" ng-model="vm.contract.productDate">
+					</td>
+					<td class="item-title">
+						<span>保存条件</span>
+					</td>
+					<td>
+						<select class="input" name="storage_condition" ng-model="vm.contract.storageCondition" ng-options="option for option in vm.storageConditionArr"></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>保存期</span>
+					</td>
+					<td>
+						<input class="input" name="storage_time" ng-model="vm.contract.storageTime">
+					</td>
+					<td class="item-title">
+						<span>样品性状</span>
+					</td>
+					<td>
+						<input class="input" name="sample_traits" ng-model="vm.contract.sampleTraits">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>样品处理要求</span>
+					</td>
+					<td>
+						<input class="input" name="process_demand" ng-model="vm.contract.processDemand">
+					</td>
+					<td class="item-title">
+						<span>检测目的</span>
+					</td>
+					<td>
+						<input class="input" name="detect_purpose" ng-model="vm.contract.detectPurpose">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>提供的其它有关资料</span>
+					</td>
+					<td>
+						<input class="input" name="other_data" ng-model="vm.contract.otherData">
+					</td>
+					<td class="item-title">
+						<span class="item-required">检验类别</span>
+					</td>
+					<td>
+						<select class="input" name="detect_type" ng-model="vm.contract.detectType" ng-options="option for option in ['监督检验', '省级食品安全监', '委托检验', '发证检验']" required></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>检测依据</span>
+					</td>
+					<td>
+						<input class="input" name="detect_by" ng-model="vm.contract.detectBy">
+					</td>
+					<td class="item-title">
+						<span class="item-required">执行标准</span>
+					</td>
+					<td>
+						<select class="input" name="execute_standard" ng-model="vm.contract.executeStandard" ng-options="option for option in ['标准一', '标准二']" required></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>是否同意使用非标准方法</span>
+					</td>
+					<td>
+						<input type="radio" ng-model="vm.contract.isUseStandard" value="1">是&emsp;&emsp;
+						<input type="radio" ng-model="vm.contract.isUseStandard" value="0">否
+					</td>
+					<td class="item-title">
+						<span>是否同意分包</span>
+					</td>
+					<td>
+						<input type="radio" ng-model="vm.contract.isSubcontracting" value="1">是&emsp;&emsp;
+						<input type="radio" ng-model="vm.contract.isSubcontracting" value="0">否
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>是否需要加急</span>
+					</td>
+					<td>
+						<input type="radio" ng-model="vm.contract.isExpedited" value="1">是&emsp;&emsp;
+						<input type="radio" ng-model="vm.contract.isExpedited" value="0">否
+					</td>
+					<td class="item-title">
+						<span>是否需要评价</span>
+					</td>
+					<td>
+						<input type="radio" ng-model="vm.contract.isEvaluation" value="1">是&emsp;&emsp;
+						<input type="radio" ng-model="vm.contract.isEvaluation" value="0">否
+					</td>
+				</tr>
+			</table>
+
+			<table class="form-table">
+				<tr>
+					<td class="item-title">
+						<span>生产单位</span>
+					</td>
+					<td>
+						<input class="input" name="product_unit" ng-model="vm.contract.productUnit">
+					</td>
+					<td class="item-title">
+						<span>送检单位</span>
+					</td>
+					<td>
+						<input class="input" name="inspection_uint" ng-model="vm.contract.inspectionUint">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>采样地点</span>
+					</td>
+					<td>
+						<input class="input" name="sampling_address" ng-model="vm.contract.samplingAddress">
+					</td>
+					<td class="item-title">
+						<span>送检单位地址</span>
+					</td>
+					<td>
+						<input class="input" name="inspection_unit_address" ng-model="vm.contract.inspectionUnitAddress">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>邮编</span>
+					</td>
+					<td>
+						<input class="input" name="zip_code" ng-model="vm.contract.zipCode">
+					</td>
+					<td class="item-title">
+						<span>电话</span>
+					</td>
+					<td>
+						<input class="input" name="phone" ng-model="vm.contract.phone">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>传真</span>
+					</td>
+					<td>
+						<input class="input" name="fax" ng-model="vm.contract.fax">
+					</td>
+					<td class="item-title">
+						<span>联系人</span>
+					</td>
+					<td>
+						<input class="input" name="contact_person" ng-model="vm.contract.contactPerson">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>取报告方式</span>
+					</td>
+					<td>
+						<input type="radio" ng-model="vm.contract.reportMethod" value="self">自取&emsp;&emsp;
+						<input type="radio" ng-model="vm.contract.reportMethod" value="mail">邮寄
+					</td>
+					<td class="item-title">
+						<span>需检测报告份数</span>
+					</td>
+					<td>
+						<input class="number" name="report_count" ng-model="vm.contract.reportCount">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>送检人签字</span>
+					</td>
+					<td>
+						<input class="input" name="inspection_user" ng-model="vm.contract.inspectionUser">
+					</td>
+					<td class="item-title">
+						<span>送检日期</span>
+					</td>
+					<td>
+						<input type="date" class="input" name="inspection_date" ng-model="vm.contract.inspectionDate">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>受理人</span>
+					</td>
+					<td>
+						<input class="input" name="acceptor" ng-model="vm.contract.acceptor">
+					</td>
+					<td class="item-title">
+						<span>受理日期</span>
+					</td>
+					<td>
+						<input type="date" class="input" name="acceptance_date" ng-model="vm.contract.acceptanceDate">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>检测费用</span>
+					</td>
+					<td>
+						<input class="input" name="cost" ng-model="vm.contract.cost">
+					</td>
+					<td colspan="2"></td>
+				</tr>
+					<td class="item-title">
+						<span>备注</span>
+					</td>
+					<td>
+						<textarea class="input" ng-model="extra" rows="2"></textarea>
+					</td>
+					<td colspan="2"></td>
+				</tr>
+			</table>
+		</form>
+		<div class="btn-area text-center">
+			<button class="btn btn-default-dark" ng-click="vm.ok()" ng-disabled="createForm.$invalid">确认</button>
+			<button class="btn btn-default-light" ui-sref="app.business.contract">取消</button>
+		</div>
+	</div>
+</div>

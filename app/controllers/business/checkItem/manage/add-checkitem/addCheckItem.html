@@ -1,0 +1,60 @@
+<div class="modal-header">
+	<div class="close" ng-click="vm.cancel()">&times;</div>
+</div>
+<div class="modal-body">
+	<div class="toolbar clearfix" style="margin-bottom: 10px;">
+		<div class="pull-right">
+			<input class="input" placeholder="请输入检测项名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
+			<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+		</div>
+	</div>
+	<table class="pt-table" st-table="vm.checkItems" st-pipe="vm.getCheckItemList">
+		<thead st-search-watch="vm.searchObject">
+			<tr>
+				<th style="width: 80px;">
+					<input type="checkbox" ng-click="vm.checkAll()" ng-model="vm.allChecked">
+				</th>
+				<th>名称</th>
+				<th>检测方法</th>
+				<th>单位</th>
+				<th>标准值</th>
+				<th>检出限</th>
+				<th>定量限</th>
+				<th>设备</th>
+				<th>默认价格</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-if="vm.loading">
+				<td colspan="9" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+			</tr>
+			<tr ng-if="!vm.loading && vm.checkItems.length == 0">
+				<td colspan="9" class="text-center">暂无检测项</td>
+			</tr>
+			<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.loading">
+				<td>
+					<input type="checkbox" ng-checked="vm.itemChecked[$index]" ng-click="vm.checkItem($event, $index, item.id)">
+				</td>
+				<td>{{ item.name }}</td>
+				<td>{{ item.method }}</td>
+				<td>{{ item.unit }}</td>
+				<td>{{ item.standardValue }}</td>
+				<td>{{ item.detectionLimit | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+				<td>{{ item.quantitationLimit }}</td>
+				<td>{{ item.device }}</td>
+				<td>{{ item.defaultPrice }}</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="9">
+					<div st-idp st-total-count="vm.total"></div>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default-dark" ng-click="vm.ok()" ng-disabled="checkItemAddForm.$invalid">确认</button>
+	<button class="btn btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

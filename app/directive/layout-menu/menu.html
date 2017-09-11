@@ -4,43 +4,57 @@
     <span>Logo</span>
   </div>
   <div class="navbar-section">
-    <ul class="navbar-items" accordion-menu>
-      <li ng-class="{'active': vm.isDashboardActive}">
-        <a title="概况" ui-sref="app.dashboard">
-          <i class="fa fa-home icon"></i>
-          <span>概况</span>
-        </a>
-      </li>
+    <div id="accordion">
+      <div class="panel">
+        <div ng-class="{'active': vm.isDashboardActive}">
+          <a title="概况" ui-sref="app.dashboard">
+            <i class="icon icon-overview"></i>
+            <span>概况</span>
+          </a>
+        </div>
+      </div>
 
-      <li ng-class="{'active open': vm.isBusinessActive, 'has-secondary': true}" role-auth="">
-        <a>
-          <i class="fa fa-user icon"></i>
-          <span>业务管理</span>
-          <i class="fa fa-chevron-down chevron"></i>
-        </a>
-        <ul>
+      <div class="panel" role-auth="">
+        <div data-parent="#accordion" data-toggle="collapse" data-target="#businessManage" aria-expanded="{{vm.isBusinessActive}}">
+          <a>
+            <i class="icon icon-service"></i>
+            <span>业务管理</span>
+            <i class="fa fa-chevron-down"></i>
+          </a>
+        </div>
+        <ul id="businessManage" ng-class="{'collapse in': vm.isBusinessActive, 'collapse': !vm.isBusinessActive}">
           <li ng-class="{'active': vm.isBusinessContractActive}" role-auth="">
-            <a ui-sref="app.business.contract"><span>合同</span></a>
+            <a ui-sref="app.business.contract"><span>合同管理</span></a>
+          </li>
+          <li ng-class="{'active': vm.isBusinessCheckItemActive}" role-auth="">
+            <a ui-sref="app.business.checkItem.list"><span>检测项管理</span></a>
+          </li>
+          <li ng-class="{'active': vm.isBusinessInspectionActive}" role-auth="">
+            <a ui-sref="app.business.inspection"><span>检测项目</span></a>
           </li>
         </ul>
-      </li>
+      </div>
 
-      <li ng-class="{'active open': vm.isPrivilegeActive, 'has-secondary': true}" role-auth="">
-        <a>
-          <i class="fa fa-user icon"></i>
-          <span>用户管理</span>
-          <i class="fa fa-chevron-down chevron"></i>
-        </a>
-        <ul>
+      <div class="panel" role-auth="">
+        <div data-parent="#accordion" data-toggle="collapse" data-target="#privilegeManage" aria-expanded="{{vm.isPrivilegeActive}}">
+          <a>
+            <i class="icon icon-service"></i>
+            <span>系统管理</span>
+            <i class="fa fa-chevron-down"></i>
+          </a>
+        </div>
+        <ul id="privilegeManage" ng-class="{'collapse in': vm.isPrivilegeActive, 'collapse': !vm.isPrivilegeActive}">
+          <li ng-class="{'active': vm.isPrivilegeOrganizationActive}" role-auth="">
+            <a ui-sref="app.privilege.organization"><span>部门管理</span></a>
+          </li>
           <li ng-class="{'active': vm.isPrivilegeUserActive}" role-auth="">
-            <a ui-sref="app.privilege.user"><span>用户</span></a>
+            <a ui-sref="app.privilege.user"><span>用户管理</span></a>
           </li>
           <li ng-class="{'active': vm.isPrivilegeRoleActive}">
-            <a ui-sref="app.privilege.role"><span>角色</span></a>
+            <a ui-sref="app.privilege.role"><span>角色管理</span></a>
           </li>
         </ul>
-      </li>
-
-    </ul>
+      </div>
+    </div>
   </div>
 </nav>

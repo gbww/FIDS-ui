@@ -1,4 +1,64 @@
 <div class="dashboard-user-list">
 	<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
-	<div class="pt-2">用户</div>
+	<div class="pt-2">
+		<div class="toolbar">
+			<button class="btn btn-default-dark" ng-click="vm.create()">
+				<i class="fa fa-plus"></i><span>新建用户</span>
+			</button>
+		</div>
+		<table class="pt-table" st-table="vm.users" st-pipe="vm.getUserList">
+			<thead st-search-watch="vm.searchObject">
+				<tr>
+					<th>用户名称</th>
+					<th>邮箱</th>
+					<th>描述</th>
+					<th>所在部门</th>
+					<th>职责</th>
+					<th>创建时间</th>
+					<th style="width: 140px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-if="vm.loading">
+					<td colspan="7" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+				</tr>
+				<tr ng-if="!vm.loading && vm.users.length == 0">
+					<td colspan="7" class="text-center">暂无用户</td>
+				</tr>
+				<tr ng-repeat="user in vm.users track by $index" ng-if="!vm.loading">
+					<td>{{ user.username }}</td>
+					<td>{{ user.email }}</td>
+					<td>{{ user.description }}</td>
+					<td>{{ user.organization.name }}</td>
+					<td>{{ user.role.name }}</td>
+					<td>{{ user.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+					<td class="dropdown-col">
+						<div class="btn-group">
+							<button class="btn btn-default" ng-click="vm.edit(user)">
+								<i class="fa fa-edit"></i><span>修改信息</span>
+							</button>
+							<button class="btn dropdown-toggle" data-toggle="dropdown">
+								<i class="caret"></i>
+							</button>
+							<ul class="dropdown-menu">
+								<li ng-click="vm.assignRole(user)">
+									<a href><i class="fa fa-trash"></i><span>更改角色</span></a>
+								</li>
+								<li ng-click="vm.delete(user)">
+									<a href><i class="fa fa-trash"></i><span>删除</span></a>
+								</li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="7">
+						<div st-idp st-total-count="vm.total"></div>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
 </div>

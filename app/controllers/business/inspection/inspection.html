@@ -1,0 +1,53 @@
+<div class="business-inspection-list">
+	<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+	<div class="pt-2">
+		<div class="toolbar">
+			<button class="btn btn-default-dark" ng-click="vm.batchAssign()">
+				<i class="fa fa-plus"></i>
+				<span>分配检测人员</span>
+			</button>
+		</div>
+
+		<table class="pt-table">
+			<thead>
+				<tr>
+          <th style="width: 80px;">
+            <input type="checkbox" ng-click="vm.checkAll()" ng-model="vm.allChecked">
+           </th>
+					<th>项目名称</th>
+					<th>检验方法</th>
+					<th>单位</th>
+					<th>标准值</th>
+					<th>单项结论</th>
+					<th>检验室</th>
+					<th style="width:140px">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-if="vm.loading">
+					<td colspan="8" class="text-center"><i class="fa fa-pluse fa-spinner"></i></td>
+				</tr>
+				<tr ng-if="!vm.loading && vm.inspections.length === 0">
+					<td colspan="8" class="text-center"><span>暂无待检测项目</span></td>
+				</tr>
+				<tr ng-repeat="inspection in vm.inspections track by $index" ng-if="!vm.loading">
+          <td>
+            <input type="checkbox" ng-checked="vm.itemChecked[$index]" ng-click="vm.checkItem($event, $index, inspection)">
+          </td>
+					<td>
+						<a href ng-click="vm.goDetail(inspection.name)">{{ inspection.name }}</a>
+					</td>
+					<td>{{ inspection.method }}</td>
+					<td>{{ inspection.unit }}</td>
+					<td>{{ inspection.standard }}</td>
+					<td>{{ inspection.summary }}</td>
+					<td>{{ inspection.department }}</td>
+					<td>
+						<button class="btn btn-default" ng-click="vm.distribute()" ng-if="$index==0">分配检测人员</button>
+						<button class="btn btn-default" ng-click="vm.record()" ng-if="$index==1">录入检测结果</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -4,8 +4,8 @@
 /** SASS的语法参见sass-lang.com */
 @import "variables";
 // bower:scss
-@import "../../bower_components/font-awesome/scss/font-awesome.scss";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "../../bower_components/font-awesome/scss/font-awesome.scss";
 // endbower
 @import "mixin";
 @import "bootstrap";
@@ -20,5 +20,7 @@
 @import "button";
 @import "table";
 @import "tab";
+@import "_switch";
 
 @import "ztree";
+@import "multiple-select";

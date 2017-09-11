@@ -1,0 +1,87 @@
+<div class="modal-header">
+	<div class="close" ng-click="vm.cancel()">&times;</div>
+	<h4>新增用户</h4>
+</div>
+
+<div class="modal-body">
+	<form name="userCreate" class="form-horizontal">
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">用户名称</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="name" ng-model="vm.user.username" required ng-minlength="2" ng-maxlength="30" ng-pattern="/^[\u4e00-\u9fa5_\-a-zA-Z0-9]+$/">
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="userCreate.name.$dirty" ng-messages="userCreate.name.$error">
+				<label class="error-messages" ng-message="minlength"><i></i>长度至少2位</label>
+				<label class="error-messages" ng-message="maxlength"><i></i>长度至多30位</label>
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+				<label class="error-messages" ng-message="pattern"><i></i>由中文、数字、字母、中横线和下划线组成</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">密码</label>
+			<div class="col-sm-8">
+				<input class="form-control" type="password" name="password" ng-model="vm.user.password" ng-minlength="8" ng-maxlength="30" required validator-password>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="userCreate.password.$dirty" ng-messages="userCreate.password.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+				<label class="error-messages" ng-message="minlength"><i></i>最小8位字符</label>
+				<label class="error-messages" ng-message="maxlength"><i></i>最多30位字符</label>
+				<label class="error-messages" ng-message="password"><i></i>由数字和字母组成，必须同时包含大小写字母</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">确认密码</label>
+			<div class="col-sm-8">
+				<input class="form-control" type="password" name="confirmPassword" ng-model="vm.user.confirmPwd" required validator-match="{{vm.user.password}}" >
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="userCreate.confirmPassword.$dirty" ng-messages="userCreate.confirmPassword.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+				<label class="error-messages" ng-message="match"><i></i>两次密码不匹配</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">邮箱</label>
+			<div class="col-sm-8">
+				<input type="email" class="form-control" required name="email" ng-model="vm.user.email">
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="userCreate.email.$dirty" ng-messages="userCreate.email.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+				<label class="error-messages" ng-message="email"><i></i>请输入正确的邮箱地址</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">手机</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="phone" ng-model="vm.user.phone" ng-pattern="/^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/"
+          required>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="userCreate.phone.$dirty" ng-messages="userCreate.phone.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+				<label class="error-messages" ng-message="pattern"><i></i>手机号码格式不正确</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">描述</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="description" ng-model="vm.user.description">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">部门</label>
+			<div class="col-sm-8">
+				<select class="form-control" name="organization" ng-model="vm.user.organizationId" ng-options="option.id as option.name for option in vm.organizations" required></select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">角色</label>
+			<div class="col-sm-8">
+				<select class="form-control" name="role" ng-model="vm.user.roleId" ng-options="option.id as option.name for option in vm.roles" required></select>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-default-dark" ng-disabled="userCreate.$invalid" ng-click="vm.ok()">确认</button>
+	<button class="btn btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

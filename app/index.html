@@ -8,7 +8,7 @@
   <meta name="force-rendering" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
-  <title>CONDUCTOR</title>
+  <title>LIMS</title>
   <base href="/"/>
   <!-- build:css styles/app.css -->
   <!-- inject:app:css -->
@@ -17,7 +17,9 @@
 
   <!-- build:css styles/vendor.css -->
   <!-- bower:css -->
+  <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css" />
   <link rel="stylesheet" href="../bower_components/angular-ui-select/dist/select.css" />
+  <link rel="stylesheet" href="../bower_components/angular-toastr/dist/angular-toastr.css" />
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css({.tmp/app,app}) main.css -->
@@ -35,15 +37,23 @@
 <!-- build:js scripts/vendor.js -->
 <!-- bower:js -->
 <script src="../bower_components/angular/angular.js" charset="utf-8"></script>
+<script src="../bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
+<script src="../bower_components/angular-animate/angular-animate.js" charset="utf-8"></script>
+<script src="../bower_components/angular-touch/angular-touch.js" charset="utf-8"></script>
 <script src="../bower_components/angular-sanitize/angular-sanitize.js" charset="utf-8"></script>
 <script src="../bower_components/angular-resource/angular-resource.js" charset="utf-8"></script>
-<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js" charset="utf-8"></script>
-<script src="../bower_components/angular-cookies/angular-cookies.js" charset="utf-8"></script>
-<script src="../bower_components/angular-ui-select/dist/select.js" charset="utf-8"></script>
-<script src="../bower_components/jquery/dist/jquery.js" charset="utf-8"></script>
-<script src="../bower_components/bootstrap-sass/assets/javascripts/bootstrap.js" charset="utf-8"></script>
-<script src="../bower_components/angular-messages/angular-messages.js" charset="utf-8"></script>
 <script src="../bower_components/angular-ui-router/release/angular-ui-router.js" charset="utf-8"></script>
+<script src="../bower_components/bootstrap-sass/assets/javascripts/bootstrap.js" charset="utf-8"></script>
+<script src="../bower_components/modernizr/modernizr.js" charset="utf-8"></script>
+<script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js" charset="utf-8"></script>
+<script src="../bower_components/angular-aria/angular-aria.js" charset="utf-8"></script>
+<script src="../bower_components/angular-messages/angular-messages.js" charset="utf-8"></script>
+<script src="../bower_components/angular-material/angular-material.js" charset="utf-8"></script>
+<script src="../bower_components/angular-ui-select/dist/select.js" charset="utf-8"></script>
+<script src="../bower_components/ng-file-upload/ng-file-upload.js" charset="utf-8"></script>
+<script src="../bower_components/angular-toastr/dist/angular-toastr.tpls.js" charset="utf-8"></script>
+<script src="../bower_components/angular-cookies/angular-cookies.js" charset="utf-8"></script>
+<script src="../bower_components/angular-smart-table/dist/smart-table.js" charset="utf-8"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -55,21 +65,54 @@
 <script src="configs/run.js" charset="utf-8"></script>
 <script src="configs/service.js" charset="utf-8"></script>
 <script src="constants/api.js" charset="utf-8"></script>
+<script src="controllers/business/business.route.js" charset="utf-8"></script>
+<script src="controllers/business/checkItem/checkItem.controller.js" charset="utf-8"></script>
+<script src="controllers/business/checkItem/checkItem.service.js" charset="utf-8"></script>
+<script src="controllers/business/checkItem/list/add-checkitem/addCheckitem.controller.js" charset="utf-8"></script>
+<script src="controllers/business/checkItem/list/edit-checkitem/editCheckitem.controller.js" charset="utf-8"></script>
+<script src="controllers/business/checkItem/list/list.controller.js" charset="utf-8"></script>
+<script src="controllers/business/checkItem/manage/add-catalog/addCatalog.controller.js" charset="utf-8"></script>
+<script src="controllers/business/checkItem/manage/add-checkitem/addCheckItem.controller.js" charset="utf-8"></script>
+<script src="controllers/business/checkItem/manage/edit-catalog/editCatalog.controller.js" charset="utf-8"></script>
+<script src="controllers/business/checkItem/manage/manage.controller.js" charset="utf-8"></script>
+<script src="controllers/business/contract/contract.controller.js" charset="utf-8"></script>
+<script src="controllers/business/contract/contract.service.js" charset="utf-8"></script>
+<script src="controllers/business/contract/create/create.controller.js" charset="utf-8"></script>
+<script src="controllers/business/contract/detail/ci/catalog-ci/catalogCi.controller.js" charset="utf-8"></script>
+<script src="controllers/business/contract/detail/ci/ci.controller.js" charset="utf-8"></script>
+<script src="controllers/business/contract/detail/ci/distribute-department/distributeDepart.controller.js" charset="utf-8"></script>
+<script src="controllers/business/contract/detail/comment/comment.controller.js" charset="utf-8"></script>
+<script src="controllers/business/contract/detail/detail.controller.js" charset="utf-8"></script>
+<script src="controllers/business/contract/detail/info/info.controller.js" charset="utf-8"></script>
+<script src="controllers/business/contract/detail/sample/sample.controller.js" charset="utf-8"></script>
+<script src="controllers/business/contract/record-comment/recordComment.controller.js" charset="utf-8"></script>
+<script src="controllers/business/contract/start-comment-process/startCommentProcess.controller.js" charset="utf-8"></script>
+<script src="controllers/business/inspection/distribute/distribute.controller.js" charset="utf-8"></script>
+<script src="controllers/business/inspection/inspection.controller.js" charset="utf-8"></script>
+<script src="controllers/business/inspection/inspection.service.js" charset="utf-8"></script>
+<script src="controllers/business/inspection/record/record.controller.js" charset="utf-8"></script>
 <script src="controllers/dashboard/dashboard.controller.js" charset="utf-8"></script>
 <script src="controllers/dashboard/dashboard.route.js" charset="utf-8"></script>
+<script src="controllers/dashboard/dashboard.service.js" charset="utf-8"></script>
 <script src="controllers/login/edit-password/editPassward.controller.js" charset="utf-8"></script>
 <script src="controllers/login/login.controller.js" charset="utf-8"></script>
 <script src="controllers/login/login.directive.js" charset="utf-8"></script>
 <script src="controllers/login/login.route.js" charset="utf-8"></script>
 <script src="controllers/login/login.service.js" charset="utf-8"></script>
-<script src="controllers/manage/child1/child1.controller.js" charset="utf-8"></script>
-<script src="controllers/manage/child2/child2.controller.js" charset="utf-8"></script>
-<script src="controllers/manage/manage.route.js" charset="utf-8"></script>
 <script src="controllers/notFound/notFound.route.js" charset="utf-8"></script>
+<script src="controllers/privilege/organization/create/create.controller.js" charset="utf-8"></script>
+<script src="controllers/privilege/organization/edit/edit.controller.js" charset="utf-8"></script>
+<script src="controllers/privilege/organization/organization.controller.js" charset="utf-8"></script>
+<script src="controllers/privilege/privilege.route.js" charset="utf-8"></script>
+<script src="controllers/privilege/privilege.service.js" charset="utf-8"></script>
+<script src="controllers/privilege/role/create/create.controller.js" charset="utf-8"></script>
+<script src="controllers/privilege/role/edit/edit.controller.js" charset="utf-8"></script>
+<script src="controllers/privilege/role/role.controller.js" charset="utf-8"></script>
+<script src="controllers/privilege/user/assign-role/assignRole.controller.js" charset="utf-8"></script>
+<script src="controllers/privilege/user/create/create.controller.js" charset="utf-8"></script>
+<script src="controllers/privilege/user/edit/edit.controller.js" charset="utf-8"></script>
+<script src="controllers/privilege/user/user.controller.js" charset="utf-8"></script>
 <script src="controllers/shared/dialog/dialog.js" charset="utf-8"></script>
-<script src="controllers/welcome/pageScroll.directive.js" charset="utf-8"></script>
-<script src="controllers/welcome/welcome.controller.js" charset="utf-8"></script>
-<script src="controllers/welcome/welcome.route.js" charset="utf-8"></script>
 <script src="directive/breadCrumb/breadCrumb.directive.js" charset="utf-8"></script>
 <script src="directive/layout-header/header.js" charset="utf-8"></script>
 <script src="directive/layout-header/layoutHeader.directive.js" charset="utf-8"></script>
@@ -77,7 +120,10 @@
 <script src="directive/layout-menu/menu.js" charset="utf-8"></script>
 <script src="directive/layout/_layout.js" charset="utf-8"></script>
 <script src="directive/layout/layout.directive.js" charset="utf-8"></script>
+<script src="directive/smart-table/smart-table-plugin.directive.js" charset="utf-8"></script>
 <script src="directive/validator/regExp.directive.js" charset="utf-8"></script>
+<script src="libraries/jquery.ztree.all.js" charset="utf-8"></script>
+<script src="libraries/multiple-select.min.js" charset="utf-8"></script>
 <!-- endinject -->
 <!-- endbuild -->
 

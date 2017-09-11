@@ -1,0 +1,18 @@
+{
+	"contractList": [{
+		"id": 123456,
+  	"project_name": "项目名称1",
+  	"creation_time": "2017-08-01",
+  	"charge": "10000"
+  },{
+		"id": 32854,
+  	"project_name": "项目名称2",
+  	"creation_time": "2017-08-01",
+  	"charge": "10000"
+  },{
+		"id": 43838,
+  	"project_name": "项目名称3",
+  	"creation_time": "2017-08-01",
+  	"charge": "10000"
+  }]
+}

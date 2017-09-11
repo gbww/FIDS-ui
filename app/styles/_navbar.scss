@@ -66,6 +66,146 @@
     }
   }
 
+  #accordion {
+    >.panel >div, >.panel >ul {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .panel {
+      background-color: transparent;
+      border: 0;
+      outline: none;
+      margin: 0;
+      border-radius: 0;
+      @include box-shadow(none);
+      >div {
+        a {
+          position: relative;
+          cursor: pointer;
+          display: block;
+          color: #fff;
+          padding: 5px 8px;
+          text-decoration: none;
+          font-size: 12px;
+          .icon{
+            display: inline-block;
+            height: 16px;
+            width: 16px;
+            background: url(./images/icon.svg) no-repeat 0 -41px;
+            margin: 0 10px -3px 0;
+            &.icon-node{
+              background-position-x: -16px;
+            }
+            &.icon-service{
+              background-position-x: -33px;
+            }
+            &.icon-log{
+              background-position-x: -49px;
+            }
+            &.icon-monitor{
+              background-position-x: -65px;
+            }
+            &.icon-system{
+              background-position-x: -82px;
+            }
+            &.icon-package{
+              background-position-x: -101px;
+            }
+            &.icon-user{
+              background-position-x: -120px;
+            }
+            &.icon-resource{
+              background-position-x: -137px;
+            }
+          }
+          .fa{
+            position: absolute;
+            right: 25px;
+            margin-top: 3px;
+            font-size: 10px;
+            opacity: 1;
+            @include transition(transform 0.4s, opacity 0.3s);
+          }
+        }
+        &.active a {
+          background-color: #1d5575;
+          color: rgba(255,255,255,0.847059);
+        }
+        &:hover a {
+          color: $blue-color;
+        }
+        &.active:hover a {
+          color: rgba(255,255,255,0.847059);
+        }
+        &[aria-expanded]:hover a {
+          color: #fff;
+        }
+        &[aria-expanded="true"]  .fa {
+          transform: rotate(-180deg);
+        }
+      }
+      ul {
+        >li {
+          a {
+            position: relative;
+            cursor: pointer;
+            display: block;
+            color: #fff;
+            padding: 5px 8px 5px 40px;
+            text-decoration: none;
+            font-size: 12px;
+            span:before{
+              content: '';
+              display: inline-block;
+              margin-right: 8px;
+              width: 6px;
+              height: 6px;
+              border-radius: 50%;
+              background-color: #fff;
+              border: 1px solid #fff;
+            }
+          }
+          &.active > a {
+            background-color: #1d5575;
+            color: rgba(255,255,255,0.847059);
+          }
+          &:hover > a {
+            color: $blue-color;
+          }
+          &.active:hover > a {
+            color: rgba(255,255,255,0.847059);
+          }
+        }
+      }
+      .panel {
+        >div {
+          &[aria-expanded="true"]  .fa {
+            transform: rotate(-45deg);
+          }
+          a {
+            padding-left: 46px;
+            span:before{
+              content: '';
+              display: inline-block;
+              margin-right: 8px;
+              width: 6px;
+              height: 6px;
+              border-radius: 50%;
+              background-color: #fff;
+              border: 1px solid #fff;
+            }
+          }
+        }
+        ul > li >a {
+          padding-left: 58px;
+          span:before{
+            width: 4px;
+            height: 4px;
+          }
+        }
+      }
+    }
+  }
+
   .navbar-items {
     margin-top: 15px;
     >li{
@@ -132,7 +272,7 @@
           a{
             display: block;
             color: rgba(255,255,255,0.847059);
-            padding: 5px 8px 5px 55px;
+            padding: 5px 8px 5px 40px;
             font-size: 10px;
             border-color: transparent;
             span:before{

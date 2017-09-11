@@ -1,43 +1,40 @@
 <div class="business-contract-list">
 	<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
 	<div class="pt-2">
-		<div class="toolbar">
-			<button class="btn btn-default-dark" ng-click="vm.create()">
+		<div class="toolbar clearfix">
+			<button class="btn btn-default-dark" ui-sref="app.business.contract.create">
 				<i class="fa fa-plus"></i>
 				<span>合同登记</span>
 			</button>
+
+			<div class="pull-right">
+				<input class="input" placeholder="请输入样品名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
+				<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+			</div>
 		</div>
 
-		<table class="pt-table">
-			<thead>
+		<table class="pt-table" st-table="vm.contracts" st-pipe="vm.getContractList">
+			<thead st-search-watch="vm.searchObject">
 				<tr>
-					<th>委托单编号</th>
-					<th>登记日期</th>
+					<th>样品名称</th>
 					<th>检验类别</th>
-					<th>委托单位</th>
-					<th>项目名称</th>
-					<th>费用</th>
-					<th>样品数量</th>
+					<th>状态</th>
 					<th style="width:140px">操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-if="vm.loading">
-					<td colspan="8" class="text-center"><i class="fa fa-pluse fa-spinner"></i></td>
+					<td colspan="4" class="text-center"><i class="fa fa-pluse fa-spinner"></i></td>
 				</tr>
 				<tr ng-if="!vm.loading && vm.contracts.length === 0">
-					<td colspan="8" class="text-center"><span>暂无委托单</span></td>
+					<td colspan="4" class="text-center">暂无合同</td>
 				</tr>
 				<tr ng-repeat="contract in vm.contracts track by $index" ng-if="!vm.loading">
 					<td>
-						<a href ng-click="vm.goDetail(contract.id)">{{ contract.id }}</a>
+						<a href ng-click="vm.goDetail(contract.id, 'info')">{{ contract.sampleName }}</a>
 					</td>
-					<td>{{ contract.creation_time | date:'yyyy-MM-dd'}}</td>
-					<td>{{ contract.inspect_type }}</td>
+					<td>{{ contract.detectType }}</td>
 					<td>{{ contract.entrust_company }}</td>
-					<td>{{ contract.project_name }}</td>
-					<td>{{ contract.charge }}</td>
-					<td>{{ contract.sample_count }}</td>
 					<td class="dropdown-col">
 						<div class="btn-group">
 							<button class="btn btn-default" ng-click="vm.edit()">
@@ -47,10 +44,19 @@
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li ng-click="vm.judge(contract.id)">
-									<a href><i class="fa fa-trash"></i><span>发起评审</span></a>
+								<li ng-click="vm.startCommentProcess(contract.id)">
+									<a href><i class="fa fa-trash"></i><span>发起评审流程</span></a>
 								</li>
-								<li ng-click="vm.delete()">
+								<li ng-click="vm.recordComment(contract.id)">
+									<a href><i class="fa fa-edit"></i><span>录入评审意见</span></a>
+								</li>
+								<li ng-click="vm.goDetail(contract.id, 'ci')">
+									<a href><i class="fa fa-edit"></i><span>查看合同检验项</span></a>
+								</li>
+								<li ng-click="vm.recordSample(contract.id)">
+									<a href><i class="fa fa-trash"></i><span>抽样录入</span></a>
+								</li>
+								<li ng-click="vm.delete(contract)">
 									<a href><i class="fa fa-trash"></i><span>删除</span></a>
 								</li>
 							</ul>
@@ -58,6 +64,13 @@
 					</td>
 				</tr>
 			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4">
+						<div st-idp st-total-count="vm.total"></div>
+					</td>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
 </div>

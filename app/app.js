@@ -9,5 +9,7 @@ angular.module('com.app', [
   'ui.bootstrap', // 第三方界面库
   'ngMessages',
   'ui.select',
-  'toastr'
+  'smart-table',
+  'toastr',
+  'multipleSelect'
 ]);

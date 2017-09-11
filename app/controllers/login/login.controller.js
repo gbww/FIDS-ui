@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('LoginController', function LoginController($rootScope, $state, $cookies) {
+angular.module('com.app').controller('LoginController', function LoginController($rootScope, $state, $cookies, LoginService) {
   var vm = this;
   $rootScope.loading = false;
   $cookies.remove("token");
@@ -36,17 +36,20 @@ angular.module('com.app').controller('LoginController', function LoginController
     }
 
     vm.logining=true;
-    // LoginService.login(vm.user).then(function (response) {
-      // var token=response.data;
-      var token = '*!@#$%&';
-      $cookies.put("token", token);
-      $cookies.put('username',vm.user.username);
-      $cookies.put('login', 'true');
+    LoginService.login(vm.user).then(function (response) {
+      if (response.data.success) {
+        var data = response.data.entity;
+        $cookies.put("token", data.access_token);
+        $cookies.put('username',vm.user.username);
 
-      $state.go("app.dashboard");
-    // }).catch(function (response) {
-      // vm.logining=false;
-      // vm.error=true;
-    // })
+        $state.go("app.dashboard");
+      } else {
+        vm.logining=false;
+        vm.error=true;
+      }
+    }).catch(function (response) {
+      vm.logining=false;
+      vm.error=true;
+    })
   }
 });

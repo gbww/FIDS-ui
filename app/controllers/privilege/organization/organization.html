@@ -1,0 +1,55 @@
+<div class="privilege-organization-list">
+	<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+	<div class="pt-2">
+		<div class="toolbar">
+			<button class="btn btn-default-dark" ng-click="vm.create()">
+				<i class="fa fa-plus"></i><span>新建部门</span>
+			</button>
+		</div>
+		<table class="pt-table" st-table="vm.organizations" st-pipe="vm.getOrganizationList">
+			<thead st-search-watch="vm.searchObject">
+				<tr>
+					<th>角色名称</th>
+					<th>描述</th>
+					<th>创建时间</th>
+					<th style="width: 140px;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-if="vm.loading">
+					<td colspan="4" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+				</tr>
+				<tr ng-if="!vm.loading && vm.organizations.length == 0">
+					<td colspan="4" class="text-center">暂无部门</td>
+				</tr>
+				<tr ng-repeat="organization in vm.organizations track by $index" ng-if="!vm.loading">
+					<td>{{ organization.name }}</td>
+					<td>{{ organization.description }}</td>
+					<td>{{ organization.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+					<td class="dropdown-col">
+						<div class="btn-group">
+							<button class="btn btn-default" ng-click="vm.edit(organization)">
+								<i class="fa fa-edit"></i><span>修改</span>
+							</button>
+							<button class="btn dropdown-toggle" data-toggle="dropdown">
+								<i class="caret"></i>
+							</button>
+							<ul class="dropdown-menu">
+								<li ng-click="vm.delete(organization)">
+									<a href><i class="fa fa-trash"></i><span>删除</span></a>
+								</li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="4">
+						<div st-idp st-total-count="vm.total"></div>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>

@@ -8,6 +8,12 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 		abstract: true
 	});
 
+	$stateProvider.state('app.privilege.organization', {
+		url: '/organization',
+		templateUrl: 'controllers/privilege/organization/organization.html',
+		controller: 'PrivilegeOrganizationCtrl as vm'
+	});
+
 	$stateProvider.state('app.privilege.user', {
 		url: '/user',
 		templateUrl: 'controllers/privilege/user/user.html',

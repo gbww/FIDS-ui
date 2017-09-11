@@ -62,13 +62,14 @@ gulp.task('watch', ['compile'], function () {
   watch([env.folders.app + "/**/*.js", env.folders.temp + '/app/**/*.js'], options, function (file) {
     if (file.event === 'add' || file.event === 'unlink') {
       // 添加删除文件时自动重新启动
-      runSequence('wireAppJs', 'tddRestart');
+      // runSequence('wireAppJs', 'tddRestart');
+      runSequence('wireAppJs');
     }
   });
-  watch([env.folders.test + "/**/*.js", env.folders.temp + '/test/**/*.js'], options, function (file) {
-    if (file.event === 'add' || file.event === 'unlink') {
-      // 添加删除文件时自动重新启动
-      runSequence('tddRestart');
-    }
-  });
+  // watch([env.folders.test + "/**/*.js", env.folders.temp + '/test/**/*.js'], options, function (file) {
+  //   if (file.event === 'add' || file.event === 'unlink') {
+  //     // 添加删除文件时自动重新启动
+  //     runSequence('tddRestart');
+  //   }
+  // });
 });

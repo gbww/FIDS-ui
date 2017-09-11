@@ -3,10 +3,12 @@
 	<h4>发起合同评审</h4>
 </div>
 <div class="modal-body">
-	<form>
+	<form class="form-horizontal">
 		<div class="form-group">
-			<p>选择评审员</p>
-			<select class="form-control" ng-model="vm.t" ng-options="option for option in ['张三', '李四']"></select>
+			<label class="col-sm-3 control-label">选择评审员</label>
+			<div class="col-sm-8">
+			<multiple-autocomplete ng-model="vm.users" object-property="name" suggestions-arr="vm.availUsers"></multiple-autocomplete>
+			</div>
 		</div>
 	</form>
 </div>
