@@ -136,8 +136,8 @@ angular.module('com.app').controller('ContractDetailCiCtrl', function ($rootScop
       animation: true,
       size: 'lg',
       backdrop: 'static',
-      templateUrl: 'controllers/business/checkItem/manage/add-checkitem/addCheckItem.html',
-      controller: 'AddCatalogCiCtrl as vm'
+      templateUrl: 'controllers/checkItem/manage/add-checkitem/addCheckItem.html',
+      controller: 'CustomAddCatalogCiCtrl as vm'
     });
 
     modalInstance.result.then(function (res) {

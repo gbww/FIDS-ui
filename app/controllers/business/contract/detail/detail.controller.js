@@ -5,9 +5,7 @@ angular.module('com.app').controller('ContractDetailCtrl', function ($rootScope,
 
 
   var businessBC = api.breadCrumbMap.business;
-  var detail = angular.copy(businessBC.contract.detail);
-
-  vm.breadCrumbArr = [businessBC.root, businessBC.contract.root, detail];
+  vm.breadCrumbArr = [businessBC.root, businessBC.contract.root, businessBC.contract.detail];
 
   $rootScope.loading = true;
   vm.getContractInfo = function () {

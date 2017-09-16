@@ -14,6 +14,7 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
     vm.searchObject.timestamp = new Date();
   }
 
+  vm.statusFilter = 'all';
   vm.contracts = [];
   vm.loading = true;
   vm.getContractList = function (tableState) {
@@ -23,7 +24,7 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
     }
   	ContractService.getContractList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
       if (response.data.success) {
-        vm.contracts = response.data.entity.list;
+        vm.tempContracts = response.data.entity.list;
         vm.total = response.data.entity.total;
         tableState.pagination.numberOfPages = response.data.entity.pages;
       } else {
@@ -37,6 +38,14 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
       vm.loading = false;
       if (response.data.success) {
         vm.userTasks = response.data.entity;
+        angular.forEach(vm.tempContracts, function (contract) {
+          angular.forEach(vm.userTasks, function (task) {
+            if (contract.processId == task.processInstanceId) {
+              contract.task = task;
+            }
+          })
+        })
+        vm.contracts = angular.copy(vm.tempContracts);
       } else {
         toastr.error(response.data.message);
       }
@@ -46,6 +55,16 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
   	})
   }
 
+  vm.searchStatus = function (filter) {
+    vm.statusFilter = filter;
+    if (filter == 'all') {
+
+    } else if (filter == 'left') {
+
+    } else if (filter == 'done') {
+
+    }
+  }
 
   vm.search=function(){
     vm.searchObject.searchKeywords = vm.query;
@@ -76,12 +95,46 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
   		templateUrl: 'controllers/business/contract/start-comment-process/startCommentProcess.html',
   		controller: 'StartCommentProcessCtrl as vm',
       resolve: {
-        contractId: function () {return id;}
+        contractId: function () {return id;},
+        users: ['$rootScope', '$q', 'PrivilegeService', function ($rootScope, $q, PrivilegeService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getRoleList().then(function (response) {
+            if (response.data.success) {
+              var roles = response.data.entity;
+              angular.forEach(roles, function (role) {
+                if (role.name == '评审员') {
+                  PrivilegeService.getUserList().then(function (response) {
+                    var users = [];
+                    angular.forEach(response.data.entity.list, function (user) {
+                      if (user.roleId == role.id) {
+                        users.push(user);
+                      }
+                    })
+                    return deferred.resolve(users);
+                  })
+                  return;
+                }
+              })
+            } else {
+              deferred.reject();
+              toastr.error(response.data.message);
+            }
+          }).catch(function (err) {
+            deferred.reject();
+            toastr.error(err.data.message);
+          });
+          return deferred.promise;
+        }]
       }
-  	})
+  	});
+
+    modalInstance.result.then(function () {
+      toastr.success('合同流程发起成功！');
+    })
   }
 
-  vm.recordComment = function (id) {
+  vm.recordComment = function (contract) {
     var modalInstance = $uibModal.open({
       animation: true,
       size: 'md',
@@ -89,13 +142,13 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
       templateUrl: 'controllers/business/contract/record-comment/recordComment.html',
       controller: 'RecordCommentCtrl as vm',
       resolve: {
-        contractId: function () {return id;},
-        taskId: function () {return vm.userTasks[0].id}
+        contractId: function () {return contract.id;},
+        taskId: function () {return contract.task.id}
       }
     })
 
     modalInstance.result.then(function (res) {
-      vm.goDetail(id, 'comment');
+      vm.goDetail(contract.id, 'comment');
     })
   }
 

@@ -15,6 +15,24 @@
       </div>
 
       <div class="panel" role-auth="">
+        <div data-parent="#accordion" data-toggle="collapse" data-target="#checkItemManage" aria-expanded="{{vm.isCheckItemActive}}">
+          <a>
+            <i class="icon icon-service"></i>
+            <span>检测库管理</span>
+            <i class="fa fa-chevron-down"></i>
+          </a>
+        </div>
+        <ul id="checkItemManage" ng-class="{'collapse in': vm.isCheckItemActive, 'collapse': !vm.isCheckItemActive}">
+          <li ng-class="{'active': vm.isCheckItemListActive}" role-auth="">
+            <a ui-sref="app.checkItem.list"><span>检测项管理</span></a>
+          </li>
+          <li ng-class="{'active': vm.isCheckItemManageActive}" role-auth="">
+            <a ui-sref="app.checkItem.manage"><span>自定义管理</span></a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="panel" role-auth="">
         <div data-parent="#accordion" data-toggle="collapse" data-target="#businessManage" aria-expanded="{{vm.isBusinessActive}}">
           <a>
             <i class="icon icon-service"></i>
@@ -26,12 +44,12 @@
           <li ng-class="{'active': vm.isBusinessContractActive}" role-auth="">
             <a ui-sref="app.business.contract"><span>合同管理</span></a>
           </li>
-          <li ng-class="{'active': vm.isBusinessCheckItemActive}" role-auth="">
-            <a ui-sref="app.business.checkItem.list"><span>检测项管理</span></a>
+          <li ng-class="{'active': vm.isBusinessSampleActive}" role-auth="">
+            <a ui-sref="app.business.sample"><span>接样管理</span></a>
           </li>
-          <li ng-class="{'active': vm.isBusinessInspectionActive}" role-auth="">
+          <!-- <li ng-class="{'active': vm.isBusinessInspectionActive}" role-auth="">
             <a ui-sref="app.business.inspection"><span>检测项目</span></a>
-          </li>
+          </li> -->
         </ul>
       </div>
 
@@ -44,6 +62,9 @@
           </a>
         </div>
         <ul id="privilegeManage" ng-class="{'collapse in': vm.isPrivilegeActive, 'collapse': !vm.isPrivilegeActive}">
+          <li ng-class="{'active': vm.isPrivilegeCurrentUserActive}" role-auth="">
+            <a ui-sref="app.privilege.currentUser"><span>个人信息管理</span></a>
+          </li>
           <li ng-class="{'active': vm.isPrivilegeOrganizationActive}" role-auth="">
             <a ui-sref="app.privilege.organization"><span>部门管理</span></a>
           </li>

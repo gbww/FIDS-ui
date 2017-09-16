@@ -26,4 +26,11 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 		controller: 'PrivilegeRoleCtrl as vm'
 	});
 
+
+	$stateProvider.state('app.privilege.currentUser', {
+		url: '/currentUser',
+		templateUrl: 'controllers/privilege/current-user/currentUser.html',
+		controller: 'PrivilegeCurrentUserCtrl as vm'
+	});
+
 });

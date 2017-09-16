@@ -1,0 +1,30 @@
+<div class="modal-header">
+	<div class="close" ng-click="vm.cancel()">&times;</div>
+	<h4>修改目录</h4>
+</div>
+<div class="modal-body">
+	<form name="catalogEditForm" class="form-horizontal">
+		<div class="form-group">
+			<label class="col-sm-3 control-label">名称</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="name" ng-model="vm.catalog.productName" required>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="catalogEditForm.name.$dirty" ng-messages="catalogEditForm.name.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">ID</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="id" ng-model="vm.catalog.productId" required>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="catalogEditForm.id.$dirty" ng-messages="catalogEditForm.id.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default-dark" ng-click="vm.ok()" ng-disabled="catalogEditForm.$invalid">确认</button>
+	<button class="btn btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

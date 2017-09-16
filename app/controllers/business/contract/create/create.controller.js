@@ -50,10 +50,13 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, api
 
   vm.ok = function () {
   	var data = angular.merge({}, vm.contract, {
-	  	isUseStandard: 0,
-	  	isSubcontracting: 0,
-	  	isExpedited: 0,
-	  	isEvaluation: 0
+	  	isUseStandard: parseInt(vm.contract.isUseStandard),
+	  	isSubcontracting: parseInt(vm.contract.isSubcontracting),
+	  	isExpedited: parseInt(vm.contract.isExpedited),
+	  	isEvaluation: parseInt(vm.contract.isEvaluation),
+      productDate: vm.contract.productDate ? new Date(vm.contract.productDate).toLocaleString() : null,
+      inspectionDate: vm.contract.inspectionDate ? new Date(vm.contract.inspectionDate).toLocaleString() : null,
+      acceptanceDate: vm.contract.acceptanceDate ? new Date(vm.contract.acceptanceDate).toLocaleString() : null
   	});
 
 		ContractService.createContract(data).then(function (response) {

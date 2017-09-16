@@ -1,0 +1,397 @@
+<div class="sample-info-list">
+	<div class="pt-2">
+		<form name="editForm" novalidate>
+			<table class="form-table">
+				<tr>
+					<td class="item-title">
+						<span class="item-required">接样单编号</span>
+					</td>
+					<td>
+						<input class="input" name="receiveSampleId" ng-model="vm.sample.receiveSampleId" required disabled>
+					</td>
+					<td class="item-title">
+						<span>报告编号</span>
+					</td>
+					<td>
+						<input class="input" name="reportId" ng-model="vm.sample.reportId">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span class="item-required">样品类别</span>
+					</td>
+					<td>
+						<input type="radio" ng-model="vm.sample.sampleType" value="food">食品&emsp;&emsp;&emsp;
+						<input type="radio" ng-model="vm.sample.sampleType" value="feed">饲料&emsp;&emsp;&emsp;
+						<input type="radio" ng-model="vm.sample.sampleType" value="env">环境
+					</td>
+					<td class="item-title">
+						<span class="item-required">检验类型</span>
+					</td>
+					<td>
+						<select class="input" name="checkType" ng-model="vm.sample.checkType" ng-options="option for option in ['监督检验', '省级食品安全监', '委托检验', '发证检验']" required></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>报告格式</span>
+					</td>
+					<td>
+						<input type="radio" ng-model="vm.sample.reportLayout" value="singleVersion">单页版&emsp;&emsp;
+						<input type="radio" ng-model="vm.sample.reportLayout" value="entrustVersion">委托版&emsp;&emsp;
+						<input type="radio" ng-model="vm.sample.reportLayout" value="standardVersion">标准版&emsp;&emsp;
+						<input type="radio" ng-model="vm.sample.reportLayout" value="greenVersion">绿色版&emsp;&emsp;
+					</td>
+					<td class="item-title">
+						<span>封面格式</span>
+					</td>
+					<td>
+						<input type="radio" ng-model="vm.sample.coverLayout" value="test">test&emsp;&emsp;
+						<input type="radio" ng-model="vm.sample.coverLayout" value="test1">test1&emsp;&emsp;
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>报告份数</span>
+					</td>
+					<td>
+						<input class="input" type="number" name="reportPageNumber" ng-model="vm.sample.reportPageNumber">
+					</td>
+					<td colspan="2"></td>
+				</tr>
+			</table>
+
+			<table class="form-table">
+				<tr>
+					<td class="item-title">
+						<span>委托单位</span>
+					</td>
+					<td>
+						<input class="input" name="entrustedUnit" ng-model="vm.sample.entrustedUnit">
+					</td>
+					<td class="item-title">
+						<span>委托地址</span>
+					</td>
+					<td>
+						<input class="input" name="entrustedUnitAddress" ng-model="vm.sample.entrustedUnitAddress">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>委托人</span>
+					</td>
+					<td>
+						<input class="input" name="entrustedUser" ng-model="vm.sample.entrustedUser">
+					</td>
+					<td class="item-title">
+						<span>电话</span>
+					</td>
+					<td>
+						<input class="input" name="entrustedUserPhone" ng-model="vm.sample.entrustedUserPhone">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>邮箱</span>
+					</td>
+					<td>
+						<input class="input" name="entrustedUserEmail" ng-model="vm.sample.entrustedUserEmail">
+					</td>
+					<td colspan="2">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>受检单位</span>
+					</td>
+					<td>
+						<input class="input" name="inspectedUnit" ng-model="vm.sample.inspectedUnit">
+					</td>
+					<td class="item-title">
+						<span>受检地址</span>
+					</td>
+					<td>
+						<input class="input" name="inspectedUnitAddress" ng-model="vm.sample.inspectedUnitAddress">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>联系人</span>
+					</td>
+					<td>
+						<input class="input" name="inspectedUser" ng-model="vm.sample.inspectedUser">
+					</td>
+					<td class="item-title">
+						<span>电话</span>
+					</td>
+					<td>
+						<input class="input" name="inspectedUserPhone" ng-model="vm.sample.inspectedUserPhone">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>邮箱</span>
+					</td>
+					<td>
+						<input class="input" name="inspectedUserEmail" ng-model="vm.sample.inspectedUserEmail">
+					</td>
+					<td colspan="2">
+					</td>
+				</tr>
+			</table>
+
+			<table class="form-table">
+				<tr>
+					<td class="item-title">
+						<span>样品名称</span>
+					</td>
+					<td>
+						<input class="input" name="sampleName" ng-model="vm.sample.sampleName">
+					</td>
+					<td class="item-title">
+						<span>接样地点</span>
+					</td>
+					<td>
+						<input class="input" name="sampleAddress" ng-model="vm.sample.sampleAddress">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>接样单号</span>
+					</td>
+					<td>
+						<input class="input" name="sampleReportId" ng-model="vm.sample.sampleReportId">
+					</td>
+					<td class="item-title">
+						<span>接样环节</span>
+					</td>
+					<td>
+						<select class="input" name="sampleLink" ng-model="vm.sample.sampleLink" ng-options="option for option in ['流通环节', '餐饮环节', '生产环节']"></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>商标</span>
+					</td>
+					<td>
+						<input class="input" name="sampleTrademark" ng-model="vm.sample.sampleTrademark">
+					</td>
+					<td class="item-title">
+						<select class="input" name="sample_period" ng-model="vm.sample_produce_date" ng-options="option for option in ['生产日期', '加工日期', '购进日期', '消毒日期']"></select>
+					</td>
+					<td>
+						<input class="input" type="date">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>样品流通方式</span>
+					</td>
+					<td>
+						<input class="input" name="sampleCirculate" ng-model="vm.sample.sampleCirculate">
+					</td>
+					<td class="item-title">
+						<span>样品流通日期</span>
+					</td>
+					<td>
+						<input type="date" class="input" ng-model="vm.sample.sampleCirculateDate">
+					</td>
+				</tr>
+
+				<tr>
+					<td class="item-title">
+						<span>接样时间</span>
+					</td>
+					<td>
+						<input type="date" class="input" name="sampleDate" ng-model="vm.sample.sampleDate">
+					</td>
+					<td class="item-title">
+						<span>接样方式</span>
+					</td>
+					<td>
+						<select class="input" name="sampleWay" ng-model="vm.sample.sampleWay" ng-options="option for option in ['test']"></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>规格型号</span>
+					</td>
+					<td>
+						<select class="input" name="specificationModel" ng-model="vm.sample.specificationModel" ng-options="option for option in ['test']"></select>
+					</td>
+					<td class="item-title">
+						<span class="item-required">执行标准</span>
+					</td>
+					<td>
+						<select class="input" name="executeStandard" ng-model="vm.sample.executeStandard" ng-options="option for option in ['test']" required></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>等级或加工工艺</span>
+					</td>
+					<td>
+						<select class="input" name="processingTechnology" ng-model="vm.sample.processingTechnology" ng-options="option for option in ['test']"></select>
+					</td>
+					<td class="item-title">
+						<span>封样状态</span>
+					</td>
+					<td>
+						<select class="input" name="closedStatus" ng-model="vm.sample.closedStatus" ng-options="option for option in ['test']"></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>样品数</span>
+					</td>
+					<td>
+						<select class="input" name="sampleNumber" ng-model="vm.sample.sampleNumber" ng-options="option for option in ['test']"></select>
+					</td>
+					<td class="item-title">
+						<span>样品状态</span>
+					</td>
+					<td>
+						<select class="input" name="sampleStatus" ng-model="vm.sample.sampleStatus" ng-options="option for option in ['test']"></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>接样基数</span>
+					</td>
+					<td>
+						<select class="input" name="sampleBasenumber" ng-model="vm.sample.sampleBasenumber" ng-options="option for option in ['test']"></select>
+					</td>
+					<td class="item-title">
+						<span>保存条件</span>
+					</td>
+					<td>
+						<select class="input" name="saveWay" ng-model="vm.sample.saveWay" ng-options="option for option in ['test']"></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>接样人或单位</span>
+					</td>
+					<td>
+						<select class="input" name="sampleNames" ng-model="vm.sample.sampleNames" ng-options="option for option in ['test']"></select>
+					</td>
+					<td class="item-title">
+						<span>市场部负责人</span>
+					</td>
+					<td>
+						<select class="input" name="responsiblePerson" ng-model="vm.sample.responsiblePerson" ng-options="option for option in ['test']"></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>交样人</span>
+					</td>
+					<td>
+						<input class="input" name="sampleHolder" ng-model="vm.sample.sampleHolder">
+					</td>
+					<td class="item-title">
+						<span>收样人</span>
+					</td>
+					<td>
+						<select class="input" name="receiveUser" ng-model="vm.sample.receiveUser" ng-options="option for option in ['test']"></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span class="item-required">协议编号</span>
+					</td>
+					<td>
+						<input class="input" name="protocolId" ng-model="vm.sample.protocolId" ng-click="vm.changeContract()" required></select>
+					</td>
+					<td class="item-title">
+						<span>分包</span>
+					</td>
+					<td>
+						<select class="input" name="subpackage" ng-model="vm.sample.subpackage" ng-options="option for option in ['test']"></select>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>收样日期</span>
+					</td>
+					<td>
+						<input class="input" type="date" name="receiveDate" ng-model="vm.sample.receiveDate">
+					</td>
+					<td colspan="2"></td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>约定完成日期</span>
+					</td>
+					<td>
+						<input class="input" type="date" name="arrangeFinishDate" ng-model="vm.sample.arrangeFinishDate">
+					</td>
+					<td class="item-title">
+						<span>要求完成日期</span>
+					</td>
+					<td>
+						<input class="input" type="date" name="finishDate" ng-model="vm.sample.finishDate">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>生产单位</span>
+					</td>
+					<td>
+						<input class="input" name="productionUnit" ng-model="vm.sample.productionUnit">
+					</td>
+					<td class="item-title">
+						<span>地址</span>
+					</td>
+					<td>
+						<input class="input" name="productionAddress" ng-model="vm.sample.productionAddress">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>联系人</span>
+					</td>
+					<td>
+						<input class="input" name="productionUser" ng-model="vm.sample.productionUser">
+					</td>
+					<td class="item-title">
+						<span>电话</span>
+					</td>
+					<td>
+						<input class="input" name="productionPhone" ng-model="vm.sample.productionPhone">
+					</td>
+				</tr>
+			</table>
+
+			<table class="form-table">
+				<tr>
+					<td class="item-title">
+						<span>费用</span>
+					</td>
+					<td>
+						<input class="input" name="cost" ng-model="vm.sample.cost">
+					</td>
+					<td colspan="2"></td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>备注</span>
+					</td>
+					<td>
+						<textarea class="input" rows="2" ng-model="vm.sample.remarks"></textarea>
+					</td>
+					<td class="item-title">
+						<span>数据页备注</span>
+					</td>
+					<td>
+						<textarea class="input" rows="2" ng-model="vm.sample.dataRemarks"></textarea>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<div class="btn-area text-center">
+			<button class="btn btn-default-dark" ng-click="vm.ok()" ng-disabled="editForm.$invalid">确认</button>
+			<button class="btn btn-default-light" ui-sref="app.business.sample">取消</button>
+		</div>
+	</div>
+</div>

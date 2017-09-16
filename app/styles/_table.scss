@@ -5,6 +5,7 @@
   cursor: inherit;
   table-layout: fixed;
   border: 1px solid $table-border-color;
+  margin-bottom: 20px;
   thead{
     tr{
       background-color: #e5ebef;
@@ -352,6 +353,27 @@
         }
       }
       .stopped{
+      }
+    }
+  }
+}
+
+.dl-table{
+  border: none;
+  th{
+    text-align: left;
+    padding: 8px;
+    width: 100px;
+    color: #3F4A56;
+  }
+  tbody tr{
+    &:hover{
+      background-color: transparent;
+    }
+    &:nth-child(2n){
+      background-color: #fff;
+      td{
+        color: #3F4A56;
       }
     }
   }

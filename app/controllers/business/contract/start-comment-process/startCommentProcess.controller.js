@@ -1,12 +1,14 @@
 'use strict';
 
-angular.module('com.app').controller('StartCommentProcessCtrl', function ($scope, $uibModalInstance, api, toastr, ContractService, contractId) {
+angular.module('com.app').controller('StartCommentProcessCtrl', function ($rootScope, $scope, $uibModalInstance, api, toastr, ContractService, contractId, users) {
   var vm = this;
   var user = api.userInfo;
-  vm.availUsers = [{
-    name: user.username,
-    id: user.id
-  }];
+  $rootScope.loading = false;
+  // vm.availUsers = [{
+  //   name: user.username,
+  //   id: user.id
+  // }];
+  vm.availUsers = users;
 
   vm.ok = function () {
   	$uibModalInstance.close();

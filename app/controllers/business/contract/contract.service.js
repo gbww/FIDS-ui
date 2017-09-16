@@ -55,6 +55,7 @@ angular.module('com.app').factory('ContractService', function ($http) {
 		getCommentList: function (id) {
 			return $http({
 				url: '/api/v1/ahgz/contract/process/comment',
+				method: 'GET',
 				params: {
 					contract_id: id
 				}
@@ -64,7 +65,7 @@ angular.module('com.app').factory('ContractService', function ($http) {
 		recordComment: function (taskId, data) {
 			return $http({
 				url: '/api/v1/ahgz/contract/process/task/' + taskId,
-				method: 'get',
+				method: 'GET',
 				params: data
 			});
 		},

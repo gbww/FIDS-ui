@@ -219,6 +219,28 @@ input[type="checkbox"], input[type="radio"]{
   .btn:last-child {
     margin-right: 0;
   }
+  ul.statusBar{
+    border-radius: 3px;
+    background-color: #e1e9ee;
+    display: inline-block;
+    margin-right: 10px;
+    padding: 1px;
+    vertical-align: middle;
+    height: 27px;
+    li{
+      float: left;
+      border-radius: 3px;
+      line-height: 25px;
+      cursor: pointer;
+      &.active{
+        background-color: #fff;
+      }
+      a{
+        color: #999;
+        padding: 0 10px;
+      }
+    }
+  }
 }
 
 i+span {
@@ -266,4 +288,17 @@ i+span {
 @keyframes slideInBottom {
   0%{ @include translate(0, 10px); opacity: 0.9 }
   100% { @include translate(0, 0); opacity: 1 }
+}
+
+// 创建、编辑页
+.create-body, .edit-body{
+  margin-top: 20px;
+  padding: 10px 0 20px;
+  &.top{
+    margin-top: 0;
+  }
+}
+.create-footer, .edit-footer{
+  border-top: 1px solid $border-color;
+  padding: 20px 0;
 }

@@ -1,0 +1,47 @@
+<div class="modal-header">
+	<div class="close" ng-click="vm.cancel()">&times;</div>
+</div>
+<div class="modal-body">
+	<table class="pt-table">
+		<thead>
+			<tr>
+				<th style="width: 80px;">
+					<input type="checkbox" ng-click="vm.checkAll()" ng-model="vm.allChecked">
+				</th>
+				<th>名称</th>
+				<th>检测方法</th>
+				<th>单位</th>
+				<th>标准值</th>
+				<th>检出限</th>
+				<th>定量限</th>
+				<th>设备</th>
+				<th>默认价格</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-if="vm.ciLoading">
+				<td colspan="9" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+			</tr>
+			<tr ng-if="!vm.ciLoading && vm.checkItems.length == 0">
+				<td colspan="9" class="text-center">暂无检测项</td>
+			</tr>
+			<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
+				<td>
+					<input type="checkbox" ng-checked="vm.itemChecked[$index]" ng-click="vm.checkItem($event, $index, item)">
+				</td>
+				<td>{{ item.name }}</td>
+				<td>{{ item.method }}</td>
+				<td>{{ item.unit }}</td>
+				<td>{{ item.standard_value }}</td>
+				<td>{{ item.detection_limit }}</td>
+				<td>{{ item.quantitation_limit }}</td>
+				<td>{{ item.device }}</td>
+				<td>{{ item.default_price }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default-dark" ng-click="vm.ok()">添加</button>
+	<button class="btn btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

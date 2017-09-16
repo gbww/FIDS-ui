@@ -2,7 +2,7 @@
 
 angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 
-  $urlRouterProvider.when('', '/dashboard');
+  $urlRouterProvider.when('', '/login');
   $urlRouterProvider.when('/', '/dashboard');
   $urlRouterProvider.otherwise('/notFound');
 
@@ -11,7 +11,7 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
     template: '<layout-menu></layout-menu><div class="main-wrapper"><layout-header></layout-header><div class="main" ui-view></div></div>',
     resolve: {
       // 当前登录用户信息
-      userInfo: ['$q', 'PrivilegeService', 'api', function ($q, PrivilegeService, api) {
+      userInfo: ['$state', '$q', 'PrivilegeService', 'api', function ($state, $q, PrivilegeService, api) {
         var deferred = $q.defer();
         PrivilegeService.getCurrentUserInfo().success(function (response) {
           if (response.success) {
@@ -34,17 +34,19 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
             deferred.resolve([]);
           }
         }).error(function (error) {
+          $state.go('login');
           deferred.reject();
         });
         return deferred.promise;
       }],
       // 登录用户所拥有的权限项
-      permissionArr: ['$q', '$cookies', 'PrivilegeService', 'api', function ($q, $cookies, PrivilegeService, api) {
+      permissionArr: ['$state', '$q', '$cookies', 'PrivilegeService', 'api', function ($state, $q, $cookies, PrivilegeService, api) {
         var deferred = $q.defer();
         PrivilegeService.getUserPrivileges().then(function (response) {
           api.permissionArr = response.data.entity;
           deferred.resolve('');
         }).catch(function () {
+          $state.go('login');
           api.permissionArr = [];
           deferred.reject();
         })

@@ -1,6 +1,6 @@
 <div class="contract-info-list">
 	<div class="pt-2">
-		<form name="createForm" novalidate>
+		<form name="editForm" novalidate>
 			<table class="form-table">
 				<tr>
 					<td class="item-title">
@@ -268,7 +268,7 @@
 			</table>
 		</form>
 		<div class="btn-area text-center">
-			<button class="btn btn-default-dark" ng-click="vm.ok()" ng-disabled="createForm.$invalid">确认</button>
+			<button class="btn btn-default-dark" ng-click="vm.ok()" ng-disabled="editForm.$invalid">确认</button>
 			<button class="btn btn-default-light" ui-sref="app.business.contract">取消</button>
 		</div>
 	</div>

@@ -40,6 +40,12 @@ angular.module('com.app').config(function($httpProvider, stConfig) {
           if (response.config.url.indexOf('login') !== -1) {
             return $q.reject(response);
           }
+
+          // 如果修改密码返回401(说明输入原始密码错误)，不返回登录页
+          if((/\w+\/password$/).test(response.config.url)){
+            return $q.reject(response);
+          }
+
 		      $rootScope.$broadcast('responseError', '401', response.data);
           return $q.defer().promise;
 	      }

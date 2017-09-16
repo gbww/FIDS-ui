@@ -60,4 +60,4 @@ angular.module('com.app').directive('validatorMatch', function() {  // 验证两
 			});
 		}
 	}
-})
+});

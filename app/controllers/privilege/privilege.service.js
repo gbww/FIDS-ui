@@ -19,18 +19,42 @@ angular.module('com.app').factory('PrivilegeService', function ($http) {
 			return $http.get('/api/v1/user')
 		},
 
+		getUserSign: function (userId) {
+			return $http({
+				url: '/api/v1/user/sign',
+				method: 'GET',
+				params: {
+					id: userId
+				}
+			})
+		},
+
+		downloadUserSign: function (userId) {
+			return $http({
+				url: '/api/v1/user/sign/download',
+				method: 'GET',
+				params: {
+					id: userId
+				}
+			})
+		},
+
 
 		// 用户列表
 		getUserList: function (tableParams, searchName) {
-			return $http({
-				url: '/api/v1/users',
-				method: 'GET',
-				params: {
-          pageSize: tableParams.pageSize,
-          pageNum: tableParams.pageNum,
-          name:searchName
-        }
-      })
+			if (tableParams) {
+				return $http({
+					url: '/api/v1/users',
+					method: 'GET',
+					params: {
+	          pageSize: tableParams.pageSize,
+	          pageNum: tableParams.pageNum,
+	          name:searchName
+	        }
+	      });
+			} else {
+				return $http.get('/api/v1/users');
+			}
 		},
 
 		createUser: function (organizationId, user) {
@@ -60,10 +84,11 @@ angular.module('com.app').factory('PrivilegeService', function ($http) {
 			return $http.get('/api/v1/users/userId');
 		},
 
-		modifyPassword: function (organizationId, userId) {
+		editPassword: function (organizationId, userId, data) {
 			return $http({
 				url: '/api/v1/organizations/' + organizationId + '/users/' + userId + '/password',
-				method: 'PUT'
+				method: 'PUT',
+				data: data
 			})
 		},
 
@@ -83,7 +108,7 @@ angular.module('com.app').factory('PrivilegeService', function ($http) {
 		},
 
 		/*
-		 ***  权限管理
+		 ***  角色管理
 		 */
 
 		getRoleList: function (tableParams, searchName) {

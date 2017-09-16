@@ -7,6 +7,24 @@
 				<span>合同登记</span>
 			</button>
 
+			<ul class="statusBar clearfix">
+        <li ng-class="{'active': vm.statusFilter === 'all'}">
+          <a ng-click="vm.searchStatus('all')">
+            <span>所有</span>
+          </a>
+        </li>
+        <li ng-class="{'active': vm.statusFilter === 'left'}">
+          <a ng-click="vm.searchStatus('left')">
+            <span>待办</span>
+          </a>
+        </li>
+        <li ng-class="{'active': vm.statusFilter === 'done'}">
+          <a ng-click="vm.searchStatus('done')">
+            <span>已办</span>
+          </a>
+        </li>
+      </ul>
+
 			<div class="pull-right">
 				<input class="input" placeholder="请输入样品名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
 				<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
@@ -34,28 +52,28 @@
 						<a href ng-click="vm.goDetail(contract.id, 'info')">{{ contract.sampleName }}</a>
 					</td>
 					<td>{{ contract.detectType }}</td>
-					<td>{{ contract.entrust_company }}</td>
+					<td>待做</td>
 					<td class="dropdown-col">
 						<div class="btn-group">
-							<button class="btn btn-default" ng-click="vm.edit()">
+							<button class="btn btn-default" ng-click="vm.goDetail(contract.id, 'info')">
 								<i class="fa fa-edit"></i><span>编辑</span>
 							</button>
 							<button class="btn dropdown-toggle" data-toggle="dropdown">
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li ng-click="vm.startCommentProcess(contract.id)">
+								<li ng-click="vm.startCommentProcess(contract.id)" ng-if="!contract.task">
 									<a href><i class="fa fa-trash"></i><span>发起评审流程</span></a>
 								</li>
-								<li ng-click="vm.recordComment(contract.id)">
+								<li ng-click="vm.recordComment(contract)" ng-if="contract.task">
 									<a href><i class="fa fa-edit"></i><span>录入评审意见</span></a>
 								</li>
-								<li ng-click="vm.goDetail(contract.id, 'ci')">
+								<!-- <li ng-click="vm.goDetail(contract.id, 'ci')">
 									<a href><i class="fa fa-edit"></i><span>查看合同检验项</span></a>
-								</li>
-								<li ng-click="vm.recordSample(contract.id)">
-									<a href><i class="fa fa-trash"></i><span>抽样录入</span></a>
-								</li>
+								</li> -->
+								<!-- <li ng-click="vm.recordSample(contract.id)">
+									<a href><i class="fa fa-trash"></i><span>接样录入</span></a>
+								</li> -->
 								<li ng-click="vm.delete(contract)">
 									<a href><i class="fa fa-trash"></i><span>删除</span></a>
 								</li>

@@ -8,6 +8,9 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 		abstract: true
 	});
 
+	/*
+	 ****************合同******************************************
+	 */
 	$stateProvider.state('app.business.contract', {
 		url: '/contract',
 		templateUrl: 'controllers/business/contract/contract.html',
@@ -60,25 +63,51 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 	});
 
 
-	$stateProvider.state('app.business.checkItem', {
-		url: '/checkItem',
-		templateUrl: 'controllers/business/checkItem/checkItem.html',
-		controller: 'CheckItemCtrl as vm'
+	/*
+	 ****************接样******************************************
+	 */
+	$stateProvider.state('app.business.sample', {
+		url: '/sample',
+		templateUrl: 'controllers/business/sample/sample.html',
+		controller: 'SampleCtrl as vm'
 	});
 
-	$stateProvider.state('app.business.checkItem.list', {
-		url: '/list',
-		templateUrl: 'controllers/business/checkItem/list/list.html',
-		controller: 'CheckItemListCtrl as vm'
+	$stateProvider.state('app.business.sample.create', {
+		url: '/create',
+		views: {
+			'@app.business': {
+				templateUrl: 'controllers/business/sample/create/create.html',
+				controller: 'SampleCreateCtrl as vm'
+			}
+		},
 	});
 
-	$stateProvider.state('app.business.checkItem.manage', {
-		url: '/manage',
-		templateUrl: 'controllers/business/checkItem/manage/manage.html',
-		controller: 'CheckItemManageCtrl as vm'
+	$stateProvider.state('app.business.sample.detail', {
+		url: '/{:id}',
+		views: {
+			'@app.business': {
+				templateUrl: 'controllers/business/sample/detail/detail.html',
+				controller: 'SampleDetailCtrl as vm'
+			}
+		},
+		abstract: true
 	});
 
+	$stateProvider.state('app.business.sample.detail.info', {
+		url: '/info',
+		templateUrl: 'controllers/business/sample/detail/info/info.html',
+		controller: 'SampleDetailInfoCtrl as vm'
+	});
 
+	$stateProvider.state('app.business.sample.detail.ci', {
+		url: '/ci',
+		templateUrl: 'controllers/business/sample/detail/ci/ci.html',
+		controller: 'SampleDetailCiCtrl as vm'
+	});
+
+	/*
+	 ****************检测任务******************************************
+	 */
 	$stateProvider.state('app.business.inspection', {
 		url: '/inspection',
 		templateUrl: 'controllers/business/inspection/inspection.html',

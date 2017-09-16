@@ -11,5 +11,6 @@ angular.module('com.app', [
   'ui.select',
   'smart-table',
   'toastr',
-  'multipleSelect'
+  'multipleSelect',
+  "ngFileUpload",
 ]);
