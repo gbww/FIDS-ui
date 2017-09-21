@@ -8,7 +8,15 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($scope,
   	vm.contract = contract;
   })
 
-  vm.ok = function () {
+  vm.storageConditionArr = ['常温', '冷冻', '冷藏'];
+  vm.detectTypeArr = ['监督检验', '省级食品安全监', '委托检验', '发证检验'];
+  vm.executeStandardArr = ['标准一', '标准二'];
+
+  vm.ok = function (form) {
+    if (form.$invalid) {
+      vm.submitted = true;
+      return;
+    }
     var data = angular.merge({}, vm.contract, {
       isUseStandard: parseInt(vm.contract.isUseStandard),
       isSubcontracting: parseInt(vm.contract.isSubcontracting),
@@ -26,7 +34,7 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($scope,
   			toastr.error(response.data.message);
   		}
   	}).catch(function (err) {
-  		toastr.error(err.data.message);
+  		toastr.error(err.data);
   	})
   }
 

@@ -4,6 +4,19 @@
 	}
 }
 
+.business-contract-create-list, .business-contract-info-list {
+	.validate-waiting {
+		position: relative;
+		.fa-spinner {
+			position: absolute;
+			display: block;
+			right: 10px;
+			top: 50%;
+			margin-top: -7px;
+		}
+	}
+}
+
 
 
 form[name="inspectionAddForm"] {

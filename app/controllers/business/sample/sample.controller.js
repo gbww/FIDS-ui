@@ -14,32 +14,45 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     vm.searchObject.timestamp = new Date();
   }
 
+  vm.status = '5';
   vm.samples = [];
-  vm.loading = true;
   vm.getSampleList = function (tableState) {
+    vm.loading = true;
+    vm.ciLoading = true;
     var tableParams = {
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
     }
-  	SampleService.getSampleList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
+  	SampleService.getSampleList(tableParams, vm.searchObject.searchKeywords, parseInt(vm.status)).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.samples = response.data.entity.list;
         vm.total = response.data.entity.total;
         tableState.pagination.numberOfPages = response.data.entity.pages;
 
-        vm.selectedSample = vm.samples[0];
-        vm.getSampleCi();
+        if (vm.samples.length > 0) {
+          vm.selectedSample = vm.samples[0];
+          vm.getSampleCi();
+        } else {
+          vm.ciLoading = false;
+          vm.checkItems = [];
+        }
       } else {
         vm.total = 0;
         toastr.error(response.data.message);
       }
     }).catch(function (err) {
   		vm.loading = false;
-      toastr.error(err.data.message);
+      toastr.error(err.data);
   	})
   }
 
+  vm.searchStatus = function (filter) {
+    if (vm.status != filter) {
+      vm.status = filter;
+      vm.refreshTable();
+    }
+  }
 
   vm.search=function(){
     vm.searchObject.searchKeywords = vm.query;
@@ -49,6 +62,25 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     if(keycode==13){
       vm.searchObject.searchKeywords = vm.query;
     }
+  }
+
+  vm.toggleStatus = function (sample) {
+    if (sample.status == 0) {
+      var status = 1;
+    } else {
+      var status = 0
+    }
+
+    var data = angular.merge({}, sample, {status: status, examineUser: api.userInfo.username})
+    SampleService.editSample(data).then(function (response) {
+      if (response.data.success) {
+        sample.status == 0 ? sample.status = 1 : sample.status = 0;
+      } else {
+        toastr.error(response.data.message);
+      }
+    }).catch(function (err) {
+      toastr.error(err.data);
+    })
   }
 
   vm.selectSample = function (sample) {
@@ -90,7 +122,9 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   }
 
   // 树形结构
+  vm.catalogLoading = true;
   CheckItemService.getChildCatalog('-1').then(function (response) {
+    vm.catalogLoading = false;
     var data = response.data.entity;
     angular.forEach(data, function (item) {
       angular.merge(item, {name: item.productName, isParent: item.isCatalog=='1'})
@@ -99,6 +133,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   })
 
   // 根据
+  vm.checkItems = [];
   vm.getSampleCi = function () {
     vm.ciLoading = true;
     SampleService.getSampleCiList(vm.selectedSample.receiveSampleId).then(function (response) {
@@ -169,6 +204,9 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   // 点击检测性集合节点，弹出集合在的检测项供用户添加
   function clickNode (event, treeId, treeNode) {
+    if (!vm.selectedSample) {
+      return;
+    }
     if (treeNode.isCatalog == '0') {
       vm.selectedNode = treeNode;
       var modalInstance = $uibModal.open({
@@ -192,7 +230,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
             }).catch(function (err) {
               $rootScope.loading = false;
               defered.reject('');
-              toastr.error(err.data.message);
+              toastr.error(err.data);
             });
             return defered.promise;
           }]
@@ -210,6 +248,9 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   // 弹出数据库中所有检测项供用户添加
   vm.addSampleCI = function () {
+    if (!vm.selectedSample) {
+      return;
+    }
     var modalInstance = $uibModal.open({
       animation: true,
       size: 'lg',
@@ -269,7 +310,23 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       controller: 'CiDistributeCtrl as vm',
       resolve: {
         sampleId: function () {return vm.selectedSample.receiveSampleId;},
-        checkItem: function () {return item;}
+        checkItem: function () {return item;},
+        departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getOrganizationList().then(function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              deferred.reject();
+              toastr.error(response.data.message);
+            }
+          }).catch(function (err) {
+            deferred.reject();
+            toastr.error(err.data);
+          });
+          return deferred.promise;
+        }]
       }
     });
 

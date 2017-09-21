@@ -21,7 +21,7 @@ angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal,
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
     }
-    CheckItemService.getCheckItemList(tableState, vm.searchObject.searchKeywords).then(function (response) {
+    CheckItemService.getCheckItemList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.checkItems = response.data.entity.list;
@@ -33,7 +33,7 @@ angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal,
       }
     }).catch(function (err) {
       vm.loading = false;
-      toastr.error(err.data.message);
+      toastr.error(err.data);
     })
   }
 

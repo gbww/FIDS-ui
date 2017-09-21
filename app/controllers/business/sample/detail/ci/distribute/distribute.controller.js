@@ -1,26 +1,64 @@
 'use strict';
 
-angular.module('com.app').controller('CiDistributeCtrl', function ($scope, $uibModalInstance, SampleService, sampleId, checkItem) {
+angular.module('com.app').controller('CiDistributeCtrl', function ($rootScope, $scope, $uibModalInstance, SampleService, PrivilegeService, sampleId, checkItem, departments) {
   var vm = this;
-  vm.checkItem = checkItem;
+  $rootScope.loading = false;
 
-  vm.departments = ['检测一部', '检测二部', '检测三部'];
-  vm.users = ['张三', '李四'];
+  vm.checkItem = checkItem;
+  vm.departments = departments;
+
+
+  vm.getDepartmentUsers = function () {
+    PrivilegeService.getOrganizationUsers(vm.testRoomId).then(function (response) {
+      if (response.data.success) {
+        vm.users = response.data.entity;
+        if (vm.users.length > 0) {
+          vm.testUser = vm.users[0].name;
+        }
+      } else {
+        vm.users = [];
+      }
+    })
+  }
+
+
+  if (vm.checkItem.testRoom) {
+    angular.forEach(vm.departments, function (department) {
+      if (department.name == vm.checkItem.testRoom) {
+        vm.testRoomId = department.id;
+        vm.getDepartmentUsers(vm.testRoomId);
+      }
+    })
+  } else {
+    vm.testRoomId = vm.departments[0].id;
+  }
+
+  vm.users = [];
+
+  if (vm.testRoomId) {
+    vm.getDepartmentUsers();
+  }
 
   vm.ok = function () {
+    var testRoom = '';
+    angular.forEach(vm.departments, function (department) {
+      if (department.id == vm.testRoomId) {
+        testRoom = department.name;
+      }
+    })
   	var data = angular.merge({}, vm.checkItem, {
-  		testRoom: vm.checkItem.testRoom,
-  		testUser: vm.checkItem.testUser
+  		testRoom: testRoom,
+  		testUser: vm.testUser,
+      status: 1
   	});
   	SampleService.updateSampleCi(sampleId, [data]).then(function (response) {
   		if (response.data.success) {
-        SampleService.setReportStatus(sampleId, 1);
 		  	$uibModalInstance.close(vm.checkItem);
   		} else {
   			toastr.error(response.data.message);
   		}
   	}).catch(function (err) {
-  		toastr.error(err.data.message);
+  		toastr.error(err.data);
   	})
   }
 

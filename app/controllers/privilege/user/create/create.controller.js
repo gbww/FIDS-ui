@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('com.app').controller('PrivilegeUserCreateCtrl', function ($uibModalInstance, PrivilegeService, toastr, organizations, roles) {
+angular.module('com.app').controller('PrivilegeUserCreateCtrl', function ($rootScope, $uibModalInstance, PrivilegeService, toastr, organizations, roles) {
   var vm = this;
+  $rootScope.loading = false;
 
   vm.user = {};
   vm.organizations = organizations;
@@ -12,6 +13,7 @@ angular.module('com.app').controller('PrivilegeUserCreateCtrl', function ($uibMo
   vm.ok = function () {
   	var data = {
   		username: vm.user.username,
+      name: vm.user.name,
   		password: vm.user.password,
   		roleId: vm.user.roleId,
   		phone: vm.user.phone,

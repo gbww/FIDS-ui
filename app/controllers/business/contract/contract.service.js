@@ -13,6 +13,10 @@ angular.module('com.app').factory('ContractService', function ($http) {
 			})
 		},
 
+		validateProtocolId: function (id) {
+			return $http.get('/api/v1/ahgz/contract/check/' + id);
+		},
+
 		createContract: function (data) {
 			return $http({
 				url: '/api/v1/ahgz/contract',
@@ -74,12 +78,13 @@ angular.module('com.app').factory('ContractService', function ($http) {
 			return $http.get('');
 		},
 
-		getUserTask: function (userId, taskName) {
+		getUserTask: function (userId, taskName, isHandle) {
 			return $http({
 				url: '/api/v1/ahgz/contract/process/task',
 				params: {
 					userId: userId,
-					taskName: taskName
+					taskName: taskName,
+					isHandle: isHandle
 				}
 			})
 		}

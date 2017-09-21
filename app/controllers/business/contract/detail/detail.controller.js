@@ -19,7 +19,7 @@ angular.module('com.app').controller('ContractDetailCtrl', function ($rootScope,
       }
     }).catch(function (err) {
       $rootScope.loading = false;
-      toastr.error(err.data.message);
+      toastr.error(err.data);
     });
   }
 
@@ -33,8 +33,6 @@ angular.module('com.app').controller('ContractDetailCtrl', function ($rootScope,
       $state.go('app.business.contract.detail.comment');
     } else if (tab == 'ci') {
       $state.go('app.business.contract.detail.ci');
-    } else if (tab == 'sample') {
-      $state.go('app.business.contract.detail.sample');
     }
   }
 
@@ -45,8 +43,6 @@ angular.module('com.app').controller('ContractDetailCtrl', function ($rootScope,
       vm.tab = 'comment';
     } else if ($state.includes('app.business.contract.detail.ci')) {
       vm.tab = 'ci';
-    } else if ($state.includes('app.business.contract.detail.sample')) {
-      vm.tab = 'sample';
     }
   })
 

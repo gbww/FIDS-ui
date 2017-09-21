@@ -15,7 +15,7 @@ angular.module('com.app').controller('ContractDetailCommentCtrl', function ($sco
   		}
   	}).catch(function (err) {
   		vm.loading = false;
-			toastr.error(err.data.message);
+			toastr.error(err.data);
   	})
   })
 

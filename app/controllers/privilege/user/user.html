@@ -10,6 +10,7 @@
 			<thead st-search-watch="vm.searchObject">
 				<tr>
 					<th>用户名称</th>
+					<th>中文姓名</th>
 					<th>邮箱</th>
 					<th>描述</th>
 					<th>所在部门</th>
@@ -20,13 +21,14 @@
 			</thead>
 			<tbody>
 				<tr ng-if="vm.loading">
-					<td colspan="7" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+					<td colspan="8" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 				</tr>
 				<tr ng-if="!vm.loading && vm.users.length == 0">
-					<td colspan="7" class="text-center">暂无用户</td>
+					<td colspan="8" class="text-center">暂无用户</td>
 				</tr>
 				<tr ng-repeat="user in vm.users track by $index" ng-if="!vm.loading">
 					<td>{{ user.username }}</td>
+					<td>{{ user.name }}</td>
 					<td>{{ user.email }}</td>
 					<td>{{ user.description }}</td>
 					<td>{{ user.organization.name }}</td>
@@ -54,7 +56,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="7">
+					<td colspan="8">
 						<div st-idp st-total-count="vm.total"></div>
 					</td>
 				</tr>

@@ -30,7 +30,7 @@ angular.module('com.app').controller('CustomAddCatalogCiCtrl', function ($scope,
       }
   	}).catch(function (err) {
   		vm.loading = false;
-      toastr.error(err.data.message);
+      toastr.error(err.data);
   	})
   }
 
@@ -83,7 +83,11 @@ angular.module('com.app').controller('CustomAddCatalogCiCtrl', function ($scope,
   }
 
   vm.ok = function () {
-  	$uibModalInstance.close(vm.checkedItems);
+    if (vm.checkedItems.length > 0) {
+      $uibModalInstance.close(vm.checkedItems);
+    } else {
+      $uibModalInstance.dismiss();
+    }
   }
 
   vm.cancel = function () {

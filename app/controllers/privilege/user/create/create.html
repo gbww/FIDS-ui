@@ -8,13 +8,25 @@
 		<div class="form-group">
 			<label class="item-required col-sm-3 control-label">用户名称</label>
 			<div class="col-sm-8">
-				<input class="form-control" name="name" ng-model="vm.user.username" required ng-minlength="2" ng-maxlength="30" ng-pattern="/^[\u4e00-\u9fa5_\-a-zA-Z0-9]+$/">
+				<input class="form-control" name="username" ng-model="vm.user.username" required ng-minlength="2" ng-maxlength="30" ng-pattern="/^[\u4e00-\u9fa5_\-a-zA-Z0-9]+$/">
 			</div>
-			<div class="col-sm-9 col-sm-offset-3" ng-if="userCreate.name.$dirty" ng-messages="userCreate.name.$error">
+			<div class="col-sm-9 col-sm-offset-3" ng-if="userCreate.username.$dirty" ng-messages="userCreate.username.$error">
 				<label class="error-messages" ng-message="minlength"><i></i>长度至少2位</label>
 				<label class="error-messages" ng-message="maxlength"><i></i>长度至多30位</label>
 				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
 				<label class="error-messages" ng-message="pattern"><i></i>由中文、数字、字母、中横线和下划线组成</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">中文姓名</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="name" ng-model="vm.user.name" required ng-minlength="2" ng-maxlength="10" ng-pattern="/^[\u4e00-\u9fa50-9]+$/">
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="userCreate.name.$dirty" ng-messages="userCreate.name.$error">
+				<label class="error-messages" ng-message="minlength"><i></i>长度至少2位</label>
+				<label class="error-messages" ng-message="maxlength"><i></i>长度至多10位</label>
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+				<label class="error-messages" ng-message="pattern"><i></i>由中文和数字组成</label>
 			</div>
 		</div>
 		<div class="form-group">

@@ -42,7 +42,11 @@ angular.module('com.app').controller('BusinessCatalogCiCtrl', function ($scope, 
   }
 
   vm.ok = function () {
-  	$uibModalInstance.close(vm.checkedItems);
+    if (vm.checkedItems.length > 0) {
+    	$uibModalInstance.close(vm.checkedItems);
+    } else {
+      $uibModalInstance.dismiss();
+    }
   }
 
   vm.cancel = function () {

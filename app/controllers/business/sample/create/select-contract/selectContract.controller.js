@@ -30,7 +30,7 @@ angular.module('com.app').controller('SelectContractCtrl', function ($scope, $ui
       }
   	}).catch(function (err) {
   		vm.loading = false;
-      toastr.error(err.data.message);
+      toastr.error(err.data);
   	})
   }
 

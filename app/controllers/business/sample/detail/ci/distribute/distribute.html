@@ -5,15 +5,15 @@
 <div class="modal-body">
 	<form name="distributeForm" class="form-horizontal">
 		<div class="form-group">
-			<label class="col-sm-3 control-label">选择部门</label>
+			<label class="col-sm-3 control-label item-required">选择部门</label>
 			<div class="col-sm-8">
-				<select class="form-control" ng-model="vm.checkItem.testRoom" ng-options="option for option in vm.departments" required></select>
+				<select class="form-control" ng-model="vm.testRoomId" ng-change="vm.getDepartmentUsers()" ng-options="option.id as option.name for option in vm.departments" required></select>
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-3 control-label">选择检测员</label>
+			<label class="col-sm-3 control-label item-required">选择检测员</label>
 			<div class="col-sm-8">
-				<select class="form-control" ng-model="vm.checkItem.testUser" ng-options="option for option in vm.users" required></select>
+				<select class="form-control" ng-model="vm.testUser" ng-options="option.name as option.name for option in vm.users" required></select>
 			</div>
 		</div>
 	</form>

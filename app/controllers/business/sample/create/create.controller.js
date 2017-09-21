@@ -6,6 +6,22 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($state, $uibM
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root, businessBC.sample.create];
 
+  vm.checkTypeArr = ['监督检验', '省级食品安全监', '委托检验', '发证检验'];
+  vm.sampleLinkArr = ['流通环节', '餐饮环节', '生产环节'];
+  vm.sampleCirculateArr = ['生产日期', '加工日期', '购进日期', '消毒日期'];
+  vm.sampleWayArr = ['接样方式一'];
+  vm.specificationModelArr = ['规格一'];
+  vm.executeStandardArr = ['标准一', '标准二'];
+  vm.processingTechnologyArr = ['等级一'];
+  vm.closedStatusArr = ['状态一'];
+  vm.sampleStatusArr = ['状态一'];
+  vm.sampleBasenumberArr = ['基数一'];
+  vm.saveWayArr = ['常温', '冷冻', '冷藏'];
+  vm.sampleNamesArr = ['zhangsan'];
+  vm.responsiblePersonArr = ['lisi'];
+  vm.receiveUserArr = ['wangwu'];
+  vm.subpackageArr = ['分包一'];
+
   vm.sample = {
     receiveSampleId: null,
     reportId: null,
@@ -64,7 +80,7 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($state, $uibM
     determine: null,
     approvalUser: null,
     examineUser: null,
-    drawUser: null,
+    drawUser: api.userInfo.username,
     principalInspector: null,
     status: 0,
     createdAt: null
@@ -84,7 +100,11 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($state, $uibM
     })
   }
 
-  vm.ok = function () {
+  vm.ok = function (form) {
+    if (form.$invalid) {
+      vm.submitted = true;
+      return;
+    }
     var data = angular.merge({}, vm.sample, {
         sampleCirculateDate: vm.sample.sampleCirculateDate ? new Date(vm.sample.sampleCirculateDate).toLocaleString() : null,
         sampleDate: vm.sample.sampleDate ? new Date(vm.sample.sampleDate).toLocaleString() : null,
@@ -100,7 +120,7 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($state, $uibM
             toastr.error(response.data.message);
         }
     }).catch(function (err) {
-        toastr.error(err.data.message);
+        toastr.error(err.data);
     });
   }
 });

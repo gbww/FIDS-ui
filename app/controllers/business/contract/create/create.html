@@ -1,20 +1,30 @@
-<div class="business-contract-list">
+<div class="business-contract-create-list">
 	<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
 	<div class="pt-2">
-		<form name="createForm" novalidate>
+		<form name="form" novalidate>
 			<table class="form-table">
 				<tr>
+					<td class="item-title validate-waiting">
+						<span class="item-required">协议编号</span>
+						<i class="fa fa-spinner fa-pulse" ng-if="vm.validating"></i>
+					</td>
+					<td>
+						<input class="input" name="protocol_id" ng-model="vm.contract.protocolId" ng-keyup="vm.validateProtocolId()" required>
+						<div ng-if="form.protocol_id.$dirty || vm.submitted" ng-messages="form.protocol_id.$error">
+							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+						</div>
+            <div ng-if="!vm.protocolIdValid">
+              <label class="error-messages"><i></i>该编号已存在，请重新输入</label>
+            </div>
+					</td>
 					<td class="item-title">
 						<span class="item-required">样品编号</span>
 					</td>
 					<td>
 						<input class="input" name="sample_id" ng-model="vm.contract.sampleId" required>
-					</td>
-					<td class="item-title">
-						<span class="item-required">协议编号</span>
-					</td>
-					<td>
-						<input class="input" name="protocol_id" ng-model="vm.contract.protocolId" required>
+						<div ng-if="form.sample_id.$dirty || vm.submitted" ng-messages="form.sample_id.$error">
+							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+						</div>
 					</td>
 				</tr>
 				<tr>
@@ -23,6 +33,9 @@
 					</td>
 					<td>
 						<input class="input" name="sample_name" ng-model="vm.contract.sampleName" required>
+						<div ng-if="form.sample_name.$dirty || vm.submitted" ng-messages="form.sample_name.$error">
+							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+						</div>
 					</td>
 					<td class="item-title">
 						<span>加工工艺</span>
@@ -56,7 +69,7 @@
 						<span>保存条件</span>
 					</td>
 					<td>
-						<select class="input" name="storage_condition" ng-model="vm.contract.storageCondition" ng-options="option for option in vm.storageConditionArr"></select>
+						<div custom-select avail-arr="vm.storageConditionArr" model="vm.contract" key="storageCondition"></div>
 					</td>
 				</tr>
 				<tr>
@@ -98,7 +111,10 @@
 						<span class="item-required">检验类别</span>
 					</td>
 					<td>
-						<select class="input" name="detect_type" ng-model="vm.contract.detectType" ng-options="option for option in ['监督检验', '省级食品安全监', '委托检验', '发证检验']" required></select>
+						<div custom-select name="detect_type" avail-arr="vm.detectTypeArr" model="vm.contract" key="detectType"></div>
+						<div ng-if="form.detect_type.$dirty || vm.submitted" ng-messages="form.detect_type.$error">
+							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+						</div>
 					</td>
 				</tr>
 				<tr>
@@ -112,7 +128,10 @@
 						<span class="item-required">执行标准</span>
 					</td>
 					<td>
-						<select class="input" name="execute_standard" ng-model="vm.contract.executeStandard" ng-options="option for option in ['标准一', '标准二']" required></select>
+						<div custom-select name="execute_standard" avail-arr="vm.executeStandardArr" model="vm.contract" key="executeStandard"></div>
+						<div ng-if="form.execute_standard.$dirty || vm.submitted" ng-messages="form.execute_standard.$error">
+							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+						</div>
 					</td>
 				</tr>
 				<tr>
@@ -218,7 +237,10 @@
 						<span>需检测报告份数</span>
 					</td>
 					<td>
-						<input class="number" name="report_count" ng-model="vm.contract.reportCount">
+						<input type="number" class="input" name="report_count" ng-model="vm.contract.reportCount" ng-pattern="/^[0-9]*$/">
+						<div ng-if="form.report_count.$dirty || vm.submitted" ng-messages="form.report_count.$error">
+							<label class="error-messages" ng-message="pattern"><i></i>请输入整数</label>
+						</div>
 					</td>
 				</tr>
 				<tr>
@@ -269,7 +291,7 @@
 			</table>
 		</form>
 		<div class="btn-area text-center">
-			<button class="btn btn-default-dark" ng-click="vm.ok()" ng-disabled="createForm.$invalid">确认</button>
+			<button class="btn btn-default-dark" ng-click="vm.ok(form)">确认</button>
 			<button class="btn btn-default-light" ui-sref="app.business.contract">取消</button>
 		</div>
 	</div>

@@ -6,20 +6,16 @@
   			<i class="fa fa-plus"></i>
   			<span>修改用户信息</span>
   		</button>
-  		<button class="btn btn-default-dark" ng-click="vm.editPassword()">
+  		<button class="btn btn-default-light" ng-click="vm.editPassword()">
   			<i class="fa fa-edit"></i>
   			<span>修改密码</span>
   		</button>
-  		<button class="btn btn-default-light" custom-file-btn ng-if="!vm.user.sign">
+  		<button class="btn btn-default-light" custom-file-btn>
   			<i class="fa fa-upload"></i>
   			<span>上传电子签名</span>
   		</button>
-  		<button class="btn btn-default-light" ng-if="vm.user.sign" ng-click="vm.download()">
-  			<i class="fa fa-download"></i>
-  			<span>下载电子签名</span>
-  		</button>
 
-  		<input type="file" class="select-file" ngf-select ng-model="vm.image" name="image" ngf-max-size="4MB" ngf-model-invalid="errorFile" ngf-pattern="/.png$/">
+  		<input type="file" class="select-file" ngf-select ng-model="vm.image" name="image" custom-file-change="vm.upload">
   	</div>
     <table class="pt-table dl-table">
     	<tr>
@@ -43,6 +39,9 @@
     	<tr>
     		<th>手机</th><td>{{ vm.user.phone }}</td>
     	</tr>
+      <tr>
+        <th>电子签名</th><td><img alt="电子签名" ng-src="{{ vm.userSignImage }}"></td>
+      </tr>
     </table>
   </div>
 </div>

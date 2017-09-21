@@ -13,8 +13,8 @@
             <span>所有</span>
           </a>
         </li>
-        <li ng-class="{'active': vm.statusFilter === 'left'}">
-          <a ng-click="vm.searchStatus('left')">
+        <li ng-class="{'active': vm.statusFilter === 'unhandled'}">
+          <a ng-click="vm.searchStatus('unhandled')">
             <span>待办</span>
           </a>
         </li>
@@ -34,25 +34,36 @@
 		<table class="pt-table" st-table="vm.contracts" st-pipe="vm.getContractList">
 			<thead st-search-watch="vm.searchObject">
 				<tr>
+					<th>协议编号</th>
+					<th>样品编号</th>
 					<th>样品名称</th>
 					<th>检验类别</th>
+					<th>执行标准</th>
 					<th>状态</th>
 					<th style="width:140px">操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-if="vm.loading">
-					<td colspan="4" class="text-center"><i class="fa fa-pluse fa-spinner"></i></td>
+					<td colspan="7" class="text-center"><i class="fa fa-pluse fa-spinner"></i></td>
 				</tr>
 				<tr ng-if="!vm.loading && vm.contracts.length === 0">
-					<td colspan="4" class="text-center">暂无合同</td>
+					<td colspan="7" class="text-center">暂无合同</td>
 				</tr>
 				<tr ng-repeat="contract in vm.contracts track by $index" ng-if="!vm.loading">
 					<td>
-						<a href ng-click="vm.goDetail(contract.id, 'info')">{{ contract.sampleName }}</a>
+						<a href ng-click="vm.goDetail(contract.id, 'info')">{{ contract.protocolId }}</a>
 					</td>
+					<td>{{ contract.sampleId }}</td>
+					<td>{{ contract.sampleName }}</td>
 					<td>{{ contract.detectType }}</td>
-					<td>待做</td>
+					<td>{{ contract.executeStandard }}</td>
+					<td>
+						<span ng-if="contract.status == '0'">待评审</span>
+						<span ng-if="contract.status == '1'">评审中</span>
+						<span ng-if="contract.status == '2'">修改中</span>
+						<span ng-if="contract.status == '3'">结束</span>
+					</td>
 					<td class="dropdown-col">
 						<div class="btn-group">
 							<button class="btn btn-default" ng-click="vm.goDetail(contract.id, 'info')">
@@ -62,18 +73,12 @@
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li ng-click="vm.startCommentProcess(contract.id)" ng-if="!contract.task">
+								<li ng-click="vm.startCommentProcess(contract.id)" ng-if="contract.status == '0'">
 									<a href><i class="fa fa-trash"></i><span>发起评审流程</span></a>
 								</li>
-								<li ng-click="vm.recordComment(contract)" ng-if="contract.task">
+								<li ng-click="vm.recordComment(contract)" ng-if="contract.task && contract.status == '1'">
 									<a href><i class="fa fa-edit"></i><span>录入评审意见</span></a>
 								</li>
-								<!-- <li ng-click="vm.goDetail(contract.id, 'ci')">
-									<a href><i class="fa fa-edit"></i><span>查看合同检验项</span></a>
-								</li> -->
-								<!-- <li ng-click="vm.recordSample(contract.id)">
-									<a href><i class="fa fa-trash"></i><span>接样录入</span></a>
-								</li> -->
 								<li ng-click="vm.delete(contract)">
 									<a href><i class="fa fa-trash"></i><span>删除</span></a>
 								</li>
@@ -84,7 +89,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="4">
+					<td colspan="7">
 						<div st-idp st-total-count="vm.total"></div>
 					</td>
 				</tr>

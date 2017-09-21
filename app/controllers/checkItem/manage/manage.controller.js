@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('DBCheckItemManageCtrl', function ($scope, $state, $uibModal, $q, $filter, api, CheckItemService, toastr, dialog) {
+angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootScope, $scope, $state, $uibModal, $q, $filter, api, CheckItemService, toastr, dialog) {
   var vm = this;
 
   var checkItemBC = api.breadCrumbMap.checkItem;
@@ -35,14 +35,16 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($scope, 
   		}
   	}).catch(function (err) {
   		vm.ciLoading = false;
-  		toastr.error(err.data.message);
+  		toastr.error(err.data);
   	})
   }
 
   vm.getCatalog = function () {
   	// 获取根目录信息
     var init = true;
+    vm.catalogLoading = true;
   	CheckItemService.getChildCatalog('-1').then(function (response) {
+      vm.catalogLoading = false;
   		var data = response.data.entity;
       angular.forEach(data, function (item) {
         angular.merge(item, {name: item.productName, isParent: item.isCatalog=='1'})
@@ -144,19 +146,34 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($scope, 
     });
 
     modalInstance.result.then(function (catalog) {
+      $rootScope.loading = true;
     	var data = angular.merge({}, catalog, {parentId: parentNode.id});
     	CheckItemService.addCICatalog(data).then(function (response) {
     		if (response.data.success) {
-    			if (catalog.isCatalog == '1') {
-	    			var nodeData = angular.merge({}, data, {name: data.productName, isParent: true})
-    			} else {
-	    			var nodeData = angular.merge({}, data, {name: data.productName});
-    			}
-		    	vm.tree.addNodes(parentNode, -1, nodeData);
+          CheckItemService.getChildCatalog(parentNode.id).then(function (response) {
+            $rootScope.loading = false;
+            var items = response.data.entity;
+            for (var i=0,len=items.length; i<len; i++) {
+              if (items[i].productName == data.productName) {
+                data.id = items[i].id;
+                break;
+              }
+            }
+      			if (catalog.isCatalog == '1') {
+  	    			var nodeData = angular.merge({}, data, {name: data.productName, isParent: true})
+      			} else {
+  	    			var nodeData = angular.merge({}, data, {name: data.productName});
+      			}
+  		    	vm.tree.addNodes(parentNode, -1, nodeData);
+          }).catch(function () {
+            $rootScope.loading = false;
+          })
     		}	else {
     			toastr.error(response.data.message);
     		}
-    	})
+    	}).catch(function () {
+        $rootScope.loading = false;
+      })
     })
   }
 
@@ -176,18 +193,38 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($scope, 
     });
 
     modalInstance.result.then(function (catalog) {
+      $rootScope.loading = true;
       var data = angular.merge({}, catalog, {parentId: parentNode ? parentNode.id : '-1'});
       CheckItemService.addCICatalog(data).then(function (response) {
         if (response.data.success) {
-          if (catalog.isCatalog == '1') {
-            var nodeData = angular.merge({}, data, {name: data.productName, isParent: true})
+          if (!parentNode) {
+            var promise = CheckItemService.getChildCatalog('-1');
           } else {
-            var nodeData = angular.merge({}, data, {name: data.productName});
+            var promise = CheckItemService.getChildCatalog(parentNode.id);
           }
-          vm.tree.addNodes(parentNode, -1, nodeData);
+          promise.then(function (response) {
+            $rootScope.loading = false;
+            var items = response.data.entity;
+            for (var i=0,len=items.length; i<len; i++) {
+              if (items[i].productName == data.productName) {
+                data.id = items[i].id;
+                break;
+              }
+            }
+            if (catalog.isCatalog == '1') {
+              var nodeData = angular.merge({}, data, {name: data.productName, isParent: true})
+            } else {
+              var nodeData = angular.merge({}, data, {name: data.productName});
+            }
+            vm.tree.addNodes(parentNode, -1, nodeData);
+          }).catch(function () {
+            $rootScope.loading = false;
+          })
         } else {
           toastr.error(response.data.message);
         }
+      }).catch(function () {
+        $rootScope.loading = false;
       })
     })
   }
@@ -257,7 +294,7 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($scope, 
     		toastr.error(response.data.message);
     	}
     }).catch(function (err) {
-    	toastr.error(err.data.message);
+    	toastr.error(err.data);
     })
   }
 

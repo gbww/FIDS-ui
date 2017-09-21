@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($uibModal, api, toastr, PrivilegeService, Upload, dialog) {
+angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($rootScope, $uibModal, $timeout, api, toastr, PrivilegeService, Upload, dialog) {
   var vm = this;
 
   var privilegeBC = api.breadCrumbMap.privilege;
@@ -8,6 +8,7 @@ angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($uibM
 
   vm.user = null;
   vm.getUserInfo = function () {
+    $rootScope.loading = true;
   	PrivilegeService.getCurrentUserInfo().then(function (response) {
   		if (response.data.success) {
   			vm.user = response.data.entity;
@@ -15,11 +16,16 @@ angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($uibM
   			toastr.error(response.data.message);
   		}
   	}).then(function () {
-  		return PrivilegeService.getUserSign(vm.user.id);
+      return PrivilegeService.downloadUserSign(vm.user.id)
   	}).then(function (response) {
-  		vm.user.sign = response.data.entity;
+      $rootScope.loading = false;
+  		vm.user.hasSign = response.data !== null;
+      if (vm.user.hasSign) {
+        vm.userSignImage = "data:image/png;base64," + response.data;
+      }
   	}).catch(function (err) {
-  		toastr.error(err.data.message);
+      $rootScope.loading = false;
+  		toastr.error(err.data);
   	});
   }
 
@@ -59,18 +65,36 @@ angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($uibM
   }
 
   vm.upload = function () {
-  	Upload.upload({
-      url: '/api/user/sign/upload',
-      data: {
-        image: vm.image
+    $timeout(function() {
+      if (!/^image\/.*$/.test(vm.image.type)) {
+        toastr.error('请上传图片！');
+        return;
       }
-    }).then(function(){
-    });
+      if (vm.image.size / 1024 / 1024 >= 4) {
+        toastr.error('图片过大，请上传4MB以内的图片');
+        return;
+      }
+    	Upload.upload({
+        url: '/api/v1/user/sign/upload',
+        data: {
+          file: vm.image
+        }
+      }).then(function(response){
+        if (response.data.success) {
+          vm.getUserInfo();
+          toastr.success('电子签名上传成功！');
+        } else {
+          toastr.error(response.data.message);
+        }
+      }).catch(function (err) {
+        toastr.error(err.data);
+      });
+    }, 100)
   }
 
   vm.download = function () {
   	PrivilegeService.downloadUserSign(vm.user.id).then(function (response) {
-
+      vm.userSignImage = "data:image/png;base64," + response.data;
   	});
   }
 

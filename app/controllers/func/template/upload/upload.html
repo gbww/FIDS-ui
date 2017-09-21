@@ -1,0 +1,48 @@
+<div class="modal-header">
+	<div class="close" ng-click="vm.cancel()">&times;</div>
+	<h4>上传模板</h4>
+</div>
+
+<div class="modal-body">
+	<form name="form" class="form-horizontal template-upload-form">
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">模板名称</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="name" ng-model="vm.template.name" required>
+				<div class="col-sm-9 col-sm-offset-3" ng-if="form.name.$dirty" ng-messages="form.name.$error">
+					<label class="error-messages" ng-message="required">不能为空</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">描述</label>
+			<div class="col-sm-8">
+				<textarea class="form-control" ng-model="vm.template.description"></textarea>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">类型</label>
+			<div class="col-sm-8">
+				<select class="form-control" name="type" ng-model="vm.template.type" ng-options="option for option in vm.typeArr" required></select>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<a class="btn btn-default-light" custom-file-btn>
+				<span class="item-required"><i class="fa fa-plus"></i>上传文件</span>
+			</a>
+			<span>{{ vm.filename }}</span>
+			<input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.addFile" ngf-pattern="/\.xlsx?$/">
+			<div class="col-sm-9 col-sm-offset-3" ng-if="form.file.$dirty" ng-messages="form.file.$error">
+				<label class="error-messages" ng-message="pattern">请添加后缀为.xls、.xlsx文件</label>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-default-dark" ng-disabled="form.$invalid" ng-click="vm.ok()">确认</button>
+	<button class="btn btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

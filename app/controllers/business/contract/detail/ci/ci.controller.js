@@ -11,21 +11,24 @@ angular.module('com.app').controller('ContractDetailCiCtrl', function ($rootScop
   }
 
 
+  vm.catalogLoading = true;
   $scope.$emit('refreshContract');
   $scope.$on('contractInfo', function (event, contract) {
     vm.contract = contract;
-    CheckItemService.getCICatalogInfo('1').then(function (response) {
+    CheckItemService.getChildCatalog('-1').then(function (response) {
+      vm.catalogLoading = false;
       var data = response.data.entity;
-      angular.merge(data, {name: data.productName, isParent: data.isCatalog=='1'})
+      angular.forEach(data, function (item) {
+        angular.merge(item, {name: item.productName, isParent: item.isCatalog=='1'})
+      })
       vm.tree = $.fn.zTree.init($("#inspectTree"), setting, data);
 
-	  	var checkItemArr = contract.detectProject ? contract.detectProject.split(',') : [];
-	  	if (checkItemArr.length > 0) {
-		  	vm.ciLoading = true;
-	  	}
+      var checkItemArr = contract.detectProject ? contract.detectProject.split(',') : [];
+      if (checkItemArr.length > 0) {
+        vm.ciLoading = true;
+      }
       vm.getContractCi(checkItemArr);
-
-  	})
+    })
   })
 
   vm.getContractCi = function (arr) {
@@ -111,7 +114,7 @@ angular.module('com.app').controller('ContractDetailCiCtrl', function ($rootScop
             }).catch(function (err) {
               $rootScope.loading = false;
               defered.reject('');
-              toastr.error(err.data.message);
+              toastr.error(err.data);
             });
             return defered.promise;
           }]

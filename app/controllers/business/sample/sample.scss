@@ -1,6 +1,15 @@
 .business-sample-list {
 	.pt-2 {
 		position: relative;
+		min-height: 300px;
+	}
+	.switch input+label+span {
+		&:before {
+			content: '否';
+		}
+		&:after {
+			content: '是';
+		}
 	}
 }
 .business-sample-detail-list {

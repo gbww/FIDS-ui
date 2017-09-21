@@ -34,7 +34,7 @@ angular.module('com.app').controller('PrivilegeOrganizationCtrl', function ($roo
       }
     }).catch(function (err) {
       vm.loading = false;
-      toastr.error(err.data.message);
+      toastr.error(err.data);
     });
   }
 

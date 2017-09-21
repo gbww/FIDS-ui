@@ -6,16 +6,19 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
   vm.highLightMenu = function(){
   	vm.isDashboardActive = $state.includes('app.dashboard');
 
+    vm.isItemToCheckActive = $state.includes('app.itemToCheck');
 
     vm.isCheckItemActive = $state.includes('app.checkItem');
     vm.isCheckItemListActive = $state.includes('app.checkItem.list');
     vm.isCheckItemManageActive = $state.includes('app.checkItem.manage');
 
+    vm.isFuncActive = $state.includes('app.func');
+    vm.isTemplateActive = $state.includes('app.func.template');
+
     vm.isBusinessActive = $state.includes('app.business');
     vm.isBusinessContractActive = $state.includes('app.business.contract');
-    vm.isBusinessCheckItemActive = $state.includes('app.business.checkItem');
     vm.isBusinessSampleActive = $state.includes('app.business.sample');
-    vm.isBusinessInspectionActive = $state.includes('app.business.inspection');
+    vm.isBusinessReportActive = $state.includes('app.business.report');
 
     vm.isPrivilegeActive = $state.includes('app.privilege');
     vm.isPrivilegeCurrentUserActive = $state.includes('app.privilege.currentUser');

@@ -302,3 +302,27 @@ i+span {
   border-top: 1px solid $border-color;
   padding: 20px 0;
 }
+
+// custom-select
+.select-wrapper {
+  position: relative;
+  width: 100%;
+  display: inline-block;
+  ul {
+    position: absolute;
+    z-index: 10;
+    top: 26px;
+    left: 0;
+    right: 0;
+    border: 1px solid $border-color;
+    background-color: #fff;
+    li a{
+      display: block;
+      padding: 0px 10px;
+      cursor: pointer;
+      &:hover {
+        color: $blue-color;
+      }
+    }
+  }
+}

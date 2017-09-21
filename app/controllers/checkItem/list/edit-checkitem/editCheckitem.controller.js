@@ -12,7 +12,7 @@ angular.module('com.app').controller('DBEditCheckItemCtrl', function ($scope, $u
   			toastr.error(response.data.message);
   		}
   	}).catch(function (err) {
-  		toastr.error(err.data.message);
+  		toastr.error(err.data);
   	})
   }
 

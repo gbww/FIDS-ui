@@ -106,12 +106,66 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 	});
 
 	/*
-	 ****************检测任务******************************************
+	 ****************报告管理******************************************
 	 */
-	$stateProvider.state('app.business.inspection', {
-		url: '/inspection',
-		templateUrl: 'controllers/business/inspection/inspection.html',
-		controller: 'BusinessInspectionCtrl as vm'
+	$stateProvider.state('app.business.report', {
+		url: '/report',
+		templateUrl: 'controllers/business/report/report.html',
+		controller: 'BusinessReportCtrl as vm'
+	});
+
+	// $stateProvider.state('app.business.report.detail', {
+	// 	url: '/:id',
+	// 	views: {
+	// 		'@app.business': {
+	// 			templateUrl: 'controllers/business/report/detail/detail.html',
+	// 			controller: 'ReportDetailCtrl as vm'
+	// 		}
+	// 	},
+	// 	resolve: {
+	// 		report: ['$rootScope', '$q', '$stateParams', 'SampleService', 'toastr', function ($rootScope, $q, $stateParams, SampleService, toastr) {
+	// 			var deferred = $q.defer();
+	// 			var sampleId = $stateParams.id;
+	// 			$rootScope.loading = true;
+	// 			SampleService.getSampleInfo(sampleId).then(function (response) {
+	// 				$rootScope.loading = false;
+	// 				if (response.data.success) {
+	// 					deferred.resolve(response.data.entity);
+	// 				} else {
+	// 					deferred.reject();
+	// 					toastr.error(response.data.message);
+	// 				}
+	// 			}).catch(function (err) {
+	// 				$rootScope.loading = false;
+	// 				deferred.reject();
+	// 				toastr.error(err.data);
+	// 			});
+	// 			return deferred.promise;
+	// 		}]
+	// 	}
+	// });
+
+	$stateProvider.state('app.business.report.detail', {
+		url: '/{:id}',
+		views: {
+			'@app.business': {
+				templateUrl: 'controllers/business/report/detail/detail.html',
+				controller: 'ReportDetailCtrl as vm'
+			}
+		},
+		abstract: true
+	});
+
+	$stateProvider.state('app.business.report.detail.info', {
+		url: '/info',
+		templateUrl: 'controllers/business/report/detail/info/info.html',
+		controller: 'ReportDetailInfoCtrl as vm'
+	});
+
+	$stateProvider.state('app.business.report.detail.ci', {
+		url: '/ci',
+		templateUrl: 'controllers/business/report/detail/ci/ci.html',
+		controller: 'ReportDetailCiCtrl as vm'
 	});
 
 });

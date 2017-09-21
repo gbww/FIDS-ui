@@ -33,7 +33,7 @@ angular.module('com.app').controller('PrivilegeRoleCtrl', function ($rootScope, 
       }
     }).catch(function (err) {
       vm.loading = false;
-      toastr.error(err.data.message);
+      toastr.error(err.data);
     });
   }
 
@@ -193,7 +193,7 @@ angular.module('com.app').controller('PrivilegeRoleCtrl', function ($rootScope, 
         toastr.error(response.data.message);
       }
     }).catch(function (err) {
-      toastr.error(err.data.message);
+      toastr.error(err.data);
     })
   }
 })

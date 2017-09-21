@@ -11,25 +11,29 @@
 	<table class="pt-table" st-table="vm.contracts" st-pipe="vm.getContractList">
 		<thead st-search-watch="vm.searchObject">
 			<tr>
+				<th>协议编号</th>
+				<th>样品编号</th>
 				<th>样品名称</th>
 				<th>检验类别</th>
-				<th>状态</th>
+				<th>执行标准</th>
 				<th style="width: 140px">操作</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-if="vm.loading">
-				<td colspan="4" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+				<td colspan="6" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 			</tr>
 			<tr ng-if="!vm.loading && vm.contracts.length == 0">
-				<td colspan="4" class="text-center">暂无检测项</td>
+				<td colspan="6" class="text-center">暂无检测项</td>
 			</tr>
 			<tr ng-repeat="contract in vm.contracts track by contract.id" ng-if="!vm.loading">
+				<td>{{ contract.protocolId }}</td>
+				<td>{{ contract.sampleId }}</td>
 				<td>{{ contract.sampleName }}</td>
 				<td>{{ contract.detectType }}</td>
-				<td>{{ contract.entrust_company }}</td>
+				<td>{{ contract.executeStandard }}</td>
 				<td>
-					<button class="btn btn-default" ng-click="vm.ok(contract.id)">选择</button>
+					<button class="btn btn-default" ng-click="vm.ok(contract.protocolId)">选择</button>
 				</td>
 			</tr>
 		</tbody>

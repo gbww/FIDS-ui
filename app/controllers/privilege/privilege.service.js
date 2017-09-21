@@ -38,6 +38,15 @@ angular.module('com.app').factory('PrivilegeService', function ($http) {
 				}
 			})
 		},
+		showUserSign: function () {
+			return $http.get('/api/v1/user/sign/show')
+		},
+
+		// 获取合同评审人员
+
+		getContractCommentUsers: function () {
+			return $http.get('/api/v1/users/reviewers');
+		},
 
 
 		// 用户列表
@@ -105,6 +114,10 @@ angular.module('com.app').factory('PrivilegeService', function ($http) {
 				url: '/api/v1/organizations/' + organizationId + '/users/' + userId + '/roles/' + roleId + '/action/assignRole',
 				method: 'PUT'
 			})
+		},
+
+		getOrganizationUsers: function (organizationId) {
+			return $http.get('/api/v1/organizations/' + organizationId + '/users');
 		},
 
 		/*

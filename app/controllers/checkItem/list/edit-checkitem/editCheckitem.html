@@ -3,29 +3,41 @@
 	<h4>编辑检测项</h4>
 </div>
 <div class="modal-body">
-	<form name="checkItemEditForm" class="form-horizontal">
+	<form name="form" class="form-horizontal">
 		<div class="form-group">
 			<label class="col-sm-3 control-label item-required">名称</label>
 			<div class="col-sm-8">
-				<input class="form-control" ng-model="vm.checkItem.name" required>
+				<input class="form-control" name="name" ng-model="vm.checkItem.name" required>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="form.name.$dirty" ng-messages="form.name.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-3 control-label item-required">检测方法</label>
 			<div class="col-sm-8">
-				<input class="form-control" ng-model="vm.checkItem.method" required>
+				<input class="form-control" name="method" ng-model="vm.checkItem.method" required>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="form.method.$dirty" ng-messages="form.method.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-3 control-label item-required">单位</label>
 			<div class="col-sm-8">
-				<input class="form-control" ng-model="vm.checkItem.unit" required>
+				<input class="form-control" name="unit" ng-model="vm.checkItem.unit" required>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="form.unit.$dirty" ng-messages="form.unit.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
 			</div>
 		</div>
 		<div class="form-group">
 			<label class="col-sm-3 control-label item-required">标准值</label>
 			<div class="col-sm-8">
-				<input class="form-control" ng-model="vm.checkItem.standardValue" required>
+				<input class="form-control" name="value" ng-model="vm.checkItem.standardValue" required>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="form.value.$dirty" ng-messages="form.value.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
 			</div>
 		</div>
 		<div class="form-group">
@@ -55,6 +67,6 @@
 	</form>
 </div>
 <div class="modal-footer">
-	<button class="btn btn-default-dark" ng-click="vm.ok()" ng-disabled="checkItemEditForm.$invalid">确认</button>
+	<button class="btn btn-default-dark" ng-click="vm.ok()" ng-disabled="form.$invalid">确认</button>
 	<button class="btn btn-default-light" ng-click="vm.cancel()">取消</button>
 </div>

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('PrivilegeUserCtrl', function ($uibModal, api, toastr, PrivilegeService, dialog) {
+angular.module('com.app').controller('PrivilegeUserCtrl', function ($rootScope, $uibModal, api, toastr, PrivilegeService, dialog) {
   var vm = this;
 
   var privilegeBC = api.breadCrumbMap.privilege;
@@ -46,6 +46,7 @@ angular.module('com.app').controller('PrivilegeUserCtrl', function ($uibModal, a
   		controller: 'PrivilegeUserCreateCtrl as vm',
       resolve: {
         organizations: ['$q', function ($q) {
+          $rootScope.loading = true;
           var deferred = $q.defer();
           PrivilegeService.getOrganizationList().then(function (response) {
             if (response.data.success) {
@@ -59,6 +60,7 @@ angular.module('com.app').controller('PrivilegeUserCtrl', function ($uibModal, a
           return deferred.promise;
         }],
         roles: ['$q', function ($q) {
+          $rootScope.loading = true;
           var deferred = $q.defer();
           PrivilegeService.getRoleList().then(function (response) {
             if (response.data.success) {

@@ -2,13 +2,14 @@
 
 angular.module('com.app').factory('SampleService', function ($http) {
 	return {
-		getSampleList: function (tableParams, searchName) {
+		getSampleList: function (tableParams, searchName, status) {
 			return $http({
 				url: '/api/v1/ahgz/sample',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
-          name: searchName
+          receivesampleid: searchName,
+          status: status || '5'
         }
 			})
 		},
@@ -77,6 +78,28 @@ angular.module('com.app').factory('SampleService', function ($http) {
 				method: 'POST',
 				data: data
 			})
+		},
+
+		// 获取检测人员的检测项列表任务
+		getUserCi: function (tableParams, status) {
+			return $http({
+				url: '/api/v1/ahgz/sampleItem',
+				params: {
+          pageSize: tableParams.pageSize,
+          pageNum: tableParams.pageNum,
+          status: status
+        }
+			})
+		},
+
+		exportFile: function (sampleId, name) {
+			return $http({
+				url: '/api/v1/ahgz/sample/items/excel/' + sampleId,
+				method: 'GET',
+				params: {
+					templateFileName: name
+				}
+			});
 		}
 
 

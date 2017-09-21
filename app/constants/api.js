@@ -5,10 +5,17 @@ angular.module('com.app').constant('api', {
     dashboard: {
       root: {name: '概览'}
     },
+    itemToCheck: {
+      root: {name: '检测结果录入'}
+    },
     checkItem: {
       root: {name: '检测库管理'},
       list: {name: '检测项管理', url: 'app.checkItem.list'},
       manage: {name: '自定义管理', url: 'app.checkItem.manage'}
+    },
+    func: {
+      root: {name: '功能管理'},
+      template: {name: '模板管理', url: 'app.func.template'}
     },
     business: {
       root: {name: '业务管理'},
@@ -22,8 +29,9 @@ angular.module('com.app').constant('api', {
         create: {name: '接样录入', url: 'app.business.sample.create'},
         detail: {name: '接样单详情', url: 'app.business.sample.detail'}
       },
-      inspection: {
-        root: {name: '检测项目', url: 'app.business.inspection'}
+      report: {
+        root: {name: '报告项目', url: 'app.business.report'},
+        detail: {name: '报告详情', url: 'app.business.sample.detail'}
       }
     },
     privilege: {

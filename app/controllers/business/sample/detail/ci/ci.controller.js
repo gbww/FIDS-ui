@@ -11,15 +11,19 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
   }
 
 
+  vm.catalogLoading = true;
   $scope.$emit('refreshSample');
   $scope.$on('sampleInfo', function (event, sample) {
     vm.sample = sample;
-    CheckItemService.getCICatalogInfo('1').then(function (response) {
+    CheckItemService.getChildCatalog('-1').then(function (response) {
+      vm.catalogLoading = false;
       var data = response.data.entity;
-      angular.merge(data, {name: data.productName, isParent: data.isCatalog=='1'})
+      angular.forEach(data, function (item) {
+        angular.merge(item, {name: item.productName, isParent: item.isCatalog=='1'})
+      })
       vm.tree = $.fn.zTree.init($("#inspectTree"), setting, data);
       vm.getSampleCi();
-  	})
+    })
   })
 
   vm.getSampleCi = function () {
@@ -115,7 +119,7 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
             }).catch(function (err) {
               $rootScope.loading = false;
               defered.reject('');
-              toastr.error(err.data.message);
+              toastr.error(err.data);
             });
             return defered.promise;
           }]

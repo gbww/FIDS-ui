@@ -11,7 +11,7 @@ angular.module('com.app').controller('EditSampleCiCtrl', function ($uibModalInst
   			toastr.error(response.data.message);
   		}
   	}).catch(function (err) {
-  		toastr.error(err.data.message);
+  		toastr.error(err.data);
   	})
   }
 

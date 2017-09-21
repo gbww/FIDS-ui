@@ -16,7 +16,7 @@ angular.module('com.app').controller('RecordCommentCtrl', function ($scope, $uib
         toastr.error(response.data.message);
       }
     }).catch(function (err) {
-      toastr.error(err.data.message);
+      toastr.error(err.data);
     })
   }
 
