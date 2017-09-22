@@ -14,19 +14,24 @@ angular.module('com.app').directive('customSelect', [function () {
 		link: function (scope, element) {
 			scope.show = false;
 
-			scope.showPanel = function (event) {
+			scope.togglePanel = function (event) {
 				event.stopPropagation();
-				scope.show = !scope.show;
+				event.preventDefault();
+				var initHide = $(event.target).next().hasClass('ng-hide');
+				$('.select-wrapper').find('ul').addClass('ng-hide');
+				if (initHide) {
+					$(event.target).next().removeClass('ng-hide');
+				}
 			}
 
 			scope.select = function (event, val) {
 				event.stopPropagation();
 				scope.model[scope.key] = val;
-				scope.show = false;
+				$(event.target).parents('ul').addClass('ng-hide');
 			}
 
 			$(document).click(function () {
-				scope.show = false;
+				$('.select-wrapper').find('ul').addClass('ng-hide');
 				scope.$apply();
 			})
 		}

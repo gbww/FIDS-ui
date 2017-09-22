@@ -11,44 +11,12 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $ti
   vm.executeStandardArr = ['标准一', '标准二'];
 
   vm.contract = {
-  	// sample_id: null,
-  	// protocol_id: null,
-  	// sample_name: null,
-  	// process_technology: null,
-  	// quality_level: null,
-  	// specification_quantity: null,
-  	// product_date: null,
-  	// storage_condition: null,
-  	// storage_time: null,
-  	// sample_traits: null,
-  	// process_demand: null,
-  	// detect_purpose: null,
-  	// other_data: null,
-  	// detectType: '委托检验',
-  	// detect_project: null,
-  	// executeStandard: '标准一',
-  	// detect_by: null,
   	isUseStandard: '0',
   	isSubcontracting: '0',
   	isExpedited: '0',
   	isEvaluation: '0',
-  	// product_unit: null,
-  	// inspection_unit: null,
-  	// sampling_address: null,
-  	// inspection_unit_address: null,
-  	// zip_code: null,
-  	// phone: null,
-  	// fax: null,
-  	// contact_person: null,
   	reportMethod: 'self',
   	reportCount: 1,
-  	// inspection_user: null,
-  	// inspection_date: null,
-  	// acceptor: null,
-  	// acceptance_date: null,
-  	// cost: null,
-  	// activity1: null,
-  	// process_id: null,
   	extra: null
   }
 
@@ -56,10 +24,6 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $ti
   vm.validateProtocolId = function () {
     $timeout.cancel(vm.validTimeout);
     var id = vm.contract.protocolId;
-    // if (!id || id === '') {
-    //   vm.validateProtocolId = true;
-    //   return;
-    // }
     vm.validTimeout = $timeout(function () {
       vm.validating = true;
       ContractService.validateProtocolId(id).then(function (response) {
@@ -80,10 +44,7 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $ti
 	  	isUseStandard: parseInt(vm.contract.isUseStandard),
 	  	isSubcontracting: parseInt(vm.contract.isSubcontracting),
 	  	isExpedited: parseInt(vm.contract.isExpedited),
-	  	isEvaluation: parseInt(vm.contract.isEvaluation),
-      productDate: vm.contract.productDate ? new Date(vm.contract.productDate).toLocaleString() : null,
-      inspectionDate: vm.contract.inspectionDate ? new Date(vm.contract.inspectionDate).toLocaleString() : null,
-      acceptanceDate: vm.contract.acceptanceDate ? new Date(vm.contract.acceptanceDate).toLocaleString() : null
+	  	isEvaluation: parseInt(vm.contract.isEvaluation)
   	});
 
 		ContractService.createContract(data).then(function (response) {

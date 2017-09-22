@@ -21,10 +21,7 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($scope,
       isUseStandard: parseInt(vm.contract.isUseStandard),
       isSubcontracting: parseInt(vm.contract.isSubcontracting),
       isExpedited: parseInt(vm.contract.isExpedited),
-      isEvaluation: parseInt(vm.contract.isEvaluation),
-      productDate: vm.contract.productDate ? new Date(vm.contract.productDate).toLocaleString() : null,
-      inspectionDate: vm.contract.inspectionDate ? new Date(vm.contract.inspectionDate).toLocaleString() : null,
-      acceptanceDate: vm.contract.acceptanceDate ? new Date(vm.contract.acceptanceDate).toLocaleString() : null
+      isEvaluation: parseInt(vm.contract.isEvaluation)
     });
 
   	ContractService.editContract(vm.contract.id, data).then(function (response) {

@@ -1,7 +1,7 @@
 <div class="select-wrapper">
-	<input class="input" name="{{name}}" ng-model="model[key]" ng-click="showPanel($event)" required ng-if="name">
-	<input class="input" name="{{name}}" ng-model="model[key]" ng-click="showPanel($event)" ng-if="!name">
-	<ul ng-show="show">
+	<input class="input" name="{{name}}" ng-model="model[key]" ng-click="togglePanel($event)" required ng-if="name">
+	<input class="input" name="{{name}}" ng-model="model[key]" ng-click="togglePanel($event)" ng-if="!name">
+	<ul class="ng-hide">
 		<li ng-repeat="option in availArr track by $index">
 			<a ng-click="select($event, option)">{{ option }}</a>
 		</li>
