@@ -169,6 +169,14 @@ input[type="checkbox"], input[type="radio"]{
     background-repeat: no-repeat;
     background-position: 3% 55%;
   }
+  &.date {
+    vertical-align: middle;
+    padding-right: 25px;
+    background-image: url(./images/calendar.png);
+    background-repeat: no-repeat;
+    background-position: 98% 55%;
+    cursor: pointer;
+  }
 }
 
 .pt, .pt-2{
@@ -324,6 +332,9 @@ i+span {
         color: $blue-color;
       }
     }
+  }
+  &[class-name='form-control'] ul {
+    top: 34px;
   }
 }
 

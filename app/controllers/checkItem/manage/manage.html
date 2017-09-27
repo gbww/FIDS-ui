@@ -47,15 +47,15 @@
 			</div>
 
 			<ul id="folder" class="context-menu">
-				<li ng-click="vm.addChildNode()">添加子节点</li>
-				<li ng-click="vm.addSiblingNode()">添加兄弟节点</li>
-				<li ng-click="vm.editNode()">编辑</li>
+				<li ng-click="vm.addChildNode()">添加下级目录</li>
+				<li ng-click="vm.addSiblingNode()">添加同级目录</li>
+				<li ng-click="vm.editNode()">重命名</li>
 				<li ng-click="vm.deleteNode()">删除</li>
 			</ul>
 			<ul id="file" class="context-menu">
-				<li ng-click="vm.addSiblingNode()">添加兄弟节点</li>
+				<li ng-click="vm.addSiblingNode()">添加同级目录</li>
 				<li ng-click="vm.addCheckItem()">添加检测项</li>
-				<li ng-click="vm.editNode()">编辑</li>
+				<li ng-click="vm.editNode()">重命名</li>
 				<li ng-click="vm.deleteNode()">删除</li>
 			</ul>
 		</div>

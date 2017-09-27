@@ -5,21 +5,21 @@
 				<th>评审人</th>
 				<th>评审时间</th>
 				<th>结论</th>
-				<th style="width:140px">操作</th>
+				<!-- <th style="width:140px">操作</th> -->
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-if="vm.loading">
-				<td colspan="4" class="text-center"><i class="fa fa-pluse fa-spinner"></i></td>
+				<td colspan="3" class="text-center"><i class="fa fa-pluse fa-spinner"></i></td>
 			</tr>
 			<tr ng-if="!vm.loading && vm.comments.length === 0">
-				<td colspan="4" class="text-center">暂未开始评审</td>
+				<td colspan="3" class="text-center">暂未开始评审</td>
 			</tr>
 			<tr ng-repeat="item in vm.comments | orderBy:time:true track by $index" ng-if="!vm.loading">
 				<td>{{ item.userName }}</td>
 				<td>{{ item.createTime }}</td>
 				<td>{{ item.context }}</td>
-				<td class="dropdown-col">
+				<!-- <td class="dropdown-col">
 					<div class="btn-group" ng-if="item.userName == 'zhangsna'">
 						<button class="btn btn-default" ng-click="vm.edit()">
 							<i class="fa fa-edit"></i><span>编辑</span>
@@ -33,7 +33,7 @@
 							</li>
 						</ul>
 					</div>
-				</td>
+				</td> -->
 			</tr>
 		</tbody>
 	</table>

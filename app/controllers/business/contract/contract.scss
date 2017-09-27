@@ -1,6 +1,6 @@
 .business-contract-detail-list {
 	.tab-content {
-		position: relative;
+		@include flex(flex, column);
 	}
 }
 
@@ -14,6 +14,14 @@
 			top: 50%;
 			margin-top: -7px;
 		}
+	}
+}
+
+.start-comment-process {
+	.col-sm-8 {
+		padding-left: 0;
+		padding-right: 0;
+		margin-left: 15px;
 	}
 }
 

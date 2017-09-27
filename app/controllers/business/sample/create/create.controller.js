@@ -1,33 +1,36 @@
 'use strict';
 
-angular.module('com.app').controller('SampleCreateCtrl', function ($state, $uibModal, api, toastr, SampleService) {
+angular.module('com.app').controller('SampleCreateCtrl', function ($state, $uibModal, api, toastr, SampleService, templateMap) {
   var vm = this;
 
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root, businessBC.sample.create];
 
+  vm.coverTypeArr = templateMap.coverType;
+  vm.reportTypeArr = templateMap.reportType;
+
   vm.checkTypeArr = ['监督检验', '省级食品安全监', '委托检验', '发证检验'];
   vm.sampleLinkArr = ['流通环节', '餐饮环节', '生产环节'];
   vm.sampleCirculateArr = ['生产日期', '加工日期', '购进日期', '消毒日期'];
-  vm.sampleWayArr = ['接样方式一'];
-  vm.specificationModelArr = ['规格一'];
-  vm.executeStandardArr = ['标准一', '标准二'];
-  vm.processingTechnologyArr = ['等级一'];
-  vm.closedStatusArr = ['状态一'];
-  vm.sampleStatusArr = ['状态一'];
-  vm.sampleBasenumberArr = ['基数一'];
+  vm.sampleWayArr = ['随机抽样', '掷骰抽样'];
+  vm.specificationModelArr = ['计量称重', '散装', 'kg/袋', 'g/袋', 'ml/瓶', 'L/瓶', 'L/桶', 'g/盒', 'kg/盒', 'ml/盒', 'L/盒'];
+  vm.executeStandardArr = ['GB/T 23587-2009'];
+  vm.processingTechnologyArr = ['合格品', '优等品', '一等品', '二等品', '三等品', '四等品', ];
+  vm.closedStatusArr = ['封样完好', '封样破损'];
+  vm.sampleStatusArr = ['固体', '液体', '半固体', '气体', '完好、新鲜、无异味', '腐烂、有异味'];
+  vm.sampleBasenumberArr = ['瓶', '袋', 'g', 'kg', 'L', 'ml'];
   vm.saveWayArr = ['常温', '冷冻', '冷藏'];
-  vm.sampleNamesArr = ['zhangsan'];
-  vm.responsiblePersonArr = ['lisi'];
-  vm.receiveUserArr = ['wangwu'];
-  vm.subpackageArr = ['分包一'];
+  vm.sampleNamesArr = ['鲍仕峰 陶云飞', '杨洋 李振凡', '张磊 徐斌'];
+  vm.responsiblePersonArr = [];
+  vm.receiveUserArr = [];
+  vm.subpackageArr = ['农标中心'];
 
   vm.sample = {
     reportPageNumber: 1,
-    sampleType: 'food',
-    reportLayout: 'singleVersion',
-    coverLayout: 'test',
-    sampleNumber: 1,
+    sampleType: '食品',
+    reportLayout: vm.reportTypeArr.length > 0 ? vm.reportTypeArr[0] : '',
+    coverLayout: vm.coverTypeArr.length > 0 ? vm.coverTypeArr[0] : '',
+    // sampleNumber: 1,
     drawUser: api.userInfo.username,
     status: 0,
   }

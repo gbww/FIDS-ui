@@ -13,7 +13,7 @@ angular.module('com.app').controller('ItemToCheckCtrl', function ($uibModal, api
     vm.searchObject.timestamp = new Date();
   }
 
-  vm.status = '5';
+  vm.status = '1';
   vm.checkItems = [];
   vm.loading = true;
   vm.getCheckItemList = function (tableState) {

@@ -12,6 +12,7 @@ angular.module('com.app').controller('CustomAddCatalogCtrl', function ($scope, $
       isCatalog: '0'
     }
   }
+  vm.catalog.productId = 'toDelete';
 
   vm.ok = function () {
   	$uibModalInstance.close(vm.catalog);

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('BusinessReportCtrl', function ($state, api, toastr, SampleService) {
+angular.module('com.app').controller('BusinessReportCtrl', function ($state, $uibModal, $timeout, api, toastr, SampleService) {
   var vm = this;
 
   var businessBC = api.breadCrumbMap.business;
@@ -53,10 +53,56 @@ angular.module('com.app').controller('BusinessReportCtrl', function ($state, api
     $state.go('app.business.report.detail.info', {id: id});
   }
 
-  vm.export = function (id) {
-    SampleService.exportFile(id, 'template.xls').then(function () {
+  vm.export = function (sample) {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      size: 'md',
+      backdrop: 'static',
+      templateUrl: 'controllers/business/report/export/export.html',
+      controller: 'ReportExportCtrl as vm',
+      resolve: {
+        templateMap: ['$rootScope', '$q', 'TemplateService', function ($rootScope, $q, TemplateService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
 
-    })
+          TemplateService.filterTemplate().then(function (response) {
+            $rootScope.loading = false;
+            var coverTemplates = [], reportTemplates = [];
+            if (response.data.success) {
+              var templates = response.data.entity.list;
+              angular.forEach(templates, function (item) {
+                if (item.category == '0' && sample.coverLayout == item.type) {
+                  coverTemplates.push(item);
+                } else if (item.category == '1' && sample.reportLayout == item.type) {
+                  reportTemplates.push(item);
+                }
+              })
+            }
+            deferred.resolve({
+              coverTemplates: coverTemplates,
+              reportTemplates: reportTemplates
+            })
+          }).catch(function (){
+            $rootScope.loading = false;
+            deferred.resolve({
+              coverTemplates: [],
+              reportTemplates: []
+            })
+          });
+          return deferred.promise;
+        }]
+      }
+    });
+
+    modalInstance.result.then(function (res) {
+      var iframe = document.createElement('iframe');
+      iframe.src = '/api/v1/ahgz/sample/items/excel/' + sample.receiveSampleId + '?templateFileName=' + res;
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+      $timeout(function () {
+        document.body.removeChild(iframe);
+      }, 1000)
+    });
   }
 
 });

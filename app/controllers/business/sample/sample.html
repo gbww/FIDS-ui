@@ -8,11 +8,6 @@
 			</button>
 
 			<ul class="statusBar clearfix">
-        <li ng-class="{'active': vm.status === '5'}">
-          <a ng-click="vm.searchStatus('5')">
-            <span>所有</span>
-          </a>
-        </li>
         <li ng-class="{'active': vm.status === '0'}">
           <a ng-click="vm.searchStatus('0')">
             <span>未完成</span>
@@ -21,6 +16,11 @@
         <li ng-class="{'active': vm.status === '1'}">
           <a ng-click="vm.searchStatus('1')">
             <span>完成</span>
+          </a>
+        </li>
+        <li ng-class="{'active': vm.status === '5'}">
+          <a ng-click="vm.searchStatus('5')">
+            <span>所有</span>
           </a>
         </li>
       </ul>
@@ -52,10 +52,8 @@
 				<tr ng-if="!vm.loading && vm.samples.length === 0">
 					<td colspan="9" class="text-center">暂无接样单</td>
 				</tr>
-				<tr ng-repeat="sample in vm.samples track by $index" ng-if="!vm.loading">
-					<td>
-						<a href ng-click="vm.selectSample(sample)">{{ sample.receiveSampleId }}</a>
-					</td>
+				<tr ng-repeat="sample in vm.samples track by $index" ng-if="!vm.loading" ng-click="vm.selectSample(sample)">
+					<td>{{ sample.receiveSampleId }}</td>
 					<td>{{ sample.protocolId }}</td>
 					<td>{{ sample.sampleType }}</td>
 					<td>{{ sample.checkType }}</td>

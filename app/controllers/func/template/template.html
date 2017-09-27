@@ -1,11 +1,57 @@
-<div class="p-template-list">
+<div class="template-list">
 	<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+
 	<div class="pt-2">
 		<div class="toolbar clearfix">
 			<button class="btn btn-default-dark" ng-click="vm.upload()">
 				<i class="fa fa-upload"></i>
 				<span>上传模板</span>
 			</button>
+			<div class="pull-right">
+				<input class="input" placeholder="请输入名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
+				<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+			</div>
 		</div>
+		<table class="pt-table" st-table="vm.templates" st-pipe="vm.getTemplateList">
+			<thead st-search-watch="vm.searchObject">
+				<tr>
+					<th>模板名称</th>
+					<th>类别</th>
+					<th>类型</th>
+					<th>描述</th>
+					<th>上传时间</th>
+					<th style="width: 140px">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-if="vm.loading">
+					<td colspan="6" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+				</tr>
+				<tr ng-if="!vm.loading && vm.templates.length == 0">
+					<td colspan="6" class="text-center">暂无模板</td>
+				</tr>
+				<tr ng-repeat="item in vm.templates track by item.id" ng-if="!vm.loading">
+					<td>{{ item.name }}</td>
+					<td>
+						<span ng-if="item.category == '0'">封面</span>
+						<span ng-if="item.category == '1'">正文</span>
+					</td>
+					<td>{{ item.type }}</td>
+					<td>{{ item.description }}</td>
+					<td>{{ item.createdAt | date:'medium' }}</td>
+					<td>
+						<button class="btn btn-default" ng-click="vm.edit(item)">编辑</button>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="6">
+						<div st-idp st-total-count="vm.total"></div>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
 	</div>
 </div>
+

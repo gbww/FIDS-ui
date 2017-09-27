@@ -80,6 +80,38 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 				controller: 'SampleCreateCtrl as vm'
 			}
 		},
+		resolve: {
+			templateMap: ['$rootScope', '$q', 'TemplateService', function ($rootScope, $q, TemplateService) {
+				$rootScope.loading = true;
+				var deferred = $q.defer();
+
+				TemplateService.filterTemplate().then(function (response) {
+					$rootScope.loading = false;
+					var coverType = [], reportType = [];
+					if (response.data.success) {
+						var templates = response.data.entity.list;
+						angular.forEach(templates, function (item) {
+							if (item.category == '0' && coverType.indexOf(item.type) == -1) {
+								coverType.push(item.type);
+							} else if (item.category == '1' && reportType.indexOf(item.type) == -1) {
+								reportType.push(item.type);
+							}
+						})
+					}
+					deferred.resolve({
+						coverType: coverType,
+						reportType: reportType
+					})
+				}).catch(function (){
+					$rootScope.loading = false;
+					deferred.resolve({
+						coverType: [],
+						reportType: []
+					})
+				});
+				return deferred.promise;
+			}]
+		}
 	});
 
 	$stateProvider.state('app.business.sample.detail', {
@@ -96,7 +128,39 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider.state('app.business.sample.detail.info', {
 		url: '/info',
 		templateUrl: 'controllers/business/sample/detail/info/info.html',
-		controller: 'SampleDetailInfoCtrl as vm'
+		controller: 'SampleDetailInfoCtrl as vm',
+		resolve: {
+			templateMap: ['$rootScope', '$q', 'TemplateService', function ($rootScope, $q, TemplateService) {
+				$rootScope.loading = true;
+				var deferred = $q.defer();
+
+				TemplateService.filterTemplate().then(function (response) {
+					$rootScope.loading = false;
+					var coverType = [], reportType = [];
+					if (response.data.success) {
+						var templates = response.data.entity.list;
+						angular.forEach(templates, function (item) {
+							if (item.category == '0' && coverType.indexOf(item.type) == -1) {
+								coverType.push(item.type);
+							} else if (item.category == '1' && reportType.indexOf(item.type) == -1) {
+								reportType.push(item.type);
+							}
+						})
+					}
+					deferred.resolve({
+						coverType: coverType,
+						reportType: reportType
+					})
+				}).catch(function (){
+					$rootScope.loading = false;
+					deferred.resolve({
+						coverType: [],
+						reportType: []
+					})
+				});
+				return deferred.promise;
+			}]
+		}
 	});
 
 	$stateProvider.state('app.business.sample.detail.ci', {
@@ -114,37 +178,6 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 		controller: 'BusinessReportCtrl as vm'
 	});
 
-	// $stateProvider.state('app.business.report.detail', {
-	// 	url: '/:id',
-	// 	views: {
-	// 		'@app.business': {
-	// 			templateUrl: 'controllers/business/report/detail/detail.html',
-	// 			controller: 'ReportDetailCtrl as vm'
-	// 		}
-	// 	},
-	// 	resolve: {
-	// 		report: ['$rootScope', '$q', '$stateParams', 'SampleService', 'toastr', function ($rootScope, $q, $stateParams, SampleService, toastr) {
-	// 			var deferred = $q.defer();
-	// 			var sampleId = $stateParams.id;
-	// 			$rootScope.loading = true;
-	// 			SampleService.getSampleInfo(sampleId).then(function (response) {
-	// 				$rootScope.loading = false;
-	// 				if (response.data.success) {
-	// 					deferred.resolve(response.data.entity);
-	// 				} else {
-	// 					deferred.reject();
-	// 					toastr.error(response.data.message);
-	// 				}
-	// 			}).catch(function (err) {
-	// 				$rootScope.loading = false;
-	// 				deferred.reject();
-	// 				toastr.error(err.data);
-	// 			});
-	// 			return deferred.promise;
-	// 		}]
-	// 	}
-	// });
-
 	$stateProvider.state('app.business.report.detail', {
 		url: '/{:id}',
 		views: {
@@ -159,7 +192,39 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider.state('app.business.report.detail.info', {
 		url: '/info',
 		templateUrl: 'controllers/business/report/detail/info/info.html',
-		controller: 'ReportDetailInfoCtrl as vm'
+		controller: 'ReportDetailInfoCtrl as vm',
+		resolve: {
+			templateMap: ['$rootScope', '$q', 'TemplateService', function ($rootScope, $q, TemplateService) {
+				$rootScope.loading = true;
+				var deferred = $q.defer();
+
+				TemplateService.filterTemplate().then(function (response) {
+					$rootScope.loading = false;
+					var coverType = [], reportType = [];
+					if (response.data.success) {
+						var templates = response.data.entity.list;
+						angular.forEach(templates, function (item) {
+							if (item.category == '0' && coverType.indexOf(item.type) == -1) {
+								coverType.push(item.type);
+							} else if (item.category == '1' && reportType.indexOf(item.type) == -1) {
+								reportType.push(item.type);
+							}
+						})
+					}
+					deferred.resolve({
+						coverType: coverType,
+						reportType: reportType
+					})
+				}).catch(function (){
+					$rootScope.loading = false;
+					deferred.resolve({
+						coverType: [],
+						reportType: []
+					})
+				});
+				return deferred.promise;
+			}]
+		}
 	});
 
 	$stateProvider.state('app.business.report.detail.ci', {

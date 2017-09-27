@@ -159,9 +159,9 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
       }
     })
 
-    modalInstance.result.then(function (res) {
-      vm.goDetail(contract.id, 'comment');
-    })
+    // modalInstance.result.then(function (res) {
+    //   vm.goDetail(contract.id, 'comment');
+    // })
   }
 
   vm.delete = function (contract) {

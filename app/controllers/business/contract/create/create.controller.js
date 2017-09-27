@@ -8,7 +8,7 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $ti
 
   vm.storageConditionArr = ['常温', '冷冻', '冷藏'];
   vm.detectTypeArr = ['监督检验', '省级食品安全监', '委托检验', '发证检验'];
-  vm.executeStandardArr = ['标准一', '标准二'];
+  vm.executeStandardArr = ['GB/T 23587-2009'];
 
   vm.contract = {
   	isUseStandard: '0',

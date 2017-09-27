@@ -25,9 +25,9 @@
 						<span class="item-required">样品类别</span>
 					</td>
 					<td>
-						<input type="radio" ng-model="vm.sample.sampleType" value="food">食品&emsp;&emsp;&emsp;
-						<input type="radio" ng-model="vm.sample.sampleType" value="feed">饲料&emsp;&emsp;&emsp;
-						<input type="radio" ng-model="vm.sample.sampleType" value="env">环境
+						<input type="radio" id="food" ng-model="vm.sample.sampleType" value="食品"><label for="food">食品</label>&emsp;&emsp;&emsp;
+						<input type="radio" id="feed" ng-model="vm.sample.sampleType" value="饲料"><label for="feed">饲料</label>&emsp;&emsp;&emsp;
+						<input type="radio" id="env" ng-model="vm.sample.sampleType" value="环境"><label for="env">环境</label>
 					</td>
 					<td class="item-title">
 						<span class="item-required">检验类型</span>
@@ -44,17 +44,17 @@
 						<span>报告格式</span>
 					</td>
 					<td>
-						<input type="radio" ng-model="vm.sample.reportLayout" value="singleVersion">单页版&emsp;&emsp;
-						<input type="radio" ng-model="vm.sample.reportLayout" value="entrustVersion">委托版&emsp;&emsp;
-						<input type="radio" ng-model="vm.sample.reportLayout" value="standardVersion">标准版&emsp;&emsp;
-						<input type="radio" ng-model="vm.sample.reportLayout" value="greenVersion">绿色版&emsp;&emsp;
+						<div style="display: inline-block" ng-repeat="option in vm.reportTypeArr track by $index">
+							<input type="radio" id="{{option}}" ng-model="vm.sample.reportLayout" value="{{option}}"><label for="{{option}}">{{option}}</label>&emsp;&emsp;
+						</div>
 					</td>
 					<td class="item-title">
 						<span>封面格式</span>
 					</td>
 					<td>
-						<input type="radio" ng-model="vm.sample.coverLayout" value="test">test&emsp;&emsp;
-						<input type="radio" ng-model="vm.sample.coverLayout" value="test1">test1&emsp;&emsp;
+						<div style="display: inline-block" ng-repeat="option in vm.coverTypeArr track by $index">
+							<input type="radio" id="{{option}}" ng-model="vm.sample.coverLayout" value="{{option}}"><label for="{{option}}">{{option}}</label>&emsp;&emsp;
+						</div>
 					</td>
 				</tr>
 				<tr>
@@ -190,7 +190,7 @@
 						<span>样品流通日期</span>
 					</td>
 					<td>
-						<input class="input" ng-model="vm.sample.sampleCirculateDate" datepicker>
+						<input class="input date" ng-model="vm.sample.sampleCirculateDate" datepicker>
 					</td>
 				</tr>
 
@@ -199,10 +199,10 @@
 						<span>接样时间</span>
 					</td>
 					<td>
-						<input class="input" ng-model="vm.sample.sampleDate" datepicker>
+						<input class="input date" ng-model="vm.sample.sampleDate" datepicker>
 					</td>
 					<td class="item-title">
-						<span>接样方式</span>
+						<span>抽样方式</span>
 					</td>
 					<td>
 						<div custom-select avail-arr="vm.sampleWayArr" model="vm.sample" key="sampleWay"></div>
@@ -244,10 +244,11 @@
 						<span>样品数</span>
 					</td>
 					<td>
-						<input class="input" type="number" name="sampleNumber" ng-model="vm.sample.sampleNumber" ng-pattern="/^[0-9]*$/">
+						<input class="input" name="sampleNumber" ng-model="vm.sample.sampleNumber">
+						<!-- <input class="input" type="number" name="sampleNumber" ng-model="vm.sample.sampleNumber" ng-pattern="/^[0-9]*$/">
 						<div ng-if="form.sampleNumber.$dirty || vm.submitted" ng-messages="form.sampleNumber.$error">
 							<label class="error-messages" ng-message="pattern"><i></i>请输入整数</label>
-						</div>
+						</div> -->
 					</td>
 					<td class="item-title">
 						<span>样品状态</span>
@@ -272,7 +273,7 @@
 				</tr>
 				<tr>
 					<td class="item-title">
-						<span>接样人或单位</span>
+						<span>抽样人或单位</span>
 					</td>
 					<td>
 						<div custom-select avail-arr="vm.sampleNamesArr" model="vm.sample" key="sampleNames"></div>
@@ -326,7 +327,7 @@
 						<span>收样日期</span>
 					</td>
 					<td>
-						<input class="input" ng-model="vm.sample.receiveDate" datepicker>
+						<input class="input date" ng-model="vm.sample.receiveDate" datepicker>
 					</td>
 				</tr>
 				<tr>
@@ -334,13 +335,13 @@
 						<span>约定完成日期</span>
 					</td>
 					<td>
-						<input class="input" ng-model="vm.sample.arrangeFinishDate" datepicker>
+						<input class="input date" ng-model="vm.sample.arrangeFinishDate" datepicker>
 					</td>
 					<td class="item-title">
 						<span>要求完成日期</span>
 					</td>
 					<td>
-						<input class="input" ng-model="vm.sample.finishDate" datepicker>
+						<input class="input date" ng-model="vm.sample.finishDate" datepicker>
 					</td>
 				</tr>
 				<tr>

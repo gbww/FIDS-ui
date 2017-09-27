@@ -1,7 +1,7 @@
 .business-sample-list {
 	.pt-2 {
-		position: relative;
 		min-height: 300px;
+		@include flex(flex, column);
 	}
 	.switch input+label+span {
 		&:before {
@@ -14,6 +14,6 @@
 }
 .business-sample-detail-list {
 	.tab-content {
-		position: relative;
+		@include flex(flex, column);
 	}
 }

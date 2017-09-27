@@ -14,7 +14,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     vm.searchObject.timestamp = new Date();
   }
 
-  vm.status = '5';
+  vm.status = '0';
   vm.samples = [];
   vm.getSampleList = function (tableState) {
     vm.loading = true;
@@ -75,6 +75,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     SampleService.editSample(data).then(function (response) {
       if (response.data.success) {
         sample.status == 0 ? sample.status = 1 : sample.status = 0;
+        vm.refreshTable();
       } else {
         toastr.error(response.data.message);
       }

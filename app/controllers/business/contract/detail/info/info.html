@@ -4,12 +4,13 @@
 			<table class="form-table">
 				<tr>
 					<td class="item-title validate-waiting">
-						<span class="item-required">协议编号</span>
+						<span class="item-required">合同编号</span>
 					</td>
 					<td>
 						<input class="input" name="protocol_id" ng-model="vm.contract.protocolId" disabled>
 					</td>
-					<td class="item-title">
+					<td colspan="2"></td>
+					<!-- <td class="item-title">
 						<span class="item-required">样品编号</span>
 					</td>
 					<td>
@@ -17,7 +18,7 @@
 						<div ng-if="form.sample_id.$dirty || vm.submitted" ng-messages="form.sample_id.$error">
 							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
 						</div>
-					</td>
+					</td> -->
 				</tr>
 				<tr>
 					<td class="item-title">
@@ -55,7 +56,7 @@
 						<span>生产日期或批号</span>
 					</td>
 					<td>
-						<input class="input" ng-model="vm.contract.productDate" datepicker>
+						<input class="input date" ng-model="vm.contract.productDate" datepicker>
 					</td>
 					<td class="item-title">
 						<span>保存条件</span>
@@ -131,15 +132,15 @@
 						<span>是否同意使用非标准方法</span>
 					</td>
 					<td>
-						<input type="radio" ng-model="vm.contract.isUseStandard" value="1">是&emsp;&emsp;
-						<input type="radio" ng-model="vm.contract.isUseStandard" value="0">否
+						<input type="radio" id="standard1" ng-model="vm.contract.isUseStandard" value="1"><label for="standard1">是</label>&emsp;&emsp;
+						<input type="radio" id="standard0" ng-model="vm.contract.isUseStandard" value="0"><label for="standard0">否</label>
 					</td>
 					<td class="item-title">
 						<span>是否同意分包</span>
 					</td>
 					<td>
-						<input type="radio" ng-model="vm.contract.isSubcontracting" value="1">是&emsp;&emsp;
-						<input type="radio" ng-model="vm.contract.isSubcontracting" value="0">否
+						<input type="radio" id="sub1" ng-model="vm.contract.isSubcontracting" value="1"><label for="sub1">是</label>&emsp;&emsp;
+						<input type="radio" id="sub0" ng-model="vm.contract.isSubcontracting" value="0"><label for="sub0">否</label>
 					</td>
 				</tr>
 				<tr>
@@ -147,15 +148,15 @@
 						<span>是否需要加急</span>
 					</td>
 					<td>
-						<input type="radio" ng-model="vm.contract.isExpedited" value="1">是&emsp;&emsp;
-						<input type="radio" ng-model="vm.contract.isExpedited" value="0">否
+						<input type="radio" id="expedited1" ng-model="vm.contract.isExpedited" value="1"><label for="expedited1">是</label>&emsp;&emsp;
+						<input type="radio" id="expedited0" ng-model="vm.contract.isExpedited" value="0"><label for="expedited0">否</label>
 					</td>
 					<td class="item-title">
 						<span>是否需要评价</span>
 					</td>
 					<td>
-						<input type="radio" ng-model="vm.contract.isEvaluation" value="1">是&emsp;&emsp;
-						<input type="radio" ng-model="vm.contract.isEvaluation" value="0">否
+						<input type="radio" id="evaluate1" ng-model="vm.contract.isEvaluation" value="1"><label for="evaluate1">是</label>&emsp;&emsp;
+						<input type="radio" id="evaluate0" ng-model="vm.contract.isEvaluation" value="0"><label for="evaluate0">否</label>
 					</td>
 				</tr>
 			</table>
@@ -222,8 +223,8 @@
 						<span>取报告方式</span>
 					</td>
 					<td>
-						<input type="radio" ng-model="vm.contract.reportMethod" value="self">自取&emsp;&emsp;
-						<input type="radio" ng-model="vm.contract.reportMethod" value="mail">邮寄
+						<input type="radio" id="self" ng-model="vm.contract.reportMethod" value="self"><label for="self">自取</label>&emsp;&emsp;
+						<input type="radio" id="mail" ng-model="vm.contract.reportMethod" value="mail"><label for="mail">邮寄</label>
 					</td>
 					<td class="item-title">
 						<span>需检测报告份数</span>
@@ -246,7 +247,7 @@
 						<span>送检日期</span>
 					</td>
 					<td>
-						<input class="input" ng-model="vm.contract.inspectionDate" datepicker>
+						<input class="input date" ng-model="vm.contract.inspectionDate" datepicker>
 					</td>
 				</tr>
 				<tr>
@@ -260,7 +261,7 @@
 						<span>受理日期</span>
 					</td>
 					<td>
-						<input class="input" ng-model="vm.contract.acceptanceDate" datepicker>
+						<input class="input date" ng-model="vm.contract.acceptanceDate" datepicker>
 					</td>
 				</tr>
 				<tr>
@@ -268,7 +269,10 @@
 						<span>检测费用</span>
 					</td>
 					<td>
-						<input class="input" name="cost" ng-model="vm.contract.cost">
+						<input class="input" name="cost" ng-model="vm.contract.cost" ng-pattern="/^\d+(\.\d)?\d*$/">
+						<div ng-if="form.cost.$dirty || vm.submitted" ng-messages="form.cost.$error">
+							<label class="error-messages" ng-message="pattern"><i></i>请输入正确的数字</label>
+						</div>
 					</td>
 					<td colspan="2"></td>
 				</tr>

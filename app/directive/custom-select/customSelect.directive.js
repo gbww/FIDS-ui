@@ -8,11 +8,15 @@ angular.module('com.app').directive('customSelect', [function () {
 			model: '=',
 			key: '@',
 			availArr: '=',
-			name: '@'
+			name: '@',
+			className: '@'
 		},
 		templateUrl: 'directive/custom-select/customSelect.html',
 		link: function (scope, element) {
 			scope.show = false;
+			if (!scope.className) {
+				scope.className = 'input';
+			}
 
 			scope.togglePanel = function (event) {
 				event.stopPropagation();

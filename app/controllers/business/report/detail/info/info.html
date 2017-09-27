@@ -44,17 +44,17 @@
 						<span>报告格式</span>
 					</td>
 					<td>
-						<input type="radio" ng-model="vm.sample.reportLayout" value="singleVersion">单页版&emsp;&emsp;
-						<input type="radio" ng-model="vm.sample.reportLayout" value="entrustVersion">委托版&emsp;&emsp;
-						<input type="radio" ng-model="vm.sample.reportLayout" value="standardVersion">标准版&emsp;&emsp;
-						<input type="radio" ng-model="vm.sample.reportLayout" value="greenVersion">绿色版&emsp;&emsp;
+						<div style="display: inline-block" ng-repeat="option in vm.reportTypeArr">
+							<input type="radio" id="{{option}}" ng-model="vm.sample.reportLayout" value="{{option}}"><label for="{{option}}">{{option}}</label>&emsp;&emsp;
+						</div>
 					</td>
 					<td class="item-title">
 						<span>封面格式</span>
 					</td>
 					<td>
-						<input type="radio" ng-model="vm.sample.coverLayout" value="test">test&emsp;&emsp;
-						<input type="radio" ng-model="vm.sample.coverLayout" value="test1">test1&emsp;&emsp;
+						<div style="display: inline-block" ng-repeat="option in vm.coverTypeArr">
+							<input type="radio" id="{{option}}" ng-model="vm.sample.coverLayout" value="{{option}}"><label for="{{option}}">{{option}}</label>&emsp;&emsp;
+						</div>
 					</td>
 				</tr>
 			</table>
@@ -139,7 +139,7 @@
 						<span>接样时间</span>
 					</td>
 					<td>
-						<input type="date" class="input" name="sampleDate" ng-model="vm.sample.sampleDate">
+						<input class="input date" ng-model="vm.sample.sampleDate" datepicker>
 					</td>
 					<td class="item-title">
 						<span>接样方式</span>
@@ -184,10 +184,11 @@
 						<span>样品数</span>
 					</td>
 					<td>
-						<input class="input" type="number" name="sampleNumber" ng-model="vm.sample.sampleNumber" ng-pattern="/^[0-9]*$/">
+						<input class="input" name="sampleNumber" ng-model="vm.sample.sampleNumber">
+						<!-- <input class="input" type="number" name="sampleNumber" ng-model="vm.sample.sampleNumber" ng-pattern="/^[0-9]*$/">
 						<div ng-if="form.sampleNumber.$dirty || vm.submitted" ng-messages="form.sampleNumber.$error">
 							<label class="error-messages" ng-message="pattern"><i></i>请输入整数</label>
-						</div>
+						</div> -->
 					</td>
 					<td class="item-title">
 						<span>样品状态</span>
@@ -207,7 +208,7 @@
 						<span>收样日期</span>
 					</td>
 					<td>
-						<input class="input" type="date" name="receiveDate" ng-model="vm.sample.receiveDate">
+						<input class="input date" ng-model="vm.sample.receiveDate" datepicker>
 					</td>
 				</tr>
 			</table>

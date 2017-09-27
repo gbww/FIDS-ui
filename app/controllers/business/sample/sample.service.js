@@ -9,7 +9,7 @@ angular.module('com.app').factory('SampleService', function ($http) {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
           receivesampleid: searchName,
-          status: status || '5'
+          status: status
         }
 			})
 		},
