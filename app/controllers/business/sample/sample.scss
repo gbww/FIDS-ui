@@ -3,6 +3,9 @@
 		min-height: 300px;
 		@include flex(flex, column);
 	}
+	table.pt-table tbody tr.selected {
+		background-color: #d4eefb + #111;
+	}
 	.switch input+label+span {
 		&:before {
 			content: '否';

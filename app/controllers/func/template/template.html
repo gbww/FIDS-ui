@@ -40,7 +40,8 @@
 					<td>{{ item.description }}</td>
 					<td>{{ item.createdAt | date:'medium' }}</td>
 					<td>
-						<button class="btn btn-default" ng-click="vm.edit(item)">编辑</button>
+						<i class="fa fa-edit" ng-click="vm.edit(item)" title="编辑"></i>
+						<i class="fa fa-trash" ng-click="vm.delete(item)" title="删除"></i>
 					</td>
 				</tr>
 			</tbody>

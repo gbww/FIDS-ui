@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope, $state, $uibModal, api, dialog, toastr, SampleService, CheckItemService) {
+angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope, $state, $uibModal, $timeout, api, dialog, toastr, SampleService, CheckItemService) {
   var vm = this;
 
   var businessBC = api.breadCrumbMap.business;
@@ -332,8 +332,10 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     });
 
     modalInstance.result.then(function (res) {
-      toastr.success('检测项分配成功！');
-      vm.getSampleCi();
+      $timeout(function () {
+        toastr.success('检测项分配成功！');
+        vm.getSampleCi();
+      }, 500)
     });
   }
 

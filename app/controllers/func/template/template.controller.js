@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, api, TemplateService, toastr) {
+angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, api, TemplateService, toastr, dialog) {
   var vm = this;
 
   var funcBC = api.breadCrumbMap.func;
@@ -107,6 +107,24 @@ angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, ap
     modalInstance.result.then(function () {
       vm.refreshTable();
       toastr.success("模板修改成功！");
+    })
+  }
+
+  vm.delete = function (template) {
+    var result = dialog.confirm('确认删除模板 ' + template.name + ' ?');
+    result.then(function (res) {
+      if (res) {
+        TemplateService.deleteTemplate(template.id).then(function (response) {
+          if (response.data.success) {
+            vm.refreshTable();
+            toastr.success('模板删除成功！');
+          } else {
+            toastr.error(response.data.message);
+          }
+        }).catch(function (error) {
+          toastr.error(error.data.message)
+        });
+      }
     })
   }
 

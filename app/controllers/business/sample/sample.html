@@ -52,7 +52,7 @@
 				<tr ng-if="!vm.loading && vm.samples.length === 0">
 					<td colspan="9" class="text-center">暂无接样单</td>
 				</tr>
-				<tr ng-repeat="sample in vm.samples track by $index" ng-if="!vm.loading" ng-click="vm.selectSample(sample)">
+				<tr ng-repeat="sample in vm.samples track by $index" ng-if="!vm.loading" ng-click="vm.selectSample(sample)" ng-class="{'selected': vm.selectedSample.receiveSampleId == sample.receiveSampleId}">
 					<td>{{ sample.receiveSampleId }}</td>
 					<td>{{ sample.protocolId }}</td>
 					<td>{{ sample.sampleType }}</td>
@@ -160,16 +160,19 @@
 							<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
 							<td class="dropdown-col">
 								<div class="btn-group">
-									<button class="btn btn-default" ng-click="vm.edit(item)">
+									<!-- <button class="btn btn-default" ng-click="vm.edit(item)">
 										<i class="fa fa-edit"></i><span>编辑</span>
+									</button> -->
+									<button class="btn btn-default" ng-click="vm.distribute(item)">
+										<i class="fa fa-edit"></i><span>检测分配</span>
 									</button>
 									<button class="btn dropdown-toggle" data-toggle="dropdown">
 										<i class="caret"></i>
 									</button>
 									<ul class="dropdown-menu">
-										<li ng-click="vm.distribute(item)">
+										<!-- <li ng-click="vm.distribute(item)">
 											<a href><i class="fa fa-trash"></i><span>分配检测人员</span></a>
-										</li>
+										</li> -->
 										<li ng-click="vm.delete(item)">
 											<a href><i class="fa fa-trash"></i><span>删除</span></a>
 										</li>

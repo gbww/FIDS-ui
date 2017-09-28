@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $uibModal, api, dialog, toastr, ContractService) {
+angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $uibModal, $timeout, api, dialog, toastr, ContractService) {
   var vm = this;
 
   var businessBC = api.breadCrumbMap.business;
@@ -141,8 +141,10 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
   	});
 
     modalInstance.result.then(function () {
-      vm.refreshTable();
-      toastr.success('合同流程发起成功！');
+      $timeout(function () {
+        vm.refreshTable();
+        toastr.success('合同流程发起成功！');
+      }, 500);
     })
   }
 

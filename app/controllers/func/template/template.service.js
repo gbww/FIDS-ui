@@ -36,6 +36,13 @@ angular.module('com.app').factory('TemplateService', function ($http) {
 			});
 		},
 
+		deleteTemplate: function (id) {
+			return $http({
+				url: '/api/v1/ahgz/template/' + id,
+				method: 'DELETE'
+			});
+		},
+
 		editTemplate: function (template) {
 			return $http({
 				url: '/api/v1/ahgz/template',
