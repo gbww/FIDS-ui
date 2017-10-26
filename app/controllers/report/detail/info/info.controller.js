@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('com.app').controller('SampleDetailInfoCtrl', function ($scope, $uibModal, toastr, SampleService, templateMap) {
+angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, toastr, SampleService, templateMap) {
   var vm = this;
 
-  $scope.$emit('refreshSample');
-  $scope.$on('sampleInfo', function (event, sample) {
+  $scope.$emit('refreshReport');
+  $scope.$on('reportInfo', function (event, sample) {
   	vm.sample = sample;
   });
 
@@ -27,20 +27,6 @@ angular.module('com.app').controller('SampleDetailInfoCtrl', function ($scope, $
   vm.receiveUserArr = [];
   vm.subpackageArr = ['农标中心'];
 
-  vm.changeContract = function () {
-    var modalInstance = $uibModal.open({
-      animation: true,
-      size: 'lg',
-      backdrop: 'static',
-      templateUrl: 'controllers/business/sample/create/select-contract/selectContract.html',
-      controller: 'SelectContractCtrl as vm'
-    });
-
-    modalInstance.result.then(function (res) {
-      vm.sample.protocolId = res;
-    })
-  }
-
   vm.ok = function (form) {
     if (form.$invalid) {
       vm.submitted = true;
@@ -49,7 +35,7 @@ angular.module('com.app').controller('SampleDetailInfoCtrl', function ($scope, $
 
 		SampleService.editSample(vm.sample).then(function (response) {
   		if (response.data.success) {
-  			toastr.success('接样单修改成功！');
+  			toastr.success('报告修改成功！');
   		} else {
   			toastr.error(response.data.message);
   		}

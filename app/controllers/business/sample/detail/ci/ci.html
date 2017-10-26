@@ -13,50 +13,36 @@
 		<table class="pt-table">
 			<thead>
 				<tr>
+					<th>序号</th>
+					<th>抽样单编号</th>
 					<th>名称</th>
 					<th>检测方法</th>
 					<th>单位</th>
 					<th>标准值</th>
-					<th>检出限</th>
-					<th>定量限</th>
-					<th>设备</th>
 					<th>默认价格</th>
-					<th>状态</th>
-					<th>结果</th>
-					<th>实测值</th>
 					<th>分包</th>
 					<th>检测部门</th>
-					<th>检测员</th>
 					<th>更新时间</th>
 					<th style="width: 140px">操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-if="vm.ciLoading">
-					<td colspan="16" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+					<td colspan="11" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 				</tr>
 				<tr ng-if="!vm.ciLoading && vm.checkItems.length == 0">
-					<td colspan="16" class="text-center">暂无检测项</td>
+					<td colspan="11" class="text-center">暂无检测项</td>
 				</tr>
 				<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
+					<td>{{ $index }}</td>
+					<td>{{ vm.sample.receiveSampleId }}</td>
 					<td>{{ item.name }}</td>
 					<td>{{ item.method }}</td>
 					<td>{{ item.unit }}</td>
 					<td>{{ item.standardValue }}</td>
-					<td>{{ item.detectionLimit }}</td>
-					<td>{{ item.quantitationLimit }}</td>
-					<td>{{ item.device }}</td>
 					<td>{{ item.defaultPrice }}</td>
-					<td>
-						<span ng-if="item.status == 0">未录入</span>
-						<span ng-if="item.status == 1">待检测</span>
-						<span ng-if="item.status == 2">检测完成</span>
-					</td>
-					<td>{{ item.itemResult }}</td>
-					<td>{{ item.measuredValue }}</td>
 					<td>{{ item.subpackage }}</td>
 					<td>{{ item.testRoom }}</td>
-					<td>{{ item.testUser }}</td>
 					<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
 					<td class="dropdown-col">
 						<div class="btn-group">

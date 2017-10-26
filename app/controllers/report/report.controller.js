@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('com.app').controller('BusinessReportCtrl', function ($state, $uibModal, $timeout, api, toastr, SampleService) {
+angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, $timeout, api, toastr, SampleService) {
   var vm = this;
 
-  var businessBC = api.breadCrumbMap.business;
-  vm.breadCrumbArr = [businessBC.root, businessBC.report.root];
+  var reportBC = api.breadCrumbMap.report;
+  vm.breadCrumbArr = [reportBC.root];
 
   vm.searchObject = {
     searchKeywords: ''
@@ -50,7 +50,7 @@ angular.module('com.app').controller('BusinessReportCtrl', function ($state, $ui
   }
 
   vm.goDetail = function (id) {
-    $state.go('app.business.report.detail.info', {id: id});
+    $state.go('app.report.detail.info', {id: id});
   }
 
   vm.export = function (sample) {
@@ -58,7 +58,7 @@ angular.module('com.app').controller('BusinessReportCtrl', function ($state, $ui
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/business/report/export/export.html',
+      templateUrl: 'controllers/report/export/export.html',
       controller: 'ReportExportCtrl as vm',
       resolve: {
         templateMap: ['$rootScope', '$q', 'TemplateService', function ($rootScope, $q, TemplateService) {
@@ -102,6 +102,34 @@ angular.module('com.app').controller('BusinessReportCtrl', function ($state, $ui
       $timeout(function () {
         document.body.removeChild(iframe);
       }, 1000)
+    });
+  }
+
+  function to_json(workbook) {
+    var result = {};
+    workbook.SheetNames.forEach(function(sheetName) {
+      var roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+      if(roa.length) result[sheetName] = roa;
+    });
+    return JSON.stringify(result, 2, 2);
+  };
+
+  function stringToUint(string) {
+    var string = btoa(unescape(encodeURIComponent(string))),
+        charList = string.split(''),
+        uintArray = [];
+    for (var i = 0; i < charList.length; i++) {
+        uintArray.push(charList[i].charCodeAt(0) & 0xff);
+    }
+    return new Uint8Array(uintArray);
+  }
+
+  vm.preview = function (sample) {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      windowClass: 'pdf-preview',
+      templateUrl: 'controllers/report/preview/preview.html',
+      controller: 'ReportPreviewCtrl as vm'
     });
   }
 

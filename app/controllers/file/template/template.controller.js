@@ -52,7 +52,7 @@ angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, ap
   		animation: true,
   		size: 'md',
   		backdrop: 'static',
-  		templateUrl: 'controllers/func/template/upload/upload.html',
+  		templateUrl: 'controllers/file/template/upload/upload.html',
   		controller: 'TemplateUploadCtrl as vm',
       resolve: {
         typeMap: function () {
@@ -83,7 +83,7 @@ angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, ap
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/func/template/edit/edit.html',
+      templateUrl: 'controllers/file/template/edit/edit.html',
       controller: 'TemplateEditCtrl as vm',
       resolve: {
         template: function () {return angular.copy(item);},

@@ -6,10 +6,12 @@ angular.module('com.app').directive('customSelect', [function () {
 		replace: true,
 		scope: {
 			model: '=',
+			mode: '@',
 			key: '@',
 			availArr: '=',
 			name: '@',
-			className: '@'
+			className: '@',
+			placeholder: '@'
 		},
 		templateUrl: 'directive/custom-select/customSelect.html',
 		link: function (scope, element) {
@@ -30,7 +32,11 @@ angular.module('com.app').directive('customSelect', [function () {
 
 			scope.select = function (event, val) {
 				event.stopPropagation();
-				scope.model[scope.key] = val;
+				if (scope.mode == 'append') {
+					scope.model[scope.key] = scope.model[scope.key] + val;
+				} else {
+					scope.model[scope.key] = val;
+				}
 				$(event.target).parents('ul').addClass('ng-hide');
 			}
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ItemToCheckCtrl', function ($uibModal, api, SampleService, toastr) {
+angular.module('com.app').controller('CiResultRecordCtrl', function ($uibModal, api, SampleService, toastr) {
   var vm = this;
 
   vm.breadCrumbArr = [api.breadCrumbMap.itemToCheck.root];
@@ -59,7 +59,7 @@ angular.module('com.app').controller('ItemToCheckCtrl', function ($uibModal, api
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/item-to-check/edit/edit.html',
+      templateUrl: 'controllers/ci-result-record/edit/edit.html',
       controller: 'RecordCiResultCtrl as vm',
       resolve: {
         checkItem: function () {return item;}

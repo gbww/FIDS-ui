@@ -100,6 +100,16 @@ angular.module('com.app').factory('SampleService', function ($http) {
 					templateFileName: name
 				}
 			});
+		},
+
+		previewReport: function(sampleId, name) {
+			return $http({
+				url: '/api/v1/ahgz/sample/items/excel/test/' + sampleId,
+				method: 'GET',
+				params: {
+					templateFileName: name
+				}
+			});
 		}
 
 

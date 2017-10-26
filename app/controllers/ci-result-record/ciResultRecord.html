@@ -37,11 +37,9 @@
 						<th>检出限</th>
 						<th>定量限</th>
 						<th>设备</th>
-						<th>默认价格</th>
 						<th>状态</th>
 						<th>结果</th>
 						<th>实测值</th>
-						<th>分包</th>
 						<th>检测部门</th>
 						<th>检测员</th>
 						<th>更新时间</th>
@@ -50,10 +48,10 @@
 				</thead>
 				<tbody>
 					<tr ng-if="vm.loading">
-						<td colspan="16" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+						<td colspan="14" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 					</tr>
 					<tr ng-if="!vm.loading && vm.checkItems.length == 0">
-						<td colspan="16" class="text-center">暂无检测项</td>
+						<td colspan="14" class="text-center">暂无检测项</td>
 					</tr>
 					<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.loading">
 						<td>{{ item.name }}</td>
@@ -63,14 +61,12 @@
 						<td>{{ item.detectionLimit }}</td>
 						<td>{{ item.quantitationLimit }}</td>
 						<td>{{ item.device }}</td>
-						<td>{{ item.defaultPrice }}</td>
 						<td>
 							<span ng-if="item.status == 1">未检测</span>
 							<span ng-if="item.status == 2">检测完成</span>
 						</td>
 						<td>{{ item.itemResult }}</td>
 						<td>{{ item.measuredValue }}</td>
-						<td>{{ item.subpackage }}</td>
 						<td>{{ item.testRoom }}</td>
 						<td>{{ item.testUser }}</td>
 						<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
@@ -81,7 +77,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="16">
+						<td colspan="14">
 							<div st-idp st-total-count="vm.total"></div>
 						</td>
 					</tr>

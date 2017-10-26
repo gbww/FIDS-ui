@@ -2,15 +2,15 @@
 
 angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 
-	$stateProvider.state('app.func', {
-		url: '/func',
+	$stateProvider.state('app.file', {
+		url: '/file',
 		template: '<div ui-view></div>',
 		abstract: true
 	});
 
-	$stateProvider.state('app.func.template', {
+	$stateProvider.state('app.file.template', {
 		url: '/template',
-		templateUrl: 'controllers/func/template/template.html',
+		templateUrl: 'controllers/file/template/template.html',
 		controller: 'TemplateListCtrl as vm'
 	});
 

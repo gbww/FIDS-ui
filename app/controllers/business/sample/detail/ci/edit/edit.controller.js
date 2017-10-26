@@ -2,6 +2,9 @@
 
 angular.module('com.app').controller('EditSampleCiCtrl', function ($uibModalInstance, SampleService, toastr, sampleId, checkItem) {
   var vm = this;
+  vm.checkItem = angular.copy(checkItem);
+
+  vm.characterArr = ['>', '>=', '<', '<='];
 
   vm.ok = function () {
   	SampleService.updateSampleCi(sampleId, [vm.checkItem]).then(function (response) {

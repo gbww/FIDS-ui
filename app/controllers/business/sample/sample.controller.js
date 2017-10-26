@@ -6,6 +6,22 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root];
 
+  $('#date-start').datetimepicker({
+    useCurrent: false,
+    format: 'YYYY-MM-DD hh:mm:ss'
+  });
+  $('#date-end').datetimepicker({
+    useCurrent: false,
+    format: 'YYYY-MM-DD hh:mm:ss'
+  });
+
+  $("#date-start").on("dp.change", function (e) {
+    $('#date-end').data("DateTimePicker").minDate(e.date);
+  });
+  $("#date-end").on("dp.change", function (e) {
+    $('#date-start').data("DateTimePicker").maxDate(e.date);
+  });
+
   vm.searchObject = {
     searchKeywords: ''
   }
@@ -13,6 +29,9 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.refreshTable = function () {
     vm.searchObject.timestamp = new Date();
   }
+
+  vm.searchConditions = {};
+  vm.sampleIdArr = [], vm.sampleTypeArr = [], vm.checkTypeArr = [], vm.entrustedUnitArr = [];
 
   vm.status = '0';
   vm.samples = [];
@@ -37,6 +56,20 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
           vm.ciLoading = false;
           vm.checkItems = [];
         }
+        angular.forEach(vm.samples, function (item) {
+          if (vm.sampleIdArr.indexOf(item.receiveSampleId) == -1) {
+            vm.sampleIdArr.push(item.receiveSampleId);
+          }
+          if (vm.sampleTypeArr.indexOf(item.sampleType) == -1) {
+            vm.sampleTypeArr.push(item.sampleType);
+          }
+          if (vm.checkTypeArr.indexOf(item.checkType) == -1) {
+            vm.checkTypeArr.push(item.checkType);
+          }
+          if (item.entrustedUnit && vm.entrustedUnitArr.indexOf(item.entrustedUnit) == -1) {
+            vm.entrustedUnitArr.push(item.entrustedUnit);
+          }
+        })
       } else {
         vm.total = 0;
         toastr.error(response.data.message);
@@ -62,26 +95,6 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     if(keycode==13){
       vm.searchObject.searchKeywords = vm.query;
     }
-  }
-
-  vm.toggleStatus = function (sample) {
-    if (sample.status == 0) {
-      var status = 1;
-    } else {
-      var status = 0
-    }
-
-    var data = angular.merge({}, sample, {status: status, examineUser: api.userInfo.username})
-    SampleService.editSample(data).then(function (response) {
-      if (response.data.success) {
-        sample.status == 0 ? sample.status = 1 : sample.status = 0;
-        vm.refreshTable();
-      } else {
-        toastr.error(response.data.message);
-      }
-    }).catch(function (err) {
-      toastr.error(err.data);
-    })
   }
 
   vm.selectSample = function (sample) {

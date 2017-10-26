@@ -3,6 +3,16 @@
 angular.module('com.app').controller('RecordCiResultCtrl', function ($uibModalInstance, SampleService, toastr, checkItem) {
   var vm = this;
   vm.checkItem = angular.copy(checkItem);
+  vm.resultArr = ['合格', '不合格'];
+
+  vm.changeResult = function () {
+    // if ($scope.$eval(vm.checkItem.measuredValue + vm.checkItem.standardValue)) {
+    if (vm.checkItem.measuredValue <= vm.checkItem.standardValue.replace(/[^\d\.]/g, '')) {
+      vm.checkItem.itemResult = '合格';
+    } else {
+      vm.checkItem.itemResult = '不合格';
+    }
+  }
 
   vm.ok = function () {
     var data = angular.merge({}, vm.checkItem, {status: 2});

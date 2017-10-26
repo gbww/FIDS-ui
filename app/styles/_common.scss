@@ -322,6 +322,8 @@ i+span {
     top: 26px;
     left: 0;
     right: 0;
+    max-height: 200px;
+    overflow: auto;
     border: 1px solid $border-color;
     background-color: #fff;
     li a{

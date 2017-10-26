@@ -9,9 +9,9 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($state, $uibM
   vm.coverTypeArr = templateMap.coverType;
   vm.reportTypeArr = templateMap.reportType;
 
-  vm.checkTypeArr = ['监督检验', '省级食品安全监', '委托检验', '发证检验'];
+  vm.checkTypeArr = ['监督检验', '委托检验', '发证检验', '认证检验', '省级抽检', '风险监测'];
   vm.sampleLinkArr = ['流通环节', '餐饮环节', '生产环节'];
-  vm.sampleCirculateArr = ['生产日期', '加工日期', '购进日期', '消毒日期'];
+  // vm.sampleCirculateArr = ['生产日期', '加工日期', '购进日期', '消毒日期'];
   vm.sampleWayArr = ['随机抽样', '掷骰抽样'];
   vm.specificationModelArr = ['计量称重', '散装', 'kg/袋', 'g/袋', 'ml/瓶', 'L/瓶', 'L/桶', 'g/盒', 'kg/盒', 'ml/盒', 'L/盒'];
   vm.executeStandardArr = ['GB/T 23587-2009'];

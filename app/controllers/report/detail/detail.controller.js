@@ -3,8 +3,8 @@
 angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $scope, $state, $stateParams, api, toastr, SampleService) {
   var vm = this;
 
-  var businessBC = api.breadCrumbMap.business;
-  vm.breadCrumbArr = [businessBC.root, businessBC.report.root, businessBC.report.detail];
+  var reportBC = api.breadCrumbMap.report;
+  vm.breadCrumbArr = [reportBC.root, reportBC.detail];
 
   $rootScope.loading = true;
   vm.getSampleInfo = function () {
@@ -27,16 +27,16 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
 
   vm.goTab = function (tab) {
     if (tab == 'info') {
-      $state.go('app.business.report.detail.info');
+      $state.go('app.report.detail.info');
     } else if (tab == 'ci') {
-      $state.go('app.business.report.detail.ci');
+      $state.go('app.report.detail.ci');
     }
   }
 
   $scope.$on('$stateChangeSuccess', function() {
-    if ($state.includes('app.business.report.detail.info')) {
+    if ($state.includes('app.report.detail.info')) {
       vm.tab = 'info';
-    } else if ($state.includes('app.business.report.detail.ci')) {
+    } else if ($state.includes('app.report.detail.ci')) {
       vm.tab = 'ci';
     }
   })

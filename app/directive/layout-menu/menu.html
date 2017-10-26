@@ -7,18 +7,45 @@
     <div id="accordion">
       <div class="panel">
         <div ng-class="{'active': vm.isDashboardActive}">
-          <a title="概况" ui-sref="app.dashboard">
+          <a title="主页" ng-click="vm.open('dashboard')">
             <i class="icon icon-overview"></i>
-            <span>概况</span>
+            <span>主页</span>
           </a>
         </div>
       </div>
 
+      <div class="panel" role-auth="">
+        <div data-parent="#accordion" data-toggle="collapse" data-target="#businessManage" aria-expanded="{{vm.isBusinessActive}}">
+          <a>
+            <i class="icon icon-service"></i>
+            <span>业务管理</span>
+            <i class="fa fa-chevron-down"></i>
+          </a>
+        </div>
+        <ul id="businessManage" ng-class="{'collapse in': vm.isBusinessActive, 'collapse': !vm.isBusinessActive}">
+          <li ng-class="{'active': vm.isBusinessContractActive}" role-auth="">
+            <a ui-sref="app.business.contract"><span>合同评审</span></a>
+          </li>
+          <li ng-class="{'active': vm.isBusinessSampleActive}" role-auth="">
+            <a ui-sref="app.business.sample"><span>业务受理</span></a>
+          </li>
+        </ul>
+      </div>
+
       <div class="panel">
         <div ng-class="{'active': vm.isItemToCheckActive}">
-          <a title="检测结果录入" ui-sref="app.itemToCheck">
+          <a title="检测结果录入" ng-click="vm.open('itemToCheck')">
             <i class="icon icon-overview"></i>
             <span>检测结果录入</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="panel" role-auth="">
+        <div ng-class="{'active': vm.isReportActive}">
+          <a title="报告管理" ng-click="vm.open('report')">
+            <i class="icon icon-service"></i>
+            <span>报告管理</span>
           </a>
         </div>
       </div>
@@ -27,7 +54,7 @@
         <div data-parent="#accordion" data-toggle="collapse" data-target="#checkItemManage" aria-expanded="{{vm.isCheckItemActive}}">
           <a>
             <i class="icon icon-service"></i>
-            <span>检测库管理</span>
+            <span>项目库</span>
             <i class="fa fa-chevron-down"></i>
           </a>
         </div>
@@ -42,40 +69,21 @@
       </div>
 
       <div class="panel" role-auth="">
-        <div data-parent="#accordion" data-toggle="collapse" data-target="#funcManage" aria-expanded="{{vm.isFuncActive}}">
+        <div data-parent="#accordion" data-toggle="collapse" data-target="#fileManage" aria-expanded="{{vm.isFileActive}}">
           <a>
             <i class="icon icon-service"></i>
-            <span>功能管理</span>
+            <span>文件管理</span>
             <i class="fa fa-chevron-down"></i>
           </a>
         </div>
-        <ul id="funcManage" ng-class="{'collapse in': vm.isFuncActive, 'collapse': !vm.isFuncActive}">
+        <ul id="fileManage" ng-class="{'collapse in': vm.isFileActive, 'collapse': !vm.isFileActive}">
           <li ng-class="{'active': vm.isTemplateActive}" role-auth="">
-            <a ui-sref="app.func.template"><span>模板管理</span></a>
+            <a ui-sref="app.file.template"><span>报告模板</span></a>
           </li>
         </ul>
       </div>
 
-      <div class="panel" role-auth="">
-        <div data-parent="#accordion" data-toggle="collapse" data-target="#businessManage" aria-expanded="{{vm.isBusinessActive}}">
-          <a>
-            <i class="icon icon-service"></i>
-            <span>业务管理</span>
-            <i class="fa fa-chevron-down"></i>
-          </a>
-        </div>
-        <ul id="businessManage" ng-class="{'collapse in': vm.isBusinessActive, 'collapse': !vm.isBusinessActive}">
-          <li ng-class="{'active': vm.isBusinessContractActive}" role-auth="">
-            <a ui-sref="app.business.contract"><span>合同管理</span></a>
-          </li>
-          <li ng-class="{'active': vm.isBusinessSampleActive}" role-auth="">
-            <a ui-sref="app.business.sample"><span>接样管理</span></a>
-          </li>
-          <li ng-class="{'active': vm.isBusinessReportActive}" role-auth="">
-            <a ui-sref="app.business.report"><span>报告管理</span></a>
-          </li>
-        </ul>
-      </div>
+
 
       <div class="panel" role-auth="">
         <div data-parent="#accordion" data-toggle="collapse" data-target="#privilegeManage" aria-expanded="{{vm.isPrivilegeActive}}">

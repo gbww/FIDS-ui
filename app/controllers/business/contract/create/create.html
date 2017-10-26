@@ -17,18 +17,6 @@
               <label class="error-messages"><i></i>该编号已存在，请重新输入</label>
             </div>
 					</td>
-					<td colspan="2"></td>
-					<!-- <td class="item-title">
-						<span class="item-required">样品编号</span>
-					</td>
-					<td>
-						<input class="input" name="sample_id" ng-model="vm.contract.sampleId" required>
-						<div ng-if="form.sample_id.$dirty || vm.submitted" ng-messages="form.sample_id.$error">
-							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
-						</div>
-					</td> -->
-				</tr>
-				<tr>
 					<td class="item-title">
 						<span class="item-required">样品名称</span>
 					</td>
@@ -38,11 +26,53 @@
 							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
 						</div>
 					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span class="item-required">检验类别</span>
+					</td>
+					<td>
+						<div custom-select name="detect_type" avail-arr="vm.detectTypeArr" model="vm.contract" key="detectType"></div>
+						<div ng-if="form.detect_type.$dirty || vm.submitted" ng-messages="form.detect_type.$error">
+							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+						</div>
+					</td>
+					<td class="item-title">
+						<span>检测目的</span>
+					</td>
+					<td>
+						<input class="input" name="detect_purpose" ng-model="vm.contract.detectPurpose">
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>检测依据</span>
+					</td>
+					<td>
+						<input class="input" name="detect_by" ng-model="vm.contract.detectBy">
+					</td>
+					<td class="item-title">
+						<span class="item-required">执行标准</span>
+					</td>
+					<td>
+						<div custom-select name="execute_standard" avail-arr="vm.executeStandardArr" model="vm.contract" key="executeStandard"></div>
+						<div ng-if="form.execute_standard.$dirty || vm.submitted" ng-messages="form.execute_standard.$error">
+							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+						</div>
+					</td>
+				</tr>
+				<tr>
 					<td class="item-title">
 						<span>加工工艺</span>
 					</td>
 					<td>
 						<input class="input" name="process_technology" ng-model="vm.contract.processTechnology">
+					</td>
+					<td class="item-title">
+						<span>样品性状</span>
+					</td>
+					<td>
+						<input class="input" name="sample_traits" ng-model="vm.contract.sampleTraits">
 					</td>
 				</tr>
 				<tr>
@@ -81,58 +111,10 @@
 						<input class="input" name="storage_time" ng-model="vm.contract.storageTime">
 					</td>
 					<td class="item-title">
-						<span>样品性状</span>
-					</td>
-					<td>
-						<input class="input" name="sample_traits" ng-model="vm.contract.sampleTraits">
-					</td>
-				</tr>
-				<tr>
-					<td class="item-title">
 						<span>样品处理要求</span>
 					</td>
 					<td>
 						<input class="input" name="process_demand" ng-model="vm.contract.processDemand">
-					</td>
-					<td class="item-title">
-						<span>检测目的</span>
-					</td>
-					<td>
-						<input class="input" name="detect_purpose" ng-model="vm.contract.detectPurpose">
-					</td>
-				</tr>
-				<tr>
-					<td class="item-title">
-						<span>提供的其它有关资料</span>
-					</td>
-					<td>
-						<input class="input" name="other_data" ng-model="vm.contract.otherData">
-					</td>
-					<td class="item-title">
-						<span class="item-required">检验类别</span>
-					</td>
-					<td>
-						<div custom-select name="detect_type" avail-arr="vm.detectTypeArr" model="vm.contract" key="detectType"></div>
-						<div ng-if="form.detect_type.$dirty || vm.submitted" ng-messages="form.detect_type.$error">
-							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td class="item-title">
-						<span>检测依据</span>
-					</td>
-					<td>
-						<input class="input" name="detect_by" ng-model="vm.contract.detectBy">
-					</td>
-					<td class="item-title">
-						<span class="item-required">执行标准</span>
-					</td>
-					<td>
-						<div custom-select name="execute_standard" avail-arr="vm.executeStandardArr" model="vm.contract" key="executeStandard"></div>
-						<div ng-if="form.execute_standard.$dirty || vm.submitted" ng-messages="form.execute_standard.$error">
-							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
-						</div>
 					</td>
 				</tr>
 				<tr>
@@ -165,6 +147,14 @@
 					<td>
 						<input type="radio" id="evaluate1" ng-model="vm.contract.isEvaluation" value="1"><label for="evaluate1">是</label>&emsp;&emsp;
 						<input type="radio" id="evaluate0" ng-model="vm.contract.isEvaluation" value="0"><label for="evaluate0">否</label>
+					</td>
+				</tr>
+				<tr>
+					<td class="item-title">
+						<span>提供的其它有关资料</span>
+					</td>
+					<td colspan="3">
+						<textarea class="input" rows="2" name="other_data" ng-model="vm.contract.otherData"></textarea>
 					</td>
 				</tr>
 			</table>
@@ -282,15 +272,16 @@
 							<label class="error-messages" ng-message="pattern"><i></i>请输入正确的数字</label>
 						</div>
 					</td>
-					<td colspan="2"></td>
+					<td class="item-title"></td>
+					<td></td>
+					<!-- <td colspan="2"></td> -->
 				</tr>
 					<td class="item-title">
 						<span>备注</span>
 					</td>
-					<td>
+					<td colspan="3">
 						<textarea class="input" ng-model="extra" rows="2"></textarea>
 					</td>
-					<td colspan="2"></td>
 				</tr>
 			</table>
 		</form>

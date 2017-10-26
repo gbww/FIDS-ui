@@ -1,4 +1,4 @@
-<div class="sample-info-list">
+<div class="business-report-detail-info-list">
 	<div class="pt-2">
 		<form name="form" novalidate>
 			<table class="form-table">
@@ -333,13 +333,7 @@
 					<td>
 						<input class="input" name="cost" ng-model="vm.sample.cost">
 					</td>
-					<td class="item-title">
-						<span>是否完成</span>
-					</td>
-					<td>
-						<input type="radio" id="complete1" ng-model="vm.sample.status" value="1"><label for="status1">是</label>&emsp;&emsp;
-						<input type="radio" id="complete0" ng-model="vm.sample.status" value="0"><label for="statue0">否</label>
-					</td>
+					<td colspan="2"></td>
 				</tr>
 				<tr>
 					<td class="item-title">
@@ -361,7 +355,7 @@
 		</form>
 		<div class="btn-area text-center">
 			<button class="btn btn-default-dark" ng-click="vm.ok(form)">确认</button>
-			<button class="btn btn-default-light" ui-sref="app.business.sample">取消</button>
+			<button class="btn btn-default-light" ui-sref="app.report">取消</button>
 		</div>
 	</div>
 </div>

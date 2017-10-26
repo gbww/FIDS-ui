@@ -23,21 +23,16 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-3 control-label item-required">单位</label>
+			<label class="col-sm-3 control-label">单位</label>
 			<div class="col-sm-8">
-				<input class="form-control" name="unit" ng-model="vm.checkItem.unit" required>
-			</div>
-			<div class="col-sm-9 col-sm-offset-3" ng-if="form.unit.$dirty" ng-messages="form.unit.$error">
-				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+				<input class="form-control" name="unit" ng-model="vm.checkItem.unit">
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-3 control-label item-required">标准值</label>
+			<label class="col-sm-3 control-label">标准值</label>
 			<div class="col-sm-8">
-				<input class="form-control" name="value" ng-model="vm.checkItem.standardValue" required>
-			</div>
-			<div class="col-sm-9 col-sm-offset-3" ng-if="form.value.$dirty" ng-messages="form.value.$error">
-				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+				<!-- <input class="form-control" name="value" ng-model="vm.checkItem.standardValue"> -->
+				<div custom-select mode="append" class-name="form-control" avail-arr="vm.characterArr" model="vm.checkItem" key="standardValue"></div>
 			</div>
 		</div>
 		<div class="form-group">
