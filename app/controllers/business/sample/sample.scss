@@ -14,6 +14,17 @@
 			content: '是';
 		}
 	}
+  .create-group-btn {
+    display: inline-block;
+    position: relative;
+    .dropdown-menu {
+      left: -1px;
+      li a:hover {
+        color: $blue-color;
+        background-color: transparent;
+      }
+    }
+  }
 	.advanced-search {
 		margin-top: 15px;
     padding-right: 0;

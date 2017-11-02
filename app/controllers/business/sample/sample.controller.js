@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope, $state, $uibModal, $timeout, api, dialog, toastr, SampleService, CheckItemService) {
+angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope, $state, $cookies, $uibModal, $timeout, api, dialog, toastr, SampleService, CheckItemService) {
   var vm = this;
 
   var businessBC = api.breadCrumbMap.business;
@@ -98,8 +98,16 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   }
 
   vm.selectSample = function (sample) {
+    if (angular.equals(vm.selectedSample, sample)) {
+      return;
+    }
     vm.selectedSample = sample;
     vm.getSampleCi();
+  }
+
+  vm.clone = function (sample) {
+    $cookies.putObject('clonedSample', sample);
+    toastr.success('复制成功！')
   }
 
   vm.goDetail = function (id) {

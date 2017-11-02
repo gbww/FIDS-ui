@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('com.app').controller('SampleCreateCtrl', function ($state, $uibModal, api, toastr, SampleService) {
+angular.module('com.app').controller('SampleCreateCtrl', function ($state, $cookies, $uibModal, api, toastr, SampleService) {
   var vm = this;
+
+  vm.clonedSample = $cookies.getObject('clonedSample');
 
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root, businessBC.sample.create];
@@ -21,10 +23,21 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($state, $uibM
   vm.receiveUserArr = [];
   vm.subpackageArr = ['农标中心'];
 
-  vm.sample = {
+  var initSample = {
     sampleType: '食品',
     drawUser: api.userInfo.username,
     status: 0,
+  }
+  vm.sample = angular.copy(initSample);
+
+  vm.paste = function () {
+    var sample = angular.copy(vm.clonedSample);
+    delete sample.receiveSampleId;
+    vm.sample = angular.copy(sample);
+  }
+
+  vm.reset = function () {
+    vm.sample = angular.copy(initSample);
   }
 
   vm.changeContract = function () {

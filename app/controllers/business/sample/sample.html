@@ -6,6 +6,27 @@
 				<i class="fa fa-plus"></i>
 				<span>接样单录入</span>
 			</button>
+			<!-- <div class="create-group-btn" role-auth="SAMPLE-ADD-1">
+        <div class="btn btn-default-dark dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-plus"></i>
+          <span>接样单录入</span>
+          <i class="caret"></i>
+        </div>
+        <ul class="dropdown-menu">
+          <li>
+          	<a href ui-sref="app.business.sample.create">
+          		<i class="fa fa-plus"></i>
+          		<span>新建接样单</span>
+          	</a>
+          </li>
+          <li>
+          	<a href ng-click="vm.cloneSample()">
+          		<i class="fa fa-clone"></i>
+          		<span>复制接样单</span>
+          	</a>
+          </li>
+        </ul>
+      </div> -->
 
 			<ul class="statusBar clearfix">
         <li ng-class="{'active': vm.status === '0'}">
@@ -95,11 +116,14 @@
 							<button class="btn btn-default" ng-click="vm.goDetail(sample.receiveSampleId)" role-auth="SAMPLE-UPDATESAMPLE-1">
 								<i class="fa fa-edit"></i><span>编辑</span>
 							</button>
-							<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-DELETESAMPLE-1">
+							<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-ADD-1 SAMPLE-DELETESAMPLE-1">
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li ng-click="vm.delete(sample)">
+								<li ng-click="vm.clone(sample)" role-auth="SAMPLE-ADD-1">
+									<a href><i class="fa fa-clone"></i><span>复制</span></a>
+								</li>
+								<li ng-click="vm.delete(sample)" role-auth="SAMPLE-DELETESAMPLE-1">
 									<a href><i class="fa fa-trash"></i><span>删除</span></a>
 								</li>
 							</ul>

@@ -1,6 +1,12 @@
 <div class="business-sample-list">
 	<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
 	<div class="pt-2">
+		<div class="toolbar" ng-if="vm.clonedSample">
+			<button class="btn btn-default-dark" ng-click="vm.paste()">
+				<i class="fa fa-plus"></i>
+				<span>录入复制信息</span>
+			</button>
+		</div>
 		<form name="form" novalidate>
 			<table class="form-table">
 				<tr>
