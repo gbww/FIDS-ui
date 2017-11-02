@@ -6,6 +6,7 @@ angular.module('com.app').controller('ReportExportCtrl', function ($uibModalInst
   vm.sampleId = sampleId;
   vm.category = '0';
   vm.templates = [];
+  vm.type = 'excel';
 
   vm.changeCategory = function (category) {
     if (vm.category == '0') {
@@ -24,7 +25,10 @@ angular.module('com.app').controller('ReportExportCtrl', function ($uibModalInst
 
 
   vm.ok = function () {
-    $uibModalInstance.close(vm.templateName);
+    $uibModalInstance.close({
+      name: vm.templateName,
+      type: vm.type
+    });
   }
 
   vm.cancel = function () {

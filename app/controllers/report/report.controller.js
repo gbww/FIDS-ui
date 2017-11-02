@@ -101,7 +101,7 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
 
     modalInstance.result.then(function (res) {
       var iframe = document.createElement('iframe');
-      iframe.src = '/api/v1/ahgz/sample/items/excel/' + sample.receiveSampleId + '?templateFileName=' + res;
+      iframe.src = '/api/v1/ahgz/sample/items/excel/' + sample.receiveSampleId + '?templateFileName=' + res.name + '&type=' + res.type;
       iframe.style.display = 'none';
       document.body.appendChild(iframe);
       $timeout(function () {
