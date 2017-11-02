@@ -48,14 +48,8 @@
 						<input type="radio" id="feed" ng-model="vm.sample.sampleType" value="饲料"><label for="feed">饲料</label>&emsp;&emsp;&emsp;
 						<input type="radio" id="env" ng-model="vm.sample.sampleType" value="环境"><label for="env">环境</label>
 					</td>
-					<td class="item-title">
-						<span>报告格式</span>
-					</td>
-					<td>
-						<div style="display: inline-block" ng-repeat="option in vm.reportTypeArr track by $index">
-							<input type="radio" id="{{option}}" ng-model="vm.sample.reportLayout" value="{{option}}"><label for="{{option}}">{{option}}</label>&emsp;&emsp;
-						</div>
-					</td>
+					<td class="item-title"></td>
+					<td></td>
 				</tr>
 			</table>
 
@@ -354,7 +348,7 @@
 			</table>
 		</form>
 		<div class="btn-area text-center">
-			<button class="btn btn-default-dark" ng-click="vm.ok(form)">确认</button>
+			<button class="btn btn-default-dark" ng-click="vm.ok(form)" role-auth="SAMPLE-UPDATESAMPLE-1">确认</button>
 			<button class="btn btn-default-light" ui-sref="app.report">取消</button>
 		</div>
 	</div>

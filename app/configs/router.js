@@ -40,10 +40,13 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
         return deferred.promise;
       }],
       // 登录用户所拥有的权限项
-      permissionArr: ['$state', '$q', '$cookies', 'PrivilegeService', 'api', function ($state, $q, $cookies, PrivilegeService, api) {
+      permissionArr: ['$state', '$q', 'PrivilegeService', 'api', function ($state, $q, PrivilegeService, api) {
         var deferred = $q.defer();
         PrivilegeService.getUserPrivileges().then(function (response) {
-          api.permissionArr = response.data.entity;
+          api.permissionArr = [];
+          angular.forEach(response.data.entity, function (item) {
+            api.permissionArr.push(item.name)
+          })
           deferred.resolve('');
         }).catch(function () {
           $state.go('login');

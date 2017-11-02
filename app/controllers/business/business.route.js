@@ -79,38 +79,6 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 				templateUrl: 'controllers/business/sample/create/create.html',
 				controller: 'SampleCreateCtrl as vm'
 			}
-		},
-		resolve: {
-			templateMap: ['$rootScope', '$q', 'TemplateService', function ($rootScope, $q, TemplateService) {
-				$rootScope.loading = true;
-				var deferred = $q.defer();
-
-				TemplateService.filterTemplate().then(function (response) {
-					$rootScope.loading = false;
-					var coverType = [], reportType = [];
-					if (response.data.success) {
-						var templates = response.data.entity.list;
-						angular.forEach(templates, function (item) {
-							if (item.category == '0' && coverType.indexOf(item.type) == -1) {
-								coverType.push(item.type);
-							} else if (item.category == '1' && reportType.indexOf(item.type) == -1) {
-								reportType.push(item.type);
-							}
-						})
-					}
-					deferred.resolve({
-						coverType: coverType,
-						reportType: reportType
-					})
-				}).catch(function (){
-					$rootScope.loading = false;
-					deferred.resolve({
-						coverType: [],
-						reportType: []
-					})
-				});
-				return deferred.promise;
-			}]
 		}
 	});
 
@@ -128,39 +96,7 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 	$stateProvider.state('app.business.sample.detail.info', {
 		url: '/info',
 		templateUrl: 'controllers/business/sample/detail/info/info.html',
-		controller: 'SampleDetailInfoCtrl as vm',
-		resolve: {
-			templateMap: ['$rootScope', '$q', 'TemplateService', function ($rootScope, $q, TemplateService) {
-				$rootScope.loading = true;
-				var deferred = $q.defer();
-
-				TemplateService.filterTemplate().then(function (response) {
-					$rootScope.loading = false;
-					var coverType = [], reportType = [];
-					if (response.data.success) {
-						var templates = response.data.entity.list;
-						angular.forEach(templates, function (item) {
-							if (item.category == '0' && coverType.indexOf(item.type) == -1) {
-								coverType.push(item.type);
-							} else if (item.category == '1' && reportType.indexOf(item.type) == -1) {
-								reportType.push(item.type);
-							}
-						})
-					}
-					deferred.resolve({
-						coverType: coverType,
-						reportType: reportType
-					})
-				}).catch(function (){
-					$rootScope.loading = false;
-					deferred.resolve({
-						coverType: [],
-						reportType: []
-					})
-				});
-				return deferred.promise;
-			}]
-		}
+		controller: 'SampleDetailInfoCtrl as vm'
 	});
 
 	$stateProvider.state('app.business.sample.detail.ci', {

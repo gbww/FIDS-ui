@@ -2,7 +2,7 @@
 	<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
 	<div class="pt-2">
 		<div class="toolbar">
-			<button class="btn btn-default-dark" ng-click="vm.create()">
+			<button class="btn btn-default-dark" ng-click="vm.create()" role-auth="ORGANIZATION-ADD-1">
 				<i class="fa fa-plus"></i><span>新建部门</span>
 			</button>
 		</div>
@@ -27,11 +27,11 @@
 					<td>{{ organization.description }}</td>
 					<td>{{ organization.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
 					<td class="dropdown-col">
-						<div class="btn-group">
-							<button class="btn btn-default" ng-click="vm.edit(organization)">
+						<div class="btn-group" role-auth="ORGANIZATION-EDIT-1 ORGANIZATION-DELETE-1">
+							<button class="btn btn-default" ng-click="vm.edit(organization)" role-auth="ORGANIZATION-EDIT-1">
 								<i class="fa fa-edit"></i><span>修改</span>
 							</button>
-							<button class="btn dropdown-toggle" data-toggle="dropdown">
+							<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="ORGANIZATION-DELETE-1">
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">

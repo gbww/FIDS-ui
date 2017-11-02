@@ -2,7 +2,7 @@
 	<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
 	<div class="pt-2">
 		<div class="toolbar">
-			<button class="btn btn-default-dark" ng-click="vm.create()">
+			<button class="btn btn-default-dark" ng-click="vm.create()" role-auth="USER-ADD-1">
 				<i class="fa fa-plus"></i><span>新建用户</span>
 			</button>
 		</div>
@@ -35,18 +35,18 @@
 					<td>{{ user.role.name }}</td>
 					<td>{{ user.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
 					<td class="dropdown-col">
-						<div class="btn-group">
-							<button class="btn btn-default" ng-click="vm.edit(user)">
+						<div class="btn-group" role-auth="USER-EDIT-1 USER-DELETE-1">
+							<button class="btn btn-default" ng-click="vm.edit(user)" role-auth="USER-EDIT-1">
 								<i class="fa fa-edit"></i><span>修改信息</span>
 							</button>
-							<button class="btn dropdown-toggle" data-toggle="dropdown">
+							<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="USER-EDIT-1 USER-DELETE-1">
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li ng-click="vm.assignRole(user)">
+								<li ng-click="vm.assignRole(user)" role-auth="USER-EDIT-1">
 									<a href><i class="fa fa-trash"></i><span>更改角色</span></a>
 								</li>
-								<li ng-click="vm.delete(user)">
+								<li ng-click="vm.delete(user)" role-auth="USER-DELETE-1">
 									<a href><i class="fa fa-trash"></i><span>删除</span></a>
 								</li>
 							</ul>

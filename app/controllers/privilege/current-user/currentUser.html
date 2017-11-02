@@ -2,15 +2,15 @@
   <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
   <div class="pt-2">
   	<div class="toolbar">
-  		<button class="btn btn-default-dark" ng-click="vm.edit()">
+  		<button class="btn btn-default-dark" ng-click="vm.edit()" role-auth="USER-EDITSELF-1">
   			<i class="fa fa-plus"></i>
   			<span>修改用户信息</span>
   		</button>
-  		<button class="btn btn-default-light" ng-click="vm.editPassword()">
+  		<button class="btn btn-default-light" ng-click="vm.editPassword()" role-auth="USER-PASSWORD-1">
   			<i class="fa fa-edit"></i>
   			<span>修改密码</span>
   		</button>
-  		<button class="btn btn-default-light" custom-file-btn>
+  		<button class="btn btn-default-light" custom-file-btn role-auth="USER-SIGN-UPLOAD-1">
   			<i class="fa fa-upload"></i>
   			<span>上传电子签名</span>
   		</button>

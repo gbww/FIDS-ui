@@ -53,23 +53,7 @@ angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, ap
   		size: 'md',
   		backdrop: 'static',
   		templateUrl: 'controllers/file/template/upload/upload.html',
-  		controller: 'TemplateUploadCtrl as vm',
-      resolve: {
-        typeMap: function () {
-          var coverType = [], reportType = [];
-          angular.forEach(vm.templates, function (item) {
-            if (item.category == '0') {
-              coverType.push(item.type);
-            } else if (item.category == '1') {
-              reportType.push(item.type);
-            }
-          })
-          return {
-            coverType: coverType,
-            reportType: reportType
-          }
-        }
-      }
+  		controller: 'TemplateUploadCtrl as vm'
   	});
 
   	modalInstance.result.then(function () {
@@ -86,21 +70,7 @@ angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, ap
       templateUrl: 'controllers/file/template/edit/edit.html',
       controller: 'TemplateEditCtrl as vm',
       resolve: {
-        template: function () {return angular.copy(item);},
-        typeMap: function () {
-          var coverType = [], reportType = [];
-          angular.forEach(vm.templates, function (item) {
-            if (item.category == '0') {
-              coverType.push(item.type);
-            } else if (item.category == '1') {
-              reportType.push(item.type);
-            }
-          })
-          return {
-            coverType: coverType,
-            reportType: reportType
-          }
-        }
+        template: function () {return angular.copy(item);}
       }
     });
 
@@ -128,5 +98,17 @@ angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, ap
     })
   }
 
+  vm.showTutorial = function () {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      size: 'lg',
+      templateUrl: 'controllers/file/template/tutorial/tutorial.html',
+      controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+        $scope.cancel = function () {
+          $uibModalInstance.close();
+        }
+      }]
+    });
+  }
 
 });

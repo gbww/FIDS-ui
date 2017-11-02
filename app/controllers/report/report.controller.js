@@ -61,32 +61,37 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
       templateUrl: 'controllers/report/export/export.html',
       controller: 'ReportExportCtrl as vm',
       resolve: {
+        sampleId: function () {return sample.receiveSampleId},
         templateMap: ['$rootScope', '$q', 'TemplateService', function ($rootScope, $q, TemplateService) {
           $rootScope.loading = true;
           var deferred = $q.defer();
 
           TemplateService.filterTemplate().then(function (response) {
             $rootScope.loading = false;
-            var coverTemplates = [], reportTemplates = [];
+            var coverTemplates = [], reportTemplates = [], bothTemplates = [];
             if (response.data.success) {
               var templates = response.data.entity.list;
               angular.forEach(templates, function (item) {
-                if (item.category == '0' && sample.coverLayout == item.type) {
+                if (item.category == '0') {
                   coverTemplates.push(item);
-                } else if (item.category == '1' && sample.reportLayout == item.type) {
+                } else if (item.category == '1') {
                   reportTemplates.push(item);
+                } else if (item.category == '2') {
+                  bothTemplates.push(item);
                 }
               })
             }
             deferred.resolve({
               coverTemplates: coverTemplates,
-              reportTemplates: reportTemplates
+              reportTemplates: reportTemplates,
+              bothTemplates: bothTemplates
             })
           }).catch(function (){
             $rootScope.loading = false;
             deferred.resolve({
               coverTemplates: [],
-              reportTemplates: []
+              reportTemplates: [],
+              bothTemplates: []
             })
           });
           return deferred.promise;
@@ -105,31 +110,49 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
     });
   }
 
-  function to_json(workbook) {
-    var result = {};
-    workbook.SheetNames.forEach(function(sheetName) {
-      var roa = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
-      if(roa.length) result[sheetName] = roa;
-    });
-    return JSON.stringify(result, 2, 2);
-  };
-
-  function stringToUint(string) {
-    var string = btoa(unescape(encodeURIComponent(string))),
-        charList = string.split(''),
-        uintArray = [];
-    for (var i = 0; i < charList.length; i++) {
-        uintArray.push(charList[i].charCodeAt(0) & 0xff);
-    }
-    return new Uint8Array(uintArray);
-  }
-
   vm.preview = function (sample) {
     var modalInstance = $uibModal.open({
       animation: true,
-      windowClass: 'pdf-preview',
+      size: 'md',
       templateUrl: 'controllers/report/preview/preview.html',
-      controller: 'ReportPreviewCtrl as vm'
+      controller: 'ReportPreviewCtrl as vm',
+      resolve: {
+        sampleId: function () {return sample.receiveSampleId},
+        templateMap: ['$rootScope', '$q', 'TemplateService', function ($rootScope, $q, TemplateService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+
+          TemplateService.filterTemplate().then(function (response) {
+            $rootScope.loading = false;
+            var coverTemplates = [], reportTemplates = [], bothTemplates = [];
+            if (response.data.success) {
+              var templates = response.data.entity.list;
+              angular.forEach(templates, function (item) {
+                if (item.category == '0') {
+                  coverTemplates.push(item);
+                } else if (item.category == '1') {
+                  reportTemplates.push(item);
+                } else if (item.category == '2') {
+                  bothTemplates.push(item);
+                }
+              })
+            }
+            deferred.resolve({
+              coverTemplates: coverTemplates,
+              reportTemplates: reportTemplates,
+              bothTemplates: bothTemplates
+            })
+          }).catch(function (){
+            $rootScope.loading = false;
+            deferred.resolve({
+              coverTemplates: [],
+              reportTemplates: [],
+              bothTemplates: []
+            })
+          });
+          return deferred.promise;
+        }]
+      }
     });
   }
 

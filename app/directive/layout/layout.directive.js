@@ -13,12 +13,12 @@ angular.module('com.app').directive('appLayout', function appLayout() {
 /**
  ** 根据用户权限来决定是否显示相应导航栏菜单及操作项
  */
-}).directive('roleAuth', ['$cookies', function ($cookies) {
+}).directive('roleAuth', ['api', function (api) {
     return {
         restrict: 'A',
         link: function (scope, element, attrs) {
-            return;
-            scope.ruleArr = $cookies.get('ruleArr').split(',');
+            if (!attrs.roleAuth) return;
+            scope.ruleArr = api.permissionArr;
 
             /**
              ** roleAuth格式如1&2 3&4 5

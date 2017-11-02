@@ -5,7 +5,7 @@
 	</div>
 	<div class="check-info">
 		<div class="toolbar">
-			<button class="btn btn-default-dark" ng-click="vm.addSampleCI()">
+			<button class="btn btn-default-dark" ng-click="vm.addSampleCI()" role-auth="SAMPLE-ADDITEM-1">
 				<i class="fa fa-plus"></i>
 				<span>添加检测项</span>
 			</button>
@@ -46,17 +46,17 @@
 					<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
 					<td class="dropdown-col">
 						<div class="btn-group">
-							<button class="btn btn-default" ng-click="vm.edit(item)">
+							<button class="btn btn-default" ng-click="vm.edit(item)" role-auth="SAMPLE-ADDITEM-1">
 								<i class="fa fa-edit"></i><span>编辑</span>
 							</button>
-							<button class="btn dropdown-toggle" data-toggle="dropdown">
+							<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-ADDITEM-1 SAMPLE-DELETEITEM-1">
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li ng-click="vm.distribute(item)">
+								<li ng-click="vm.distribute(item)" role-auth="SAMPLE-ADDITEM-1">
 									<a href><i class="fa fa-trash"></i><span>分配检测人员</span></a>
 								</li>
-								<li ng-click="vm.delete(item)">
+								<li ng-click="vm.delete(item)" role-auth="SAMPLE-DELETEITEM-1">
 									<a href><i class="fa fa-trash"></i><span>删除</span></a>
 								</li>
 							</ul>
