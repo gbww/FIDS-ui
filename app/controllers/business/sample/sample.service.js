@@ -2,13 +2,18 @@
 
 angular.module('com.app').factory('SampleService', function ($http) {
 	return {
-		getSampleList: function (tableParams, searchName, status) {
+		getSampleList: function (tableParams, searchConditions, status) {
 			return $http({
 				url: '/api/v1/ahgz/sample',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
-          receivesampleid: searchName,
+          receivesampleid: searchConditions.receivesampleid,
+          entrustedunit: searchConditions.entrustedunit,
+          sampletype: searchConditions.sampletype,
+          checktype: searchConditions.checktype,
+          startTime: searchConditions.startTime,
+          endTime: searchConditions.endTime,
           status: status
         }
 			})
@@ -63,10 +68,18 @@ angular.module('com.app').factory('SampleService', function ($http) {
 			return $http.get('/api/v1/ahgz/sample/items/item/' + id);
 		},
 
-		// 批量录入和更改
+		// 批量录入和更改(同一抽样单)
 		updateSampleCi: function (sampleId, data) {
 			return $http({
 				url: '/api/v1/ahgz/sample/item/' + sampleId,
+				method: 'POST',
+				data: data
+			})
+		},
+
+		batchRecordCiResult: function (data) {
+			return $http({
+				url: '/api/v1/ahgz/sample/item/result',
 				method: 'POST',
 				data: data
 			})
@@ -94,24 +107,25 @@ angular.module('com.app').factory('SampleService', function ($http) {
 
 		exportFile: function (sampleId, name) {
 			return $http({
-				url: '/api/v1/ahgz/sample/items/excel/' + sampleId,
+				url: '/api/v1/ahgz/sample/items/report/' + sampleId,
 				method: 'GET',
 				params: {
-					templateFileName: name
+					templateFileName: name,
+					type: 'excel'
 				}
 			});
 		},
 
 		previewReport: function(sampleId, name) {
 			return $http({
-				url: '/api/v1/ahgz/sample/items/excel/test/' + sampleId,
+				url: '/api/v1/ahgz/sample/items/report/' + sampleId,
 				method: 'GET',
 				params: {
-					templateFileName: name
+					templateFileName: name,
+					type: 'pdf'
 				}
 			});
 		}
-
 
 	}
 });

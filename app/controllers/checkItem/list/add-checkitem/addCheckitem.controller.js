@@ -4,6 +4,8 @@ angular.module('com.app').controller('DBAddCheckItemCtrl', function ($scope, $ui
   var vm = this;
   vm.checkItem = {};
 
+  vm.characterArr = ['>', '>=', '<', '<=', '~', '!', '/', '$', '%', '^', '*', '(', ')', '[', ']'];
+
   vm.ok = function () {
   	CheckItemService.recordCheckItem(vm.checkItem).then(function (response) {
   		if (response.data.success) {

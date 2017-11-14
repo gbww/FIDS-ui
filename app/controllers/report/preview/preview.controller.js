@@ -2,6 +2,8 @@
 
 angular.module('com.app').controller('ReportPreviewCtrl', function ($uibModalInstance, $uibModal, $sce, SampleService, toastr, sampleId, templateMap) {
   var vm = this;
+  // var filepath = '/opt/test.pdf';
+  // vm.url = $sce.trustAsResourceUrl('http://' + location.host + '/pdfjs/web/viewer.html?file=' + filepath);
 
   vm.sampleId = sampleId;
   vm.category = '0';
@@ -22,8 +24,6 @@ angular.module('com.app').controller('ReportPreviewCtrl', function ($uibModalIns
   }
   vm.changeCategory('0');
 
-  // var filepath = '/opt/test.pdf';
-  // vm.url = $sce.trustAsResourceUrl('http://' + location.host + '/pdfjs/web/viewer.html?file=' + filepath);
   function base64ToBlob (dataURI) {
 		var mimeString =  dataURI.match(/:(.*?);/)[1]; // mime类型
 		var byteString = atob(dataURI.split(',')[1]); //base64 解码
@@ -36,21 +36,35 @@ angular.module('com.app').controller('ReportPreviewCtrl', function ($uibModalIns
   }
 
   vm.ok = function () {
-	  var reader = new FileReader();
-	  reader.onload = function () {
-			var blob = base64ToBlob(this.result);
-			$uibModalInstance.dismiss();
-			$uibModal.open({
-	      animation: true,
-	      windowClass: 'pdf-preview',
-	      templateUrl: 'controllers/report/preview/pdf/pdf.html',
-	      controller: 'PDFPreviewCtrl as vm',
-	      resolve: {
-	      	blobData: blob
-	      }
-	    });
-	  }
-	  reader.readAsDataURL(vm.file);
+	  // var reader = new FileReader();
+	  // reader.onload = function () {
+			// var blob = base64ToBlob(this.result);
+			// $uibModalInstance.dismiss();
+			// $uibModal.open({
+	  //     animation: true,
+	  //     windowClass: 'pdf-preview',
+	  //     templateUrl: 'controllers/report/preview/pdf/pdf.html',
+	  //     controller: 'PDFPreviewCtrl as vm',
+	  //     resolve: {
+	  //     	blobData: blob
+	  //     }
+	  //   });
+	  // }
+	  // reader.readAsDataURL(vm.file);
+
+    SampleService.previewReport(sampleId, vm.templateName).then(function (response) {
+      $uibModalInstance.dismiss();
+      $uibModal.open({
+        animation: true,
+        windowClass: 'pdf-preview',
+        templateUrl: 'controllers/report/preview/pdf/pdf.html',
+        controller: 'PDFPreviewCtrl as vm',
+        resolve: {
+         filepath: function () {return response.data}
+         // filepath: function () { return '/opt/test.pdf' }
+        }
+      });
+    })
 	}
 
   vm.cancel = function () {

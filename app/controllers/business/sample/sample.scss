@@ -26,38 +26,40 @@
     }
   }
 	.advanced-search {
-		margin-top: 15px;
+		margin-top: 10px;
     padding-right: 0;
     >div {
-    	margin-right: 5px;
-    }
-    input {
-    	width: 150px;
-    	background-image: none;
-    	padding-left: 10px!important;
-    }
-    .calendar-area{
-      .calendar-from{
-        margin: 0 5px 0 0;
+    	&:first-child {
+        margin-bottom: 5px;
       }
-      .input-group, .date{
-      	display: inline-block;
-        width: auto;
-        border-radius: 0;
-        input{
-        	padding: 3px 16px;
-        	width: 170px;
-          max-width: 170px;
-          height: 26px;
-          border-top-left-radius:3px;
-          border-bottom-left-radius:3px;
+      >div {
+        padding-left: 0;
+        max-width: 300px;
+        input {
+          width: 100%;
         }
       }
-      .input-group-addon{
-        width: 30px;
-        height: 26px;
-        padding: 4px 8px;
-        display: inline-block;
+    }
+    .select-wrapper {
+      margin-right: 10px;
+    }
+    input {
+    	background-image: none;
+    	padding-left: 10px!important;
+      &.date {
+        padding-right: 25px;
+        background-image: url(./images/calendar.png);
+        background-repeat: no-repeat;
+        background-position: 98% 55%;
+      }
+      &::-ms-input-placeholder {
+        color: #ccc;
+      }
+      &::-moz-input-placeholder {
+        color: #ccc;
+      }
+      &::-webkit-input-placeholder {
+        color: #ccc;
       }
     }
   }

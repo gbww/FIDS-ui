@@ -4,7 +4,7 @@ angular.module('com.app').controller('DBEditCheckItemCtrl', function ($scope, $u
   var vm = this;
   vm.checkItem = angular.copy(checkItem);
 
-  vm.characterArr = ['>', '>=', '<', '<='];
+  vm.characterArr = ['>', '>=', '<', '<=', '~', '!', '/', '$', '%', '^', '*', '(', ')', '[', ']'];
 
   vm.ok = function () {
   	CheckItemService.editCheckItem(vm.checkItem.id, vm.checkItem).then(function (response) {

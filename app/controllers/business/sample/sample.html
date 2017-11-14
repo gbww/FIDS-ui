@@ -47,39 +47,35 @@
       </ul>
 
 			<div class="pull-right" ng-show="!vm.advance">
-				<input class="input" placeholder="请输入抽样单编号查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
+				<input class="input" placeholder="请输入抽样单编号查询" ng-model="vm.searchConditions.receivesampleid" ng-keyup="vm.eventSearch($event)">
 				<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
-				<a href ng-click="vm.advance = true">高级查询</a>
+				<a href ng-click="vm.advance = true"><span>展开</span>&nbsp;<i class="fa fa-chevron-down"></i></a>
 			</div>
 			<div class="advanced-search clearfix" ng-show="vm.advance">
-				<div class="pull-left">
-					<div custom-select avail-arr="vm.sampleIdArr" model="vm.searchConditions" key="sampleId" placeholder="抽样单编号"></div>
+				<div class="clearfix">
+					<div class="col-sm-3">
+						<div custom-select avail-arr="vm.sampleIdArr" model="vm.searchConditions" key="receivesampleid" placeholder="抽样单编号"></div>
+					</div>
+					<div class="col-sm-3">
+						<div custom-select avail-arr="vm.sampleTypeArr" model="vm.searchConditions" key="sampletype" placeholder="样品类别"></div>
+					</div>
+					<div class="col-sm-3">
+						<div custom-select avail-arr="vm.checkTypeArr" model="vm.searchConditions" key="checktype" placeholder="检验类型"></div>
+					</div>
 				</div>
-				<div class="pull-left">
-					<div custom-select avail-arr="vm.sampleTypeArr" model="vm.searchConditions" key="sampleType" placeholder="样品类别"></div>
-				</div>
-				<div class="pull-left">
-					<div custom-select avail-arr="vm.checkTypeArr" model="vm.searchConditions" key="checkType" placeholder="检验类型"></div>
-				</div>
-				<div class="pull-left">
-					<div custom-select avail-arr="vm.entrustedUnitArr" model="vm.searchConditions" key="entrustedUnit" placeholder="委托单位"></div>
-				</div>
-				<div class="calendar-area pull-left">
-          <div class="input-group date calendar calendar-from" id="date-start">
-            <input type='text' class="form-control" placeholder="开始时间" ng-model="vm.startTime">
-                <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
-                </span>
-          </div>
-          <div class="input-group date calendar calendar-to" id="date-end">
-            <input type='text' class="form-control" placeholder="结束时间" ng-model="vm.endTime" ng-change="vm.getPeriod()">
-                <span class="input-group-addon">
-                    <span class="fa fa-calendar"></span>
-                </span>
-          </div>
+				<div class="clearfix">
+					<div class="col-sm-3">
+						<div custom-select avail-arr="vm.entrustedUnitArr" model="vm.searchConditions" key="entrustedunit" placeholder="委托单位"></div>
+					</div>
+					<div class="col-sm-3">
+						<input class="input date" ng-model="vm.searchConditions.startTime" placeholder="开始时间" datepicker>
+					</div>
+					<div class="col-sm-3">
+						<input class="input date" ng-model="vm.searchConditions.endTime" placeholder="结束时间" datepicker>
+					</div>
+					<button class="btn btn-default-dark pull-left" ng-click="vm.search()">查询</button>
+					<a href class="pull-left" ng-click="vm.back()"><span>收起</span><i class="fa fa-chevron-up"></i></a>
         </div>
-				<button class="btn btn-default-dark pull-left" ng-click="vm.search()">查询</button>
-				<a href class="pull-left" ng-click="vm.advance = false">返回</a>
 			</div>
 		</div>
 
@@ -116,14 +112,14 @@
 							<button class="btn btn-default" ng-click="vm.goDetail(sample.receiveSampleId)" role-auth="SAMPLE-UPDATESAMPLE-1">
 								<i class="fa fa-edit"></i><span>编辑</span>
 							</button>
-							<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-ADD-1 SAMPLE-DELETESAMPLE-1">
+							<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-ADD-1 SAMPLE-DELETESAMPLE-1" ng-click="vm.toggleDropdown($event)">
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li ng-click="vm.clone(sample)" role-auth="SAMPLE-ADD-1">
+								<li ng-click="vm.clone(sample, $event)" role-auth="SAMPLE-ADD-1">
 									<a href><i class="fa fa-clone"></i><span>复制</span></a>
 								</li>
-								<li ng-click="vm.delete(sample)" role-auth="SAMPLE-DELETESAMPLE-1">
+								<li ng-click="vm.delete(sample, $event)" role-auth="SAMPLE-DELETESAMPLE-1">
 									<a href><i class="fa fa-trash"></i><span>删除</span></a>
 								</li>
 							</ul>
@@ -146,21 +142,32 @@
 	</p>
 	<div class="pt-2">
 		<div class="contract-check-list check-list">
-			<div class="check-tree">
+			<div class="check-tree" role-auth="SAMPLE-ADDITEM-1">
 				<div class="loading" ng-if="vm.catalogLoading"><i></i></div>
 				<div id="inspectTree" class="ztree"></div>
 			</div>
-			<div class="check-info">
+			<div class="check-info" ng-class="{'no-padding': !vm.hasAddItemAuth}">
 				<div class="toolbar">
 					<button class="btn btn-default-dark" ng-click="vm.addSampleCI()" role-auth="SAMPLE-ADDITEM-1">
 						<i class="fa fa-plus"></i>
 						<span>添加检测项</span>
 					</button>
+					<button class="btn btn-default-light" ng-click="vm.appendCI()" role-auth="SAMPLE-ADDITEM-1" ng-show="vm.clonedSampleId">
+						<i class="fa fa-plus"></i>
+						<span>追加复制检测项</span>
+					</button>
+					<button class="btn btn-default-light" ng-click="vm.batchDistribute()" role-auth="SAMPLE-ADDITEM-1">
+						<i class="fa fa-edit"></i>
+						<span>批量分配检测人员</span>
+					</button>
 				</div>
 				<table class="pt-table">
 					<thead>
 						<tr>
-							<th>序号</th>
+							<th style="width: 80px;">
+								<input type="checkbox" ng-click="vm.selectAll()" ng-model="vm.allSelected">
+								序号
+							</th>
 							<th>名称</th>
 							<th>检测方法</th>
 							<th>单位</th>
@@ -182,7 +189,10 @@
 							<td colspan="12" class="text-center">暂无检测项</td>
 						</tr>
 						<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
-							<td>{{ $index }}</td>
+							<td>
+								<input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)">
+								{{ $index }}
+							</td>
 							<td>{{ item.name }}</td>
 							<td>{{ item.method }}</td>
 							<td>{{ item.unit }}</td>

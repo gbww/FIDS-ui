@@ -100,15 +100,48 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
     });
 
     modalInstance.result.then(function (res) {
-      var iframe = document.createElement('iframe');
-      iframe.src = '/api/v1/ahgz/sample/items/excel/' + sample.receiveSampleId + '?templateFileName=' + res.name + '&type=' + res.type;
-      iframe.style.display = 'none';
-      document.body.appendChild(iframe);
-      $timeout(function () {
-        document.body.removeChild(iframe);
-      }, 1000)
+      /* 二进制流 */
+      // var iframe = document.createElement('iframe');
+      // iframe.src = '/api/v1/ahgz/sample/items/report/' + sample.receiveSampleId + '?templateFileName=' + res.name + '&type=' + res.type;
+      // iframe.style.display = 'none';
+      // document.body.appendChild(iframe);
+      // $timeout(function () {
+      //   document.body.removeChild(iframe);
+      // }, 1000)
+
+      /* base64编码流数据 */
+      // SampleService.exportFile(sample.receiveSampleId, res).then(function (response) {
+      //   var link = document.createElement('a');
+      //   var blob = binaryToBlob(response.data);
+      //   link.href = URL.createObjectURL(blob);
+      //   link.download = res;
+      //   link.click();
+      //   URL.revokeObjectURL(link.href);
+      // })
+
+      /* 文件路径，需要配置nginx */
+      // var link = document.createElement('a');
+      // link.href = 'http://' + location.host + '/opt/test.xls';
+      // link.download = 'test.xls';
+      // link.click();
+
+
+      var link = document.createElement('a');
+      link.href = '/api/v1/ahgz/sample/items/report/' + sample.receiveSampleId + '?type=excel&templateFileName=' + res;
+      link.download = res;
+      link.click();
     });
   }
+
+  function binaryToBlob(data) {
+    var l = data.length, arr = new Uint8Array(l);
+
+    for(var i = 0; i < l; i++) {
+      arr[i] = data.charCodeAt(i);
+    }
+
+    return new Blob([arr], { type: 'application/vnd.ms-excel'})
+  };
 
   vm.preview = function (sample) {
     var modalInstance = $uibModal.open({

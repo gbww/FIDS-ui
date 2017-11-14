@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('com.app').controller('RecordCiResultCtrl', function ($uibModalInstance, SampleService, toastr, checkItem) {
+angular.module('com.app').controller('RecordCiResultCtrl', function ($uibModalInstance, SampleService, toastr, checkItems) {
   var vm = this;
-  vm.checkItem = angular.copy(checkItem);
+
+  vm.checkItem = angular.copy(checkItems[0]);
   vm.resultArr = ['合格', '不合格'];
 
   vm.changeResult = function () {
@@ -15,8 +16,17 @@ angular.module('com.app').controller('RecordCiResultCtrl', function ($uibModalIn
   }
 
   vm.ok = function () {
-    var data = angular.merge({}, vm.checkItem, {status: 2});
-  	SampleService.updateSampleCi(vm.checkItem.receiveSampleId, [data]).then(function (response) {
+    var data = angular.copy(checkItems);
+    angular.forEach(data, function (item) {
+      angular.merge(item, {
+        measuredValue: vm.checkItem.measuredValue,
+        itemResult: vm.checkItem.itemResult,
+        status: 2
+      })
+    })
+    // var data = angular.merge({}, vm.checkItem, {status: 2});
+  	// SampleService.updateSampleCi(vm.checkItem.receiveSampleId, [data]).then(function (response) {
+    SampleService.batchRecordCiResult(data).then(function (response) {
   		if (response.data.success) {
 		  	$uibModalInstance.close();
   		} else {

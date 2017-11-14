@@ -4,7 +4,7 @@ angular.module('com.app').controller('EditSampleCiCtrl', function ($uibModalInst
   var vm = this;
   vm.checkItem = angular.copy(checkItem);
 
-  vm.characterArr = ['>', '>=', '<', '<='];
+  vm.characterArr = ['>', '>=', '<', '<=', '~', '!', '/', '$', '%', '^', '*', '(', ')', '[', ']'];
 
   vm.ok = function () {
   	SampleService.updateSampleCi(sampleId, [vm.checkItem]).then(function (response) {

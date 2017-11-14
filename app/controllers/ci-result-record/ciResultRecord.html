@@ -4,6 +4,11 @@
 
 		<div class="pt-2">
 			<div class="toolbar clearfix">
+				<button class="btn btn-default-dark" ng-click="vm.batch()">
+					<i class="fa fa-edit"></i>
+					<span>批量录入检测结果</span>
+				</button>
+
 				<ul class="statusBar clearfix">
 	        <li ng-class="{'active': vm.status === '1'}">
 	          <a ng-click="vm.searchStatus('1')">
@@ -30,6 +35,9 @@
 			<table class="pt-table" st-table="vm.checkItems" st-pipe="vm.getCheckItemList">
 				<thead st-search-watch="vm.searchObject">
 					<tr>
+	          <th style="width: 60px;">
+  	          <input type="checkbox" ng-click="vm.selectAll()" ng-model="vm.allSelected">
+  	        </th>
 						<th>名称</th>
 						<th>检测方法</th>
 						<th>单位</th>
@@ -48,12 +56,15 @@
 				</thead>
 				<tbody>
 					<tr ng-if="vm.loading">
-						<td colspan="14" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+						<td colspan="15" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 					</tr>
 					<tr ng-if="!vm.loading && vm.checkItems.length == 0">
-						<td colspan="14" class="text-center">暂无检测项</td>
+						<td colspan="15" class="text-center">暂无检测项</td>
 					</tr>
 					<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.loading">
+	          <td>
+	            <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)">
+	          </td>
 						<td>{{ item.name }}</td>
 						<td>{{ item.method }}</td>
 						<td>{{ item.unit }}</td>
@@ -77,7 +88,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="14">
+						<td colspan="15">
 							<div st-idp st-total-count="vm.total"></div>
 						</td>
 					</tr>

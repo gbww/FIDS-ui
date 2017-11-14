@@ -34,7 +34,7 @@
 		<div class="form-group">
 			<label class="col-sm-3 control-label item-required">标准值</label>
 			<div class="col-sm-8">
-				<input class="form-control" name="standardValue" ng-model="vm.checkItem.standardValue" required>
+				<div custom-select name="standardValue" mode="append" class-name="form-control inline" avail-arr="vm.characterArr" model="vm.checkItem" key="standardValue"></div>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3" ng-if="checkItemAddForm.standardValue.$dirty" ng-messages="checkItemAddForm.standardValue.$error">
 				<label class="error-messages" ng-message="required"><i></i>不能为空</label>

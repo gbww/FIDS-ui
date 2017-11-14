@@ -335,8 +335,22 @@ i+span {
       }
     }
   }
-  &[class-name='form-control'] ul {
+  &[class-name='form-control inline'] ul {
     top: 34px;
+  }
+  .inline+ul {
+    padding: 5px;
+    li {
+      display: inline-block;
+      width: 34px;
+      text-align: center;
+      &:hover {
+        background-color: #eee;
+      }
+      a {
+        padding: 0
+      }
+    }
   }
 }
 

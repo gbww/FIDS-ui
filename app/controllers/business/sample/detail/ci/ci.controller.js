@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope, $scope, $uibModal, $q, CheckItemService, SampleService, toastr, dialog) {
+angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope, $scope, $uibModal, $q, $cookies, api, CheckItemService, SampleService, toastr, dialog) {
   var vm = this;
+  vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1;
+  vm.clonedSampleId = $cookies.getObject('clonedSampleId');
 
   var setting = {
     callback: {
@@ -84,7 +86,9 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
         data.push(tempItem);
       });
     }
+    $rootScope.loading = true;
     SampleService.updateSampleCi(vm.sample.receiveSampleId, data).then(function (response) {
+      $rootScope.loading = false;
       if (response.data.success) {
         vm.getSampleCi();
         toastr.success('添加成功！');
@@ -92,6 +96,29 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
         toastr.error(response.data.message);
       }
     })
+  }
+
+  vm.appendCI = function () {
+    var result = dialog.confirm('确认追加接样单 ' + vm.clonedSampleId + ' 的检测项?');
+    result.then(function (res) {
+      if (res) {
+        $rootScope.loading = true;
+        SampleService.getSampleCiList(vm.clonedSampleId).then(function (response) {
+          if (response.data.success) {
+            var checkItems = response.data.entity;
+            angular.forEach(checkItems, function (item) {
+              item.standard_value = item.standardValue,
+              item.detection_limit = item.detectionLimit,
+              item.quantitation_limit = item.quantitationLimit,
+              item.default_price = item.defaultPrice
+            });
+            addCheckItems(checkItems);
+          } else {
+            toastr.error(response.data.message);
+          }
+        })
+      }
+    });
   }
 
   // 点击检测性集合节点，弹出集合在的检测项供用户添加
@@ -153,7 +180,7 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
   vm.edit = function (ci) {
     var modalInstance = $uibModal.open({
       animation: true,
-      size: 'lg',
+      size: 'md',
       backdrop: 'static',
       templateUrl: 'controllers/business/sample/detail/ci/edit/edit.html',
       controller: 'EditSampleCiCtrl as vm',
@@ -196,7 +223,23 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
       controller: 'CiDistributeCtrl as vm',
       resolve: {
         sampleId: function () {return vm.sample.receiveSampleId;},
-        checkItem: function () {return item;}
+        checkItems: function () {return [item];},
+        departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getOrganizationList().then(function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              deferred.reject();
+              toastr.error(response.data.message);
+            }
+          }).catch(function (err) {
+            deferred.reject();
+            toastr.error(err.data);
+          });
+          return deferred.promise;
+        }]
       }
     });
 
@@ -204,6 +247,95 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
       toastr.success('检测项分配成功！');
       vm.getSampleCi();
     });
+  }
+
+  vm.batchDistribute = function () {
+    if (vm.selectedItems.length === 0) {
+      toastr.warning('请选择检测项！');
+      return;
+    }
+
+    var testRoom = '', testUser = '';
+    for (var i=0,len=vm.selectedItems.length; i<len; i++) {
+      if (i == 0) {
+        testRoom = vm.selectedItems[i].testRoom;
+        testUser = vm.selectedItems[i].testUser;
+      } else if (testRoom !== vm.selectedItems[i].testRoom || testUser !== vm.selectedItems[i].testUser) {
+        toastr.error('请确认所选检测项分配的检测室检测人员为同一人！');
+        return;
+      }
+    }
+
+    var modalInstance = $uibModal.open({
+      animation: true,
+      size: 'md',
+      backdrop: 'static',
+      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
+      controller: 'CiDistributeCtrl as vm',
+      resolve: {
+        sampleId: function () {return vm.sample.receiveSampleId;},
+        checkItems: function () {return angular.copy(vm.selectedItems);},
+        departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getOrganizationList().then(function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              deferred.reject();
+              toastr.error(response.data.message);
+            }
+          }).catch(function (err) {
+            deferred.reject();
+            toastr.error(err.data);
+          });
+          return deferred.promise;
+        }]
+      }
+    });
+
+    modalInstance.result.then(function () {
+      vm.itemSelected = [], vm.selectedItems = [], vm.allSelected = false;
+      toastr.success('检测项分配成功！');
+      vm.getSampleCi();
+    });
+  }
+
+  // 单选、复选
+  vm.itemSelected = [];
+  vm.selectedItems = [];
+  vm.selectAll = function () {
+    if (vm.allSelected){
+      vm.selectedItems = [];
+      angular.forEach(vm.checkItems, function (item, idx) {
+        vm.selectedItems.push(item);
+        vm.itemSelected[idx] = true;
+      });
+    } else {
+      vm.selectedItems = [];
+      angular.forEach(vm.checkItems, function (item, idx) {
+        vm.itemSelected[idx] = false;
+      });
+    }
+  }
+
+  vm.selectItem = function (event, idx, item) {
+    if(event.target.checked){
+      vm.selectedItems.push(item);
+      vm.itemSelected[idx] = true;
+      if(vm.selectedItems.length == vm.checkItems.length){
+        vm.allSelected = true;
+      }
+    } else {
+      for (var i=0,len=vm.selectedItems.length; i<len; i++){
+        if (item.name == vm.selectedItems[i].name) {
+          vm.selectedItems.splice(i, 1);
+          break;
+        }
+      };
+      vm.itemSelected[idx] = false;
+      vm.allSelected = false;
+    }
   }
 
 });

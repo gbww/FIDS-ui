@@ -1,19 +1,30 @@
 <div class="contract-check-list check-list">
-	<div class="check-tree">
+	<div class="check-tree" role-auth="SAMPLE-ADDITEM-1">
 		<div class="loading" ng-if="vm.catalogLoading"><i></i></div>
 		<div id="inspectTree" class="ztree"></div>
 	</div>
-	<div class="check-info">
+	<div class="check-info" ng-class="{'no-padding': !vm.hasAddItemAuth}">
 		<div class="toolbar">
 			<button class="btn btn-default-dark" ng-click="vm.addSampleCI()" role-auth="SAMPLE-ADDITEM-1">
 				<i class="fa fa-plus"></i>
 				<span>添加检测项</span>
 			</button>
+			<button class="btn btn-default-light" ng-click="vm.appendCI()" role-auth="SAMPLE-ADDITEM-1" ng-show="vm.clonedSampleId">
+				<i class="fa fa-plus"></i>
+				<span>追加复制检测项</span>
+			</button>
+			<button class="btn btn-default-light" ng-click="vm.batchDistribute()" role-auth="SAMPLE-ADDITEM-1">
+				<i class="fa fa-edit"></i>
+				<span>批量分配检测人员</span>
+			</button>
 		</div>
 		<table class="pt-table">
 			<thead>
 				<tr>
-					<th>序号</th>
+          <th style="width: 80px;">
+	          <input type="checkbox" ng-click="vm.selectAll()" ng-model="vm.allSelected">
+	          序号
+	        </th>
 					<th>抽样单编号</th>
 					<th>名称</th>
 					<th>检测方法</th>
@@ -34,7 +45,10 @@
 					<td colspan="11" class="text-center">暂无检测项</td>
 				</tr>
 				<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
-					<td>{{ $index }}</td>
+          <td>
+            <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)">
+            {{ $index }}
+          </td>
 					<td>{{ vm.sample.receiveSampleId }}</td>
 					<td>{{ item.name }}</td>
 					<td>{{ item.method }}</td>
@@ -54,7 +68,7 @@
 							</button>
 							<ul class="dropdown-menu">
 								<li ng-click="vm.distribute(item)" role-auth="SAMPLE-ADDITEM-1">
-									<a href><i class="fa fa-trash"></i><span>分配检测人员</span></a>
+									<a href><i class="fa fa-edit"></i><span>分配检测人员</span></a>
 								</li>
 								<li ng-click="vm.delete(item)" role-auth="SAMPLE-DELETEITEM-1">
 									<a href><i class="fa fa-trash"></i><span>删除</span></a>

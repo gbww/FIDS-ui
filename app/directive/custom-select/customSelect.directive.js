@@ -25,7 +25,7 @@ angular.module('com.app').directive('customSelect', [function () {
 				event.preventDefault();
 				var initHide = $(event.target).next().hasClass('ng-hide');
 				$('.select-wrapper').find('ul').addClass('ng-hide');
-				if (initHide) {
+				if (initHide && scope.availArr.length > 0) {
 					$(event.target).next().removeClass('ng-hide');
 				}
 			}
@@ -33,7 +33,7 @@ angular.module('com.app').directive('customSelect', [function () {
 			scope.select = function (event, val) {
 				event.stopPropagation();
 				if (scope.mode == 'append') {
-					scope.model[scope.key] = scope.model[scope.key] + val;
+					scope.model[scope.key] = (scope.model[scope.key] || '') + val;
 				} else {
 					scope.model[scope.key] = val;
 				}

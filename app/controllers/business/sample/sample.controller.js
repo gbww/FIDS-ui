@@ -5,32 +5,22 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root];
+  vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1;
 
-  $('#date-start').datetimepicker({
-    useCurrent: false,
-    format: 'YYYY-MM-DD hh:mm:ss'
-  });
-  $('#date-end').datetimepicker({
-    useCurrent: false,
-    format: 'YYYY-MM-DD hh:mm:ss'
-  });
-
-  $("#date-start").on("dp.change", function (e) {
-    $('#date-end').data("DateTimePicker").minDate(e.date);
-  });
-  $("#date-end").on("dp.change", function (e) {
-    $('#date-start').data("DateTimePicker").maxDate(e.date);
-  });
-
-  vm.searchObject = {
-    searchKeywords: ''
-  }
+  vm.searchObject = {}
 
   vm.refreshTable = function () {
     vm.searchObject.timestamp = new Date();
   }
 
-  vm.searchConditions = {};
+  vm.searchConditions = {
+    receivesampleid: null,
+    entrustedunit: null,
+    sampletype: null,
+    checktype: null,
+    startTime: null,
+    endTime: null
+  };
   vm.sampleIdArr = [], vm.sampleTypeArr = [], vm.checkTypeArr = [], vm.entrustedUnitArr = [];
 
   vm.status = '0';
@@ -42,7 +32,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
     }
-  	SampleService.getSampleList(tableParams, vm.searchObject.searchKeywords, parseInt(vm.status)).then(function (response) {
+  	SampleService.getSampleList(tableParams, vm.searchObject, parseInt(vm.status)).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.samples = response.data.entity.list;
@@ -60,10 +50,10 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
           if (vm.sampleIdArr.indexOf(item.receiveSampleId) == -1) {
             vm.sampleIdArr.push(item.receiveSampleId);
           }
-          if (vm.sampleTypeArr.indexOf(item.sampleType) == -1) {
+          if (item.sampleType && vm.sampleTypeArr.indexOf(item.sampleType) == -1) {
             vm.sampleTypeArr.push(item.sampleType);
           }
-          if (vm.checkTypeArr.indexOf(item.checkType) == -1) {
+          if (item.checkType && vm.checkTypeArr.indexOf(item.checkType) == -1) {
             vm.checkTypeArr.push(item.checkType);
           }
           if (item.entrustedUnit && vm.entrustedUnitArr.indexOf(item.entrustedUnit) == -1) {
@@ -87,13 +77,25 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     }
   }
 
-  vm.search=function(){
-    vm.searchObject.searchKeywords = vm.query;
+  vm.back = function () {
+    vm.advance = false;
+    angular.merge(vm.searchConditions, {
+      entrustedunit: null,
+      sampletype: null,
+      checktype: null,
+      startTime: null,
+      endTime: null,
+    });
   }
+
+  vm.search=function(){
+    vm.searchObject = angular.copy(vm.searchConditions);
+  }
+
   vm.eventSearch=function(e){
     var keycode = window.event?e.keyCode:e.which;
     if(keycode==13){
-      vm.searchObject.searchKeywords = vm.query;
+      vm.search();
     }
   }
 
@@ -105,16 +107,35 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     vm.getSampleCi();
   }
 
-  vm.clone = function (sample) {
-    $cookies.putObject('clonedSample', sample);
+  /* 防止事件冒泡到 vm.selectSample */
+  vm.toggleDropdown = function (event) {
+    event.stopPropagation();
+    var $menu = $(event.target).parents('.dropdown-col').find('.dropdown-menu');
+    var status = $menu.css('display');
+    $('.dropdown-col').find('.dropdown-menu').hide();
+    if (status == 'none') {
+      $menu.toggle();
+    }
+  }
+  $(document).click(function () {
+    $('.dropdown-col').find('.dropdown-menu').hide();
+  })
+
+  vm.clone = function (sample, event) {
+    event.stopPropagation();
+    vm.clonedSampleId = sample.receiveSampleId
+    $cookies.putObject('clonedSampleId', sample.receiveSampleId);
     toastr.success('复制成功！')
+    $('.dropdown-col').find('.dropdown-menu').hide();
   }
 
   vm.goDetail = function (id) {
     $state.go('app.business.sample.detail.info', {id: id});
   }
 
-  vm.delete = function (sample) {
+  vm.delete = function (sample, event) {
+    event.stopPropagation();
+    $('.dropdown-col').find('.dropdown-menu').hide();
     var result = dialog.confirm('确认删除接样单 ' + sample.receiveSampleId + ' ?');
     result.then(function (res) {
       if (res) {
@@ -145,14 +166,16 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   // 树形结构
   vm.catalogLoading = true;
-  CheckItemService.getChildCatalog('-1').then(function (response) {
-    vm.catalogLoading = false;
-    var data = response.data.entity;
-    angular.forEach(data, function (item) {
-      angular.merge(item, {name: item.productName, isParent: item.isCatalog=='1'})
+  if (vm.hasAddItemAuth) {
+    CheckItemService.getChildCatalog('-1').then(function (response) {
+      vm.catalogLoading = false;
+      var data = response.data.entity;
+      angular.forEach(data, function (item) {
+        angular.merge(item, {name: item.productName, isParent: item.isCatalog=='1'})
+      })
+      vm.tree = $.fn.zTree.init($("#inspectTree"), setting, data);
     })
-    vm.tree = $.fn.zTree.init($("#inspectTree"), setting, data);
-  })
+  }
 
   // 根据
   vm.checkItems = [];
@@ -214,7 +237,9 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
         data.push(tempItem);
       });
     }
+    $rootScope.loading = true;
     SampleService.updateSampleCi(vm.selectedSample.receiveSampleId, data).then(function (response) {
+      $rootScope.loading = false;
       if (response.data.success) {
         vm.getSampleCi();
         toastr.success('添加成功！');
@@ -224,7 +249,30 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     })
   }
 
-  // 点击检测性集合节点，弹出集合在的检测项供用户添加
+  vm.appendCI = function () {
+    var result = dialog.confirm('确认追加接样单 ' + vm.clonedSampleId + ' 的检测项?');
+    result.then(function (res) {
+      if (res) {
+        $rootScope.loading = true;
+        SampleService.getSampleCiList(vm.clonedSampleId).then(function (response) {
+          if (response.data.success) {
+            var checkItems = response.data.entity;
+            angular.forEach(checkItems, function (item) {
+              item.standard_value = item.standardValue,
+              item.detection_limit = item.detectionLimit,
+              item.quantitation_limit = item.quantitationLimit,
+              item.default_price = item.defaultPrice
+            });
+            addCheckItems(checkItems);
+          } else {
+            toastr.error(response.data.message);
+          }
+        })
+      }
+    });
+  }
+
+  // 点击检测项集合节点，弹出集合的检测项供用户添加
   function clickNode (event, treeId, treeNode) {
     if (!vm.selectedSample) {
       return;
@@ -289,7 +337,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.edit = function (ci) {
     var modalInstance = $uibModal.open({
       animation: true,
-      size: 'lg',
+      size: 'md',
       backdrop: 'static',
       templateUrl: 'controllers/business/sample/detail/ci/edit/edit.html',
       controller: 'EditSampleCiCtrl as vm',
@@ -332,7 +380,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       controller: 'CiDistributeCtrl as vm',
       resolve: {
         sampleId: function () {return vm.selectedSample.receiveSampleId;},
-        checkItem: function () {return item;},
+        checkItems: function () {return [item];},
         departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;
           var deferred = $q.defer();
@@ -358,6 +406,95 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
         vm.getSampleCi();
       }, 500)
     });
+  }
+
+  vm.batchDistribute = function () {
+    if (vm.selectedItems.length === 0) {
+      toastr.warning('请选择检测项！');
+      return;
+    }
+
+    var testRoom = '', testUser = '';
+    for (var i=0,len=vm.selectedItems.length; i<len; i++) {
+      if (i == 0) {
+        testRoom = vm.selectedItems[i].testRoom;
+        testUser = vm.selectedItems[i].testUser;
+      } else if (testRoom !== vm.selectedItems[i].testRoom || testUser !== vm.selectedItems[i].testUser) {
+        toastr.error('请确认所选检测项分配的检测室检测人员为同一人！');
+        return;
+      }
+    }
+
+    var modalInstance = $uibModal.open({
+      animation: true,
+      size: 'md',
+      backdrop: 'static',
+      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
+      controller: 'CiDistributeCtrl as vm',
+      resolve: {
+        sampleId: function () {return vm.sample.receiveSampleId;},
+        checkItems: function () {return angular.copy(vm.selectedItems);},
+        departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getOrganizationList().then(function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              deferred.reject();
+              toastr.error(response.data.message);
+            }
+          }).catch(function (err) {
+            deferred.reject();
+            toastr.error(err.data);
+          });
+          return deferred.promise;
+        }]
+      }
+    });
+
+    modalInstance.result.then(function () {
+      vm.itemSelected = [], vm.selectedItems = [], vm.allSelected = false;
+      toastr.success('检测项分配成功！');
+      vm.getSampleCi();
+    });
+  }
+
+  // 单选、复选
+  vm.itemSelected = [];
+  vm.selectedItems = [];
+  vm.selectAll = function () {
+    if (vm.allSelected){
+      vm.selectedItems = [];
+      angular.forEach(vm.checkItems, function (item, idx) {
+        vm.selectedItems.push(item);
+        vm.itemSelected[idx] = true;
+      });
+    } else {
+      vm.selectedItems = [];
+      angular.forEach(vm.checkItems, function (item, idx) {
+        vm.itemSelected[idx] = false;
+      });
+    }
+  }
+
+  vm.selectItem = function (event, idx, item) {
+    if(event.target.checked){
+      vm.selectedItems.push(item);
+      vm.itemSelected[idx] = true;
+      if(vm.selectedItems.length == vm.checkItems.length){
+        vm.allSelected = true;
+      }
+    } else {
+      for (var i=0,len=vm.selectedItems.length; i<len; i++){
+        if (item.name == vm.selectedItems[i].name) {
+          vm.selectedItems.splice(i, 1);
+          break;
+        }
+      };
+      vm.itemSelected[idx] = false;
+      vm.allSelected = false;
+    }
   }
 
 });

@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('com.app').controller('SampleCreateCtrl', function ($state, $cookies, $uibModal, api, toastr, SampleService) {
+angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $state, $cookies, $uibModal, api, toastr, SampleService) {
   var vm = this;
 
-  vm.clonedSample = $cookies.getObject('clonedSample');
+  vm.clonedSampleId = $cookies.getObject('clonedSampleId');
 
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root, businessBC.sample.create];
@@ -31,9 +31,18 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($state, $cook
   vm.sample = angular.copy(initSample);
 
   vm.paste = function () {
-    var sample = angular.copy(vm.clonedSample);
-    delete sample.receiveSampleId;
-    vm.sample = angular.copy(sample);
+    $rootScope.loading = true;
+    SampleService.getSampleInfo(vm.clonedSampleId).then(function (response) {
+      $rootScope.loading = false;
+      if (response.data.success) {
+        vm.sample = angular.merge(response.data.entity, {receiveSampleId: null});
+      } else {
+        toastr.error(response.data.message);
+      }
+    }).catch(function (err) {
+      $rootScope.loading = false;
+      toastr.error(err.data);
+    })
   }
 
   vm.reset = function () {

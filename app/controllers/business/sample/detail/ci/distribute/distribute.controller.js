@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('com.app').controller('CiDistributeCtrl', function ($rootScope, $scope, $uibModalInstance, SampleService, PrivilegeService, sampleId, checkItem, departments) {
+angular.module('com.app').controller('CiDistributeCtrl', function ($rootScope, $scope, $uibModalInstance, SampleService, PrivilegeService, sampleId, checkItems, departments) {
   var vm = this;
   $rootScope.loading = false;
 
-  vm.checkItem = checkItem;
+  vm.checkItem = angular.copy(checkItems[0]);
   vm.departments = departments;
 
 
@@ -46,12 +46,15 @@ angular.module('com.app').controller('CiDistributeCtrl', function ($rootScope, $
         testRoom = department.name;
       }
     })
-  	var data = angular.merge({}, vm.checkItem, {
-  		testRoom: testRoom,
-  		testUser: vm.testUser,
-      status: 1
-  	});
-  	SampleService.updateSampleCi(sampleId, [data]).then(function (response) {
+    var data = angular.copy(checkItems);
+    angular.forEach(data, function (item) {
+    	angular.merge(item, {
+    		testRoom: testRoom,
+    		testUser: vm.testUser,
+        status: 1
+    	});
+    })
+  	SampleService.updateSampleCi(sampleId, data).then(function (response) {
   		if (response.data.success) {
 		  	$uibModalInstance.close(vm.checkItem);
   		} else {

@@ -14,7 +14,7 @@ angular.module('com.app')
         };
         $(elem).datetimepicker({
           useCurrent: false,
-          format: 'YYYY-MM-DD hh:mm:ss'
+          format: 'YYYY-MM-DD HH:mm:ss'
         });
         $(elem).on("dp.change",function (e) {
           updateModel();
