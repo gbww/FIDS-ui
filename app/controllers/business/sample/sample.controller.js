@@ -7,10 +7,14 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root];
   vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1;
 
+  vm.clonedSampleId = $cookies.get('clonedSampleId');
   vm.searchObject = {}
 
-  vm.refreshTable = function () {
+  vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
+    if (flag) {
+      vm.searchObject.totalCount = vm.total - 1;
+    }
   }
 
   vm.searchConditions = {
@@ -110,24 +114,30 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   /* 防止事件冒泡到 vm.selectSample */
   vm.toggleDropdown = function (event) {
     event.stopPropagation();
-    var $menu = $(event.target).parents('.dropdown-col').find('.dropdown-menu');
-    var status = $menu.css('display');
-    $('.dropdown-col').find('.dropdown-menu').hide();
+    var $group = $(event.target).parents('.btn-group');
+    var status = $group.find('.dropdown-menu').css('display');
+    $('.btn-group').removeClass('open');
     if (status == 'none') {
-      $menu.toggle();
+      $group.addClass('open');
     }
+
   }
   $(document).click(function () {
-    $('.dropdown-col').find('.dropdown-menu').hide();
-  })
+    $('.btn-group').removeClass('open');
+  });
 
   vm.clone = function (sample, event) {
     event.stopPropagation();
     vm.clonedSampleId = sample.receiveSampleId
-    $cookies.putObject('clonedSampleId', sample.receiveSampleId);
+    $cookies.put('clonedSampleId', sample.receiveSampleId);
     toastr.success('复制成功！')
-    $('.dropdown-col').find('.dropdown-menu').hide();
+    $('.btn-group').removeClass('open');
   }
+
+  // 离开抽样单页面时，清空复制信息
+  $scope.$on('$destroy', function () {
+    $cookies.remove('clonedSampleId');
+  })
 
   vm.goDetail = function (id) {
     $state.go('app.business.sample.detail.info', {id: id});
@@ -135,13 +145,13 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   vm.delete = function (sample, event) {
     event.stopPropagation();
-    $('.dropdown-col').find('.dropdown-menu').hide();
+    $('.btn-group').removeClass('open');
     var result = dialog.confirm('确认删除接样单 ' + sample.receiveSampleId + ' ?');
     result.then(function (res) {
       if (res) {
         SampleService.deleteSample([sample.receiveSampleId]).then(function (response) {
           if (response.data.success) {
-            vm.refreshTable();
+            vm.refreshTable(true);
             toastr.success('接样单删除成功！');
           } else {
             toastr.error(response.data.message);
@@ -353,7 +363,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     });
   }
 
-  vm.delete = function (ci) {
+  vm.deleteCI = function (ci) {
     var result = dialog.confirm('确认从接样单中删除检测项 ' + ci.name + ' ?');
     result.then(function (res) {
       if (res) {
@@ -432,7 +442,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
       controller: 'CiDistributeCtrl as vm',
       resolve: {
-        sampleId: function () {return vm.sample.receiveSampleId;},
+        sampleId: function () {return vm.selectedSample.receiveSampleId;},
         checkItems: function () {return angular.copy(vm.selectedItems);},
         departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ContractDetailInfoCtrl', function ($scope, toastr, ContractService) {
+angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state, $scope, toastr, ContractService) {
   var vm = this;
 
   $scope.$emit('refreshContract');
@@ -26,6 +26,7 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($scope,
 
   	ContractService.editContract(vm.contract.id, data).then(function (response) {
   		if (response.data.success) {
+        $state.go('app.business.contract');
   			toastr.success('合同修改成功！');
   		} else {
   			toastr.error(response.data.message);

@@ -4,7 +4,7 @@
 
 		<div class="pt-2">
 			<div class="toolbar clearfix">
-				<button class="btn btn-default-dark" ng-click="vm.batch()">
+				<button class="btn btn-default-dark" ng-click="vm.batch()" role-auth="SAMPLE-UPDATEITEMRESULT-1">
 					<i class="fa fa-edit"></i>
 					<span>批量录入检测结果</span>
 				</button>
@@ -82,7 +82,7 @@
 						<td>{{ item.testUser }}</td>
 						<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
 						<td>
-							<button class="btn btn-default" ng-click="vm.recordResult(item)">录入检测结果</button>
+							<button class="btn btn-default" ng-click="vm.recordResult(item)" role-auth="SAMPLE-UPDATEITEMRESULT-1">录入检测结果</button>
 						</td>
 					</tr>
 				</tbody>

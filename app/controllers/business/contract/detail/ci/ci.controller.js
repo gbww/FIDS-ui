@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('com.app').controller('ContractDetailCiCtrl', function ($rootScope, $scope, $uibModal, $q, CheckItemService, ContractService, toastr, dialog) {
+angular.module('com.app').controller('ContractDetailCiCtrl', function ($rootScope, $scope, $uibModal, $q, api, CheckItemService, ContractService, toastr, dialog) {
   var vm = this;
+  vm.hasAddItemAuth = api.permissionArr.indexOf('CONTRACT-UPDATE-1') != -1;
 
   var setting = {
     callback: {
@@ -84,7 +85,7 @@ angular.module('com.app').controller('ContractDetailCiCtrl', function ($rootScop
     }
     var data = angular.merge(vm.contract, {detectProject: existArr.join(',')});
     ContractService.editContract(vm.contract.id, data).then(function () {
-      vm.getContractCi(vm.contract.detectProject.split(','));
+      vm.getContractCi(vm.contract.detectProject ? vm.contract.detectProject.split(',') : []);
       toastr.success('添加成功！');
     });
   }
@@ -157,7 +158,7 @@ angular.module('com.app').controller('ContractDetailCiCtrl', function ($rootScop
         var data = angular.merge(vm.contract, {detectProject: existArr.join(',')});
         ContractService.editContract(vm.contract.id, data).then(function (response) {
           if (response.data.success) {
-            vm.getContractCi(vm.contract.detectProject.split(','));
+            vm.getContractCi(vm.contract.detectProject ? vm.contract.detectProject.split(',') : []);
             toastr.success('合同检测项删除成功！');
           } else {
             toastr.error(response.data.message);
@@ -167,20 +168,6 @@ angular.module('com.app').controller('ContractDetailCiCtrl', function ($rootScop
         });
       }
     })
-  }
-
-  vm.distributeDepart = function () {
-    var modalInstance = $uibModal.open({
-      animation: true,
-      size: 'md',
-      backdrop: 'static',
-      templateUrl: 'controllers/business/contract/detail/ci/distribute-department/distributeDepart.html',
-      controller: 'CiDistributeDepartCtrl as vm',
-    });
-
-    modalInstance.result.then(function () {
-
-    });
   }
 
 });

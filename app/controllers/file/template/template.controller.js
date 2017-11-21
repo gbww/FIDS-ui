@@ -10,8 +10,11 @@ angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, ap
     searchKeywords: ''
   }
 
-  vm.refreshTable = function () {
+  vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
+    if (flag) {
+      vm.searchObject.totalCount = vm.total - 1;
+    }
   }
 
   vm.templates = [];
@@ -86,7 +89,7 @@ angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, ap
       if (res) {
         TemplateService.deleteTemplate(template.id).then(function (response) {
           if (response.data.success) {
-            vm.refreshTable();
+            vm.refreshTable(true);
             toastr.success('模板删除成功！');
           } else {
             toastr.error(response.data.message);

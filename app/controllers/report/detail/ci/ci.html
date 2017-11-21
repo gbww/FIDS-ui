@@ -1,9 +1,9 @@
 <div class="contract-check-list check-list">
-	<div class="check-tree">
+	<div class="check-tree" role-auth="SAMPLE-ADDITEM-1">
 		<div class="loading" ng-if="vm.catalogLoading"><i></i></div>
 		<div id="inspectTree" class="ztree"></div>
 	</div>
-	<div class="check-info">
+	<div class="check-info" ng-class="{'no-padding': !vm.hasAddItemAuth}">
 		<div class="toolbar">
 			<button class="btn btn-default-dark" ng-click="vm.addSampleCI()" role-auth="SAMPLE-ADDITEM-1">
 				<i class="fa fa-plus"></i>
@@ -59,7 +59,7 @@
 					<td>{{ item.testUser }}</td>
 					<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
 					<td class="dropdown-col">
-						<div class="btn-group">
+						<div class="btn-group" role-auth="SAMPLE-ADDITEM-1 SAMPLE-DELETEITEM-1">
 							<button class="btn btn-default" ng-click="vm.edit(item)" role-auth="SAMPLE-ADDITEM-1">
 								<i class="fa fa-edit"></i><span>编辑</span>
 							</button>

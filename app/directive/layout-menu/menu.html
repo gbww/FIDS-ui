@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div class="panel" role-auth="CONTRACT-ADD-1 SAMPLE-SELECT-1">
+      <div class="panel" role-auth="CONTRACT-SELECT-1 SAMPLE-SELECT-1">
         <div data-parent="#accordion" data-toggle="collapse" data-target="#businessManage" aria-expanded="{{vm.isBusinessActive}}">
           <a>
             <i class="icon icon-service"></i>
@@ -23,7 +23,7 @@
           </a>
         </div>
         <ul id="businessManage" ng-class="{'collapse in': vm.isBusinessActive, 'collapse': !vm.isBusinessActive}">
-          <li ng-class="{'active': vm.isBusinessContractActive}" role-auth="CONTRACT-ADD-1">
+          <li ng-class="{'active': vm.isBusinessContractActive}" role-auth="CONTRACT-SELECT-1">
             <a ui-sref="app.business.contract"><span>合同评审</span></a>
           </li>
           <li ng-class="{'active': vm.isBusinessSampleActive}" role-auth="SAMPLE-SELECT-1">

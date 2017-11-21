@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('com.app').controller('ReportDetailCiCtrl', function ($rootScope, $scope, $uibModal, $q, CheckItemService, SampleService, toastr, dialog) {
+angular.module('com.app').controller('ReportDetailCiCtrl', function ($rootScope, $scope, $uibModal, $q, api, CheckItemService, SampleService, toastr, dialog) {
   var vm = this;
+  vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1;
 
   var setting = {
     callback: {
@@ -153,7 +154,7 @@ angular.module('com.app').controller('ReportDetailCiCtrl', function ($rootScope,
   vm.edit = function (ci) {
     var modalInstance = $uibModal.open({
       animation: true,
-      size: 'lg',
+      size: 'md',
       backdrop: 'static',
       templateUrl: 'controllers/business/sample/detail/ci/edit/edit.html',
       controller: 'EditSampleCiCtrl as vm',

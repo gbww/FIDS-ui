@@ -30,8 +30,6 @@
 					<th>检测方法</th>
 					<th>单位</th>
 					<th>标准值</th>
-					<th>默认价格</th>
-					<th>分包</th>
 					<th>检测部门</th>
 					<th>更新时间</th>
 					<th style="width: 140px">操作</th>
@@ -39,23 +37,21 @@
 			</thead>
 			<tbody>
 				<tr ng-if="vm.ciLoading">
-					<td colspan="11" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+					<td colspan="9" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 				</tr>
 				<tr ng-if="!vm.ciLoading && vm.checkItems.length == 0">
-					<td colspan="11" class="text-center">暂无检测项</td>
+					<td colspan="9" class="text-center">暂无检测项</td>
 				</tr>
 				<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
           <td>
             <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)">
-            {{ $index }}
+            {{ $index + 1 }}
           </td>
 					<td>{{ vm.sample.receiveSampleId }}</td>
 					<td>{{ item.name }}</td>
 					<td>{{ item.method }}</td>
 					<td>{{ item.unit }}</td>
 					<td>{{ item.standardValue }}</td>
-					<td>{{ item.defaultPrice }}</td>
-					<td>{{ item.subpackage }}</td>
 					<td>{{ item.testRoom }}</td>
 					<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
 					<td class="dropdown-col">

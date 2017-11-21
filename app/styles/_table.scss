@@ -103,15 +103,14 @@
     }
     td.dropdown-col{
       .btn-group{
+        border: 1px solid $table-border-color;
+        border-radius: 4px;
         .btn{
-          border: 1px solid $table-border-color;
           margin: 0;
-          @include box-shadow(none);
         }
         .btn-default{
           color: inherit;
           background-color: transparent;
-          border-right: none;
           &:link, &:visited, &:hover, &:active {
             outline: none;
           }

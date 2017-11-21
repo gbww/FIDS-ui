@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('SampleDetailInfoCtrl', function ($scope, $uibModal, toastr, SampleService) {
+angular.module('com.app').controller('SampleDetailInfoCtrl', function ($state, $scope, $uibModal, toastr, SampleService) {
   var vm = this;
 
   $scope.$emit('refreshSample');
@@ -45,6 +45,7 @@ angular.module('com.app').controller('SampleDetailInfoCtrl', function ($scope, $
 
 		SampleService.editSample(vm.sample).then(function (response) {
   		if (response.data.success) {
+        $state.go('app.business.sample');
   			toastr.success('接样单修改成功！');
   		} else {
   			toastr.error(response.data.message);

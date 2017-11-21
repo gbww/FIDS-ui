@@ -50,6 +50,14 @@ angular.module('com.app').config(function($httpProvider, stConfig) {
           return $q.defer().promise;
 	      }
 
+        // 5**，请求服务器错误
+        if (/^5\d+$/.test(response.status)) {
+          if (response.config.url.indexOf('login') == -1) {
+            $rootScope.$broadcast('responseError', '5**', response.data);
+            return $q.defer().promise;
+          }
+        }
+
 	      return $q.reject(response);
 	    }
   	};

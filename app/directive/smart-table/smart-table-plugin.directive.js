@@ -42,7 +42,10 @@ angular.module('smart-table').run(['$templateCache', function ($templateCache) {
                 scope.$watch('stSearchWatch', function (newValue, oldValue) {
                     if (newValue !== oldValue) {
                         var tableState = ctrl.tableState();
-                        tableState.pagination.start = 0;
+                        // 当删除操作后总页数改变时，跳转到第一页
+                        if (newValue.totalCount && (newValue.totalCount <= tableState.pagination.start)) {
+                            tableState.pagination.start = 0;
+                        }
                         ctrl.pipe();
                         console.log('st-search-object');
                     }

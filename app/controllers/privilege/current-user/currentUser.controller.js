@@ -39,7 +39,7 @@ angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($root
       templateUrl: 'controllers/privilege/user/edit/edit.html',
       controller: 'PrivilegeUserEditCtrl as vm',
       resolve: {
-        user: function () { return vm.user; }
+        user: function () { return angular.copy(vm.user); }
       }
     });
 

@@ -10,8 +10,11 @@ angular.module('com.app').controller('PrivilegeOrganizationCtrl', function ($roo
     searchKeywords: ''
   }
 
-  vm.refreshTable = function () {
+  vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
+    if (flag) {
+      vm.searchObject.totalCount = vm.total - 1;
+    }
   }
 
   vm.organizations = [];
@@ -61,7 +64,7 @@ angular.module('com.app').controller('PrivilegeOrganizationCtrl', function ($roo
       templateUrl: 'controllers/privilege/organization/edit/edit.html',
       controller: 'PrivilegeOrganizationEditCtrl as vm',
       resolve: {
-        organization: function () { return organization; }
+        organization: function () { return angular.copy(organization); }
       }
     });
 
@@ -77,7 +80,7 @@ angular.module('com.app').controller('PrivilegeOrganizationCtrl', function ($roo
       if (res) {
         PrivilegeService.deleteOrganization(organization.id).then(function (response) {
           if (response.data.success) {
-            vm.refreshTable();
+            vm.refreshTable(true);
             toastr.success('部门删除成功！');
           } else {
             toastr.error(response.data.message);

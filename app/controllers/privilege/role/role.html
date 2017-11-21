@@ -27,7 +27,7 @@
 					<td>{{ role.description }}</td>
 					<td>{{ role.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
 					<td class="dropdown-col">
-						<div class="btn-group">
+						<div class="btn-group" role-auth="ROLE-EDIT-1 ROLE-DELETE-1">
 							<button class="btn btn-default" ng-click="vm.editEntity(role.id)" role-auth="ROLE-EDIT-1">
 								<i class="fa fa-edit"></i><span>修改权限</span>
 							</button>

@@ -109,7 +109,7 @@
 					<td>{{ sample.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
 					<td class="dropdown-col">
 						<div class="btn-group">
-							<button class="btn btn-default" ng-click="vm.goDetail(sample.receiveSampleId)" role-auth="SAMPLE-UPDATESAMPLE-1">
+							<button class="btn btn-default" ng-click="vm.goDetail(sample.receiveSampleId)">
 								<i class="fa fa-edit"></i><span>编辑</span>
 							</button>
 							<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-ADD-1 SAMPLE-DELETESAMPLE-1" ng-click="vm.toggleDropdown($event)">
@@ -147,16 +147,16 @@
 				<div id="inspectTree" class="ztree"></div>
 			</div>
 			<div class="check-info" ng-class="{'no-padding': !vm.hasAddItemAuth}">
-				<div class="toolbar">
-					<button class="btn btn-default-dark" ng-click="vm.addSampleCI()" role-auth="SAMPLE-ADDITEM-1">
+				<div class="toolbar" role-auth="SAMPLE-ADDITEM-1">
+					<button class="btn btn-default-dark" ng-click="vm.addSampleCI()">
 						<i class="fa fa-plus"></i>
 						<span>添加检测项</span>
 					</button>
-					<button class="btn btn-default-light" ng-click="vm.appendCI()" role-auth="SAMPLE-ADDITEM-1" ng-show="vm.clonedSampleId">
+					<button class="btn btn-default-light" ng-click="vm.appendCI()" ng-show="vm.clonedSampleId && vm.clonedSampleId != vm.selectedSample.receiveSampleId">
 						<i class="fa fa-plus"></i>
 						<span>追加复制检测项</span>
 					</button>
-					<button class="btn btn-default-light" ng-click="vm.batchDistribute()" role-auth="SAMPLE-ADDITEM-1">
+					<button class="btn btn-default-light" ng-click="vm.batchDistribute()">
 						<i class="fa fa-edit"></i>
 						<span>批量分配检测人员</span>
 					</button>
@@ -191,7 +191,7 @@
 						<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
 							<td>
 								<input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)">
-								{{ $index }}
+								{{ $index + 1 }}
 							</td>
 							<td>{{ item.name }}</td>
 							<td>{{ item.method }}</td>
@@ -208,7 +208,7 @@
 							<td>{{ item.testUser }}</td>
 							<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
 							<td class="dropdown-col">
-								<div class="btn-group">
+								<div class="btn-group" role-auth="SAMPLE-ADDITEM-1 SAMPLE-DELETEITEM-1">
 									<button class="btn btn-default" ng-click="vm.edit(item)" role-auth="SAMPLE-ADDITEM-1">
 										<i class="fa fa-edit"></i><span>编辑</span>
 									</button>
@@ -219,7 +219,7 @@
 										<li ng-click="vm.distribute(item)" role-auth="SAMPLE-ADDITEM-1">
 											<a href><i class="fa fa-edit"></i><span>检测分配</span></a>
 										</li>
-										<li ng-click="vm.delete(item)" role-auth="SAMPLE-DELETEITEM-1">
+										<li ng-click="vm.deleteCI(item)" role-auth="SAMPLE-DELETEITEM-1">
 											<a href><i class="fa fa-trash"></i><span>删除</span></a>
 										</li>
 									</ul>

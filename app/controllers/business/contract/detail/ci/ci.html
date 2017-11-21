@@ -1,10 +1,10 @@
 <div class="contract-check-list check-list">
-	<div class="check-tree">
+	<div class="check-tree" role-auth="CONTRACT-UPDATE-1">
 		<div class="loading" ng-if="vm.catalogLoading"><i></i></div>
 		<div id="inspectTree" class="ztree"></div>
 	</div>
-	<div class="check-info">
-		<div class="toolbar">
+	<div class="check-info" ng-class="{'no-padding': !vm.hasAddItemAuth}">
+		<div class="toolbar" role-auth="CONTRACT-UPDATE-1">
 			<button class="btn btn-default-dark" ng-click="vm.addContractCI()">
 				<i class="fa fa-plus"></i>
 				<span>添加检测项</span>
@@ -41,23 +41,8 @@
 					<td>{{ item.device }}</td>
 					<td>{{ item.defaultPrice }}</td>
 					<td>
-						<button class="btn btn-default" ng-click="vm.delete(item)">删除</button>
+						<button class="btn btn-default" ng-click="vm.delete(item)" role-auth="CONTRACT-UPDATE-1">删除</button>
 					</td>
-					<!-- <td class="dropdown-col">
-						<div class="btn-group">
-							<button class="btn btn-default" ng-click="vm.distributeDepart()">
-								<i class="fa fa-edit"></i><span>检测分配</span>
-							</button>
-							<button class="btn dropdown-toggle" data-toggle="dropdown">
-								<i class="caret"></i>
-							</button>
-							<ul class="dropdown-menu">
-								<li ng-click="vm.delete(item)">
-									<a href><i class="fa fa-trash"></i><span>删除</span></a>
-								</li>
-							</ul>
-						</div>
-					</td> -->
 				</tr>
 			</tbody>
 		</table>

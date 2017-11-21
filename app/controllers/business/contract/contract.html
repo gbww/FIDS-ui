@@ -65,7 +65,7 @@
 					</td>
 					<td>{{ contract.createdAt | date:'medium' }}</td>
 					<td class="dropdown-col">
-						<div class="btn-group">
+						<div class="btn-group" role-auth="CONTRACT-STARTPROCESS-1 CONTRACT-UPDATE-1 CONTRACT-DELETE-1">
 							<button class="btn btn-default" ng-click="vm.goDetail(contract.id, 'info')" role-auth="CONTRACT-UPDATE-1">
 								<i class="fa fa-edit"></i><span>编辑</span>
 							</button>

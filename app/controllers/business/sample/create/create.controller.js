@@ -3,7 +3,7 @@
 angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $state, $cookies, $uibModal, api, toastr, SampleService) {
   var vm = this;
 
-  vm.clonedSampleId = $cookies.getObject('clonedSampleId');
+  vm.clonedSampleId = $cookies.get('clonedSampleId');
 
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root, businessBC.sample.create];

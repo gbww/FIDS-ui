@@ -10,8 +10,11 @@ angular.module('com.app').controller('PrivilegeUserCtrl', function ($rootScope, 
     searchKeywords: ''
   }
 
-  vm.refreshTable = function () {
+  vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
+    if (flag) {
+      vm.searchObject.totalCount = vm.total - 1;
+    }
   }
 
   vm.users = [];
@@ -52,10 +55,9 @@ angular.module('com.app').controller('PrivilegeUserCtrl', function ($rootScope, 
             if (response.data.success) {
               deferred.resolve(response.data.entity);
             } else {
+              $rootScope.loading = false;
               deferred.reject()
             }
-          }).catch(function () {
-            deferred.reject()
           });
           return deferred.promise;
         }],
@@ -66,10 +68,9 @@ angular.module('com.app').controller('PrivilegeUserCtrl', function ($rootScope, 
             if (response.data.success) {
               deferred.resolve(response.data.entity);
             } else {
+              $rootScope.loading = false;
               deferred.reject()
             }
-          }).catch(function () {
-            deferred.reject()
           })
           return deferred.promise;
         }]
@@ -137,7 +138,7 @@ angular.module('com.app').controller('PrivilegeUserCtrl', function ($rootScope, 
       if (res) {
         PrivilegeService.deleteUser(user.organization.id, user.id).then(function (response) {
           if (response.data.success) {
-            vm.refreshTable();
+            vm.refreshTable(true);
             toastr.success('用户删除成功！');
           } else {
             toastr.error(response.data.message);

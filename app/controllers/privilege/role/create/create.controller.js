@@ -13,7 +13,7 @@ angular.module('com.app').controller('PrivilegeRoleCreateCtrl', function ($uibMo
   		} else {
   			toastr.error(response.data.message);
   		}
-  	})
+    })
   }
 
   vm.cancel = function () {

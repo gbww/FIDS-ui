@@ -10,25 +10,29 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
     searchKeywords: ''
   }
 
-  vm.refreshTable = function () {
+  vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
+    if (flag) {
+      vm.searchObject.totalCount = vm.total - 1;
+    }
   }
 
   vm.statusFilter = 'all';
   vm.contracts = [];
   vm.getContractList = function (tableState) {
     vm.loading = true;
+    vm.total = 0;
     var tableParams = {
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
-    }
+    }, tempTotal = 0;
   	ContractService.getContractList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
       if (response.data.success) {
         vm.tempContracts = response.data.entity.list;
-        vm.total = response.data.entity.total;
+        tempTotal = response.data.entity.total;
         tableState.pagination.numberOfPages = response.data.entity.pages;
       } else {
-        vm.total = 0;
+        tempTotal = 0;
         toastr.error(response.data.message);
       }
   	}).then(function () {
@@ -49,6 +53,10 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
       vm.loading = false;
       if (response.data.success) {
         vm.userTasks = response.data.entity;
+        /*
+         ** 若用户有合同的审批任务，则将任务信息放入合同中，
+         ** 即合同存在task，则表明该合同是用户的代办项
+         */
         angular.forEach(vm.tempContracts, function (contract) {
           angular.forEach(vm.userTasks, function (task) {
             if (contract.processId == task.processInstanceId) {
@@ -56,25 +64,31 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
             }
           })
         });
-        // 列出所有合同
+        /* 列出所有合同，不过滤 */
         if (vm.statusFilter == 'all') {
           vm.contracts = angular.copy(vm.tempContracts);
-        // 列出待办合同
+        /* 列出待办合同，根据是否存在task过滤 */
         } else if (vm.statusFilter == 'unhandled') {
           vm.contracts = [];
           angular.forEach(vm.tempContracts, function (contract) {
             if (contract.task) {
               vm.contracts.push(contract);
+            } else {
+              tempTotal -= 1;
             }
           })
+        /* 列出已办合同，根据状态过滤 */
         } else if (vm.statusFilter == 'done') {
           vm.contracts = [];
           angular.forEach(vm.tempContracts, function (contract) {
             if (contract.status == 3) {
               vm.contracts.push(contract);
+            } else {
+              tempTotal -= 1;
             }
           })
         }
+        vm.total = tempTotal;
       } else {
         toastr.error(response.data.message);
       }
@@ -161,9 +175,14 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
       }
     })
 
-    // modalInstance.result.then(function (res) {
-    //   vm.goDetail(contract.id, 'comment');
-    // })
+    modalInstance.result.then(function (res) {
+      if (res.approve == 'false') {
+        toastr.warning('您已驳回合同审批！');
+      } else {
+        toastr.success('您已通过合同审批！');
+      }
+      vm.refreshTable();
+    })
   }
 
   vm.delete = function (contract) {
@@ -172,7 +191,7 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
       if (res) {
         ContractService.deleteContract(contract.id).then(function (response) {
           if (response.data.success) {
-            vm.refreshTable();
+            vm.refreshTable(true);
             toastr.success('合同删除成功！');
           } else {
             toastr.error(response.data.message);

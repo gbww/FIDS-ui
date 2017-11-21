@@ -17,7 +17,7 @@ angular.module('com.app').controller('PrivilegeRoleEditCtrl', function ($uibModa
   		} else {
   			toastr.error(response.data.message);
   		}
-  	})
+    })
   }
 
   vm.cancel = function () {

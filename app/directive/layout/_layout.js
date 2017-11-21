@@ -1,13 +1,25 @@
 'use strict';
 
-angular.module('com.app').controller('AppLayoutController', function AppLayoutController($rootScope, $scope, $state, $cookies, HttpPendingRequestsService, dialog) {
+angular.module('com.app').controller('AppLayoutController', function AppLayoutController($rootScope, $scope, $state, $cookies, HttpPendingRequestsService, toastr) {
   var vm = this;
 
   $scope.$on('responseError', function (event, type, data) {
     $rootScope.loading = false;
+
+    if (!$cookies.get('token')) {
+      $state.go('login');
+      return;
+    }
+
     if (type === '401') {
       $state.go('login');
       return;
+    } else if (type == '5**') {
+      if (data.message) {
+        toastr.error(data.message);
+      } else {
+        toastr.error(data);
+      }
     }
 
   });
