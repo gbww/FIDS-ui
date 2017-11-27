@@ -12,8 +12,10 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
-    if (flag) {
+    if (flag == 'delete') {
       vm.searchObject.totalCount = vm.total - 1;
+    } else if (flag == 'toggle') {
+      vm.searchObject.toggle = true;
     }
   }
 
@@ -35,6 +37,8 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     var tableParams = {
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
+      "orderBy": tableState.sort.predicate,
+      "reverse": tableState.sort.reverse
     }
   	SampleService.getSampleList(tableParams, vm.searchObject, parseInt(vm.status)).then(function (response) {
       vm.loading = false;
@@ -77,7 +81,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.searchStatus = function (filter) {
     if (vm.status != filter) {
       vm.status = filter;
-      vm.refreshTable();
+      vm.refreshTable('toggle');
     }
   }
 
@@ -151,7 +155,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       if (res) {
         SampleService.deleteSample([sample.receiveSampleId]).then(function (response) {
           if (response.data.success) {
-            vm.refreshTable(true);
+            vm.refreshTable('delete');
             toastr.success('接样单删除成功！');
           } else {
             toastr.error(response.data.message);

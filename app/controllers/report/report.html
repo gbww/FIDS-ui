@@ -41,13 +41,22 @@
 						<td>{{ sample.executeStandard }}</td>
 						<td>{{ sample.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
 						<td>
-							<span ng-if="sample.status == 0">未完成</span>
-							<span ng-if="sample.status == 1">完成</span>
+							<span ng-if="sample.reportStatus == 0">待编辑</span>
+							<span ng-if="sample.reportStatus == 1">待审核</span>
+							<span ng-if="sample.reportStatus == 2">待批准</span>
+							<span ng-if="sample.reportStatus == 3">完成</span>
 						</td>
 						<td class="dropdown-col">
 							<div class="btn-group">
-								<button class="btn btn-default" ng-click="vm.goDetail(sample.receiveSampleId)">
-									<i class="fa fa-edit"></i><span>编辑</span>
+								<button class="btn btn-default" ng-click="vm.goDetail(sample.receiveSampleId)" ng-if="sample.reportStatus != 3">
+									<i class="fa fa-edit"></i>
+									<span ng-if="sample.reportStatus == 0">编辑</span>
+									<span ng-if="sample.reportStatus == 1">审核</span>
+									<span ng-if="sample.reportStatus == 2">批准</span>
+								</button>
+								<button class="btn btn-default" ng-click="vm.preview(sample)" ng-if="sample.reportStatus == 3">
+									<i class="fa fa-edit"></i>
+									<span>预览</span>
 								</button>
 								<button class="btn dropdown-toggle" data-toggle="dropdown">
 									<i class="caret"></i>
@@ -56,7 +65,7 @@
 									<li ng-click="vm.export(sample)">
 										<a href><i class="fa fa-file-excel-o"></i><span>导出</span></a>
 									</li>
-									<li ng-click="vm.preview(sample)">
+									<li ng-click="vm.preview(sample)" ng-if="sample.reportStatus != 3">
 										<a href><i class="fa fa-file-pdf-o"></i><span>预览</span></a>
 									</li>
 								</ul>

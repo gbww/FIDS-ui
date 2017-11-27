@@ -6,27 +6,6 @@
 				<i class="fa fa-plus"></i>
 				<span>接样单录入</span>
 			</button>
-			<!-- <div class="create-group-btn" role-auth="SAMPLE-ADD-1">
-        <div class="btn btn-default-dark dropdown-toggle" data-toggle="dropdown">
-          <i class="fa fa-plus"></i>
-          <span>接样单录入</span>
-          <i class="caret"></i>
-        </div>
-        <ul class="dropdown-menu">
-          <li>
-          	<a href ui-sref="app.business.sample.create">
-          		<i class="fa fa-plus"></i>
-          		<span>新建接样单</span>
-          	</a>
-          </li>
-          <li>
-          	<a href ng-click="vm.cloneSample()">
-          		<i class="fa fa-clone"></i>
-          		<span>复制接样单</span>
-          	</a>
-          </li>
-        </ul>
-      </div> -->
 
 			<ul class="statusBar clearfix">
         <li ng-class="{'active': vm.status === '0'}">
@@ -84,11 +63,11 @@
 				<tr>
 					<th>抽样单编号</th>
 					<th>协议编号</th>
-					<th>样品类别</th>
-					<th>检验类型</th>
+					<th st-sort="sampleType">样品类别<i class="fa fa-sort"></i></th>
+					<th st-sort="checkType">检验类型<i class="fa fa-sort"></i></th>
 					<th>委托单位</th>
 					<th>执行标准</th>
-					<th>创建时间</th>
+					<th st-sort="createdAt">创建时间<i class="fa fa-sort"></i></th>
 					<th style="width:140px">操作</th>
 				</tr>
 			</thead>

@@ -9,8 +9,11 @@ angular.module('com.app').controller('CiResultRecordCtrl', function ($uibModal, 
     searchKeywords: ''
   }
 
-  vm.refreshTable = function () {
+  vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
+    if (flag == 'toggle') {
+      vm.searchObject.toggle = true;
+    }
   }
 
   vm.status = '1';
@@ -27,6 +30,9 @@ angular.module('com.app').controller('CiResultRecordCtrl', function ($uibModal, 
         vm.checkItems = response.data.entity.list;
         vm.total = response.data.entity.total;
         tableState.pagination.numberOfPages = response.data.entity.pages;
+        if (tableState.pagination.start > vm.total) {
+          tableState.pagination.start = 0;
+        }
       } else {
         vm.total = 0;
         toastr.error(response.data.message);
@@ -40,7 +46,7 @@ angular.module('com.app').controller('CiResultRecordCtrl', function ($uibModal, 
   vm.searchStatus = function (filter) {
     if (vm.status != filter) {
       vm.status = filter;
-      vm.refreshTable();
+      vm.refreshTable('toggle');
     }
   }
 

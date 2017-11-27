@@ -12,7 +12,7 @@ angular.module('com.app').controller('PrivilegeOrganizationCtrl', function ($roo
 
   vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
-    if (flag) {
+    if (flag == 'delete') {
       vm.searchObject.totalCount = vm.total - 1;
     }
   }
@@ -80,7 +80,7 @@ angular.module('com.app').controller('PrivilegeOrganizationCtrl', function ($roo
       if (res) {
         PrivilegeService.deleteOrganization(organization.id).then(function (response) {
           if (response.data.success) {
-            vm.refreshTable(true);
+            vm.refreshTable('delete');
             toastr.success('部门删除成功！');
           } else {
             toastr.error(response.data.message);

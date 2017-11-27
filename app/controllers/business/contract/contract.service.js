@@ -8,6 +8,8 @@ angular.module('com.app').factory('ContractService', function ($http) {
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
+          orderBy: tableParams.orderBy,
+          reverse: tableParams.reverse,
           sampleName: searchName
         }
 			})

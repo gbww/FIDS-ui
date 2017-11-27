@@ -6,7 +6,7 @@ angular.module('com.app').constant('api', {
       root: {name: '概览'}
     },
     report: {
-      root: {name: '报告管理'},
+      root: {name: '报告管理', url: 'app.report'},
       detail: {name: '详情', url: 'app.report.detail'}
     },
     itemToCheck: {

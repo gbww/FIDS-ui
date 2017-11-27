@@ -12,7 +12,7 @@ angular.module('com.app').controller('PrivilegeRoleCtrl', function ($rootScope, 
 
   vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
-    if (flag) {
+    if (flag == 'delete') {
       vm.searchObject.totalCount = vm.total - 1;
     }
   }
@@ -79,7 +79,7 @@ angular.module('com.app').controller('PrivilegeRoleCtrl', function ($rootScope, 
       if (res) {
         PrivilegeService.deleteRole(role.id).then(function (response) {
           if (response.data.success) {
-            vm.refreshTable(true);
+            vm.refreshTable('delete');
             toastr.success('角色删除成功！');
           } else {
             toastr.error(response.data.message);

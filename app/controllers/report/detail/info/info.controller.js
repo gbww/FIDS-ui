@@ -1,11 +1,25 @@
 'use strict';
 
-angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, toastr, SampleService) {
+angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, $state, api, toastr, SampleService) {
   var vm = this;
+  var userInfo = api.userInfo;
 
   $scope.$emit('refreshReport');
   $scope.$on('reportInfo', function (event, sample) {
   	vm.sample = sample;
+    if (vm.sample.reportStatus == 0) {
+      vm.sample.reportStatus = 1;
+      vm.sample.drawUser = userInfo.name;
+    } else if (vm.sample.reportStatus == 1){
+      vm.sample.reportStatus = 2;
+      vm.sample.examineUser = userInfo.name;
+    } else if (vm.sample.reportStatus == 2){
+      vm.sample.reportStatus = 3;
+      vm.sample.approveUser = userInfo.name;
+    } else {
+      vm.sample.reportStatus = 1;
+      vm.sample.drawUser = userInfo.name;
+    }
   });
 
   vm.checkTypeArr = ['监督检验', '委托检验', '发证检验', '认证检验', '省级抽检', '风险监测'];
@@ -32,6 +46,7 @@ angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, t
 		SampleService.editSample(vm.sample).then(function (response) {
   		if (response.data.success) {
   			toastr.success('报告修改成功！');
+        $state.go('app.report');
   		} else {
   			toastr.error(response.data.message);
   		}

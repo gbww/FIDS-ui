@@ -8,6 +8,8 @@ angular.module('com.app').factory('SampleService', function ($http) {
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
+          orderBy: tableParams.orderBy,
+          reverse: tableParams.reverse,
           receivesampleid: searchConditions.receivesampleid,
           entrustedunit: searchConditions.entrustedunit,
           sampletype: searchConditions.sampletype,

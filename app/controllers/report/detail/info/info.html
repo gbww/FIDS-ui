@@ -346,6 +346,29 @@
 					</td>
 				</tr>
 			</table>
+
+			<table class="form-table">
+				<tr class="three-col">
+					<td class="item-title">
+						<span>编制人</span>
+					</td>
+					<td>
+						<input class="input" name="drawUser" ng-model="vm.sample.drawUser" disabled>
+					</td>
+					<td class="item-title">
+						<span>审核人</span>
+					</td>
+					<td>
+						<input class="input" name="examineUser" ng-model="vm.sample.examineUser" disabled>
+					</td>
+					<td class="item-title">
+						<span>批准人</span>
+					</td>
+					<td>
+						<input class="input" name="approveUser" ng-model="vm.sample.approveUser" disabled>
+					</td>
+				</tr>
+			</table>
 		</form>
 		<div class="btn-area text-center" role-auth="SAMPLE-UPDATESAMPLE-1">
 			<button class="btn btn-default-dark" ng-click="vm.ok(form)" role-auth="SAMPLE-UPDATESAMPLE-1">确认</button>

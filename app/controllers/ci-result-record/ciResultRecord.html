@@ -27,10 +27,10 @@
 	        </li>
 	      </ul>
 
-				<div class="pull-right">
+				<!-- <div class="pull-right">
 					<input class="input" placeholder="请输入检测项名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
 					<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
-				</div>
+				</div> -->
 			</div>
 			<table class="pt-table" st-table="vm.checkItems" st-pipe="vm.getCheckItemList">
 				<thead st-search-watch="vm.searchObject">
@@ -38,6 +38,7 @@
 	          <th style="width: 60px;">
   	          <input type="checkbox" ng-click="vm.selectAll()" ng-model="vm.allSelected">
   	        </th>
+						<th style="width: 80px">抽样单编号</th>
 						<th>名称</th>
 						<th>检测方法</th>
 						<th>单位</th>
@@ -56,15 +57,16 @@
 				</thead>
 				<tbody>
 					<tr ng-if="vm.loading">
-						<td colspan="15" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+						<td colspan="16" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 					</tr>
 					<tr ng-if="!vm.loading && vm.checkItems.length == 0">
-						<td colspan="15" class="text-center">暂无检测项</td>
+						<td colspan="16" class="text-center">暂无检测项</td>
 					</tr>
 					<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.loading">
 	          <td>
 	            <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)">
 	          </td>
+						<td>{{ item.receiveSampleId }}</td>
 						<td>{{ item.name }}</td>
 						<td>{{ item.method }}</td>
 						<td>{{ item.unit }}</td>
@@ -88,7 +90,7 @@
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="15">
+						<td colspan="16">
 							<div st-idp st-total-count="vm.total"></div>
 						</td>
 					</tr>

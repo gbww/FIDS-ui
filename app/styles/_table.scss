@@ -20,30 +20,29 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        .fa.fa-sort{
-          margin-left: 7px;
-          &.fa-sort-asc{
-            vertical-align: bottom;
-          }
-          &.fa-sort-desc{
-            vertical-align: top;
+        &[st-sort] {
+          .fa {
+            position: relative;
+            padding-left: 3px;
+            &:before {
+              color: #9e9e9e;
+            }
           }
         }
         input[type="checkbox"]:focus{
           outline: none;
         }
       }
-
-      .st-sort-descent:after {
-          font-size: 1em;
-          padding-left: 3px;
-          content: "\25BC";
+      .st-sort-descent .fa-sort:after, .st-sort-ascent .fa-sort:after {
+        position: absolute;
+        left: 3px;
+        color: #795548;
       }
-
-      .st-sort-ascent:after {
-          font-size: 1em;
-          padding-left: 3px;
-          content: '\25B2';
+      .st-sort-descent .fa-sort:after {
+        content: "\f0dd";
+      }
+      .st-sort-ascent .fa-sort:after {
+        content: "\f0de";
       }
     }
   }
@@ -207,6 +206,11 @@
           height: initial;
           width: 100%;
         }
+      }
+    }
+    &.three-col {
+      td.item-title + td {
+        width: 18.33%
       }
     }
   }

@@ -17,6 +17,7 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
           if (response.success) {
             var userObject = {
               "id": response.entity.id,
+              "name": response.entity.name,
               "username": response.entity.username,
               "organization": {
                 "id": response.entity.organizationId,

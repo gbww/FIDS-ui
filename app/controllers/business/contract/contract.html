@@ -36,10 +36,10 @@
 				<tr>
 					<th>合同编号</th>
 					<th>样品名称</th>
-					<th>检验类别</th>
+					<th st-sort="detectType">检验类别<i class="fa fa-sort"></i></th>
 					<th>执行标准</th>
 					<th>状态</th>
-					<th>登记时间</th>
+					<th st-sort="createdAt">登记时间<i class="fa fa-sort"></i></th>
 					<th style="width:140px">操作</th>
 				</tr>
 			</thead>
@@ -58,10 +58,10 @@
 					<td>{{ contract.detectType }}</td>
 					<td>{{ contract.executeStandard }}</td>
 					<td>
-						<span ng-if="contract.status == '0'">待评审</span>
-						<span ng-if="contract.status == '1'">评审中</span>
-						<span ng-if="contract.status == '2'">修改中</span>
-						<span ng-if="contract.status == '3'">结束</span>
+						<span ng-if="contract.status == 0">待评审</span>
+						<span ng-if="contract.status == 1">评审中</span>
+						<span ng-if="contract.status == 2">修改中</span>
+						<span ng-if="contract.status == 3">结束</span>
 					</td>
 					<td>{{ contract.createdAt | date:'medium' }}</td>
 					<td class="dropdown-col">
