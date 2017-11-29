@@ -34,11 +34,21 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.getSampleList = function (tableState) {
     vm.loading = true;
     vm.ciLoading = true;
+
+    var orderBy = tableState.sort.predicate;
+    var reverse = tableState.sort.reverse ? 'desc' : 'asc';
+    if (orderBy == 'sampleType') {
+      orderBy = 'sample_type'
+    } else if (orderBy == 'checkType') {
+      orderBy = 'check_type'
+    } else if (orderBy == 'createdAt') {
+      orderBy = 'created_at'
+    }
+
     var tableParams = {
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
-      "orderBy": tableState.sort.predicate,
-      "reverse": tableState.sort.reverse
+      "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
   	SampleService.getSampleList(tableParams, vm.searchObject, parseInt(vm.status)).then(function (response) {
       vm.loading = false;

@@ -20,9 +20,22 @@ angular.module('com.app').controller('CiResultRecordCtrl', function ($uibModal, 
   vm.checkItems = [];
   vm.loading = true;
   vm.getCheckItemList = function (tableState) {
+    var orderBy = tableState.sort.predicate;
+    var reverse = tableState.sort.reverse ? 'desc' : 'asc';
+    if (orderBy == 'receiveSampleId') {
+      orderBy = 'receive_sample_id'
+    } else if (orderBy == 'testRoom') {
+      orderBy = 'test_room'
+    } else if (orderBy == 'testUser') {
+      orderBy = 'test_user'
+    } else if (orderBy == 'updatedAt') {
+      orderBy = 'updated_at'
+    }
+
     var tableParams = {
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
+      "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
   	SampleService.getUserCi(tableParams, parseInt(vm.status)).then(function (response) {
       vm.loading = false;

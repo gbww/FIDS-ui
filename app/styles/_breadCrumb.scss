@@ -1,13 +1,12 @@
 .bread-crumb{
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   a{
-    color: #999;
+    color: $body-font-color;
     &:hover{
       color: $blue-color;
     }
   }
   >span{
-    color: #999;
     &:after{
       content: '\/';
       display: inline-block;

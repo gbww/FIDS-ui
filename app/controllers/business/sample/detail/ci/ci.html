@@ -10,11 +10,11 @@
 				<span>添加检测项</span>
 			</button>
 			<button class="btn btn-default-light" ng-click="vm.appendCI()" role-auth="SAMPLE-ADDITEM-1" ng-show="vm.clonedSampleId">
-				<i class="fa fa-plus"></i>
+				<i class="icon icon-paste"></i>
 				<span>追加复制检测项</span>
 			</button>
 			<button class="btn btn-default-light" ng-click="vm.batchDistribute()" role-auth="SAMPLE-ADDITEM-1">
-				<i class="fa fa-edit"></i>
+				<i class="icon icon-distribute"></i>
 				<span>批量分配检测人员</span>
 			</button>
 		</div>
@@ -64,7 +64,7 @@
 							</button>
 							<ul class="dropdown-menu">
 								<li ng-click="vm.distribute(item)" role-auth="SAMPLE-ADDITEM-1">
-									<a href><i class="fa fa-edit"></i><span>分配检测人员</span></a>
+									<a href><i class="icon icon-distribute"></i><span>分配检测人员</span></a>
 								</li>
 								<li ng-click="vm.delete(item)" role-auth="SAMPLE-DELETEITEM-1">
 									<a href><i class="fa fa-trash"></i><span>删除</span></a>

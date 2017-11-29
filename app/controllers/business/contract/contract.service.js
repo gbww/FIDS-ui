@@ -2,14 +2,24 @@
 
 angular.module('com.app').factory('ContractService', function ($http) {
 	return {
+		getContractLog: function (id, page) {
+			return $http({
+				url: '/api/v1/ahgz/log/page',
+				method: 'GET',
+				params: {
+					target: id,
+					page: page
+				}
+			});
+		},
+
 		getContractList: function (tableParams, searchName) {
 			return $http({
 				url: '/api/v1/ahgz/contract',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
-          orderBy: tableParams.orderBy,
-          reverse: tableParams.reverse,
+          order: tableParams.order,
           sampleName: searchName
         }
 			})
@@ -80,12 +90,10 @@ angular.module('com.app').factory('ContractService', function ($http) {
 			return $http.get('');
 		},
 
-		getUserTask: function (userId, taskName, isHandle) {
+		getUserTask: function (isHandle) {
 			return $http({
 				url: '/api/v1/ahgz/contract/process/task',
 				params: {
-					userId: userId,
-					taskName: taskName,
 					isHandle: isHandle
 				}
 			})

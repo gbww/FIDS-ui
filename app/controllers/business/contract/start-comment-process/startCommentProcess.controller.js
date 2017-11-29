@@ -2,12 +2,7 @@
 
 angular.module('com.app').controller('StartCommentProcessCtrl', function ($rootScope, $scope, $uibModalInstance, api, toastr, ContractService, contractId, users) {
   var vm = this;
-  var user = api.userInfo;
   $rootScope.loading = false;
-  // vm.availUsers = [{
-  //   name: user.username,
-  //   id: user.id
-  // }];
   vm.availUsers = users;
 
   vm.ok = function () {
@@ -19,7 +14,7 @@ angular.module('com.app').controller('StartCommentProcessCtrl', function ($rootS
   	var data = {
   		approveUsers: approveUsers,
   		contractId: contractId,
-  		updateContractUser: api.userInfo.username
+  		updateContractUser: api.userInfo.id
   	};
   	ContractService.startCommentTask(data).then(function (response) {
   		if (response.data.success) {

@@ -3,9 +3,37 @@
 		<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
 		<div class="pt-2">
 			<div class="toolbar clearfix">
-				<div class="pull-right">
-					<input class="input" placeholder="请输入接样单编号查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
+
+				<div class="pull-right" ng-show="!vm.advance">
+					<input class="input" placeholder="请输入抽样单编号查询" ng-model="vm.searchConditions.receivesampleid" ng-keyup="vm.eventSearch($event)">
 					<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+					<a href ng-click="vm.advance = true"><span>展开</span>&nbsp;<i class="fa fa-chevron-down"></i></a>
+				</div>
+				<div class="advanced-search clearfix" ng-show="vm.advance">
+					<div class="clearfix">
+						<div class="col-sm-3">
+							<div custom-select avail-arr="vm.sampleIdArr" model="vm.searchConditions" key="receivesampleid" placeholder="抽样单编号"></div>
+						</div>
+						<div class="col-sm-3">
+							<div custom-select avail-arr="vm.sampleTypeArr" model="vm.searchConditions" key="sampletype" placeholder="样品类别"></div>
+						</div>
+						<div class="col-sm-3">
+							<div custom-select avail-arr="vm.checkTypeArr" model="vm.searchConditions" key="checktype" placeholder="检验类型"></div>
+						</div>
+					</div>
+					<div class="clearfix">
+						<div class="col-sm-3">
+							<div custom-select avail-arr="vm.entrustedUnitArr" model="vm.searchConditions" key="entrustedunit" placeholder="委托单位"></div>
+						</div>
+						<div class="col-sm-3">
+							<input class="input date" ng-model="vm.searchConditions.startTime" placeholder="开始时间" datepicker>
+						</div>
+						<div class="col-sm-3">
+							<input class="input date" ng-model="vm.searchConditions.endTime" placeholder="结束时间" datepicker>
+						</div>
+						<button class="btn btn-default-dark pull-left" ng-click="vm.search()">查询</button>
+						<a href class="pull-left" ng-click="vm.back()"><span>收起</span><i class="fa fa-chevron-up"></i></a>
+					</div>
 				</div>
 			</div>
 
@@ -14,11 +42,11 @@
 					<tr>
 						<th>抽样单编号</th>
 						<th>协议编号</th>
-						<th>样品类别</th>
-						<th>检验类型</th>
+						<th st-sort="sampleType">样品类别<i class="fa fa-sort"></i></th>
+						<th st-sort="checkType">检验类型<i class="fa fa-sort"></i></th>
 						<th>委托单位</th>
 						<th>执行标准</th>
-						<th>创建时间</th>
+						<th st-sort="createdAt">创建时间<i class="fa fa-sort"></i></th>
 						<th>状态</th>
 						<th style="width:140px">操作</th>
 					</tr>
@@ -31,9 +59,7 @@
 						<td colspan="9" class="text-center">暂无接样单</td>
 					</tr>
 					<tr ng-repeat="sample in vm.samples track by $index" ng-if="!vm.loading">
-						<td>
-							<a href ng-click="vm.goDetail(sample.receiveSampleId)">{{ sample.receiveSampleId }}</a>
-						</td>
+						<td>{{ sample.receiveSampleId }}</td>
 						<td>{{ sample.protocolId }}</td>
 						<td>{{ sample.sampleType }}</td>
 						<td>{{ sample.checkType }}</td>
@@ -49,7 +75,9 @@
 						<td class="dropdown-col">
 							<div class="btn-group">
 								<button class="btn btn-default" ng-click="vm.goDetail(sample.receiveSampleId)" ng-if="sample.reportStatus != 3">
-									<i class="fa fa-edit"></i>
+									<i class="icon icon-edit" ng-if="sample.reportStatus == 0"></i>
+									<i class="icon icon-inspection" ng-if="sample.reportStatus == 1"></i>
+									<i class="icon icon-approve" ng-if="sample.reportStatus == 2"></i>
 									<span ng-if="sample.reportStatus == 0">编辑</span>
 									<span ng-if="sample.reportStatus == 1">审核</span>
 									<span ng-if="sample.reportStatus == 2">批准</span>

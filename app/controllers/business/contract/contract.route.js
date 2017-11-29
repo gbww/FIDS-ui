@@ -8,6 +8,7 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 		controller: 'ContractCtrl as vm'
 	});
 
+
 	$stateProvider.state('app.business.contract.create', {
 		url: '/create',
 		views: {
@@ -45,6 +46,12 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 		url: '/comment',
 		templateUrl: 'controllers/business/contract/detail/comment/comment.html',
 		controller: 'ContractDetailCommentCtrl as vm'
+	});
+
+	$stateProvider.state('app.business.contract.detail.log', {
+		url: '/log',
+		templateUrl: 'controllers/business/contract/detail/log/log.html',
+		controller: 'ContractDetailLogCtrl as vm'
 	});
 
 });

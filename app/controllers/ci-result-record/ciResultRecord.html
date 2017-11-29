@@ -12,16 +12,19 @@
 				<ul class="statusBar clearfix">
 	        <li ng-class="{'active': vm.status === '1'}">
 	          <a ng-click="vm.searchStatus('1')">
+		        	<i class="icon icon-todo-list"></i>
 	            <span>待办</span>
 	          </a>
 	        </li>
 	        <li ng-class="{'active': vm.status === '2'}">
 	          <a ng-click="vm.searchStatus('2')">
+		        	<i class="icon icon-finished-list"></i>
 	            <span>已办</span>
 	          </a>
 	        </li>
 	        <li ng-class="{'active': vm.status === '5'}">
 	          <a ng-click="vm.searchStatus('5')">
+		        	<i class="icon icon-all-list"></i>
 	            <span>所有</span>
 	          </a>
 	        </li>
@@ -38,9 +41,9 @@
 	          <th style="width: 60px;">
   	          <input type="checkbox" ng-click="vm.selectAll()" ng-model="vm.allSelected">
   	        </th>
-						<th style="width: 80px">抽样单编号</th>
+						<th style="width: 100px" st-sort="receiveSampleId">抽样单编号<i class="fa fa-sort"></i></th>
 						<th>名称</th>
-						<th>检测方法</th>
+						<th st-sort="method">检测方法<i class="fa fa-sort"></i></th>
 						<th>单位</th>
 						<th>标准值</th>
 						<th>检出限</th>
@@ -49,9 +52,9 @@
 						<th>状态</th>
 						<th>结果</th>
 						<th>实测值</th>
-						<th>检测部门</th>
-						<th>检测员</th>
-						<th>更新时间</th>
+						<th st-sort="testRoom">检测部门<i class="fa fa-sort"></i></th>
+						<th st-sort="testUser">检测员<i class="fa fa-sort"></i></th>
+						<th st-sort="updatedAt">更新时间<i class="fa fa-sort"></i></th>
 						<th style="width: 140px">操作</th>
 					</tr>
 				</thead>
@@ -84,7 +87,7 @@
 						<td>{{ item.testUser }}</td>
 						<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
 						<td>
-							<button class="btn btn-default" ng-click="vm.recordResult(item)" role-auth="SAMPLE-UPDATEITEMRESULT-1">录入检测结果</button>
+							<button class="btn btn-default" ng-click="vm.recordResult(item)" role-auth="SAMPLE-UPDATEITEMRESULT-1"><i class="fa fa-edit"></i><span>录入检测结果</span></button>
 						</td>
 					</tr>
 				</tbody>

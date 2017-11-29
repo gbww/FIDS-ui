@@ -19,7 +19,7 @@
       border-top-right-radius: 5px;
       float: left;
       &.active{
-        border-top: 3px solid $blue-color;
+        border-top: 3px solid $hover-blue-color;
         background-color: #FFFFFF;
         @include box-shadow(0 5px 0 #fff, -3px 0 8px rgba(0, 0, 0, 0.1), 3px 0 8px rgba(0, 0, 0, 0.1));
         a{
@@ -35,7 +35,7 @@
       a{
         color: #555;
         background-color: transparent;
-        padding: 5px 20px;
+        padding: 8px 20px;
         display: block;
         cursor: pointer;
       }

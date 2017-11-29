@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal, api, CheckItemService, toastr, dialog) {
+angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal, api, CheckItemService, toastr, Upload, dialog) {
   var vm = this;
 
   var checkItemBC = api.breadCrumbMap.checkItem;
@@ -99,6 +99,29 @@ angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal,
         });
       }
     })
+  }
+
+  vm.importFile = function (event) {
+    var file = event.target.files[0];
+    if (!/\.xlsx?$/.test(file.name)) {
+      toastr.error('请选择excel文件！');
+      return;
+    }
+    Upload.upload({
+      url: '/api/v1/ahgz/checkitemscatalog/import',
+      data: {
+        file: event.target.files[0]
+      }
+    }).then(function (response) {
+      if (response.data.success) {
+        toastr.success('导入成功！');
+        vm.refreshTable();
+      } else {
+        toastr.error(response.data.message);
+      }
+    }).catch(function (err) {
+      toastr.error(err.data);
+    });
   }
 
 });

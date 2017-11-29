@@ -25,8 +25,6 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $
 
   var initSample = {
     sampleType: '食品',
-    // 编制人
-    // drawUser: api.userInfo.username,
     status: 0
   }
   vm.sample = angular.copy(initSample);

@@ -24,13 +24,19 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
   vm.getContractList = function (tableState) {
     vm.loading = true;
     vm.total = 0;
+    var orderBy = tableState.sort.predicate;
+    var reverse = tableState.sort.reverse ? 'desc' : 'asc';
+    if (orderBy == 'detectType') {
+      orderBy = 'detect_type'
+    } else if (orderBy == 'createdAt') {
+      orderBy = 'created_at'
+    }
     var tableParams = {
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
-      "orderBy": tableState.sort.predicate,
-      "reverse": tableState.sort.reverse
+      "order": orderBy ? [orderBy, reverse].join(' ') : null
     }, tempTotal = 0;
-  	ContractService.getContractList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
+    ContractService.getContractList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
       if (response.data.success) {
         vm.tempContracts = response.data.entity.list;
         tempTotal = response.data.entity.total;
@@ -39,14 +45,12 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
         tempTotal = 0;
         toastr.error(response.data.message);
       }
-  	}).then(function () {
+    }).then(function () {
       // 获取用户相关流程
-      if (vm.statusFilter == 'unhandled') {  // 代办
-        return ContractService.getUserTask(api.userInfo.id, '联合审批', '0');
-        // return ContractService.getUserTask(api.userInfo.id, '修改合同', '0');
+      if (vm.statusFilter == 'unhandled') {  // 待办
+        return ContractService.getUserTask('0');
       } else if (vm.statusFilter == 'done') {  // 已办
-        return ContractService.getUserTask(api.userInfo.id, '联合审批', '1');
-        // return ContractService.getUserTask(api.userInfo.id, '修改合同', '1');
+        return ContractService.getUserTask('1');
       } else {
         return {
           data: {
@@ -73,21 +77,21 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
         /* 列出所有合同，不过滤 */
         if (vm.statusFilter == 'all') {
           vm.contracts = angular.copy(vm.tempContracts);
-        /* 列出待办合同，根据是否存在task和状态过滤 */
+        /* 列出待办合同，根据是否存在task过滤 */
         } else if (vm.statusFilter == 'unhandled') {
           vm.contracts = [];
           angular.forEach(vm.tempContracts, function (contract) {
-            if (contract.task && (contract.status == 1 || contract.status == 2)) {
+            if (contract.task) {
               vm.contracts.push(contract);
             } else {
               tempTotal -= 1;
             }
           })
-        /* 列出已办合同，根据是否存在task和状态过滤 */
+        /* 列出已办合同，根据是否存在task过滤 */
         } else if (vm.statusFilter == 'done') {
           vm.contracts = [];
           angular.forEach(vm.tempContracts, function (contract) {
-            if (contract.task && contract.status == 3) {
+            if (contract.task) {
               vm.contracts.push(contract);
             } else {
               tempTotal -= 1;
@@ -99,9 +103,9 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
         toastr.error(response.data.message);
       }
     }).catch(function (err) {
-  		vm.loading = false;
+      vm.loading = false;
       toastr.error(err.data);
-  	})
+    })
   }
 
   vm.searchStatus = function (filter) {
@@ -121,24 +125,15 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
     }
   }
 
-  vm.goDetail = function (id, tab) {
-    if (tab == 'info') {
-      $state.go('app.business.contract.detail.info', {id: id});
-    } else if (tab == 'comment') {
-      $state.go('app.business.contract.detail.comment', {id: id});
-    } else if (tab == 'ci') {
-      $state.go('app.business.contract.detail.ci', {id: id});
-    }
-  }
 
   // 发起评审流程
   vm.startCommentProcess = function (id) {
-  	var modalInstance = $uibModal.open({
-  		animation: true,
-  		size: 'md',
-  		backdrop: 'static',
-  		templateUrl: 'controllers/business/contract/start-comment-process/startCommentProcess.html',
-  		controller: 'StartCommentProcessCtrl as vm',
+    var modalInstance = $uibModal.open({
+      animation: true,
+      size: 'md',
+      backdrop: 'static',
+      templateUrl: 'controllers/business/contract/start-comment-process/startCommentProcess.html',
+      controller: 'StartCommentProcessCtrl as vm',
       resolve: {
         contractId: function () {return id;},
         users: ['$rootScope', '$q', 'PrivilegeService', function ($rootScope, $q, PrivilegeService) {
@@ -158,7 +153,7 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
           return deferred.promise;
         }]
       }
-  	});
+    });
 
     modalInstance.result.then(function () {
       $timeout(function () {

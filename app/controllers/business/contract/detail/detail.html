@@ -12,6 +12,9 @@
 			<li ng-class="{'active': vm.tab == 'comment'}" ng-click="vm.goTab('comment')">
 				<a href>评审报告</a>
 			</li>
+			<li ng-class="{'active': vm.tab == 'log'}" ng-click="vm.goTab('log')">
+				<a href>日志</a>
+			</li>
 		</ul>
 
 		<div class="tab-content" ui-view></div>

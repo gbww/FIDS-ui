@@ -7,6 +7,12 @@
 				<i class="fa fa-plus"></i>
 				<span>添加检测项</span>
 			</button>
+			<button class="btn btn-default-light" custom-file-btn>
+				<i class="fa fa-file-excel-o"></i>
+				<span>批量导入</span>
+			</button>
+			<input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.importFile" ngf-pattern="/\.xlsx?$/" ng-hide="true">
+
 			<div class="pull-right">
 				<input class="input" placeholder="请输入检测项名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
 				<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>

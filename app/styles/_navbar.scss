@@ -83,39 +83,12 @@
           cursor: pointer;
           display: block;
           color: #fff;
-          padding: 5px 8px;
+          padding: 10px 16px;
           text-decoration: none;
           font-size: 12px;
-          .icon{
+          .icon {
             display: inline-block;
-            height: 16px;
-            width: 16px;
-            background: url(./images/icon.svg) no-repeat 0 -41px;
-            margin: 0 10px -3px 0;
-            &.icon-node{
-              background-position-x: -16px;
-            }
-            &.icon-service{
-              background-position-x: -33px;
-            }
-            &.icon-log{
-              background-position-x: -49px;
-            }
-            &.icon-monitor{
-              background-position-x: -65px;
-            }
-            &.icon-system{
-              background-position-x: -82px;
-            }
-            &.icon-package{
-              background-position-x: -101px;
-            }
-            &.icon-user{
-              background-position-x: -120px;
-            }
-            &.icon-resource{
-              background-position-x: -137px;
-            }
+            margin-bottom: -3px;
           }
           .fa{
             position: absolute;
@@ -131,7 +104,7 @@
           color: rgba(255,255,255,0.847059);
         }
         &:hover a {
-          color: $blue-color;
+          color: $hover-blue-color;
         }
         &.active:hover a {
           color: rgba(255,255,255,0.847059);
@@ -150,7 +123,7 @@
             cursor: pointer;
             display: block;
             color: #fff;
-            padding: 5px 8px 5px 40px;
+            padding: 10px 16px 10px 48px;
             text-decoration: none;
             font-size: 12px;
             span:before{
@@ -169,7 +142,7 @@
             color: rgba(255,255,255,0.847059);
           }
           &:hover > a {
-            color: $blue-color;
+            color: $hover-blue-color;
           }
           &.active:hover > a {
             color: rgba(255,255,255,0.847059);

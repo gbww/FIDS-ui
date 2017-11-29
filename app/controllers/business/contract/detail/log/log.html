@@ -1,0 +1,24 @@
+<div class="contract-log-list">
+	<div class="timeline-item">
+		<div class="timeline-item-content">
+			<span class="time">时间</span>
+			<span class="operator">操作人</span>
+			<span class="operation">操作内容</span>
+			<span class="extra">备注</span>
+		</div>
+	</div>
+	<div class="timeline-item" ng-repeat="log in vm.logs | orderBy:'createTime':false track by $index">
+		<div class="timeline-item-tail" ng-if="!$last"></div>
+		<div class="timeline-item-head"></div>
+		<div class="timeline-item-content">
+			<span class="time">{{ log.createTime }}</span>
+			<span class="operator">{{ log.operateUser }}</span>
+			<span class="operation">{{ log.operation }}</span>
+			<span class="extra">{{ log.extra }}</span>
+		</div>
+	</div>
+	<div class="loading" ng-if="vm.loading"><i></i></div>
+	<div class="text-center" ng-if="!vm.loading && vm.hasMore">
+		<button class="btn btn-default-dark" ng-click="vm.getMoreLogs()">更多</button>
+	</div>
+</div>

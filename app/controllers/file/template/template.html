@@ -42,9 +42,21 @@
 					</td>
 					<td>{{ item.description }}</td>
 					<td>{{ item.createdAt | date:'medium' }}</td>
-					<td>
-						<i class="fa fa-edit" ng-click="vm.edit(item)" title="编辑"></i>
-						<i class="fa fa-trash" ng-click="vm.delete(item)" title="删除"></i>
+					<td class="dropdown-col">
+						<div class="btn-group">
+							<button class="btn btn-default" ng-click="vm.edit(item)">
+								<i class="fa fa-edit"></i>
+								<span>编辑</span>
+							</button>
+							<button class="btn dropdown-toggle" data-toggle="dropdown">
+								<i class="caret"></i>
+							</button>
+							<ul class="dropdown-menu">
+								<li ng-click="vm.delete(item)">
+									<a href><i class="fa fa-trash"></i><span>删除</span></a>
+								</li>
+							</ul>
+						</div>
 					</td>
 				</tr>
 			</tbody>

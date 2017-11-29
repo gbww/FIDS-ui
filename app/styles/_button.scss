@@ -19,16 +19,16 @@
 }
 
 .btn-default-light{
-  color: $blue-color;
+  padding: 6px 18px;
+  color: #444;
   background-color: transparent;
-  border: 1px solid $blue-color;
+  border: 1px solid #d9d9d9;
   &:focus{
-    color: $blue-color;
+    color: $hover-blue-color;
   }
   &:hover{
-    background-color: $blue-color;
-    color: #FFFFFF;
-    border: 1px solid $blue-color;
+    color: $hover-blue-color;
+    border: 1px solid $hover-blue-color;
   }
   &:disabled, &:disabled:hover{
     color: #CBD2D8;
@@ -38,6 +38,7 @@
 
 }
 .btn-default-dark{
+  padding: 6px 18px;
   color: #FFFFFF;
   background-color: $blue-color;
   border: 1px solid $blue-color;
@@ -46,7 +47,7 @@
   }
   &:hover{
     color: #FFFFFF;
-    background-color: $blue-color;
+    background-color: $hover-blue-color;
     border: 1px solid $blue-color;
   }
 }

@@ -3,12 +3,11 @@
 angular.module('com.app').controller('ContractDetailCtrl', function ($rootScope, $scope, $state, $stateParams, api, toastr, ContractService) {
   var vm = this;
 
-
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.contract.root, businessBC.contract.detail];
 
-  $rootScope.loading = true;
   vm.getContractInfo = function () {
+    $rootScope.loading = true;
     var contractId = $stateParams.id;
     ContractService.getContractInfo(contractId).then(function (response) {
       $rootScope.loading = false;
@@ -33,6 +32,8 @@ angular.module('com.app').controller('ContractDetailCtrl', function ($rootScope,
       $state.go('app.business.contract.detail.comment');
     } else if (tab == 'ci') {
       $state.go('app.business.contract.detail.ci');
+    } else if (tab == 'log') {
+      $state.go('app.business.contract.detail.log');
     }
   }
 
@@ -43,6 +44,8 @@ angular.module('com.app').controller('ContractDetailCtrl', function ($rootScope,
       vm.tab = 'comment';
     } else if ($state.includes('app.business.contract.detail.ci')) {
       vm.tab = 'ci';
+    } else if ($state.includes('app.business.contract.detail.log')) {
+      vm.tab = 'log';
     }
   })
 

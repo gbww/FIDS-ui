@@ -8,22 +8,25 @@
 			</button>
 
 			<ul class="statusBar clearfix">
-        <li ng-class="{'active': vm.statusFilter === 'all'}">
-          <a ng-click="vm.searchStatus('all')">
-            <span>所有</span>
-          </a>
-        </li>
-        <li ng-class="{'active': vm.statusFilter === 'unhandled'}">
-          <a ng-click="vm.searchStatus('unhandled')">
-            <span>待办</span>
-          </a>
-        </li>
-        <li ng-class="{'active': vm.statusFilter === 'done'}">
-          <a ng-click="vm.searchStatus('done')">
-            <span>已办</span>
-          </a>
-        </li>
-      </ul>
+	      <li ng-class="{'active': vm.statusFilter === 'all'}">
+	        <a ng-click="vm.searchStatus('all')">
+	        	<i class="icon icon-all-list"></i>
+	          <span>所有</span>
+	        </a>
+	      </li>
+	      <li ng-class="{'active': vm.statusFilter === 'unhandled'}">
+	        <a ng-click="vm.searchStatus('unhandled')">
+	        	<i class="icon icon-todo-list"></i>
+	          <span>待办</span>
+	        </a>
+	      </li>
+	      <li ng-class="{'active': vm.statusFilter === 'done'}">
+	        <a ng-click="vm.searchStatus('done')">
+	        	<i class="icon icon-finished-list"></i>
+	          <span>已办</span>
+	        </a>
+	      </li>
+	    </ul>
 
 			<div class="pull-right">
 				<input class="input" placeholder="请输入样品名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
@@ -52,7 +55,7 @@
 				</tr>
 				<tr ng-repeat="contract in vm.contracts track by $index" ng-if="!vm.loading">
 					<td>
-						<a href ng-click="vm.goDetail(contract.id, 'info')">{{ contract.protocolId }}</a>
+						<a href ui-sref="app.business.contract.detail.info({id: contract.id})">{{ contract.protocolId }}</a>
 					</td>
 					<td>{{ contract.sampleName }}</td>
 					<td>{{ contract.detectType }}</td>
@@ -66,7 +69,7 @@
 					<td>{{ contract.createdAt | date:'medium' }}</td>
 					<td class="dropdown-col">
 						<div class="btn-group" role-auth="CONTRACT-STARTPROCESS-1 CONTRACT-UPDATE-1 CONTRACT-DELETE-1">
-							<button class="btn btn-default" ng-click="vm.goDetail(contract.id, 'info')" role-auth="CONTRACT-UPDATE-1">
+							<button class="btn btn-default" ui-sref="app.business.contract.detail.info({id: contract.id})" role-auth="CONTRACT-UPDATE-1">
 								<i class="fa fa-edit"></i><span>编辑</span>
 							</button>
 							<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="CONTRACT-STARTPROCESS-1 CONTRACT-UPDATE-1 CONTRACT-DELETE-1">
@@ -74,10 +77,10 @@
 							</button>
 							<ul class="dropdown-menu">
 								<li ng-click="vm.startCommentProcess(contract.id)" ng-if="contract.status == '0'" role-auth="CONTRACT-STARTPROCESS-1">
-									<a href><i class="fa fa-trash"></i><span>发起评审流程</span></a>
+									<a href><i class="icon icon-launch"></i><span>发起评审流程</span></a>
 								</li>
 								<li ng-click="vm.recordComment(contract)" ng-if="contract.task && contract.status == '1'" role-auth="CONTRACT-UPDATE-1">
-									<a href><i class="fa fa-edit"></i><span>录入评审意见</span></a>
+									<a href><i class="icon icon-record"></i><span>录入评审意见</span></a>
 								</li>
 								<li ng-click="vm.delete(contract)" role-auth="CONTRACT-DELETE-1">
 									<a href><i class="fa fa-trash"></i><span>删除</span></a>

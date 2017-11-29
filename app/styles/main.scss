@@ -9,6 +9,7 @@
 // endbower
 @import "mixin";
 @import "bootstrap";
+@import "iconfont";
 
 @import "header";
 @import "navbar";
@@ -20,7 +21,8 @@
 @import "button";
 @import "table";
 @import "tab";
-@import "_switch";
+@import "switch";
+@import "timeline";
 
 @import "ztree";
 @import "multiple-select";

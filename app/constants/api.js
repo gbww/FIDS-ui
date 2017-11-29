@@ -24,12 +24,12 @@ angular.module('com.app').constant('api', {
     business: {
       root: {name: '业务管理'},
       contract: {
-        root: {name: '合同管理', url: 'app.business.contract'},
+        root: {name: '合同评审', url: 'app.business.contract'},
         create: {name: '合同登记', url: 'app.business.contract.create'},
         detail: {name: '合同详情', url: 'app.business.contract.detail'}
       },
       sample: {
-        root: {name: '抽样单管理', url: 'app.business.sample'},
+        root: {name: '业务受理', url: 'app.business.sample'},
         create: {name: '抽样录入', url: 'app.business.sample.create'},
         detail: {name: '抽样单详情', url: 'app.business.sample.detail'}
       }

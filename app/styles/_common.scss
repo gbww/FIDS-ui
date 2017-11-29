@@ -39,7 +39,7 @@ ul, li {
 }
 
 a {
-  color: #3F4A56;
+  color: $blue-color;
   background-color: transparent;
   text-decoration: none;
 }
@@ -100,7 +100,7 @@ a:link, a:visited, a:hover, a:active{
       }
       >div{
         @include flex(flex, column);
-        padding: 5px 8px;
+        padding: 10px;
         min-height: 100%;
         @include animation(scaleIn 0.8s ease-in-out);
       }
@@ -206,6 +206,7 @@ input[type="checkbox"], input[type="radio"]{
   color: #555;
   input:not([type='checkbox']){
     width: 240px;
+    height: 31px;
     color: #999;
     vertical-align: middle;
     padding-left: 25px;
@@ -234,11 +235,12 @@ input[type="checkbox"], input[type="radio"]{
     margin-right: 10px;
     padding: 1px;
     vertical-align: middle;
-    height: 27px;
+    height: 31px;
     li{
       float: left;
       border-radius: 3px;
-      line-height: 25px;
+      height: 29px;
+      line-height: 29px;
       cursor: pointer;
       &.active{
         background-color: #fff;
@@ -246,6 +248,16 @@ input[type="checkbox"], input[type="radio"]{
       a{
         color: #999;
         padding: 0 10px;
+        .icon {
+          font-size: 16px;
+          vertical-align: middle;
+        }
+        .icon-todo-list {
+          color: #ed4630;
+        }
+        .icon-finished-list {
+          color: #16c2c2
+        }
       }
     }
   }
@@ -312,6 +324,9 @@ i+span {
 }
 
 // custom-select
+.toolbar .select-wrapper ul {
+  top: 32px;
+}
 .select-wrapper {
   position: relative;
   width: 100%;
@@ -319,7 +334,7 @@ i+span {
   ul {
     position: absolute;
     z-index: 10;
-    top: 26px;
+    top: 27px;
     left: 0;
     right: 0;
     max-height: 200px;
@@ -330,6 +345,7 @@ i+span {
       display: block;
       padding: 0px 10px;
       cursor: pointer;
+      color: inherit;
       &:hover {
         color: $blue-color;
       }

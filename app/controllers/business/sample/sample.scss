@@ -1,10 +1,10 @@
-.business-sample-list {
+.business-sample-list, .report-list {
 	.pt-2 {
 		min-height: 300px;
 		@include flex(flex, column);
 	}
 	table.pt-table tbody tr.selected {
-		background-color: #d4eefb + #111;
+		background-color: #f3f3f3;
 	}
 	.switch input+label+span {
 		&:before {
@@ -61,6 +61,9 @@
       &::-webkit-input-placeholder {
         color: #ccc;
       }
+    }
+    a {
+      margin-top: 4px;
     }
   }
 }

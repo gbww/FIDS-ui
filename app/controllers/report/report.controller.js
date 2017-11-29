@@ -6,27 +6,61 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
   var reportBC = api.breadCrumbMap.report;
   vm.breadCrumbArr = [reportBC.root];
 
-  vm.searchObject = {
-    searchKeywords: ''
-  }
+  vm.searchObject = {}
 
   vm.refreshTable = function () {
     vm.searchObject.timestamp = new Date();
   }
 
+  vm.searchConditions = {
+    receivesampleid: null,
+    entrustedunit: null,
+    sampletype: null,
+    checktype: null,
+    startTime: null,
+    endTime: null
+  };
+  vm.sampleIdArr = [], vm.sampleTypeArr = [], vm.checkTypeArr = [], vm.entrustedUnitArr = [];
+
   vm.samples = [];
   vm.getSampleList = function (tableState) {
     vm.loading = true;
+
+    var orderBy = tableState.sort.predicate;
+    var reverse = tableState.sort.reverse ? 'desc' : 'asc';
+    if (orderBy == 'sampleType') {
+      orderBy = 'sample_type'
+    } else if (orderBy == 'checkType') {
+      orderBy = 'check_type'
+    } else if (orderBy == 'createdAt') {
+      orderBy = 'created_at'
+    }
     var tableParams = {
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
+      "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-    SampleService.getSampleList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
+    SampleService.getSampleList(tableParams, vm.searchObject).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.samples = response.data.entity.list;
         vm.total = response.data.entity.total;
         tableState.pagination.numberOfPages = response.data.entity.pages;
+
+        angular.forEach(vm.samples, function (item) {
+          if (vm.sampleIdArr.indexOf(item.receiveSampleId) == -1) {
+            vm.sampleIdArr.push(item.receiveSampleId);
+          }
+          if (item.sampleType && vm.sampleTypeArr.indexOf(item.sampleType) == -1) {
+            vm.sampleTypeArr.push(item.sampleType);
+          }
+          if (item.checkType && vm.checkTypeArr.indexOf(item.checkType) == -1) {
+            vm.checkTypeArr.push(item.checkType);
+          }
+          if (item.entrustedUnit && vm.entrustedUnitArr.indexOf(item.entrustedUnit) == -1) {
+            vm.entrustedUnitArr.push(item.entrustedUnit);
+          }
+        })
       } else {
         vm.total = 0;
         toastr.error(response.data.message);
@@ -37,9 +71,19 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
     })
   }
 
+  vm.back = function () {
+    vm.advance = false;
+    angular.merge(vm.searchConditions, {
+      entrustedunit: null,
+      sampletype: null,
+      checktype: null,
+      startTime: null,
+      endTime: null,
+    });
+  }
 
   vm.search=function(){
-    vm.searchObject.searchKeywords = vm.query;
+    vm.searchObject = angular.copy(vm.searchConditions);
   }
 
   vm.eventSearch=function(e){
