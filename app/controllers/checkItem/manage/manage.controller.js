@@ -25,16 +25,13 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
 
   // 根据目录id获取该目录下的检测项
   vm.getCatalogCheckItems = function (id) {
-  	vm.ciLoading = true;
   	CheckItemService.getCheckItemsTree(id).then(function (response) {
-  		vm.ciLoading = false;
   		if (response.data.success) {
   			vm.checkItems = response.data.entity;
   		} else {
   			toastr.error(response.data.message);
   		}
   	}).catch(function (err) {
-  		vm.ciLoading = false;
   		toastr.error(err.data);
   	})
   }

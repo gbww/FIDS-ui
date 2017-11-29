@@ -23,8 +23,8 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
   vm.sampleIdArr = [], vm.sampleTypeArr = [], vm.checkTypeArr = [], vm.entrustedUnitArr = [];
 
   vm.samples = [];
+  vm.loading = true;
   vm.getSampleList = function (tableState) {
-    vm.loading = true;
 
     var orderBy = tableState.sort.predicate;
     var reverse = tableState.sort.reverse ? 'desc' : 'asc';

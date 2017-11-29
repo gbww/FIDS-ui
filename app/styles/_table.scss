@@ -21,6 +21,8 @@
         overflow: hidden;
         text-overflow: ellipsis;
         &[st-sort] {
+          overflow: visible;
+          text-overflow: initial;
           .fa {
             position: relative;
             padding-left: 3px;

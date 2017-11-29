@@ -21,9 +21,8 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
 
   vm.statusFilter = 'all';
   vm.contracts = [];
+  vm.loading = true;
   vm.getContractList = function (tableState) {
-    vm.loading = true;
-    vm.total = 0;
     var orderBy = tableState.sort.predicate;
     var reverse = tableState.sort.reverse ? 'desc' : 'asc';
     if (orderBy == 'detectType') {

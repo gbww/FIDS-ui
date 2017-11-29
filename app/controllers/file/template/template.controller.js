@@ -18,8 +18,8 @@ angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, ap
   }
 
   vm.templates = [];
+  vm.loading = true;
   vm.getTemplateList = function (tableState) {
-    vm.loading = true;
     var tableParams = {
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,

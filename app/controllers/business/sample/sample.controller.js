@@ -31,9 +31,9 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   vm.status = '0';
   vm.samples = [];
+  vm.loading = true;
+  vm.ciLoading = true;
   vm.getSampleList = function (tableState) {
-    vm.loading = true;
-    vm.ciLoading = true;
 
     var orderBy = tableState.sort.predicate;
     var reverse = tableState.sort.reverse ? 'desc' : 'asc';
@@ -203,8 +203,8 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   // 根据
   vm.checkItems = [];
+  vm.ciLoading = true;
   vm.getSampleCi = function () {
-    vm.ciLoading = true;
     SampleService.getSampleCiList(vm.selectedSample.receiveSampleId).then(function (response) {
       vm.ciLoading = false;
       if (response.data.success) {

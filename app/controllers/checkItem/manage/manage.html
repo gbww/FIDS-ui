@@ -23,13 +23,10 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr ng-if="vm.ciLoading">
-							<td colspan="9" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
-						</tr>
-						<tr ng-if="!vm.ciLoading && vm.checkItems.length == 0">
+						<tr ng-if="vm.checkItems.length == 0">
 							<td colspan="9" class="text-center">暂无检测项</td>
 						</tr>
-						<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
+						<tr ng-repeat="item in vm.checkItems track by item.id">
 							<td>{{ item.name }}</td>
 							<td>{{ item.method }}</td>
 							<td>{{ item.unit }}</td>
