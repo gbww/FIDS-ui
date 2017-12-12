@@ -149,8 +149,10 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   }
 
   // 离开抽样单页面时，清空复制信息
-  $scope.$on('$destroy', function () {
-    $cookies.remove('clonedSampleId');
+  $scope.$on('$stateChangeStart', function (event, toState) {
+    if (toState.name.indexOf('sample') == -1) {
+      $cookies.remove('clonedSampleId');
+    }
   })
 
   vm.goDetail = function (id) {

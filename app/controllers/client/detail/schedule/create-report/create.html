@@ -1,0 +1,30 @@
+<div class="modal-header">
+	<div class="close" ng-click="vm.cancel()">&times;</div>
+	<h4>添加汇报</h4>
+</div>
+
+<div class="modal-body">
+	<form name="form" class="form-horizontal" novalidate>
+		<div class="form-group">
+			<label class="col-sm-3 control-label item-required">进展内容</label>
+			<div class="col-sm-8">
+				<textarea class="form-control" name="content" ng-model="vm.report.reportContent" required></textarea>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="form.content.$dirty" ng-messages="form.content.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">备注</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="remark" ng-model="vm.report.remark">
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-default-dark" ng-disabled="form.$invalid" ng-click="vm.ok()">确认</button>
+	<button class="btn btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

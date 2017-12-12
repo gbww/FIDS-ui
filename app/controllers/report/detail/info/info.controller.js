@@ -8,16 +8,16 @@ angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, $
   $scope.$on('reportInfo', function (event, sample) {
   	vm.sample = sample;
     if (vm.sample.reportStatus == 0) {
-      vm.sample.reportStatus = 1;
+      // vm.sample.reportStatus = 1;
       vm.sample.drawUser = userInfo.name;
     } else if (vm.sample.reportStatus == 1){
-      vm.sample.reportStatus = 2;
+      // vm.sample.reportStatus = 2;
       vm.sample.examineUser = userInfo.name;
     } else if (vm.sample.reportStatus == 2){
-      vm.sample.reportStatus = 3;
-      vm.sample.approveUser = userInfo.name;
+      // vm.sample.reportStatus = 3;
+      vm.sample.approvalUser = userInfo.name;
     } else {
-      vm.sample.reportStatus = 1;
+      // vm.sample.reportStatus = 1;
       vm.sample.drawUser = userInfo.name;
     }
   });
@@ -42,8 +42,10 @@ angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, $
       vm.submitted = true;
       return;
     }
+    var data = angular.copy(vm.sample);
+    data.reportStatus += 1;
 
-		SampleService.editSample(vm.sample).then(function (response) {
+		SampleService.editSample(data).then(function (response) {
   		if (response.data.success) {
   			toastr.success('报告修改成功！');
         $state.go('app.report');
@@ -53,6 +55,27 @@ angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, $
   	}).catch(function (err) {
   		toastr.error(err.data);
   	})
+  }
+
+  vm.reset = function (form, action) {
+    if (form.$invalid) {
+      vm.submitted = true;
+      return;
+    }
+    var reportStatus = vm.sample.reportStatus;
+    if (action == 'unpass') {
+      reportStatus = 0;
+    } else if (action == 'unapprove') {
+      reportStatus = 1;
+    }
+    SampleService.editSample(angular.merge({}, vm.sample, {reportStatus: reportStatus})).then(function (response) {
+      if (response.data.success) {
+        toastr.success('报告已驳回！');
+        $state.go('app.report');
+      } else {
+        toastr.error(response.data.message);
+      }
+    })
   }
 
 });

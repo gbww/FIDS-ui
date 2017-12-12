@@ -108,7 +108,7 @@ angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal,
       return;
     }
     Upload.upload({
-      url: '/api/v1/ahgz/checkitemscatalog/import',
+      url: '/api/v1/ahgz/checkitems/import',
       data: {
         file: event.target.files[0]
       }

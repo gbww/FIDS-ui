@@ -60,7 +60,7 @@ angular.module('com.app').controller('ReportPreviewCtrl', function ($uibModalIns
         templateUrl: 'controllers/report/preview/pdf/pdf.html',
         controller: 'PDFPreviewCtrl as vm',
         resolve: {
-         filepath: function () {return response.data}
+         filepath: function () {return response.data.entity}
          // filepath: function () { return '/opt/test.pdf' }
         }
       });

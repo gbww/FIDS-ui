@@ -11,6 +11,8 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
       $state.go('app.itemToCheck');
     } else if (module == 'report') {
       $state.go('app.report');
+    } else if (module == 'client') {
+      $state.go('app.client');
     }
   }
 
@@ -18,6 +20,7 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
   	vm.isDashboardActive = $state.includes('app.dashboard');
     vm.isItemToCheckActive = $state.includes('app.itemToCheck');
     vm.isReportActive = $state.includes('app.report');
+    vm.isClientActive = $state.includes('app.client');
 
     vm.isCheckItemActive = $state.includes('app.checkItem');
     vm.isCheckItemListActive = $state.includes('app.checkItem.list');

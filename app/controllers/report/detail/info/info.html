@@ -365,13 +365,19 @@
 						<span>批准人</span>
 					</td>
 					<td>
-						<input class="input" name="approveUser" ng-model="vm.sample.approveUser" disabled>
+						<input class="input" name="approveUser" ng-model="vm.sample.approvalUser" disabled>
 					</td>
 				</tr>
 			</table>
 		</form>
 		<div class="btn-area text-center" role-auth="SAMPLE-UPDATESAMPLE-1">
-			<button class="btn btn-default-dark" ng-click="vm.ok(form)" role-auth="SAMPLE-UPDATESAMPLE-1">确认</button>
+			<button class="btn btn-default-dark" ng-click="vm.ok(form)" role-auth="SAMPLE-UPDATESAMPLE-1">
+				<span ng-if="vm.sample.reportStatus == 0">确认</span>
+				<span ng-if="vm.sample.reportStatus == 1">通过</span>
+				<span ng-if="vm.sample.reportStatus == 2">批准</span>
+			</button>
+			<button class="btn btn-default-light" ng-click="vm.reset(form, 'unpass')" role-auth="SAMPLE-UPDATESAMPLE-1" ng-if="vm.sample.reportStatus == 1">不通过</button>
+			<button class="btn btn-default-light" ng-click="vm.reset(form, 'unapprove')" role-auth="SAMPLE-UPDATESAMPLE-1" ng-if="vm.sample.reportStatus == 2">不批准</button>
 			<button class="btn btn-default-light" ui-sref="app.report">取消</button>
 		</div>
 	</div>

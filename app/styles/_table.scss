@@ -18,8 +18,6 @@
         cursor: pointer;
         font-weight: inherit;
         white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
         &[st-sort] {
           overflow: visible;
           text-overflow: initial;
@@ -78,11 +76,17 @@
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        .fa{
+        .fa, .icon{
           position: relative;
           font-size: 14px;
           margin-right: 5px;
           cursor: pointer;
+        }
+        .icon {
+          font-size: 12px;
+          display: inline-block;
+          width: 14px;
+          height: 14px;
         }
         >a{
           color: $blue-color;
@@ -383,6 +387,171 @@
       background-color: #fff;
       td{
         color: #3F4A56;
+      }
+    }
+  }
+}
+
+.div-pt-table{
+  display: table;
+  font-size: 13px;
+  font-weight: 400;
+  width: 100%;
+  cursor: inherit;
+  table-layout: fixed;
+  border: 1px solid $table-border-color;
+  border-bottom: none;
+  .div-pt-header{
+    .div-pt-row{
+      width: 100%;
+      background-color: #e5ebef;
+      border-bottom: 1px solid $table-border-color;
+      outline: none;
+      .div-pt-cell{
+        display: inline-block;
+        color: $thead-font-color;
+        padding: 10px 10px;
+        font-size: 13px;
+        cursor: pointer;
+        font-weight: inherit;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+        .fa{
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+  .div-pt-body{
+    .div-pt-loading {
+      padding: 10px;
+      border-bottom: 1px solid $table-border-color;
+    }
+    .div-pt-row{
+      outline: none;
+      color: #FFFFFF;
+      border-bottom: 1px solid $table-border-color;
+      width: 100%;
+      white-space: nowrap;
+      &:nth-child(2n){
+        background-color: #fbfcfd;
+      }
+      &:nth-child(2n-1){
+        background-color: #ffffff;
+      }
+      .div-pt-cell{
+        display: inline-block;
+        font-size: 12px;
+        padding: 10px 10px;
+        outline: none;
+        word-break: break-all;
+        word-wrap: break-word;
+        color: $tbody-font-color;
+        vertical-align: middle;
+        .fa{
+          cursor: pointer;
+          margin-right: 8px;
+        }
+        a{
+          color: $blue-color;
+          &:hover {
+            color: $hover-blue-color;
+          }
+        }
+        .btn-group{
+          border: 1px solid $border-color;
+          border-radius: 4px;
+          .btn{
+            margin: 0;
+          }
+          .btn-default{
+            color: inherit;
+            background-color: transparent;
+            &:link, &:visited, &:hover, &:active {
+              outline: none;
+            }
+            &:hover{
+              color: $blue-color;
+            }
+            +.dropdown-toggle{
+              color: inherit;
+              background-color: transparent;
+            }
+          }
+        }
+        .dropdown-menu{
+          min-width: 93px;
+          li{
+            a{
+              color: inherit;
+              padding: 3px 8px;
+            }
+            a:hover{
+              color: $blue-color;
+              background-color: transparent;
+            }
+          }
+        }
+      }
+      .pt-table{
+        min-width: 80%;
+        width: 90%;
+        margin: 20px auto 0;
+        border: none;
+        thead{
+          tr{
+            background-color: transparent;
+            border-top: 1px dashed $table-border-color;
+            border-bottom: 1px dashed $table-border-color;
+            th{
+              cursor: default;
+              padding: 5px 10px;
+            }
+            th:first-child{
+              padding-left: 40px;
+            }
+          }
+        }
+        tbody{
+          tr{
+            border-bottom: 1px dashed $table-border-color;
+            &:last-child{
+              border: none;
+            }
+            &:hover{
+              background-color: transparent;
+            }
+            td:first-child{
+              padding-left: 40px;
+            }
+            .btn-group{
+              border: 1px solid $border-color;
+              border-radius: 4px;
+              .btn{
+                margin: 0;
+              }
+              .btn-default{
+                color: inherit;
+                background-color: transparent;
+                &:link, &:visited, &:hover, &:active {
+                  outline: none;
+                }
+                &:hover{
+                  color: $blue-color;
+                }
+                +.dropdown-toggle{
+                  color: inherit;
+                  background-color: transparent;
+                }
+              }
+            }
+            .dropdown-menu{
+              min-width: 93px;
+            }
+          }
+        }
       }
     }
   }

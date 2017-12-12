@@ -1,0 +1,74 @@
+<div class="modal-header">
+	<div class="close" ng-click="vm.cancel()">&times;</div>
+	<h4>编辑客户信息</h4>
+</div>
+
+<div class="modal-body">
+	<form name="form" class="form-horizontal">
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">客户名称</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="name" ng-model="vm.client.clientName" disabled>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">业务负责人</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="salesman" ng-model="vm.client.salesman" ng-minlength="2" ng-maxlength="30" ng-pattern="/^[\u4e00-\u9fa5_\-a-zA-Z0-9]+$/">
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="form.salesman.$dirty" ng-messages="form.salesman.$error">
+				<label class="error-messages" ng-message="minlength"><i></i>长度至少2位</label>
+				<label class="error-messages" ng-message="maxlength"><i></i>长度至多30位</label>
+				<label class="error-messages" ng-message="pattern"><i></i>由中文、数字、字母、中横线和下划线组成</label>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">区域</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="area" ng-model="vm.client.area">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">纳税人识别号</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="invoiceTitle" ng-model="vm.client.invoiceTitle">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">开户银行</label>
+			<div class="col-sm-8">
+				<div custom-select class-name="form-control" avail-arr="vm.bankArr" model="vm.client" key="bankName" ng-if="vm.bankArr"></div>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">银行账号</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="bankAccount" ng-model="vm.client.bankAccount">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">地址</label>
+			<div class="col-sm-8">
+				<china-address select-result="vm.address" select-class="form-control"></china-address>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">备注</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="remark" ng-model="vm.client.remark">
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-default-dark" ng-disabled="form.$invalid" ng-click="vm.ok()">确认</button>
+	<button class="btn btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

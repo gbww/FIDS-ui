@@ -1,7 +1,7 @@
 'use strict';
 
 // 这里只能注入constant和各种Provider。本阶段主要用于通过Provider对各种服务进行配置。
-angular.module('com.app').config(function($httpProvider, stConfig) {
+angular.module('com.app').config(function($httpProvider, stConfig, toastrConfig) {
   // 禁止IE请求从缓存拿数据
   $httpProvider.defaults.headers.get = {
     'Cache-Control': 'no-cache',
@@ -11,6 +11,10 @@ angular.module('com.app').config(function($httpProvider, stConfig) {
   // smart-table
   stConfig.pagination.itemsByPage = 10;
   stConfig.sort.skipNatural = true;
+
+  angular.extend(toastrConfig, {
+    closeButton: true
+  })
 
   $httpProvider.interceptors.push(['$rootScope', '$cookies', '$q', 'HttpPendingRequestsService', function($rootScope, $cookies, $q, HttpPendingRequestsService){
   	return {

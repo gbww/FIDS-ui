@@ -1,6 +1,6 @@
 @charset "UTF-8";
-
-html, body {
+html,
+body {
   min-height: 100%;
   height: 100%;
   background-color: #000000;
@@ -28,14 +28,15 @@ body {
   box-sizing: border-box;
 }
 
-*:focus{
+*:focus {
   outline: none;
 }
 
-ul, li {
-	padding: 0;
-	margin: 0;
-	list-style: none;
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
 a {
@@ -43,9 +44,16 @@ a {
   background-color: transparent;
   text-decoration: none;
 }
-a:link, a:visited, a:hover, a:active{
+
+a:link,
+a:visited,
+a:hover,
+a:active {
   text-decoration: none;
   outline: none;
+}
+a:visited, a:active {
+  color: $blue-color;
 }
 
 .container {
@@ -54,7 +62,7 @@ a:link, a:visited, a:hover, a:active{
   height: 100%;
   padding: 0;
   overflow: hidden;
-  >div{
+  >div {
     height: 100%;
   }
 }
@@ -68,37 +76,36 @@ a:link, a:visited, a:hover, a:active{
   background-color: #e1e9ee;
   zoom: 1;
   @include transition(padding-left 0.7s ease-in-out);
-  .main{
+  .main {
     width: 100%;
     height: 100%;
     padding-top: 50px;
-    >div{
+    >div {
       height: 100%;
       overflow: auto;
       &::-webkit-scrollbar {
         width: 8px;
         height: 8px;
       }
-      &::-webkit-scrollbar-button    {
+      &::-webkit-scrollbar-button {
         height: 0;
         width: 0;
       }
-      &::-webkit-scrollbar-track     {
+      &::-webkit-scrollbar-track {
         background: #ccc;
       }
       &::-webkit-scrollbar-track-piece {
         background: #ccc;
       }
-      &::-webkit-scrollbar-thumb{
+      &::-webkit-scrollbar-thumb {
         background-color: #aaa;
         border-radius: 8px;
       }
       &::-webkit-scrollbar-corner {
         background: #ccc;
       }
-      &::-webkit-scrollbar-resizer  {
-      }
-      >div{
+      &::-webkit-scrollbar-resizer {}
+      >div {
         @include flex(flex, column);
         padding: 10px;
         min-height: 100%;
@@ -108,20 +115,23 @@ a:link, a:visited, a:hover, a:active{
   }
 }
 
-input, select, textarea{
+input,
+select,
+textarea {
   border: 1px solid $border-color;
-  @include box-shadow(inset 0 1px 1px rgba(0,0,0,0.075));
-  &:focus{
+  @include box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075));
+  &:focus {
     border-color: #66afe9;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
     -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
   }
 }
 
-select::-ms-expand{
+select::-ms-expand {
   display: none;
 }
-select{
+
+select {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -135,20 +145,24 @@ select{
 
 input {
   outline: none;
-  &:focus, &:hover{
+  &:focus,
+  &:hover {
     outline: none;
   }
 }
 
-input[type="file"]{
+input[type="file"] {
   border: 0;
   @include box-shadow(none);
-  &:focus{
+  &:focus {
     @include box-shadow(none);
   }
 }
-input[type="checkbox"], input[type="radio"]{
-  &+label, &+span{
+
+input[type="checkbox"],
+input[type="radio"] {
+  &+label,
+  &+span {
     margin-left: 5px;
     vertical-align: middle;
     font-weight: initial;
@@ -158,7 +172,7 @@ input[type="checkbox"], input[type="radio"]{
 
 .input {
   min-width: 120px;
-  height:26px;
+  height: 26px;
   padding: 3px 8px;
   border-radius: 3px;
   color: #999;
@@ -179,32 +193,44 @@ input[type="checkbox"], input[type="radio"]{
   }
 }
 
-.pt, .pt-2{
+.form-control.date {
+  vertical-align: middle;
+  padding-right: 25px;
+  background-image: url(./images/calendar.png);
+  background-repeat: no-repeat;
+  background-position: 98% 55%;
+  cursor: pointer;
+}
+
+.pt,
+.pt-2 {
   padding: 8px;
   border-radius: 5px;
   background-color: #FFFFFF;
   color: #555;
   @include box-shadow(3px 4px 8px rgba(0, 0, 0, 0.1), -3px -1px 8px rgba(0, 0, 0, 0.1));
 }
-.pt{
+
+.pt {
   margin-bottom: 30px;
   flex-shrink: 0;
   -webkie-flex-shrink: 0;
   -moz-flex-shrink: 0;
   -ms-flex-shrink: 0;
 }
-.pt-2{
+
+.pt-2 {
   flex: 1 0 auto;
   -webkit-flex: 1 0 auto;
   -moz-flex: 1 0 auto;
   -ms-flex: 1 0 auto;
 }
 
-.toolbar{
+.toolbar {
   padding: 0;
   margin-bottom: 8px;
   color: #555;
-  input:not([type='checkbox']){
+  input:not([type='checkbox']) {
     width: 240px;
     height: 31px;
     color: #999;
@@ -214,21 +240,22 @@ input[type="checkbox"], input[type="radio"]{
     background-repeat: no-repeat;
     background-position: 3% 55%;
   }
-  select{
+  select {
     width: 240px;
     height: 32px;
     color: #999;
     border-radius: 4px;
     text-indent: 8px;
     vertical-align: middle;
-    &+select, &+input{
+    &+select,
+    &+input {
       margin-left: 5px;
     }
   }
   .btn:last-child {
     margin-right: 0;
   }
-  ul.statusBar{
+  ul.statusBar {
     border-radius: 3px;
     background-color: #e1e9ee;
     display: inline-block;
@@ -236,16 +263,16 @@ input[type="checkbox"], input[type="radio"]{
     padding: 1px;
     vertical-align: middle;
     height: 31px;
-    li{
+    li {
       float: left;
       border-radius: 3px;
       height: 29px;
       line-height: 29px;
       cursor: pointer;
-      &.active{
+      &.active {
         background-color: #fff;
       }
-      a{
+      a {
         color: #999;
         padding: 0 10px;
         .icon {
@@ -274,7 +301,8 @@ i+span {
   color: $unhealthy;
   margin-top: 8px;
 }
-.error-messages > i {
+
+.error-messages>i {
   background: url(./images/icon.svg) no-repeat 0px -359px;
   display: inline-block;
   width: 16px;
@@ -282,7 +310,7 @@ i+span {
   margin-bottom: -2px;
 }
 
-.item-required:after{
+.item-required:after {
   content: '*';
   color: #cc3333;
   margin-left: 4px;
@@ -290,35 +318,72 @@ i+span {
 }
 
 @keyframes scaleIn {
-  0%{ @include scale(0.97); opacity: 0.9 }
-  100% { @include scale(1); opacity: 1 }
+  0% {
+    @include scale(0.97);
+    opacity: 0.9
+  }
+  100% {
+    @include scale(1);
+    opacity: 1
+  }
 }
+
 @keyframes slideInLeft {
-  0%{ @include translate(-10px, 0); opacity: 0.9 }
-  100% { @include translate(0, 0); opacity: 1 }
+  0% {
+    @include translate(-10px, 0);
+    opacity: 0.9
+  }
+  100% {
+    @include translate(0, 0);
+    opacity: 1
+  }
 }
+
 @keyframes slideInRight {
-  0%{ @include translate(10px, 0); opacity: 0.9 }
-  100% { @include translate(0, 0); opacity: 1 }
+  0% {
+    @include translate(10px, 0);
+    opacity: 0.9
+  }
+  100% {
+    @include translate(0, 0);
+    opacity: 1
+  }
 }
+
 @keyframes slideInTop {
-  0%{ @include translate(0, -10px); opacity: 0.9 }
-  100% { @include translate(0, 0); opacity: 1 }
+  0% {
+    @include translate(0, -10px);
+    opacity: 0.9
+  }
+  100% {
+    @include translate(0, 0);
+    opacity: 1
+  }
 }
+
 @keyframes slideInBottom {
-  0%{ @include translate(0, 10px); opacity: 0.9 }
-  100% { @include translate(0, 0); opacity: 1 }
+  0% {
+    @include translate(0, 10px);
+    opacity: 0.9
+  }
+  100% {
+    @include translate(0, 0);
+    opacity: 1
+  }
 }
 
 // 创建、编辑页
-.create-body, .edit-body{
+.create-body,
+.edit-body {
   margin-top: 20px;
   padding: 10px 0 20px;
-  &.top{
+  &.top {
     margin-top: 0;
   }
 }
-.create-footer, .edit-footer{
+
+.create-footer,
+.edit-footer {
   border-top: 1px solid $border-color;
   padding: 20px 0;
 }
@@ -327,6 +392,11 @@ i+span {
 .toolbar .select-wrapper ul {
   top: 32px;
 }
+
+.select-wrapper[class-name='form-control'] ul {
+  top: 34px;
+}
+
 .select-wrapper {
   position: relative;
   width: 100%;
@@ -341,7 +411,7 @@ i+span {
     overflow: auto;
     border: 1px solid $border-color;
     background-color: #fff;
-    li a{
+    li a {
       display: block;
       padding: 0px 10px;
       cursor: pointer;
@@ -372,4 +442,12 @@ i+span {
 
 .input-group .input-group-addon {
   padding: 4px 12px;
+}
+
+.city-select {
+  @include flex(flex, row, space-between);
+  select {
+    display: inline-block;
+    width: 30%;
+  }
 }

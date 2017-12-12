@@ -19,7 +19,7 @@
           <a>
             <i class="icon icon-business"></i>
             <span>业务管理</span>
-            <i class="fa fa-chevron-down"></i>
+            <i class="fa fa-chevron-right"></i>
           </a>
         </div>
         <ul id="businessManage" ng-class="{'collapse in': vm.isBusinessActive, 'collapse': !vm.isBusinessActive}">
@@ -55,7 +55,7 @@
           <a>
             <i class="icon icon-project"></i>
             <span>项目库</span>
-            <i class="fa fa-chevron-down"></i>
+            <i class="fa fa-chevron-right"></i>
           </a>
         </div>
         <ul id="checkItemManage" ng-class="{'collapse in': vm.isCheckItemActive, 'collapse': !vm.isCheckItemActive}">
@@ -73,7 +73,7 @@
           <a>
             <i class="icon icon-filecenter"></i>
             <span>文件管理</span>
-            <i class="fa fa-chevron-down"></i>
+            <i class="fa fa-chevron-right"></i>
           </a>
         </div>
         <ul id="fileManage" ng-class="{'collapse in': vm.isFileActive, 'collapse': !vm.isFileActive}">
@@ -84,11 +84,20 @@
       </div>
 
       <div class="panel">
+        <div ng-class="{'active': vm.isClientActive}">
+          <a title="客户管理" ng-click="vm.open('client')">
+            <i class="icon icon-client"></i>
+            <span>客户管理</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="panel">
         <div data-parent="#accordion" data-toggle="collapse" data-target="#privilegeManage" aria-expanded="{{vm.isPrivilegeActive}}">
           <a>
             <i class="icon icon-system"></i>
             <span>系统管理</span>
-            <i class="fa fa-chevron-down"></i>
+            <i class="fa fa-chevron-right"></i>
           </a>
         </div>
         <ul id="privilegeManage" ng-class="{'collapse in': vm.isPrivilegeActive, 'collapse': !vm.isPrivilegeActive}">

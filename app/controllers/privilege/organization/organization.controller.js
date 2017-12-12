@@ -70,12 +70,12 @@ angular.module('com.app').controller('PrivilegeOrganizationCtrl', function ($roo
 
     modalInstance.result.then(function () {
       vm.refreshTable();
-      toastr.success("角色信息修改成功！");
+      toastr.success("部门信息修改成功！");
     })
   }
 
   vm.delete = function (organization) {
-    var result = dialog.confirm('确认删除角色 ' + organization.name + ' ?');
+    var result = dialog.confirm('确认删除部门 ' + organization.name + ' ?');
     result.then(function (res) {
       if (res) {
         PrivilegeService.deleteOrganization(organization.id).then(function (response) {

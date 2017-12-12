@@ -17,7 +17,8 @@
 
   		<input type="file" class="select-file" ngf-select ng-model="vm.image" name="image" custom-file-change="vm.upload">
   	</div>
-    <table class="pt-table dl-table">
+    <div class="loading" style="margin-top: 100px" ng-if="vm.loading"><i></i></div>
+    <table class="pt-table dl-table" ng-if="!vm.loading">
     	<tr>
     		<th>用户名称</th><td>{{ vm.user.username }}</td>
     	</tr>

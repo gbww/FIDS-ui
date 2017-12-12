@@ -18,8 +18,12 @@ angular.module('com.app').constant('api', {
       manage: {name: '自定义管理', url: 'app.checkItem.manage'}
     },
     func: {
-      root: {name: '功能管理'},
+      root: {name: '文件管理'},
       template: {name: '模板管理', url: 'app.func.template'}
+    },
+    client: {
+      root: {name: '客户管理', url: 'app.client'},
+      detail: {name: '客户详情'}
     },
     business: {
       root: {name: '业务管理'},

@@ -1,0 +1,11 @@
+<div class="city-select">
+  <select ng-model="province" class="{{ selectClass }}" ng-options="key as key for (key, value) in areaData" ng-change="changeProvince()">
+    <option value="">-- 省 --</option>
+  </select>
+  <select ng-model="city" class="{{ selectClass }}" ng-options="key as key for (key, value) in areaData[province]" ng-change="changeCity()">
+    <option value="">-- 市 --</option>
+  </select>
+  <select ng-model="district" class="{{ selectClass }}" ng-options="key as key for key in areaData[province][city]" ng-change="changeDistrict()">
+    <option value="">-- 区 --</option>
+  </select>
+</div>

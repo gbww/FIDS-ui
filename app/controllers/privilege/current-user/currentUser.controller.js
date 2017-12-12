@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($rootScope, $uibModal, $timeout, api, toastr, PrivilegeService, Upload, dialog) {
+angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($uibModal, $timeout, api, toastr, PrivilegeService, Upload, dialog) {
   var vm = this;
 
   var privilegeBC = api.breadCrumbMap.privilege;
@@ -8,7 +8,7 @@ angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($root
 
   vm.user = null;
   vm.getUserInfo = function () {
-    $rootScope.loading = true;
+    vm.loading = true;
   	PrivilegeService.getCurrentUserInfo().then(function (response) {
   		if (response.data.success) {
   			vm.user = response.data.entity;
@@ -18,13 +18,13 @@ angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($root
   	}).then(function () {
       return PrivilegeService.downloadUserSign(vm.user.id)
   	}).then(function (response) {
-      $rootScope.loading = false;
+      vm.loading = false;
   		vm.user.hasSign = response.data !== null;
       if (vm.user.hasSign) {
         vm.userSignImage = "data:image/png;base64," + response.data;
       }
   	}).catch(function (err) {
-      $rootScope.loading = false;
+      vm.loading = false;
   		toastr.error(err.data);
   	});
   }
