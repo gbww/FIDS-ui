@@ -16,14 +16,15 @@
 				<th>定量限</th>
 				<th>设备</th>
 				<th>默认价格</th>
+				<th>检测部门</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-if="vm.ciLoading">
-				<td colspan="9" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+				<td colspan="10" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 			</tr>
 			<tr ng-if="!vm.ciLoading && vm.checkItems.length == 0">
-				<td colspan="9" class="text-center">暂无检测项</td>
+				<td colspan="10" class="text-center">暂无检测项</td>
 			</tr>
 			<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
 				<td>
@@ -37,6 +38,7 @@
 				<td>{{ item.quantitation_limit }}</td>
 				<td>{{ item.device }}</td>
 				<td>{{ item.default_price }}</td>
+				<td>{{ item.department }}</td>
 			</tr>
 		</tbody>
 	</table>

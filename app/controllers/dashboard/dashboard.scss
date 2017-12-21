@@ -1,21 +1,58 @@
-// 这里写本页中特有的部分
+  // 这里写本页中特有的部分
 .dashboard-list {
-	.box {
-		border: 1px solid $border-color;
-		border-radius: 5px;
-		@include box-shadow(inset 0 0 3px $border-color);
-		p {
-			font-size: 18px;
-			background-color: #f3fafd;
-			padding: 5px 0;
-			border-top-left-radius: 5px;
-			border-top-right-radius: 5px;
-		}
-		.table-wrapper {
-			padding: 5px 10px;
-			height: 240px;
-			overflow-x: hidden;
-			overflow-y: auto;
-		}
+  .box {
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    @include box-shadow(inset 0 0 3px $border-color);
+    p {
+      font-size: 18px;
+      background-color: #f3fafd;
+      padding: 5px 0;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+    .table-wrapper {
+			position: relative;
+      padding: 5px 10px;
+      height: 350px;
+      overflow: hidden;
+      >div {
+        width: 100%;
+        height: 340px;
+			}
+			.no-data-tips {
+				position: absolute;
+				text-align: center;
+				top: 45%;
+				color:rgba(133,139,157,0.8);
+			}
+      .statusBar {
+				position: absolute;
+				top: 0px;
+        border-radius: 3px;
+        background-color: #eee;
+        padding: 1px;
+        vertical-align: middle;
+				height: 31px;
+				z-index: 10000;
+        li {
+          float: left;
+          border-radius: 3px;
+          height: 29px;
+          line-height: 29px;
+          cursor: pointer;
+          &.active {
+            background-color: #fff;
+            span {
+              color: #000;
+            }
+          }
+					a {
+						color: #666;
+						padding: 0 10px;
+					}
+        }
+      }
+    }
 	}
 }

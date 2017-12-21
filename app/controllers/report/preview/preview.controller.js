@@ -2,8 +2,6 @@
 
 angular.module('com.app').controller('ReportPreviewCtrl', function ($uibModalInstance, $uibModal, $sce, SampleService, toastr, sampleId, templateMap) {
   var vm = this;
-  // var filepath = '/opt/test.pdf';
-  // vm.url = $sce.trustAsResourceUrl('http://' + location.host + '/pdfjs/web/viewer.html?file=' + filepath);
 
   vm.sampleId = sampleId;
   vm.category = '0';
@@ -24,46 +22,25 @@ angular.module('com.app').controller('ReportPreviewCtrl', function ($uibModalIns
   }
   vm.changeCategory('0');
 
-  function base64ToBlob (dataURI) {
-		var mimeString =  dataURI.match(/:(.*?);/)[1]; // mime类型
-		var byteString = atob(dataURI.split(',')[1]); //base64 解码
-		var arrayBuffer = new ArrayBuffer(byteString.length); //创建缓冲数组
-		var intArray = new Uint8Array(arrayBuffer); //创建视图
-		for (var i=0,len=byteString.length; i<len; i++) {
-			intArray[i] = byteString.charCodeAt(i);
-		}
-		return new Blob([intArray], {type: mimeString});
-  }
-
   vm.ok = function () {
-	  // var reader = new FileReader();
-	  // reader.onload = function () {
-			// var blob = base64ToBlob(this.result);
-			// $uibModalInstance.dismiss();
-			// $uibModal.open({
-	  //     animation: true,
-	  //     windowClass: 'pdf-preview',
-	  //     templateUrl: 'controllers/report/preview/pdf/pdf.html',
-	  //     controller: 'PDFPreviewCtrl as vm',
-	  //     resolve: {
-	  //     	blobData: blob
-	  //     }
-	  //   });
-	  // }
-	  // reader.readAsDataURL(vm.file);
-
     SampleService.previewReport(sampleId, vm.templateName).then(function (response) {
-      $uibModalInstance.dismiss();
-      $uibModal.open({
+      var modalInstance = $uibModal.open({
         animation: true,
         windowClass: 'pdf-preview',
         templateUrl: 'controllers/report/preview/pdf/pdf.html',
         controller: 'PDFPreviewCtrl as vm',
         resolve: {
-         filepath: function () {return response.data.entity}
-         // filepath: function () { return '/opt/test.pdf' }
+          sampleId: function () {return vm.sampleId;},
+          filepath: function () {return response.data.entity;}
         }
       });
+      modalInstance.result.then(function (res) {
+        if (res) {
+          $uibModalInstance.close();
+        } else {
+          $uibModalInstance.dismiss();
+        }
+      })
     })
 	}
 

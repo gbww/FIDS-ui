@@ -13,14 +13,15 @@ angular.module('com.app').factory('ContractService', function ($http) {
 			});
 		},
 
-		getContractList: function (tableParams, searchName) {
+		getContractList: function (tableParams, searchName, type) {
 			return $http({
 				url: '/api/v1/ahgz/contract',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
           order: tableParams.order,
-          sampleName: searchName
+					sampleName: searchName,
+					type: type
         }
 			})
 		},
@@ -29,11 +30,14 @@ angular.module('com.app').factory('ContractService', function ($http) {
 			return $http.get('/api/v1/ahgz/contract/check/' + id);
 		},
 
-		createContract: function (data) {
+		createContract: function (contract, files) {
 			return $http({
 				url: '/api/v1/ahgz/contract',
 				method: 'POST',
-				data: data
+				data: {
+					contractSample: contract,
+					files: files
+				}
 			})
 		},
 

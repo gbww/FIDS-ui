@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, $timeout, api, toastr, SampleService) {
+angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $uibModal, $timeout, api, toastr, SampleService) {
   var vm = this;
 
   var reportBC = api.breadCrumbMap.report;
@@ -8,30 +8,34 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
 
   vm.searchObject = {}
 
-  vm.refreshTable = function () {
+  vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
+    if (flag == 'toggle') {
+      vm.searchObject.toggle = true;
+    }
   }
 
   vm.searchConditions = {
-    receivesampleid: null,
-    entrustedunit: null,
-    sampletype: null,
-    checktype: null,
-    startTime: null,
-    endTime: null
+    reportId: null,
+    sampleName: null,
+    entrustedUnit: null,
+    inspectedUnit: null,
+    productionUnit: null,
+    receiveSampleId: null,
+    executeStandard: null
   };
-  vm.sampleIdArr = [], vm.sampleTypeArr = [], vm.checkTypeArr = [], vm.entrustedUnitArr = [];
+  vm.reportIdArr = [], vm.sampleNameArr = [], vm.entrustedUnitArr = [], vm.inspectedUnitArr = [],
+    vm.productionUnitArr = [], vm.sampleIdArr = [], vm.exeStandardArr = [];
 
+  vm.status = 0;
   vm.samples = [];
   vm.loading = true;
   vm.getSampleList = function (tableState) {
 
     var orderBy = tableState.sort.predicate;
     var reverse = tableState.sort.reverse ? 'desc' : 'asc';
-    if (orderBy == 'sampleType') {
-      orderBy = 'sample_type'
-    } else if (orderBy == 'checkType') {
-      orderBy = 'check_type'
+    if (orderBy == 'reportId') {
+      orderBy = 'report_id'
     } else if (orderBy == 'createdAt') {
       orderBy = 'created_at'
     }
@@ -40,7 +44,7 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-    SampleService.getSampleList(tableParams, vm.searchObject).then(function (response) {
+    SampleService.getSampleList(tableParams, vm.searchObject, null, vm.status === 5 ? null : vm.status).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.samples = response.data.entity.list;
@@ -48,17 +52,26 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
         tableState.pagination.numberOfPages = response.data.entity.pages;
 
         angular.forEach(vm.samples, function (item) {
+          if (vm.reportIdArr.indexOf(item.reportId) == -1) {
+            vm.reportIdArr.push(item.reportId);
+          }
           if (vm.sampleIdArr.indexOf(item.receiveSampleId) == -1) {
             vm.sampleIdArr.push(item.receiveSampleId);
           }
-          if (item.sampleType && vm.sampleTypeArr.indexOf(item.sampleType) == -1) {
-            vm.sampleTypeArr.push(item.sampleType);
-          }
-          if (item.checkType && vm.checkTypeArr.indexOf(item.checkType) == -1) {
-            vm.checkTypeArr.push(item.checkType);
+          if (item.sampleName && vm.sampleNameArr.indexOf(item.sampleName) == -1) {
+            vm.sampleNameArr.push(item.sampleName);
           }
           if (item.entrustedUnit && vm.entrustedUnitArr.indexOf(item.entrustedUnit) == -1) {
             vm.entrustedUnitArr.push(item.entrustedUnit);
+          }
+          if (item.inspectedUnit && vm.inspectedUnitArr.indexOf(item.inspectedUnit) == -1) {
+            vm.inspectedUnitArr.push(item.inspectedUnit);
+          }
+          if (item.productionUnit && vm.productionUnitArr.indexOf(item.productionUnit) == -1) {
+            vm.productionUnitArr.push(item.productionUnit);
+          }
+          if (item.executeStandard && vm.exeStandardArr.indexOf(item.executeStandard) == -1) {
+            vm.exeStandardArr.push(item.executeStandard);
           }
         })
       } else {
@@ -71,30 +84,46 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
     })
   }
 
-  vm.back = function () {
-    vm.advance = false;
-    angular.merge(vm.searchConditions, {
-      entrustedunit: null,
-      sampletype: null,
-      checktype: null,
-      startTime: null,
-      endTime: null,
-    });
-  }
-
-  vm.search=function(){
-    vm.searchObject = angular.copy(vm.searchConditions);
-  }
-
-  vm.eventSearch=function(e){
-    var keycode = window.event?e.keyCode:e.which;
-    if(keycode==13){
-      vm.searchObject.searchKeywords = vm.query;
+  vm.searchStatus = function (filter) {
+    if (vm.status != filter) {
+      vm.status = filter;
+      vm.refreshTable('toggle');
     }
   }
 
-  vm.goDetail = function (id) {
-    $state.go('app.report.detail.info', {id: id});
+  vm.back = function () {
+    vm.advance = false;
+    angular.merge(vm.searchConditions, {
+      sampleName: null,
+      entrustedUnit: null,
+      inspectedUnit: null,
+      productionUnit: null,
+      receiveSampleId: null,
+      executeStandard: null
+    });
+  }
+
+  vm.reset = function () {
+    angular.merge(vm.searchConditions, {
+      reportId: null,
+      sampleName: null,
+      entrustedUnit: null,
+      inspectedUnit: null,
+      productionUnit: null,
+      receiveSampleId: null,
+      executeStandard: null
+    });
+  }
+
+  vm.search = function () {
+    vm.searchObject = angular.copy(vm.searchConditions);
+  }
+
+  vm.eventSearch = function (e) {
+    var keycode = window.event ? e.keyCode : e.which;
+    if (keycode == 13) {
+      vm.searchObject.searchKeywords = vm.query;
+    }
   }
 
   vm.export = function (sample) {
@@ -105,14 +134,18 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
       templateUrl: 'controllers/report/export/export.html',
       controller: 'ReportExportCtrl as vm',
       resolve: {
-        sampleId: function () {return sample.receiveSampleId},
+        sampleId: function () {
+          return sample.receiveSampleId;
+        },
         templateMap: ['$rootScope', '$q', 'TemplateService', function ($rootScope, $q, TemplateService) {
           $rootScope.loading = true;
           var deferred = $q.defer();
 
           TemplateService.filterTemplate().then(function (response) {
             $rootScope.loading = false;
-            var coverTemplates = [], reportTemplates = [], bothTemplates = [];
+            var coverTemplates = [],
+              reportTemplates = [],
+              bothTemplates = [];
             if (response.data.success) {
               var templates = response.data.entity.list;
               angular.forEach(templates, function (item) {
@@ -130,7 +163,7 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
               reportTemplates: reportTemplates,
               bothTemplates: bothTemplates
             })
-          }).catch(function (){
+          }).catch(function () {
             $rootScope.loading = false;
             deferred.resolve({
               coverTemplates: [],
@@ -144,48 +177,12 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
     });
 
     modalInstance.result.then(function (res) {
-      /* 二进制流 */
-      // var iframe = document.createElement('iframe');
-      // iframe.src = '/api/v1/ahgz/sample/items/report/' + sample.receiveSampleId + '?templateFileName=' + res.name + '&type=' + res.type;
-      // iframe.style.display = 'none';
-      // document.body.appendChild(iframe);
-      // $timeout(function () {
-      //   document.body.removeChild(iframe);
-      // }, 1000)
-
-      /* base64编码流数据 */
-      // SampleService.exportFile(sample.receiveSampleId, res).then(function (response) {
-      //   var link = document.createElement('a');
-      //   var blob = binaryToBlob(response.data);
-      //   link.href = URL.createObjectURL(blob);
-      //   link.download = res;
-      //   link.click();
-      //   URL.revokeObjectURL(link.href);
-      // })
-
-      /* 文件路径，需要配置nginx */
-      // var link = document.createElement('a');
-      // link.href = 'http://' + location.host + '/opt/test.xls';
-      // link.download = 'test.xls';
-      // link.click();
-
-
       var link = document.createElement('a');
       link.href = '/api/v1/ahgz/sample/items/report/' + sample.receiveSampleId + '?type=excel&templateFileName=' + res;
       link.download = res;
       link.click();
     });
   }
-
-  function binaryToBlob(data) {
-    var l = data.length, arr = new Uint8Array(l);
-
-    for(var i = 0; i < l; i++) {
-      arr[i] = data.charCodeAt(i);
-    }
-
-    return new Blob([arr], { type: 'application/vnd.ms-excel'})
-  };
 
   vm.preview = function (sample) {
     var modalInstance = $uibModal.open({
@@ -194,14 +191,18 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
       templateUrl: 'controllers/report/preview/preview.html',
       controller: 'ReportPreviewCtrl as vm',
       resolve: {
-        sampleId: function () {return sample.receiveSampleId},
+        sampleId: function () {
+          return sample.receiveSampleId;
+        },
         templateMap: ['$rootScope', '$q', 'TemplateService', function ($rootScope, $q, TemplateService) {
           $rootScope.loading = true;
           var deferred = $q.defer();
 
           TemplateService.filterTemplate().then(function (response) {
             $rootScope.loading = false;
-            var coverTemplates = [], reportTemplates = [], bothTemplates = [];
+            var coverTemplates = [],
+              reportTemplates = [],
+              bothTemplates = [];
             if (response.data.success) {
               var templates = response.data.entity.list;
               angular.forEach(templates, function (item) {
@@ -219,7 +220,7 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
               reportTemplates: reportTemplates,
               bothTemplates: bothTemplates
             })
-          }).catch(function (){
+          }).catch(function () {
             $rootScope.loading = false;
             deferred.resolve({
               coverTemplates: [],
@@ -231,6 +232,8 @@ angular.module('com.app').controller('ReportCtrl', function ($state, $uibModal, 
         }]
       }
     });
+    modalInstance.result.then(function () {
+      vm.refreshTable();
+    });
   }
-
 });

@@ -5,31 +5,35 @@ angular.module('com.app').controller('CiResultRecordCtrl', function ($uibModal, 
 
   vm.breadCrumbArr = [api.breadCrumbMap.itemToCheck.root];
 
-  vm.searchObject = {
-    searchKeywords: ''
-  }
+  vm.query = {
+    reportId: null,
+    receiveSampleId: null
+  };
+  vm.searchObject = {};
 
   vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
-    if (flag == 'toggle') {
+    if (flag === 'toggle') {
       vm.searchObject.toggle = true;
     }
-  }
+  };
 
-  vm.status = '1';
+  vm.status = 1;
   vm.checkItems = [];
   vm.loading = true;
   vm.getCheckItemList = function (tableState) {
     var orderBy = tableState.sort.predicate;
     var reverse = tableState.sort.reverse ? 'desc' : 'asc';
-    if (orderBy == 'receiveSampleId') {
-      orderBy = 'receive_sample_id'
-    } else if (orderBy == 'testRoom') {
-      orderBy = 'test_room'
-    } else if (orderBy == 'testUser') {
-      orderBy = 'test_user'
-    } else if (orderBy == 'updatedAt') {
-      orderBy = 'updated_at'
+    if (orderBy === 'reportId') {
+      orderBy = 'report_id';
+    } else if (orderBy === 'receiveSampleId') {
+      orderBy = 'receive_sample_id';
+    } else if (orderBy === 'testRoom') {
+      orderBy = 'test_room';
+    } else if (orderBy === 'testUser') {
+      orderBy = 'test_user';
+    } else if (orderBy === 'updatedAt') {
+      orderBy = 'updated_at';
     }
 
     var tableParams = {
@@ -37,7 +41,7 @@ angular.module('com.app').controller('CiResultRecordCtrl', function ($uibModal, 
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-  	SampleService.getUserCi(tableParams, parseInt(vm.status)).then(function (response) {
+  	SampleService.getUserCi(tableParams, vm.status, vm.query).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.checkItems = response.data.entity.list;
@@ -64,12 +68,12 @@ angular.module('com.app').controller('CiResultRecordCtrl', function ($uibModal, 
   }
 
   vm.search=function(){
-    vm.searchObject.searchKeywords = vm.query;
+    vm.refreshTable();
   }
   vm.eventSearch=function(e){
     var keycode = window.event?e.keyCode:e.which;
     if(keycode==13){
-      vm.searchObject.searchKeywords = vm.query;
+      vm.refreshTable();
     }
   }
 

@@ -1,13 +1,51 @@
 <div class="modal-header">
 	<div class="close" ng-click="vm.cancel()">&times;</div>
-	<h4>编辑检测项</h4>
+	<h4>录入检测结果</h4>
 </div>
 <div class="modal-body">
 	<form name="form" class="form-horizontal">
 		<div class="form-group">
+			<label class="col-sm-3 control-label">检出限</label>
+			<div class="col-sm-8">
+				<input class="form-control" ng-model="vm.checkItem.detectionLimit">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">定量限</label>
+			<div class="col-sm-8">
+				<input class="form-control" ng-model="vm.checkItem.quantitationLimit">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">设备</label>
+			<div class="col-sm-8">
+				<input class="form-control" ng-model="vm.checkItem.device">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="col-sm-3 control-label">单位</label>
+			<div class="col-sm-8">
+				<input class="form-control" ng-model="vm.checkItem.unit">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">标准值</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="standardValue" ng-model="vm.checkItem.standardValue" required>
+				<div ng-if="form.standardValue.$dirty" ng-messages="form.standardValue.$error">
+					<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group">
 			<label class="item-required col-sm-3 control-label">实测值</label>
 			<div class="col-sm-8">
-				<input class="form-control" name="value" ng-model="vm.checkItem.measuredValue" ng-blur="vm.changeResult()" required>
+				<input class="form-control" name="value" ng-model="vm.checkItem.measuredValue" required>
 				<div ng-if="form.value.$dirty" ng-messages="form.value.$error">
 					<label class="error-messages" ng-message="required"><i></i>不能为空</label>
 				</div>
@@ -16,11 +54,10 @@
 		<div class="form-group">
 			<label class="item-required col-sm-3 control-label">结果</label>
 			<div class="col-sm-8">
-				<select class="form-control" ng-model="vm.checkItem.itemResult" ng-options="option for option in vm.resultArr" required></select>
-				<!-- <input class="form-control" name="result" ng-model="vm.checkItem.itemResult" required> -->
-				<!-- <div ng-if="form.result.$dirty" ng-messages="form.result.$error">
+				<div custom-select class-name="form-control" name="result" avail-arr="vm.resultArr" model="vm.checkItem" key="itemResult"></div>
+				<div ng-if="form.result.$dirty" ng-messages="form.result.$error">
 					<label class="error-messages" ng-message="required"><i></i>不能为空</label>
-				</div> -->
+				</div>
 			</div>
 		</div>
 	</form>

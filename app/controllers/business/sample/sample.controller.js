@@ -20,16 +20,18 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   }
 
   vm.searchConditions = {
-    receivesampleid: null,
-    entrustedunit: null,
-    sampletype: null,
-    checktype: null,
-    startTime: null,
-    endTime: null
+    reportId: null,
+    sampleName: null,
+    entrustedUnit: null,
+    inspectedUnit: null,
+    productionUnit: null,
+    receiveSampleId: null,
+    executeStandard: null
   };
-  vm.sampleIdArr = [], vm.sampleTypeArr = [], vm.checkTypeArr = [], vm.entrustedUnitArr = [];
+  vm.reportIdArr = [], vm.sampleNameArr = [], vm.entrustedUnitArr = [], vm.inspectedUnitArr = [],
+  vm.productionUnitArr = [], vm.sampleIdArr = [], vm.exeStandardArr =[];
 
-  vm.status = '0';
+  vm.status = 0;
   vm.samples = [];
   vm.loading = true;
   vm.ciLoading = true;
@@ -37,12 +39,10 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
     var orderBy = tableState.sort.predicate;
     var reverse = tableState.sort.reverse ? 'desc' : 'asc';
-    if (orderBy == 'sampleType') {
-      orderBy = 'sample_type'
-    } else if (orderBy == 'checkType') {
-      orderBy = 'check_type'
+    if (orderBy == 'reportId') {
+      orderBy = 'report_id';
     } else if (orderBy == 'createdAt') {
-      orderBy = 'created_at'
+      orderBy = 'created_at';
     }
 
     var tableParams = {
@@ -50,7 +50,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-  	SampleService.getSampleList(tableParams, vm.searchObject, parseInt(vm.status)).then(function (response) {
+  	SampleService.getSampleList(tableParams, vm.searchObject, vm.status).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.samples = response.data.entity.list;
@@ -65,17 +65,26 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
           vm.checkItems = [];
         }
         angular.forEach(vm.samples, function (item) {
+          if (vm.reportIdArr.indexOf(item.reportId) == -1) {
+            vm.reportIdArr.push(item.reportId);
+          }
           if (vm.sampleIdArr.indexOf(item.receiveSampleId) == -1) {
             vm.sampleIdArr.push(item.receiveSampleId);
           }
-          if (item.sampleType && vm.sampleTypeArr.indexOf(item.sampleType) == -1) {
-            vm.sampleTypeArr.push(item.sampleType);
-          }
-          if (item.checkType && vm.checkTypeArr.indexOf(item.checkType) == -1) {
-            vm.checkTypeArr.push(item.checkType);
+          if (item.sampleName && vm.sampleNameArr.indexOf(item.sampleName) == -1) {
+            vm.sampleNameArr.push(item.sampleName);
           }
           if (item.entrustedUnit && vm.entrustedUnitArr.indexOf(item.entrustedUnit) == -1) {
             vm.entrustedUnitArr.push(item.entrustedUnit);
+          }
+          if (item.inspectedUnit && vm.inspectedUnitArr.indexOf(item.inspectedUnit) == -1) {
+            vm.inspectedUnitArr.push(item.inspectedUnit);
+          }
+          if (item.productionUnit && vm.productionUnitArr.indexOf(item.productionUnit) == -1) {
+            vm.productionUnitArr.push(item.productionUnit);
+          }
+          if (item.executeStandard && vm.exeStandardArr.indexOf(item.executeStandard) == -1) {
+            vm.exeStandardArr.push(item.executeStandard);
           }
         })
       } else {
@@ -98,12 +107,26 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.back = function () {
     vm.advance = false;
     angular.merge(vm.searchConditions, {
-      entrustedunit: null,
-      sampletype: null,
-      checktype: null,
-      startTime: null,
-      endTime: null,
+      sampleName: null,
+      entrustedUnit: null,
+      inspectedUnit: null,
+      productionUnit: null,
+      receiveSampleId: null,
+      executeStandard: null
     });
+  }
+
+  vm.reset = function () {
+    angular.merge(vm.searchConditions, {
+      reportId: null,
+      sampleName: null,
+      entrustedUnit: null,
+      inspectedUnit: null,
+      productionUnit: null,
+      receiveSampleId: null,
+      executeStandard: null
+    });
+
   }
 
   vm.search=function(){
@@ -205,8 +228,8 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   // 根据
   vm.checkItems = [];
-  vm.ciLoading = true;
   vm.getSampleCi = function () {
+    vm.ciLoading = true;
     SampleService.getSampleCiList(vm.selectedSample.receiveSampleId).then(function (response) {
       vm.ciLoading = false;
       if (response.data.success) {
@@ -244,12 +267,14 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     if (isDb) {
       angular.forEach(checkItems, function (item) {
         item.receiveSampleId = vm.selectedSample.receiveSampleId;
+        item.reportId = vm.selectedSample.reportId;
         delete item.id;
       });
       data = [].concat(checkItems);
     } else {
       angular.forEach(checkItems, function (item) {
         var tempItem = {
+          reportId: vm.selectedSample.reportId,
           receiveSampleId: vm.selectedSample.receiveSampleId,
           name: item.name,
           method: item.method,
@@ -276,26 +301,34 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   }
 
   vm.appendCI = function () {
-    var result = dialog.confirm('确认追加接样单 ' + vm.clonedSampleId + ' 的检测项?');
-    result.then(function (res) {
-      if (res) {
-        $rootScope.loading = true;
-        SampleService.getSampleCiList(vm.clonedSampleId).then(function (response) {
-          if (response.data.success) {
-            var checkItems = response.data.entity;
-            angular.forEach(checkItems, function (item) {
-              item.standard_value = item.standardValue,
-              item.detection_limit = item.detectionLimit,
-              item.quantitation_limit = item.quantitationLimit,
-              item.default_price = item.defaultPrice
-            });
-            addCheckItems(checkItems);
-          } else {
-            toastr.error(response.data.message);
+    $rootScope.loading = true;
+    SampleService.getSampleCiList(vm.clonedSampleId).then(function (response) {
+      $rootScope.loading = false;
+      if (response.data.success) {
+        var checkItems = response.data.entity;
+        angular.forEach(checkItems, function (item) {
+          item.standard_value = item.standardValue,
+          item.detection_limit = item.detectionLimit,
+          item.quantitation_limit = item.quantitationLimit,
+          item.default_price = item.defaultPrice
+        });
+        var modalInstance = $uibModal.open({
+          animation: true,
+          size: 'lg',
+          backdrop: 'static',
+          templateUrl: 'controllers/business/sample/detail/ci/catalog-ci/catalogCi.html',
+          controller: 'SampleAddCatalogCiCtrl as vm',
+          resolve: {
+            checkItems: function () {return checkItems}
           }
+        });
+        modalInstance.result.then(function (res) {
+          addCheckItems(res);
         })
+      } else {
+        toastr.error(response.data.message);
       }
-    });
+    })
   }
 
   // 点击检测项集合节点，弹出集合的检测项供用户添加

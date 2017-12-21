@@ -41,6 +41,9 @@ angular.module('com.app').factory('dialog', function ($uibModal) {
 				vm.ok = function () {
 					$uibModalInstance.close(data);
 				};
+				vm.close = function () {
+					$uibModalInstance.close(false);
+				};
                 //取消按钮
 				vm.dismiss = function () {
 					$uibModalInstance.dismiss();

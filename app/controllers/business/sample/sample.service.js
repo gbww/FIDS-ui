@@ -2,20 +2,22 @@
 
 angular.module('com.app').factory('SampleService', function ($http) {
 	return {
-		getSampleList: function (tableParams, searchConditions, status) {
+		getSampleList: function (tableParams, searchConditions, status, reportStatus) {
 			return $http({
 				url: '/api/v1/ahgz/sample',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
           order: tableParams.order,
-          receivesampleid: searchConditions.receivesampleid,
-          entrustedunit: searchConditions.entrustedunit,
-          sampletype: searchConditions.sampletype,
-          checktype: searchConditions.checktype,
-          startTime: searchConditions.startTime,
-          endTime: searchConditions.endTime,
-          status: status
+          reportId: searchConditions.reportId,
+          sampleName: searchConditions.sampleName,
+          entrustedUnit: searchConditions.entrustedUnit,
+          inspectedUnit: searchConditions.inspectedUnit,
+          productionUnit: searchConditions.productionUnit,
+          receiveSampleId: searchConditions.receiveSampleId,
+          executeStandard: searchConditions.executeStandard,
+					status: status,
+					reportStatus: reportStatus
         }
 			})
 		},
@@ -95,14 +97,16 @@ angular.module('com.app').factory('SampleService', function ($http) {
 		},
 
 		// 获取检测人员的检测项列表任务
-		getUserCi: function (tableParams, status) {
+		getUserCi: function (tableParams, status, searchObject) {
 			return $http({
 				url: '/api/v1/ahgz/sampleItem',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
           order: tableParams.order,
-          status: status
+					status: status,
+					reportId: searchObject.reportId,
+					receiveSampleId: searchObject.receiveSampleId
         }
 			})
 		},

@@ -34,7 +34,7 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $
     SampleService.getSampleInfo(vm.clonedSampleId).then(function (response) {
       $rootScope.loading = false;
       if (response.data.success) {
-        vm.sample = angular.merge(response.data.entity, {receiveSampleId: null});
+        vm.sample = angular.merge(response.data.entity, {reportId: null, receiveSampleId: null});
       } else {
         toastr.error(response.data.message);
       }

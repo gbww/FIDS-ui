@@ -4,7 +4,7 @@
 			<table class="form-table">
 				<tr>
 					<td class="item-title">
-						<span>报告编号</span>
+						<span class="item-required">报告编号</span>
 					</td>
 					<td>
 						<input class="input" name="reportId" ng-model="vm.sample.reportId">
@@ -30,13 +30,10 @@
 						</div>
 					</td>
 					<td class="item-title">
-						<span class="item-required">协议编号</span>
+						<span>协议编号</span>
 					</td>
 					<td>
-						<input class="input" name="protocolId" ng-model="vm.sample.protocolId" ng-click="vm.changeContract()" required>
-						<div ng-if="form.protocolId.$dirty || vm.submitted" ng-messages="form.protocolId.$error">
-							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
-						</div>
+						<input class="input" name="protocolId" ng-model="vm.sample.protocolId" ng-click="vm.changeContract()">
 					</td>
 				</tr>
 				<tr>
@@ -159,13 +156,10 @@
 
 				<tr>
 					<td class="item-title">
-						<span class="item-required">执行标准</span>
+						<span>执行标准</span>
 					</td>
 					<td>
-						<div custom-select name="executeStandard" avail-arr="vm.executeStandardArr" model="vm.sample" key="executeStandard"></div>
-						<div ng-if="form.executeStandard.$dirty || vm.submitted" ng-messages="form.executeStandard.$error">
-							<label class="error-messages" ng-message="required"><i></i>不能为空</label>
-						</div>
+						<div custom-select avail-arr="vm.executeStandardArr" model="vm.sample" key="executeStandard"></div>
 					</td>
 					<td class="item-title">
 						<span>接样时间</span>

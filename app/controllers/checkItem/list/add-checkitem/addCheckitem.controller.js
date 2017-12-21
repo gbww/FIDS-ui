@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('com.app').controller('DBAddCheckItemCtrl', function ($scope, $uibModalInstance, CheckItemService, toastr) {
+angular.module('com.app').controller('DBAddCheckItemCtrl', function ($scope, $uibModalInstance, CheckItemService, toastr, organizations) {
   var vm = this;
-  vm.checkItem = {};
+	vm.checkItem = {};
+	vm.organizations = organizations;
 
   vm.characterArr = ['>', '>=', '<', '<=', '~', '!', '/', '$', '%', '^', '*', '(', ')', '[', ']'];
 

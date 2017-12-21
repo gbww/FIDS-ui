@@ -10,7 +10,7 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 
 
 	$stateProvider.state('app.business.contract.create', {
-		url: '/create',
+		url: '/:type/create',
 		views: {
 			'@app.business': {
 				templateUrl: 'controllers/business/contract/create/create.html',

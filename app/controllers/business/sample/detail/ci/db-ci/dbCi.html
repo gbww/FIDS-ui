@@ -3,6 +3,10 @@
 </div>
 <div class="modal-body">
 	<div class="toolbar clearfix" style="margin-bottom: 10px;">
+		<button class="btn btn-default-dark" ng-click="vm.addCheckItem()">
+			<i class="fa fa-plus"></i>
+			<span>录入检测项</span>
+		</button>
 		<div class="pull-right">
 			<input class="input" placeholder="请输入检测项名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
 			<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
@@ -22,14 +26,15 @@
 				<th>定量限</th>
 				<th>设备</th>
 				<th>默认价格</th>
+				<th>检测部门</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-if="vm.loading">
-				<td colspan="9" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+				<td colspan="10" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 			</tr>
 			<tr ng-if="!vm.loading && vm.checkItems.length == 0">
-				<td colspan="9" class="text-center">暂无检测项</td>
+				<td colspan="10" class="text-center">暂无检测项</td>
 			</tr>
 			<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.loading">
 				<td>
@@ -43,11 +48,12 @@
 				<td>{{ item.quantitationLimit }}</td>
 				<td>{{ item.device }}</td>
 				<td>{{ item.defaultPrice }}</td>
+				<td>{{ item.department }}</td>
 			</tr>
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="9">
+				<td colspan="10">
 					<div st-idp st-total-count="vm.total"></div>
 				</td>
 			</tr>

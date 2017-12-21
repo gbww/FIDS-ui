@@ -2,8 +2,15 @@
 
 angular.module('com.app').factory('DashboardService', function ($http) {
 	return {
-		getJudgeContractList: function () {
-			return $http.get('/mock/data/contract_to_judge.json');
+		getAllCi: function (startTime, endTime) {
+			return $http({
+				url: '/api/v1/ahgz/sample/items/countByDepartment',
+				method: 'GET',
+				params: {
+					startTime: startTime,
+					endTime: endTime
+				}
+			});
 		},
 
 		getContractInfo: function () {

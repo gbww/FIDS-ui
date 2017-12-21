@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('SampleAddDbCiCtrl', function ($scope, $uibModalInstance, CheckItemService, toastr) {
+angular.module('com.app').controller('SampleAddDbCiCtrl', function ($scope, $uibModal, $uibModalInstance, CheckItemService, toastr) {
   var vm = this;
 
   vm.searchObject = {
@@ -43,6 +43,21 @@ angular.module('com.app').controller('SampleAddDbCiCtrl', function ($scope, $uib
     if(keycode==13){
       vm.searchObject.searchKeywords = vm.query;
     }
+  }
+
+  vm.addCheckItem = function () {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      size: 'md',
+      backdrop: 'static',
+      templateUrl: 'controllers/checkItem/list/add-checkitem/addCheckitem.html',
+      controller: 'DBAddCheckItemCtrl as vm'
+    });
+
+    modalInstance.result.then(function (res) {
+      vm.refreshTable();
+      toastr.success('检测项添加成功！');
+    });
   }
 
   // 单选、复选

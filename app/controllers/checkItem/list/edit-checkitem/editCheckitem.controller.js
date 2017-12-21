@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('com.app').controller('DBEditCheckItemCtrl', function ($scope, $uibModalInstance, CheckItemService, toastr, checkItem) {
+angular.module('com.app').controller('DBEditCheckItemCtrl', function ($scope, $uibModalInstance, CheckItemService, toastr, checkItem, organizations) {
   var vm = this;
-  vm.checkItem = angular.copy(checkItem);
+	vm.checkItem = angular.copy(checkItem);
+	vm.organizations = organizations;
 
   vm.characterArr = ['>', '>=', '<', '<=', '~', '!', '/', '$', '%', '^', '*', '(', ')', '[', ']'];
 

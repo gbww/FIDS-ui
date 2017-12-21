@@ -19,12 +19,13 @@
 							<th>定量限</th>
 							<th>设备</th>
 							<th>默认价格</th>
+							<th>检测部门</th>
 							<th>操作</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-if="vm.checkItems.length == 0">
-							<td colspan="9" class="text-center">暂无检测项</td>
+							<td colspan="10" class="text-center">暂无检测项</td>
 						</tr>
 						<tr ng-repeat="item in vm.checkItems track by item.id">
 							<td>{{ item.name }}</td>
@@ -35,6 +36,7 @@
 							<td>{{ item.quantitation_limit }}</td>
 							<td>{{ item.device }}</td>
 							<td>{{ item.default_price }}</td>
+							<td>{{ item.department || '--' }}</td>
 							<td>
 								<button class="btn btn-default" ng-click="vm.deleteCheckItem(item)"><i class="fa fa-trash"></i><span>删除</span></button>
 							</td>

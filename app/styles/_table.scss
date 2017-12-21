@@ -62,7 +62,7 @@
         cursor: pointer;
       }
       &:hover{
-        background-color: #d4eefb;
+        background-color: #b4ddff;
       }
       td{
         font-size: 12px;
@@ -207,7 +207,7 @@
       }
       &+td {
         width: 35%;
-        input:not([type="checkbox"]):not([type="radio"]), select {
+        input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), select {
           display: inline-block;
           width: 100%;
           padding: 3px 8px;
@@ -227,147 +227,45 @@
 }
 
 .border-table{
-  font-family: 'ArialMT', 'Arial';
-  font-size: 13px;
-  font-weight: 400;
   width: 100%;
-  cursor: inherit;
   table-layout: fixed;
+  border: 1px solid $table-border-color;
   thead{
     tr{
-      background-color: transparent;
-      outline: none;
-      border-top: 2px solid $table-border-color;
-      border-bottom: 2px solid $table-border-color;
+      background-color: #f8f8f8;
       th{
-        border: none;
-        color: $thead-font-color;
-        padding: 3px 5px;
+        padding: 8px;
         font-size: 13px;
-        cursor: pointer;
-        .fa.fa-sort{
-          &.fa-sort-asc{
-            vertical-align: bottom;
-          }
-          &.fa-sort-desc{
-            vertical-align: top;
-          }
-        }
-        input[type="checkbox"]:focus{
-          outline: none;
-        }
+        font-weight: initial;
+        border-bottom: 1px solid $table-border-color;
+        border-right: 1px solid $table-border-color;
       }
     }
   }
   tbody{
-    background-color: transparent;
     tr{
-      outline: none;
-      position: relative;
-      border-bottom: 1px solid $table-border-color;
-      &:hover{
-        background-color: #fff - #050505;
-      }
-      &.clickabld{
-        cursor: pointer;
-      }
       td{
-        border: none;
-        padding: 3px 5px;
-        outline: none;
-        word-break: break-all;
-        word-wrap: break-word;
-        color: $tbody-font-color;
-        &:first-child{
-          position: relative;
-          &:before{
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            display: block;
-            width: 3px;
-            height: 100%;
-            background-color: transparent;
-          }
-        }
-        a{
-          color: $blue-color;
-          &:hover{
-            color: $hover-blue-color;
-          }
-          &:focus{
-            color: $blue-color;
-          }
-        }
-        input[type="checkbox"]:focus{
-          outline: none;
+        padding: 8px;
+        border-bottom: 1px solid $table-border-color;
+        border-right: 1px solid $table-border-color;
+        .fa{
+          font-size: 14px;
+          margin-right: 5px;
+          cursor: pointer;
         }
       }
-      .dropdown-col{
-        .btn-group{
-          border: 1px solid $table-border-color;
-          border-radius: 4px;
-          .btn{
-            color: #333;
-            margin: 0;
-          }
-          .btn-default{
-            color: inherit;
-            background-color: transparent;
-            border-right: 1px solid $table-border-color;
-            &:hover{
-              color: $blue-color;
-            }
-            +.dropdown-toggle{
-              color: inherit;
-              background-color: transparent;
-            }
-          }
-        }
-        .dropdown-menu{
-          min-width: 100px;
-          li{
-            a{
-              color: inherit;
-            }
-            a:hover{
-              color: $blue-color;
-              background-color: transparent;
-            }
-          }
-        }
+      &:hover {
+        background-color: transparent;
       }
     }
-    tr.healthy, tr.running{
-      td:first-child{
-        &:before{
-          background-color: $healthy;
-        }
-      }
-      .healthy, .running{
-        color: $healthy;
-      }
+  }
+  &.no-vertical-line{
+    thead tr th, tbody tr td{
+      border-right: none;
     }
-    tr.unhealthy{
-      td:first-child{
-        &:before{
-          background-color: $unhealthy;
-        }
-      }
-      .unhealthy{
-        color: $unhealthy;
-      }
-    }
-    tr.stopped{
-      td:first-child{
-        &:before{
-          background-color: #FFAE00;
-        }
-      }
-      .stopped{
-      }
-    }
+  }
+  &.no-top-border{
+    border-top: 0;
   }
 }
 

@@ -7,7 +7,7 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
   vm.breadCrumbArr = [businessBC.root, businessBC.contract.root];
 
   vm.searchObject = {
-    searchKeywords: ''
+    searchKeywords: null
   }
 
   vm.refreshTable = function (flag) {
@@ -19,6 +19,7 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
     }
   }
 
+  vm.type = 'enterprise';
   vm.statusFilter = 'all';
   vm.contracts = [];
   vm.loading = true;
@@ -35,7 +36,7 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }, tempTotal = 0;
-    ContractService.getContractList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
+    ContractService.getContractList(tableParams, vm.searchObject.searchKeywords, vm.type).then(function (response) {
       if (response.data.success) {
         vm.tempContracts = response.data.entity.list;
         tempTotal = response.data.entity.total;
@@ -105,6 +106,20 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
       vm.loading = false;
       toastr.error(err.data);
     })
+  }
+
+  vm.toggleType = function (type) {
+    if (vm.type === type) {
+      return;
+    }
+    if (type === 'enterprise') {
+      vm.type = 'enterprise';
+    } else if (type === 'government') {
+      vm.type = 'government';
+    } else {
+      vm.type = 'pb';
+    }
+    vm.refreshTable('toggle');
   }
 
   vm.searchStatus = function (filter) {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal, api, CheckItemService, toastr, Upload, dialog) {
+angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal, api, CheckItemService, PrivilegeService, toastr, Upload, dialog) {
   var vm = this;
 
   var checkItemBC = api.breadCrumbMap.checkItem;
@@ -56,7 +56,23 @@ angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal,
       size: 'md',
       backdrop: 'static',
       templateUrl: 'controllers/checkItem/list/add-checkitem/addCheckitem.html',
-      controller: 'DBAddCheckItemCtrl as vm'
+      controller: 'DBAddCheckItemCtrl as vm',
+      resolve: {
+        organizations: ['$rootScope', '$q', function ($rootScope, $q) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getOrganizationList().then(function (response) {
+            $rootScope.loading = false;
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              $rootScope.loading = false;
+              deferred.reject();
+            }
+          });
+          return deferred.promise;
+        }]
+      }
     });
 
     modalInstance.result.then(function (res) {
@@ -73,7 +89,21 @@ angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal,
       templateUrl: 'controllers/checkItem/list/edit-checkitem/editCheckitem.html',
       controller: 'DBEditCheckItemCtrl as vm',
       resolve: {
-        checkItem: function () {return item;}
+        checkItem: function () {return item;},
+        organizations: ['$rootScope', '$q', function ($rootScope, $q) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getOrganizationList().then(function (response) {
+            $rootScope.loading = false;
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              $rootScope.loading = false;
+              deferred.reject();
+            }
+          });
+          return deferred.promise;
+        }]
       }
     });
 
