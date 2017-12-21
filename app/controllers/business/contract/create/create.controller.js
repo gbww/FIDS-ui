@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ContractCreateCtrl', function ($state, $stateParams, $timeout, api, toastr, ContractService) {
+angular.module('com.app').controller('ContractCreateCtrl', function ($state, $stateParams, $timeout, api, toastr, ContractService, Upload) {
   var vm = this;
 
   var businessBC = api.breadCrumbMap.business;
@@ -87,7 +87,14 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
       sampleList: vm.sampleArr
     };
 
-		ContractService.createContract(contractData, vm.files).then(function (response) {
+    Upload.upload({
+  		url: '/api/v1/ahgz/contract',
+  		data: {
+        contractSample: contractData,
+        files: vm.files
+  		}
+  	}).then(function (response) {
+		// ContractService.createContract(contractData, vm.files).then(function (response) {
 			if (response.data.success) {
 				toastr.success('合同录入成功！');
 				$state.go('app.business.contract');
