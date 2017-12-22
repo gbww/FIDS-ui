@@ -45,7 +45,7 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
 
   vm.sampleArr = [];
   vm.addSample = function () {
-    vm.sampleArr.push({name: null, specificationQuantity: null, executeStandard: null, detectBy: null, processTechnology: null, qualityLevel: null, produceDate: null, storageTime: null, sampleShape: null, storageCondition: null, processDemand: null});
+    vm.sampleArr.push({name: '', specificationQuantity: '', executeStandard: '', detectBy: '', processTechnology: '', qualityLevel: '', produceDate: '', storageTime: '', sampleShape: '', storageCondition: '', processDemand: ''});
   }
   vm.addSample();
   vm.deleteSample = function (idx) {
@@ -71,9 +71,20 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
       return;
     }
 
-    angular.forEach(vm.sampleArr, function (sample, idx) {
+		var sampleList = angular.copy(vm.sampleArr);
+    angular.forEach(sampleList, function (sample, idx) {
       if (!sample.name || !sample.executeStandard) {
         vm.sampleArr.splice(idx, 1);
+      } else {
+      	if (!sample.specificationQuantity) delete sample.specificationQuantity;
+      	if (!sample.detectBy) delete sample.detectBy;
+      	if (!sample.processTechnology) delete sample.processTechnology;
+      	if (!sample.qualityLevel) delete sample.qualityLevel;
+      	if (!sample.produceDate) delete sample.produceDate;
+      	if (!sample.storageTime) delete sample.storageTime;
+      	if (!sample.sampleShape) delete sample.sampleShape;
+      	if (!sample.storageCondition) delete sample.storageCondition;
+      	if (!sample.processDemand) delete sample.processDemand;      	
       }
     });
 
@@ -85,7 +96,7 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
         isEvaluation: parseInt(vm.contract.isEvaluation),
         reportCount: [(vm.passReportCount||0), (vm.unpassReportCount||0)].join(';')
       }),
-      sampleList: vm.sampleArr
+      sampleList: sampleList
     };
 
     Upload.upload({
