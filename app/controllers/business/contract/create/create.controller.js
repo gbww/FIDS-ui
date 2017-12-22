@@ -9,7 +9,7 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
 
   vm.storageConditionArr = ['常温', '冷冻', '冷藏'];
   vm.detectTypeArr = ['委托检验', '发证检验', '其他'];
-  vm.executeStandardArr = ['GB/T 23587-2009'];
+  vm.executeStandardArr = ['GB/T 23587-2009', '其他'];
 
   vm.taskCategoryArr = ['监督抽检', '投诉举报', '风险监测'];
   vm.sampleTypeArr = ['普通食品&工业加工食品', '餐饮加工食品', '食品相关产品', '食用农产品', '其他'];
@@ -19,12 +19,12 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
   vm.authTypeArr = ['首次认证', '再次认证', '其他'];
   vm.enterpriseFileArr = ['现场审查意见', '现场调查报告', '其他'];
 
+  vm.passReportCount = 1,
+  vm.unpassReportCount = 0
   vm.contract = {
     type: vm.type,
     isSubcontracting: '0',
-    extra: null,
-    passReportCount: 1,
-    unpassReportCount: 0
+    extra: null
   }
 
   if (vm.type === 'enterprise') {
@@ -83,6 +83,7 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
         isSubcontracting: parseInt(vm.contract.isSubcontracting),
         isExpedited: parseInt(vm.contract.isExpedited),
         isEvaluation: parseInt(vm.contract.isEvaluation),
+        reportCount: [(vm.passReportCount||0), (vm.unpassReportCount||0)].join(';')
       }),
       sampleList: vm.sampleArr
     };
@@ -90,7 +91,7 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
     Upload.upload({
   		url: '/api/v1/ahgz/contract',
   		data: {
-        contractSample: contractData,
+        contractSample: JSON.stringify(contractData),
         files: vm.files
   		}
   	}).then(function (response) {

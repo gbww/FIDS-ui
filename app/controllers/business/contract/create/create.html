@@ -108,7 +108,8 @@
               <input class="input" ng-model="sample.specificationQuantity">
             </td>
             <td>
-              <input class="input" ng-model="sample.executeStandard">
+              <!-- <input class="input" ng-model="sample.executeStandard"> -->
+              <div custom-select avail-arr="vm.executeStandardArr" model="sample" key="executeStandard"></div>
             </td>
             <td>
               <input class="input" ng-model="sample.detectBy">
@@ -221,11 +222,11 @@
               </div> -->
               <div class="col-sm-6 col-md-6">
                 <span>合格</span>&emsp;
-                <input type="number" class="input" ng-model="vm.contract.passReportCount">
+                <input type="number" class="input" ng-model="vm.passReportCount">
               </div>
               <div class="col-sm-6 col-md-6 text-right">
                 <span>不合格</span>&emsp;
-                <input type="number" class="input" ng-model="vm.contract.unpassReportCount">
+                <input type="number" class="input" ng-model="vm.unpassReportCount">
               </div>
             </td>
           </tr>
@@ -387,11 +388,11 @@
               </div> -->
               <div class="col-sm-6 col-md-6">
                 <span>合格</span>&emsp;
-                <input type="number" class="input" ng-model="vm.contract.passReportCount">
+                <input type="number" class="input" ng-model="vm.passReportCount">
               </div>
               <div class="col-sm-6 col-md-6 text-right">
                 <span>不合格</span>&emsp;
-                <input type="number" class="input" ng-model="vm.contract.unpassReportCount">
+                <input type="number" class="input" ng-model="vm.unpassReportCount">
               </div>
             </td>
           </tr>
@@ -527,11 +528,11 @@
               </div> -->
               <div class="col-sm-6 col-md-6">
                 <span>合格</span>&emsp;
-                <input type="number" class="input" ng-model="vm.contract.passReportCount">
+                <input type="number" class="input" ng-model="vm.passReportCount">
               </div>
               <div class="col-sm-6 col-md-6 text-right">
                 <span>不合格</span>&emsp;
-                <input type="number" class="input" ng-model="vm.contract.unpassReportCount">
+                <input type="number" class="input" ng-model="vm.unpassReportCount">
               </div>
             </td>
             <tr>

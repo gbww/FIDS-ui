@@ -18,7 +18,11 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
       return PrivilegeService.getUserList();
     }).then(function (response) {
       $rootScope.loading = false;
-      vm.users = response.data.entity.list;
+      var res = [];
+      angular.forEach(response.data.entity.list, function (user) {
+        res.push(user.name);
+      });
+      vm.users = res;
     }).catch(function (err) {
       $rootScope.loading = false;
       toastr.error(err.data);
@@ -58,10 +62,17 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
   vm.subpackageArr = ['农标中心'];
 
   vm.ok = function (form) {
-    var invalid = (vm.sample.reportStatus === 0 && !vm.sample.drawUser) ||
-        (vm.sample.reportStatus === 1 && !vm.sample.examineUser) ||
-        (vm.sample.reportStatus === 2 && !vm.sample.approveUser);
-    if (form.$invalid || invalid) {
+    // 在待编辑状态确认必须选择审核人
+    if (vm.sample.reportStatus === 0 && !vm.sample.examineUser) {
+      vm.examineUserError = true;
+      return;
+    }
+    // 在待审核状态确认必须选择批准人
+    if (vm.sample.reportStatus === 1 && !vm.sample.approvalUser) {
+      vm.approveUserError = true;
+      return;
+    }
+    if (form.$invalid) {
       vm.submitted = true;
       return;
     }
@@ -81,10 +92,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
   }
 
   vm.reset = function (form, action) {
-    var invalid = (vm.sample.reportStatus === 0 && !vm.sample.drawUser) ||
-        (vm.sample.reportStatus === 1 && !vm.sample.examineUser) ||
-        (vm.sample.reportStatus === 2 && !vm.sample.approveUser);
-    if (form.$invalid || invalid) {
+    if (form.$invalid) {
       vm.submitted = true;
       return;
     }

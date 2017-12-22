@@ -29,6 +29,11 @@ angular.module('com.app').controller('DashboardCtrl', function (api, DashboardSe
     }
   };
 
+  function getFormattedDate(date) {
+    return date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate() + ' ' +
+      date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+  }
+
 
   // vm.contractChart = echarts.init(document.getElementById('contract-chart'));
   vm.ciChart = echarts.init(document.getElementById('checkitem-chart'));
@@ -39,9 +44,11 @@ angular.module('com.app').controller('DashboardCtrl', function (api, DashboardSe
   // 0: 待分配 1：待检测 2：完成
   vm.getAllCi = function () {
     var endDate = new Date();  
-    var endTime = endDate.toLocaleString();
+    // var endTime = endDate.toLocaleString();
+    var endTime = getFormattedDate(endDate);
     var startDate = new Date(endDate.getTime() - formatTime(vm.citimePeriod, 'milliSecond'));
-    var startTime = startDate.toLocaleString();
+    // var startTime = startDate.toLocaleString();
+    var startTime = getFormattedDate(startDate);
     DashboardService.getAllCi(startTime, endTime).then(function (response) {
       var department = {};
       vm.allCiXData = [];
@@ -140,6 +147,10 @@ angular.module('com.app').controller('DashboardCtrl', function (api, DashboardSe
   vm.drawCiChart = function () {
     vm.ciChart.hideLoading();
     var ciOption = angular.merge({}, option, {
+      legend: {
+        bottom: 0,
+        data: ['待分配', '待检测', '检测完成']
+      },
       xAxis: [{ data: vm.allCiXData }],
       series: [{
         name: '待分配',

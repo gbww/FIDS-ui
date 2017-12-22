@@ -6,7 +6,7 @@
 			<div class="toolbar clearfix">
 				<button class="btn btn-default-dark" ng-click="vm.batch()" role-auth="SAMPLE-UPDATEITEMRESULT-1">
 					<i class="fa fa-edit"></i>
-					<span>批量录入检测结果</span>
+					<span>批量录入</span>
 				</button>
 
 				<ul class="statusBar clearfix">
@@ -57,7 +57,7 @@
 						<th st-sort="testRoom" style="width: 80px;">检测部门<i class="fa fa-sort"></i></th>
 						<th st-sort="testUser" style="width: 80px;">检测员<i class="fa fa-sort"></i></th>
 						<th st-sort="updatedAt">更新时间<i class="fa fa-sort"></i></th>
-						<th style="width: 140px">操作</th>
+						<th style="width: 120px">操作</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -104,8 +104,8 @@
 						<td>
 							<button class="btn btn-default" ng-click="vm.recordResult(item)" role-auth="SAMPLE-UPDATEITEMRESULT-1">
 								<i class="fa fa-edit"></i>
-								<span ng-if="item.status == 1">录入检测结果</span>
-								<span ng-if="item.status == 2">编辑检测结果</span>
+								<span ng-if="item.status == 1">录入</span>
+								<span ng-if="item.status == 2">编辑</span>
 							</button>
 						</td>
 					</tr>

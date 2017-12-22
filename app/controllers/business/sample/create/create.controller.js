@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $state, $cookies, $uibModal, api, toastr, SampleService) {
+angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $state, $cookies, $uibModal, api, toastr, SampleService, users) {
   var vm = this;
+  vm.users = users;
 
   vm.clonedSampleId = $cookies.get('clonedSampleId');
 

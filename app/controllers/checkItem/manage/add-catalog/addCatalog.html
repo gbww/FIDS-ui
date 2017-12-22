@@ -5,7 +5,7 @@
 <div class="modal-body">
 	<form name="catalogAddForm" class="form-horizontal">
 		<div class="form-group">
-			<label class="col-sm-3 control-label">名称</label>
+			<label class="col-sm-3 control-label item-required">名称</label>
 			<div class="col-sm-8">
 				<input class="form-control" name="name" ng-model="vm.catalog.productName" required>
 			</div>
@@ -25,8 +25,8 @@
 		<div class="form-group" ng-hide="vm.isCatalog === false">
 			<label class="col-sm-3 control-label" style="padding-top:0">类型</label>
 			<div class="col-sm-8">
-				<input type="radio" ng-model="vm.catalog.isCatalog" value="1">目录节点&emsp;&emsp;
-				<input type="radio" ng-model="vm.catalog.isCatalog" value="0">非目录节点
+				<input type="radio" id="folder" ng-model="vm.catalog.isCatalog" value="1"><label for="folder">目录节点</label>&emsp;&emsp;
+				<input type="radio" id="file" ng-model="vm.catalog.isCatalog" value="0"><label for="file">非目录节点</label>
 			</div>
 		</div>
 	</form>

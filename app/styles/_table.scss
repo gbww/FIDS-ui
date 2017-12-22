@@ -223,6 +223,26 @@
         width: 18.33%
       }
     }
+    .ui-select-container {
+      .ui-select-match {
+        >span {
+          margin: 0;
+          padding: 3px 8px;
+          height: 26px;
+          color: #333;
+          border: 1px solid #D8DEE2;
+          @include box-shadow(none);
+          &:focus, &:active, &:hover {
+            background-color: transparent;
+          }  
+        }
+      }
+      input[type='search'] {
+        padding: 3px 8px;
+        height: 26px;
+        color: #333;
+      }
+    }
   }
 }
 

@@ -2,7 +2,7 @@
 
 angular.module('com.app').factory('SampleService', function ($http) {
 	return {
-		getSampleList: function (tableParams, searchConditions, status, reportStatus) {
+		getSampleList: function (tableParams, searchConditions, status) {
 			return $http({
 				url: '/api/v1/ahgz/sample',
 				params: {
@@ -16,7 +16,25 @@ angular.module('com.app').factory('SampleService', function ($http) {
           productionUnit: searchConditions.productionUnit,
           receiveSampleId: searchConditions.receiveSampleId,
           executeStandard: searchConditions.executeStandard,
-					status: status,
+					status: status
+        }
+			})
+		},
+
+		getReportList: function (tableParams, searchConditions, reportStatus) {
+			return $http({
+				url: '/api/v1/ahgz/sample',
+				params: {
+          pageSize: tableParams.pageSize,
+          pageNum: tableParams.pageNum,
+          order: tableParams.order,
+          reportId: searchConditions.reportId,
+          sampleName: searchConditions.sampleName,
+          entrustedUnit: searchConditions.entrustedUnit,
+          inspectedUnit: searchConditions.inspectedUnit,
+          productionUnit: searchConditions.productionUnit,
+          receiveSampleId: searchConditions.receiveSampleId,
+          executeStandard: searchConditions.executeStandard,
 					reportStatus: reportStatus
         }
 			})

@@ -31,7 +31,8 @@ angular.module('com.app').controller('ReportPreviewCtrl', function ($uibModalIns
         controller: 'PDFPreviewCtrl as vm',
         resolve: {
           sampleId: function () {return vm.sampleId;},
-          filepath: function () {return response.data.entity;}
+          // filepath: function () {return response.data.entity;}
+          filepath: function () {return '/var/lib/docs/gzjy/temp/test.pdf';}
         }
       });
       modalInstance.result.then(function (res) {

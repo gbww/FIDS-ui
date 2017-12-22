@@ -13,7 +13,7 @@ angular.module('com.app').controller('PDFPreviewCtrl', function ($scope, $timeou
         return;
       }
       vm.show = true;
-      var result = dialog.confirm('是否完成打印?');
+      var result = dialog.confirm('是否已完成报告的所有打印工作?');
       result.then(function (res) {
         vm.show = false;
         if (res) {

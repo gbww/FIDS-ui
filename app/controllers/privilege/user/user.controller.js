@@ -40,6 +40,16 @@ angular.module('com.app').controller('PrivilegeUserCtrl', function ($rootScope, 
     });
   }
 
+  vm.search=function(){
+    vm.searchObject.searchKeywords = vm.query;
+  }
+  vm.eventSearch=function(e){
+    var keycode = window.event?e.keyCode:e.which;
+    if(keycode==13){
+      vm.searchObject.searchKeywords = vm.query;
+    }
+  }
+
   vm.create = function () {
   	var modalInstance = $uibModal.open({
   		animation: true,

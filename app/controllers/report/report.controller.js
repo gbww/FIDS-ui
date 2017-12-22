@@ -44,7 +44,7 @@ angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $ui
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-    SampleService.getSampleList(tableParams, vm.searchObject, null, vm.status === 5 ? null : vm.status).then(function (response) {
+    SampleService.getReportList(tableParams, vm.searchObject, vm.status === 5 ? null : vm.status).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.samples = response.data.entity.list;

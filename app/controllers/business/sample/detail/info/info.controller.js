@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('com.app').controller('SampleDetailInfoCtrl', function ($state, $scope, $uibModal, toastr, SampleService) {
+angular.module('com.app').controller('SampleDetailInfoCtrl', function ($state, $scope, $uibModal, toastr, SampleService, users) {
   var vm = this;
+  vm.users = users;
 
   $scope.$emit('refreshSample');
   $scope.$on('sampleInfo', function (event, sample) {

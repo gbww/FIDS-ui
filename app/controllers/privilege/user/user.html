@@ -5,6 +5,10 @@
 			<button class="btn btn-default-dark" ng-click="vm.create()" role-auth="USER-ADD-1">
 				<i class="fa fa-plus"></i><span>新建用户</span>
 			</button>
+			<div class="pull-right">
+				<input class="input" placeholder="请输入名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
+				<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+			</div>
 		</div>
 		<table class="pt-table" st-table="vm.users" st-pipe="vm.getUserList">
 			<thead st-search-watch="vm.searchObject">
