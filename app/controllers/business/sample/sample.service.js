@@ -23,7 +23,7 @@ angular.module('com.app').factory('SampleService', function ($http) {
 
 		getReportList: function (tableParams, searchConditions, reportStatus) {
 			return $http({
-				url: '/api/v1/ahgz/sample',
+				url: '/api/v1/ahgz/sample/reports',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,

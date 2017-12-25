@@ -1,25 +1,12 @@
 'use strict';
 
-angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, $state, api, toastr, SampleService) {
+angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, $state, api, toastr, SampleService, users) {
   var vm = this;
-  var userInfo = api.userInfo;
+  vm.users = users;
 
   $scope.$emit('refreshReport');
   $scope.$on('reportInfo', function (event, sample) {
   	vm.sample = sample;
-    if (vm.sample.reportStatus == 0) {
-      // vm.sample.reportStatus = 1;
-      vm.sample.drawUser = userInfo.name;
-    } else if (vm.sample.reportStatus == 1){
-      // vm.sample.reportStatus = 2;
-      vm.sample.examineUser = userInfo.name;
-    } else if (vm.sample.reportStatus == 2){
-      // vm.sample.reportStatus = 3;
-      vm.sample.approvalUser = userInfo.name;
-    } else {
-      // vm.sample.reportStatus = 1;
-      vm.sample.drawUser = userInfo.name;
-    }
   });
 
   vm.checkTypeArr = ['监督检验', '委托检验', '发证检验', '认证检验', '省级抽检', '风险监测'];
@@ -38,6 +25,16 @@ angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, $
   vm.subpackageArr = ['农标中心'];
 
   vm.ok = function (form) {
+    // 在待编辑状态确认必须选择审核人
+    if (vm.sample.reportStatus === 0 && !vm.sample.examineUser) {
+      vm.examineUserError = true;
+      return;
+    }
+    // 在待审核状态确认必须选择批准人
+    if (vm.sample.reportStatus === 1 && !vm.sample.approvalUser) {
+      vm.approveUserError = true;
+      return;
+    }
     if (form.$invalid) {
       vm.submitted = true;
       return;

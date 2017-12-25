@@ -19,8 +19,8 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
   vm.authTypeArr = ['首次认证', '再次认证', '其他'];
   vm.enterpriseFileArr = ['现场审查意见', '现场调查报告', '其他'];
 
-  vm.passReportCount = 1,
-  vm.unpassReportCount = 0
+  vm.passReportCount = 1;
+  vm.unpassReportCount = 0;
   vm.contract = {
     type: vm.type,
     isSubcontracting: '0',
@@ -33,7 +33,7 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
       isExpedited: '0',
       isEvaluation: '0',
       reportMethod: 'self'
-    })
+    });
   } else if (vm.type === 'government') {
     vm.contract = angular.merge({}, vm.contract, {
       isSeparateSettlement: '0'
@@ -59,8 +59,8 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
   vm.addFile = function (event) {
     angular.forEach(event.target.files, function (item) {
       vm.files.push(item);
-    })
-  };
+    });
+  }
   vm.deleteFile = function (idx) {
     vm.files.splice(idx, 1);
   }
