@@ -101,11 +101,26 @@
 						<td>{{ item.testRoom }}</td>
 						<td>{{ item.testUser }}</td>
 						<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
-						<td>
+            <td class="dropdown-col" ng-if="item.status == 1">
+              <div class="btn-group" role-auth="SAMPLE-UPDATEITEMRESULT-1">
+								<button class="btn btn-default" ng-click="vm.recordResult(item)" role-auth="SAMPLE-UPDATEITEMRESULT-1">
+									<i class="fa fa-edit"></i>
+									<span>录入</span>
+								</button>
+                <button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-ADDITEM-1">
+                  <i class="caret"></i>
+                </button>
+								<ul class="dropdown-menu">
+                  <li ng-click="vm.distribute(item)" role-auth="SAMPLE-ADDITEM-1">
+                    <a href><i class="icon icon-distribute"></i><span>重新分配</span></a>
+									</li>
+								</ul>
+							</div>
+						</td>
+						<td ng-if="item.status == 2">
 							<button class="btn btn-default" ng-click="vm.recordResult(item)" role-auth="SAMPLE-UPDATEITEMRESULT-1">
 								<i class="fa fa-edit"></i>
-								<span ng-if="item.status == 1">录入</span>
-								<span ng-if="item.status == 2">编辑</span>
+								<span>编辑</span>
 							</button>
 						</td>
 					</tr>

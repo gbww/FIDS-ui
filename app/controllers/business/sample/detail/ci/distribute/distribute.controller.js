@@ -12,7 +12,8 @@ angular.module('com.app').controller('CiDistributeCtrl', function ($rootScope, $
     PrivilegeService.getOrganizationUsers(vm.testRoomId).then(function (response) {
       if (response.data.success) {
         vm.users = response.data.entity;
-        if (vm.users.length > 0) {
+        vm.testUser = vm.checkItem.testUser;
+        if (vm.users.length > 0 && !vm.testUser) {
           vm.testUser = vm.users[0].name;
         }
       } else {

@@ -77,6 +77,43 @@ angular.module('com.app').controller('CiResultRecordCtrl', function ($uibModal, 
     }
   }
 
+  vm.distribute = function (item) {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      size: 'md',
+      backdrop: 'static',
+      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
+      controller: 'CiDistributeCtrl as vm',
+      resolve: {
+        sampleId: function () {return item.receiveSampleId;},
+        checkItems: function () {return [item];},
+        departments: ['$rootScope', '$q', 'PrivilegeService', function ($rootScope, $q, PrivilegeService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getOrganizationList().then(function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              deferred.reject();
+              toastr.error(response.data.message);
+            }
+          }).catch(function (err) {
+            deferred.reject();
+            toastr.error(err.data);
+          });
+          return deferred.promise;
+        }]
+      }
+    });
+
+    modalInstance.result.then(function (res) {
+      $timeout(function () {
+        toastr.success('检测项分配成功！');
+        vm.getSampleCi();
+      }, 500)
+    });
+  }
+
   vm.recordResult = function (item) {
     var modalInstance = $uibModal.open({
       animation: true,

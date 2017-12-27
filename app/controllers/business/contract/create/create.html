@@ -80,7 +80,7 @@
         </tbody>
       </table>
 
-      <table class="pt-table border-table no-vertical-line">
+      <table class="pt-table border-table no-vertical-line" ng-if="vm.type === 'enterprise'">
         <thead>
           <tr>
             <th style="width:40px">序号</th>
@@ -108,7 +108,6 @@
               <input class="input" ng-model="sample.specificationQuantity">
             </td>
             <td>
-              <!-- <input class="input" ng-model="sample.executeStandard"> -->
               <div custom-select avail-arr="vm.executeStandardArr" model="sample" key="executeStandard"></div>
             </td>
             <td>
@@ -121,7 +120,7 @@
               <input class="input" ng-model="sample.qualityLevel">
             </td>
             <td>
-              <input class="input date" ng-model="sample.produceDate" datepicker>
+              <input class="input date" ng-model="sample.productDate" datepicker>
             </td>
             <td>
               <input class="input" ng-model="sample.storageTime">
@@ -130,7 +129,7 @@
               <input class="input" ng-model="sample.sampleShape">
             </td>
             <td>
-              <input class="input" ng-model="sample.storageCondition">
+              <div custom-select avail-arr="vm.storageConditionArr" model="sample" key="storageCondition"></div>
             </td>
             <td>
               <input class="input" ng-model="sample.processDemand">

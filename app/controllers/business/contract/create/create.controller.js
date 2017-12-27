@@ -39,13 +39,17 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
       isSeparateSettlement: '0'
     });
   } else {
-    vm.contract = angular.merge({}, vm.contract);
+    vm.contract = angular.merge({}, vm.contract, {
+      isUseStandard: '0',
+      isExpedited: '0',
+      isEvaluation: '0',
+    });
   }
 
 
   vm.sampleArr = [];
   vm.addSample = function () {
-    vm.sampleArr.push({name: '', specificationQuantity: '', executeStandard: '', detectBy: '', processTechnology: '', qualityLevel: '', produceDate: '', storageTime: '', sampleShape: '', storageCondition: '', processDemand: ''});
+    vm.sampleArr.push({name: '', specificationQuantity: '', executeStandard: '', detectBy: '', processTechnology: '', qualityLevel: '', productDate: '', storageTime: '', sampleShape: '', storageCondition: '', processDemand: ''});
   }
   vm.addSample();
   vm.deleteSample = function (idx) {
@@ -80,7 +84,11 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
       	if (!sample.detectBy) delete sample.detectBy;
       	if (!sample.processTechnology) delete sample.processTechnology;
       	if (!sample.qualityLevel) delete sample.qualityLevel;
-      	if (!sample.produceDate) delete sample.produceDate;
+      	if (!sample.productDate) {
+          delete sample.productDate;
+        } else {
+          sample.productDate = sample.productDate.split(' ')[0] + '\'T\'' + sample.productDate.split(' ')[1] + 'Z';
+        }
       	if (!sample.storageTime) delete sample.storageTime;
       	if (!sample.sampleShape) delete sample.sampleShape;
       	if (!sample.storageCondition) delete sample.storageCondition;

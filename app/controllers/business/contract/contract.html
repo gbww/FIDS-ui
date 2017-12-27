@@ -73,7 +73,7 @@
           </tr>
           <tr ng-repeat="contract in vm.contracts track by $index" ng-if="!vm.loading">
             <td>
-              <a href ui-sref="app.business.contract.detail.info({id: contract.id})">{{ contract.protocolId }}</a>
+              <a href ui-sref="app.business.contract.detail.info({id: contract.id})">{{ contract.id }}</a>
             </td>
             <td>{{ contract.sampleName }}</td>
             <td>{{ contract.detectType }}</td>
