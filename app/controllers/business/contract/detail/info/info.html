@@ -3,12 +3,11 @@
 		<form name="form" novalidate>
 			<table class="form-table">
 				<tr>
-					<td class="item-title validate-waiting">
+					<td class="item-title">
 						<span class="item-required">合同编号</span>
-						<i class="fa fa-spinner fa-pulse" ng-if="vm.validating"></i>
 					</td>
 					<td>
-						<input class="input" name="protocol_id" ng-model="vm.contract.protocolId" disabled>
+						<input class="input" name="id" ng-model="vm.contract.id" disabled>
 					</td>
 					<td class="item-title">
 						<span class="item-required">样品名称</span>
@@ -279,8 +278,8 @@
 			</table>
 		</form>
 		<div class="btn-area text-center" role-auth="CONTRACT-UPDATE-1">
-			<button class="btn btn-default-dark" ng-click="vm.ok(form)">确认</button>
-			<button class="btn btn-default-light" ui-sref="app.business.contract">取消</button>
+			<button class="btn btn-2x btn-default-dark" ng-click="vm.ok(form)">确认</button>
+			<button class="btn btn-2x btn-default-light" ui-sref="app.business.contract">取消</button>
 		</div>
 	</div>
 </div>

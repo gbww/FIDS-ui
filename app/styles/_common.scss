@@ -95,17 +95,17 @@ a:visited, a:active {
         width: 0;
       }
       &::-webkit-scrollbar-track {
-        background: #ccc;
+        background-color: transparent;
       }
       &::-webkit-scrollbar-track-piece {
-        background: #ccc;
+        background-color: transparent;
       }
       &::-webkit-scrollbar-thumb {
         background-color: #aaa;
         border-radius: 8px;
       }
       &::-webkit-scrollbar-corner {
-        background: #ccc;
+        background-color: transparent;
       }
       &::-webkit-scrollbar-resizer {}
       >div {
@@ -237,15 +237,18 @@ input[type="radio"] {
 		position: relative;
 		display: inline-block;
 		.caret {
-			margin-left: 5px;
+			margin-left: 3px;
 		}
 		.icon {
 			vertical-align: middle;
 		}
-	}
+  }
+  .fa, .icon {
+    font-size: 13px;
+  }
   input:not([type='checkbox']) {
     width: 240px;
-    height: 31px;
+    height: 23px;
     color: #333;
     vertical-align: middle;
     padding-left: 25px;
@@ -255,7 +258,7 @@ input[type="radio"] {
   }
   select {
     width: 240px;
-    height: 32px;
+    height: 23px;
     color: #333;
     border-radius: 4px;
     text-indent: 8px;
@@ -279,12 +282,12 @@ input[type="radio"] {
     margin-right: 10px;
     padding: 1px;
     vertical-align: middle;
-    height: 31px;
+    height: 23px;
     li {
       float: left;
       border-radius: 3px;
-      height: 29px;
-      line-height: 29px;
+      height: 21px;
+      line-height: 21px;
       cursor: pointer;
       &.active {
         background-color: #fff;
@@ -296,7 +299,7 @@ input[type="radio"] {
         color: #666;
         padding: 0 10px;
         .icon, .fa {
-          font-size: 16px;
+          font-size: 14px;
           vertical-align: middle;
         }
         .fa-edit {
@@ -323,7 +326,7 @@ input[type="radio"] {
 }
 
 i+span {
-  margin-left: 5px;
+  margin-left: 2px;
 }
 
 .error-messages {
@@ -513,4 +516,16 @@ i+span {
     display: inline-block;
     width: 30%;
   }
+}
+
+.adjust-line {
+  opacity: 0;
+  filter: alpha(opacity=0);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -4px;
+  width: 8px;
+  cursor: ew-resize;
+  z-index: 100;
 }

@@ -55,10 +55,10 @@
       height: 0;
     }
     &::-webkit-scrollbar-track     {
-      background: #ccc;
+      background-color: transparent;
     }
     &::-webkit-scrollbar-track-piece {
-      background: #ccc;
+      background-color: transparent;
     }
     &::-webkit-scrollbar-thumb{
       background-color: #aaa;

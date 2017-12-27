@@ -97,14 +97,35 @@
 			<table class="pt-table" st-table="vm.samples" st-pipe="vm.getSampleList">
 				<thead st-search-watch="vm.searchObject">
 					<tr>
-						<th st-sort="sampleType">报告编号<i class="fa fa-sort"></i></th>
-						<th>样品名称</th>
-						<th>委托单位</th>
-						<th>开始时间</th>
-						<th>结束时间</th>
-						<th st-sort="createdAt">创建时间<i class="fa fa-sort"></i></th>
-						<th>状态</th>
-						<th style="width:140px">操作</th>
+						<th>
+							<div st-sort="sampleType">报告编号<i class="fa fa-sort"></i></div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>样品名称</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>委托单位</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>开始时间</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>结束时间</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div st-sort="createdAt">创建时间<i class="fa fa-sort"></i></div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>状态</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th style="width:100px">操作</th>
 					</tr>
 				</thead>
 				<tbody>

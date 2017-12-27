@@ -5,18 +5,36 @@
 	<div class="toolbar clearfix" style="margin-bottom: 10px;">
 		<div class="pull-right">
 			<input class="input" placeholder="请输入检测项名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
-			<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+			<button class="btn btn-default-dark" ng-click="vm.search()">
+				<i class="fa fa-search"></i>
+				<span>查询</span>
+			</button>
 		</div>
 	</div>
 	<table class="pt-table" st-table="vm.contracts" st-pipe="vm.getContractList">
 		<thead st-search-watch="vm.searchObject">
 			<tr>
-				<th>协议编号</th>
-				<th>样品编号</th>
-				<th>样品名称</th>
-				<th>检验类别</th>
-				<th>执行标准</th>
-				<th style="width: 140px">操作</th>
+				<th>
+					<div>协议编号</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>样品编号</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>样品名称</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>检验类别</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>执行标准</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th style="width: 70px">操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,7 +45,7 @@
 				<td colspan="6" class="text-center">暂无检测项</td>
 			</tr>
 			<tr ng-repeat="contract in vm.contracts track by contract.id" ng-if="!vm.loading">
-				<td>{{ contract.protocolId }}</td>
+				<td>{{ contract.id }}</td>
 				<td>{{ contract.sampleId }}</td>
 				<td>{{ contract.sampleName }}</td>
 				<td>{{ contract.detectType }}</td>

@@ -38,18 +38,48 @@
 			<table class="pt-table" st-table="vm.clients" st-pipe="vm.getClientList">
 				<thead st-search-watch="vm.searchObject">
 					<tr>
-						<th style="width:80px">序号</th>
-						<th st-sort="clientName">客户名称<i class="fa fa-sort"></i></th>
-						<th>业务负责人</th>
-						<th>区域</th>
-						<th>客户编号</th>
-						<th>纳税人识别号</th>
-						<th>开户银行</th>
-						<th>银行账号</th>
-						<th>地址</th>
-						<th st-sort="createdAt">建档时间<i class="fa fa-sort"></i></th>
-						<th>备注</th>
-						<th style="width:140px">操作</th>
+						<th style="width:40px">序号</th>
+						<th>
+							<div st-sort="clientName">客户名称<i class="fa fa-sort"></i></div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>业务负责人</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>区域</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>客户编号</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>纳税人识别号</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>开户银行</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>银行账号</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>地址</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div st-sort="createdAt">建档时间<i class="fa fa-sort"></i></div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th>
+							<div>备注</div>
+							<adjust-line></adjust-line>	
+						</th>
+						<th style="width:100px">操作</th>
 					</tr>
 				</thead>
 				<tbody>

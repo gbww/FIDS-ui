@@ -33,31 +33,78 @@
 				<div class="pull-right multiple-search">
 					<input class="input" placeholder="报告编号" ng-model="vm.query.reportId" ng-keyup="vm.eventSearch($event)">
 					<input class="input" placeholder="抽样单编号" ng-model="vm.query.receiveSampleId" ng-keyup="vm.eventSearch($event)">
-					<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+					<button class="btn btn-default-dark" ng-click="vm.search()">
+						<i class="fa fa-search"></i>
+						<sapn>查询</sapn>
+					</button>
 				</div>
 			</div>
 			<table class="pt-table" st-table="vm.checkItems" st-pipe="vm.getCheckItemList">
 				<thead st-search-watch="vm.searchObject">
 					<tr>
-	          <th style="width: 60px;">
+	          <th style="width: 24px;">
   	          <input type="checkbox" ng-click="vm.selectAll()" ng-model="vm.allSelected">
   	        </th>
-						<th style="width: 100px" st-sort="reportId">报告编号<i class="fa fa-sort"></i></th>
-						<th style="width: 100px" st-sort="receiveSampleId">抽样单编号<i class="fa fa-sort"></i></th>
-						<th>名称</th>
-						<th st-sort="method" style="width: 80px;">检测方法<i class="fa fa-sort"></i></th>
-						<th>单位</th>
-						<th>标准值</th>
-						<th>检出限</th>
-						<th>定量限</th>
-						<th>设备</th>
-						<th style="width: 90px;">状态</th>
-						<th>结果</th>
-						<th>实测值</th>
-						<th st-sort="testRoom" style="width: 80px;">检测部门<i class="fa fa-sort"></i></th>
-						<th st-sort="testUser" style="width: 80px;">检测员<i class="fa fa-sort"></i></th>
-						<th st-sort="updatedAt">更新时间<i class="fa fa-sort"></i></th>
-						<th style="width: 120px">操作</th>
+						<th style="width: 100px">
+							<div st-sort="reportId">报告编号<i class="fa fa-sort"></i></div>
+							<adjust-line></adjust-line>
+						</th>
+						<th style="width: 100px">
+							<div st-sort="receiveSampleId">抽样单编号<i class="fa fa-sort"></i></div>
+							<adjust-line></adjust-line>
+						</th>
+						<th>
+							<div>名称</div>
+							<adjust-line></adjust-line>
+						</th>
+						<th style="width: 80px;">
+							<div st-sort="method">检测方法<i class="fa fa-sort"></i></div>
+						</th>
+						<th>
+							<div>单位</div>
+							<adjust-line></adjust-line>
+						</th>
+						<th>
+							<div>标准值</div>
+							<adjust-line></adjust-line>
+						</th>
+						<th>
+							<div>检出限</div>
+							<adjust-line></adjust-line>
+						</th>
+						<th>
+							<div>定量限</div>
+							<adjust-line></adjust-line>
+						</th>
+						<th>
+							<div>设备</div>
+							<adjust-line></adjust-line>
+						</th>
+						<th style="width: 90px;">
+							<div>状态</div>
+							<adjust-line></adjust-line>
+						</th>
+						<th>
+							<div>结果</div>
+							<adjust-line></adjust-line>
+						</th>
+						<th>
+							<div>实测值</div>
+							<adjust-line></adjust-line>
+						</th>
+						<th style="width: 80px;">
+							<div st-sort="testRoom">检测部门<i class="fa fa-sort"></i></div>
+							<adjust-line></adjust-line>
+						</th>
+						<th style="width: 80px;">
+							<div st-sort="testUser">检测员<i class="fa fa-sort"></i></div>
+							<adjust-line></adjust-line>
+						</th>
+						<th st-sort="updatedAt">
+							<div>更新时间<i class="fa fa-sort"></i></div>
+							<adjust-line></adjust-line>
+						</th>
+						<th style="width: 100px"><div>操作</div></th>
 					</tr>
 				</thead>
 				<tbody>

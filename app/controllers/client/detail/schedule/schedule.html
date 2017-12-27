@@ -59,10 +59,19 @@
 				<table class="pt-table" ng-if="vm.show[schedule.id] && (schedule.reports && schedule.reports.length > 0)">
 					<thead>
 						<tr>
-							<th>进展内容</th>
-							<th>备注</th>
-							<th>汇报时间</th>
-							<th style="width:140px">操作</th>
+							<th>
+								<div>进展内容</div>
+								<adjust-line></adjust-line>
+							</th>
+							<th>
+								<div>备注</div>
+								<adjust-line></adjust-line>
+							</th>
+							<th>
+								<div>汇报时间</div>
+								<adjust-line></adjust-line>
+							</th>
+							<th style="width:100px">操作</th>
 						</tr>
 					</thead>
 					<tbody>

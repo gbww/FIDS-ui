@@ -9,13 +9,31 @@
 	<table class="pt-table" st-table="vm.links" st-pipe="vm.getLinkList">
 		<thead st-search-watch="vm.searchObject">
 			<tr>
-				<th st-sort="linkmanName">联系人名称<i class="fa fa-sort"></i></th>
-				<th>位置</th>
-				<th>手机</th>
-				<th>邮箱</th>
-				<th st-sort="createdAt">创建时间<i class="fa fa-sort"></i></th>
-				<th>备注</th>
-				<th style="width:140px">操作</th>
+				<th>
+					<div st-sort="linkmanName">联系人名称<i class="fa fa-sort"></i></div>
+					<adjust-line></adjust-line>	
+				</th>
+				<th>
+					<div>位置</div>
+					<adjust-line></adjust-line>	
+				</th>
+				<th>
+					<div>手机</div>
+					<adjust-line></adjust-line>	
+				</th>
+				<th>
+					<div>邮箱</div>
+					<adjust-line></adjust-line>	
+				</th>
+				<th>
+					<div st-sort="createdAt">创建时间<i class="fa fa-sort"></i></div>
+					<adjust-line></adjust-line>	
+				</th>
+				<th>
+					<div>备注</div>
+					<adjust-line></adjust-line>	
+				</th>
+				<th style="width:100px">操作</th>
 			</tr>
 		</thead>
 		<tbody>

@@ -6,10 +6,11 @@
 	.modal-dialog {
 		margin-top: 100px;
 	}
-	.modal-header {
-		h4 {
-			margin: 0;
-		}
+	.modal-header, .modal-body, .modal-footer {
+		padding: 8px 10px;
+	}
+	.modal-header h4 {
+		margin: 0;
 	}
 	&.right {
 		.modal-dialog {
@@ -24,8 +25,8 @@
 				overflow: hidden;
 			}
 			.modal-header {
-				height: 50px;
-				padding: 8px 10px;
+				height: 40px;
+				padding: 4px 10px;
 				h3 {
 					height: 35px;
 					line-height: inherit;
@@ -37,17 +38,18 @@
 			}
 			.modal-body {
 				position: absolute;
-				top: 50px;
-				bottom: 60px;
+				top: 40px;
+				bottom: 40px;
 				width: 100%;
-				padding: 15px 15px 18px;
+				padding: 8px;
 				overflow-y: auto;
 			}
 			.modal-footer {
 				position: absolute;
-				height: 60px;
+				height: 40px;
 				width: 100%;
 				bottom: 0;
+				text-align: center;
 			}
 		}
 		&.fade .modal-dialog {

@@ -51,7 +51,23 @@ angular.module('com.app').controller('SampleAddDbCiCtrl', function ($scope, $uib
       size: 'md',
       backdrop: 'static',
       templateUrl: 'controllers/checkItem/list/add-checkitem/addCheckitem.html',
-      controller: 'DBAddCheckItemCtrl as vm'
+      controller: 'DBAddCheckItemCtrl as vm',
+      resolve: {
+        organizations: ['PrivilegeService', '$rootScope', '$q', function (PrivilegeService, $rootScope, $q) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getOrganizationList().then(function (response) {
+            $rootScope.loading = false;
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              $rootScope.loading = false;
+              deferred.reject();
+            }
+          });
+          return deferred.promise;
+        }]
+      }
     });
 
     modalInstance.result.then(function (res) {

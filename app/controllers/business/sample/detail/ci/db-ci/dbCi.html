@@ -9,24 +9,53 @@
 		</button>
 		<div class="pull-right">
 			<input class="input" placeholder="请输入检测项名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
-			<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+			<button class="btn btn-default-dark" ng-click="vm.search()">
+				<i class="fa fa-search"></i>
+				<span>查询</span>
+			</button>
 		</div>
 	</div>
 	<table class="pt-table" st-table="vm.checkItems" st-pipe="vm.getCheckItemList">
 		<thead st-search-watch="vm.searchObject">
 			<tr>
-				<th style="width: 80px;">
+				<th style="width: 24px;">
 					<input type="checkbox" ng-click="vm.checkAll()" ng-model="vm.allChecked">
 				</th>
-				<th>名称</th>
-				<th>检测方法</th>
-				<th>单位</th>
-				<th>标准值</th>
-				<th>检出限</th>
-				<th>定量限</th>
-				<th>设备</th>
-				<th>默认价格</th>
-				<th>检测部门</th>
+				<th>
+					<div>名称</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>检测方法</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>单位</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>标准值</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>检出限</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>定量限</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>设备</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>默认价格</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>检测部门</div>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -61,6 +90,6 @@
 	</table>
 </div>
 <div class="modal-footer">
-	<button class="btn btn-default-dark" ng-click="vm.ok()" ng-disabled="checkItemAddForm.$invalid">添加</button>
-	<button class="btn btn-default-light" ng-click="vm.cancel()">取消</button>
+	<button class="btn btn-2x btn-default-dark" ng-click="vm.ok()" ng-disabled="checkItemAddForm.$invalid">添加</button>
+	<button class="btn btn-2x btn-default-light" ng-click="vm.cancel()">取消</button>
 </div>

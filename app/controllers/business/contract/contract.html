@@ -42,24 +42,41 @@
 
         <div class="pull-right">
           <input class="input" placeholder="请输入样品名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
-          <button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+          <button class="btn btn-default-dark" ng-click="vm.search()">
+            <i class="fa fa-search"></i>
+            <span>查询</span>
+          </button>
         </div>
       </div>
 
       <table class="pt-table" st-table="vm.contracts" st-pipe="vm.getContractList">
         <thead st-search-watch="vm.searchObject">
           <tr>
-            <th>合同编号</th>
-            <th>样品名称</th>
-            <th st-sort="detectType">检验类别
-              <i class="fa fa-sort"></i>
+            <th>
+              <div>合同编号</div>
+              <adjust-line></adjust-line>
             </th>
-            <th>执行标准</th>
-            <th>状态</th>
-            <th st-sort="createdAt">登记时间
-              <i class="fa fa-sort"></i>
+            <th>
+              <div>样品名称</div>
+              <adjust-line></adjust-line>
             </th>
-            <th style="width:180px">操作</th>
+            <th>
+              <div st-sort="detectType">检验类别<i class="fa fa-sort"></i></div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>执行标准</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>状态</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div st-sort="createdAt">登记时间<i class="fa fa-sort"></i></div>
+              <adjust-line></adjust-line>
+            </th>
+            <th style="width:150px">操作</th>
           </tr>
         </thead>
         <tbody>

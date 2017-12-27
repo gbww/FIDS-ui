@@ -13,17 +13,32 @@
 			</button>
 			<div class="pull-right">
 				<input class="input" placeholder="请输入名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
-				<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+				<button class="btn btn-default-dark" ng-click="vm.search()">
+					<i class="fa fa-search"></i>
+					<span>查询</span>
+				</button>
 			</div>
 		</div>
 		<table class="pt-table" st-table="vm.templates" st-pipe="vm.getTemplateList">
 			<thead st-search-watch="vm.searchObject">
 				<tr>
-					<th>模板名称</th>
-					<th>类别</th>
-					<th>描述</th>
-					<th>上传时间</th>
-					<th style="width: 140px">操作</th>
+					<th>
+						<div>模板名称</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>类别</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>描述</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>上传时间</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th style="width: 100px">操作</th>
 				</tr>
 			</thead>
 			<tbody>

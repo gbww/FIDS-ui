@@ -9,19 +9,28 @@
   thead{
     tr{
       background-color: #fafafa;
-      border-bottom: 1px solid $table-border-color;
       outline: none;
       th{
+        position: relative;
         color: $thead-font-color;
-        padding: 6px 8px;
+        padding: 2px 5px;
         font-size: 14px;
-        cursor: pointer;
-        font-weight: inherit;
+        font-weight: 700;
         white-space: nowrap;
-        &[st-sort] {
-          overflow: visible;
-          text-overflow: initial;
+        border-bottom: 1px solid $table-border-color;
+        border-right: 1px solid $table-border-color;
+        min-width: 20px;
+        >div {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          word-break: break-all;
+          word-wrap: break-word;
+        }
+        [st-sort] {
+          cursor: pointer;
           .fa {
+            cursor: pointer;
             position: relative;
             padding-left: 3px;
             &:before {
@@ -51,7 +60,6 @@
     tr{
       outline: none;
       color: #FFFFFF;
-      border-bottom: 1px solid $table-border-color;
       &:nth-child(2n){
         background-color: #fbfcfd;
       }
@@ -65,12 +73,17 @@
         background-color: #b4ddff;
       }
       td{
-        font-size: 12px;
-        padding: 6px 8px;
+        font-size: 10px;
+        padding: 2px 5px;
         outline: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         word-break: break-all;
         word-wrap: break-word;
         color: $tbody-font-color;
+        border-bottom: 1px solid $table-border-color;
+        border-right: 1px solid $table-border-color;
         &.nowrap{
           white-space: nowrap;
           overflow: hidden;
@@ -79,7 +92,7 @@
         .fa, .icon{
           position: relative;
           font-size: 14px;
-          margin-right: 5px;
+          margin-right: 2px;
           cursor: pointer;
         }
         .icon {
@@ -111,6 +124,7 @@
       }
     }
     td.dropdown-col{
+      overflow: visible;
       .btn-group{
         border: 1px solid $border-color;
         border-radius: 4px;
@@ -134,10 +148,11 @@
       }
       .dropdown-menu{
         min-width: 93px;
+        padding: 0;
         li{
           a{
             color: inherit;
-            padding: 3px 8px;
+            padding: 2px 8px;
           }
           a:hover{
             color: $blue-color;
@@ -196,6 +211,7 @@
       padding: 3px 8px;
       border-right: 1px solid $table-border-color;
       border-bottom: 1px solid $table-border-color;
+      overflow: visible;
     }
 
     td.item-title {
@@ -268,6 +284,7 @@
         padding: 8px;
         border-bottom: 1px solid $table-border-color;
         border-right: 1px solid $table-border-color;
+        overflow: visible;
         .fa{
           font-size: 14px;
           margin-right: 5px;
@@ -416,13 +433,10 @@
       .pt-table{
         min-width: 80%;
         width: 90%;
-        margin: 20px auto 0;
-        border: none;
+        margin: 20px auto 5px;
         thead{
           tr{
             background-color: transparent;
-            border-top: 1px dashed $table-border-color;
-            border-bottom: 1px dashed $table-border-color;
             th{
               cursor: default;
               padding: 5px 10px;
@@ -434,7 +448,6 @@
         }
         tbody{
           tr{
-            border-bottom: 1px dashed $table-border-color;
             &:last-child{
               border: none;
             }
