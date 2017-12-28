@@ -27,7 +27,7 @@ angular.module('com.app').controller('ReportPreviewCtrl', function ($uibModalIns
       var modalInstance = $uibModal.open({
         animation: true,
         windowClass: 'pdf-preview',
-        templateUrl: 'controllers/report/preview/pdf/pdf.html',
+        templateUrl: 'controllers/business/report/preview/pdf/pdf.html',
         controller: 'PDFPreviewCtrl as vm',
         resolve: {
           sampleId: function () {return vm.sampleId;},

@@ -130,7 +130,7 @@ angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $ui
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/report/export/export.html',
+      templateUrl: 'controllers/business/report/export/export.html',
       controller: 'ReportExportCtrl as vm',
       resolve: {
         sampleId: function () {
@@ -187,7 +187,7 @@ angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $ui
     var modalInstance = $uibModal.open({
       animation: true,
       size: 'md',
-      templateUrl: 'controllers/report/preview/preview.html',
+      templateUrl: 'controllers/business/report/preview/preview.html',
       controller: 'ReportPreviewCtrl as vm',
       resolve: {
         sampleId: function () {
