@@ -42,6 +42,7 @@
     }
   }
   .tab-content{
+    position: relative;
     flex: 1 0 auto;
     -webkit-flex: 1 0 auto;
     -moz-flex: 1 0 auto;
@@ -50,13 +51,14 @@
     padding: 10px;
     border-radius: 5px;
     @include box-shadow(3px 4px 8px rgba(0, 0, 0, 0.1), -3px -1px 8px rgba(0, 0, 0, 0.1));
+		@include flex(flex, column);
     &:after{
       content: '';
       clear: both;
       display: block;
     }
-    >div, >form{
+    // >div, >form{
       //@include animation(slideInBottom 0.6s ease-in-out);
-    }
+    // }
   }
 }

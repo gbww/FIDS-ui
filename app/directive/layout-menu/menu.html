@@ -29,25 +29,13 @@
           <li ng-class="{'active': vm.isBusinessSampleActive}" role-auth="SAMPLE-SELECT-1">
             <a ui-sref="app.business.sample"><span>业务受理</span></a>
           </li>
+          <li ng-class="{'active': vm.isBusinessReportActive}" role-auth="SAMPLE-SELECT-1">
+            <a ui-sref="app.business.report"><span>报告管理</span></a>
+          </li>
+          <li ng-class="{'active': vm.isBusinessItemToCheckActive}" role-auth="SAMPLE-SELECTITEM-1">
+            <a ui-sref="app.business.itemToCheck"><span>检测结果录入</span></a>
+          </li>
         </ul>
-      </div>
-
-      <div class="panel" role-auth="SAMPLE-SELECTITEM-1">
-        <div ng-class="{'active': vm.isItemToCheckActive}">
-          <a title="检测结果录入" ng-click="vm.open('itemToCheck')">
-            <i class="icon icon-result"></i>
-            <span>检测结果录入</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="panel" role-auth="SAMPLE-SELECT-1">
-        <div ng-class="{'active': vm.isReportActive}">
-          <a title="报告管理" ng-click="vm.open('report')">
-            <i class="icon icon-report"></i>
-            <span>报告管理</span>
-          </a>
-        </div>
       </div>
 
       <div class="panel" role-auth="">

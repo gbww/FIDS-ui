@@ -1,31 +1,8 @@
 'use strict';
 
-angular.module('com.app').controller('ReportDetailCiCtrl', function ($rootScope, $scope, $uibModal, $q, api, CheckItemService, SampleService, toastr, dialog) {
+angular.module('com.app').controller('ReportDetailCiCtrl', function ($rootScope, $stateParams, $scope, $uibModal, $q, api, CheckItemService, SampleService, toastr, dialog) {
   var vm = this;
   vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1;
-
-  var setting = {
-    callback: {
-      onExpand: expandNode,
-      onClick: clickNode
-    }
-  }
-
-
-  vm.catalogLoading = true;
-  $scope.$emit('refreshReport');
-  $scope.$on('reportInfo', function (event, sample) {
-    vm.sample = sample;
-    CheckItemService.getChildCatalog('-1').then(function (response) {
-      vm.catalogLoading = false;
-      var data = response.data.entity;
-      angular.forEach(data, function (item) {
-        angular.merge(item, {name: item.productName, isParent: item.isCatalog=='1'})
-      })
-      vm.tree = $.fn.zTree.init($("#inspectTree"), setting, data);
-      vm.getSampleCi();
-    })
-  })
 
   vm.getSampleCi = function () {
     vm.ciLoading = true;
@@ -38,6 +15,39 @@ angular.module('com.app').controller('ReportDetailCiCtrl', function ($rootScope,
       }
     })
   }
+
+  vm.getSampleInfo = function () {
+    vm.ciLoading = true;
+    SampleService.getSampleInfo($stateParams.id).then(function (response) {
+      if (response.data.success) {
+        vm.sample = response.data.entity;
+        vm.getSampleCi();
+      } else {
+        toastr.error(response.data.message);
+      }
+    }).catch(function (err) {
+      toastr.error(err.data);
+    });
+  };
+  vm.getSampleInfo();
+
+  var setting = {
+    callback: {
+      onExpand: expandNode,
+      onClick: clickNode
+    }
+  }
+
+
+  vm.catalogLoading = true;
+  CheckItemService.getChildCatalog('-1').then(function (response) {
+    vm.catalogLoading = false;
+    var data = response.data.entity;
+    angular.forEach(data, function (item) {
+      angular.merge(item, {name: item.productName, isParent: item.isCatalog=='1'})
+    })
+    vm.tree = $.fn.zTree.init($("#inspectTree"), setting, data);
+  });
 
   function expandNode (event, treeId, treeNode) {
     if (!treeNode.children) {

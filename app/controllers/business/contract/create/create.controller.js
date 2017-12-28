@@ -106,15 +106,20 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
       }),
       sampleList: sampleList
     };
+    var formData = new FormData();
+    formData.append('contractSample', JSON.stringify(contractData));
+    angular.forEach(vm.files, function (file) {
+      formData.append('files', file);
+    })
 
-    Upload.upload({
-  		url: '/api/v1/ahgz/contract',
-  		data: {
-        contractSample: JSON.stringify(contractData),
-        files: vm.files
-  		}
-  	}).then(function (response) {
-		// ContractService.createContract(contractData, vm.files).then(function (response) {
+    // Upload.upload({
+    //   url: '/api/v1/ahgz/contract',
+  	// 	data: {
+    //     contractSample: JSON.stringify(contractData),
+    //     files: vm.files
+  	// 	}
+  	// }).then(function (response) {
+		ContractService.createContract(formData).then(function (response) {
 			if (response.data.success) {
 				toastr.success('合同录入成功！');
 				$state.go('app.business.contract');

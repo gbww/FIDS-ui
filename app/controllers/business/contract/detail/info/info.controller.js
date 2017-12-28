@@ -1,12 +1,23 @@
 'use strict';
 
-angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state, $scope, toastr, ContractService) {
+angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state, $stateParams, $scope, toastr, ContractService) {
   var vm = this;
 
-  $scope.$emit('refreshContract');
-  $scope.$on('contractInfo', function (event, contract) {
-  	vm.contract = contract;
-  });
+  vm.getContractInfo = function () {
+    vm.loading = true;
+    ContractService.getContractInfo($stateParams.id).then(function (response) {
+      vm.loading = false;
+      if (response.data.success) {
+        vm.contract = response.data.entity;
+      } else {
+        toastr.error(response.data.message);
+      }
+    }).catch(function (err) {
+      vm.loading = false;
+      toastr.error(err.data);
+    });
+  }
+  vm.getContractInfo();
 
   vm.storageConditionArr = ['常温', '冷冻', '冷藏'];
   vm.detectTypeArr = ['委托检验', '发证检验', '其他'];

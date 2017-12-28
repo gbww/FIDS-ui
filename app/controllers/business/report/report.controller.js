@@ -2,9 +2,8 @@
 
 angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $uibModal, $timeout, api, toastr, SampleService) {
   var vm = this;
-
-  var reportBC = api.breadCrumbMap.report;
-  vm.breadCrumbArr = [reportBC.root];
+  var businessBC = api.breadCrumbMap.business;
+  vm.breadCrumbArr = [businessBC.root, businessBC.report.root];
 
   vm.searchObject = {}
 

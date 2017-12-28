@@ -7,10 +7,6 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
     $("#accordion").children('.panel').children('ul').collapse('hide');
     if (module == 'dashboard') {
       $state.go('app.dashboard');
-    } else if (module == 'itemToCheck') {
-      $state.go('app.itemToCheck');
-    } else if (module == 'report') {
-      $state.go('app.report');
     } else if (module == 'client') {
       $state.go('app.client');
     }
@@ -19,8 +15,6 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
   vm.highLightMenu = function(){
   	vm.isDashboardActive = $state.includes('app.dashboard');
     vm.isItemToCheckActive = $state.includes('app.itemToCheck');
-    vm.isReportActive = $state.includes('app.report');
-    vm.isClientActive = $state.includes('app.client');
 
     vm.isCheckItemActive = $state.includes('app.checkItem');
     vm.isCheckItemListActive = $state.includes('app.checkItem.list');
@@ -32,6 +26,8 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
     vm.isBusinessActive = $state.includes('app.business');
     vm.isBusinessContractActive = $state.includes('app.business.contract');
     vm.isBusinessSampleActive = $state.includes('app.business.sample');
+    vm.isBusinessReportActive = $state.includes('app.business.report');
+    vm.isBusinessItemToCheckActive = $state.includes('app.business.itemToCheck');
 
     vm.isPrivilegeActive = $state.includes('app.privilege');
     vm.isPrivilegeCurrentUserActive = $state.includes('app.privilege.currentUser');

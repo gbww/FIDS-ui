@@ -1,30 +1,9 @@
 'use strict';
 
-angular.module('com.app').controller('SampleDetailCtrl', function ($rootScope, $scope, $state, $stateParams, api, toastr, SampleService) {
+angular.module('com.app').controller('SampleDetailCtrl', function ($scope, $state, api) {
   var vm = this;
-
-
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root, businessBC.sample.detail];
-
-  $rootScope.loading = true;
-  vm.getSampleInfo = function () {
-    var sampleId = $stateParams.id;
-    SampleService.getSampleInfo(sampleId).then(function (response) {
-      $rootScope.loading = false;
-      if (response.data.success) {
-        $scope.$broadcast('sampleInfo', response.data.entity);
-      } else {
-        toastr.error(response.data.message);
-      }
-    }).catch(function (err) {
-      $rootScope.loading = false;
-      toastr.error(err.data);
-    });
-  }
-
-  $scope.$on('refreshSample', vm.getSampleInfo);
-
 
   vm.goTab = function (tab) {
     if (tab == 'info') {

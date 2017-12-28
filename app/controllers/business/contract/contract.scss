@@ -1,9 +1,3 @@
-.business-contract-detail-list {
-	.tab-content {
-		@include flex(flex, column);
-	}
-}
-
 .business-contract-create-list, .business-contract-info-list {
 	.input {
 		min-width: 100%;
@@ -28,7 +22,7 @@
 	.file-item {
 		vertical-align: top;
 		display: inline-block;
-		padding: 6px 18px;
+		padding: 2px 8px;
 		margin: 0px 5px 3px 0;
 		background-color: #f8f8f8; 
 		border-radius: 3px;

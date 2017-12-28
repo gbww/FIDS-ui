@@ -2,9 +2,9 @@
 
 angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 
-	$stateProvider.state('app.itemToCheck', {
+	$stateProvider.state('app.business.itemToCheck', {
 		url: '/result-record',
-		templateUrl: 'controllers/ci-result-record/ciResultRecord.html',
+		templateUrl: 'controllers/business/ci-result-record/ciResultRecord.html',
 		controller: 'CiResultRecordCtrl as vm'
 	});
 

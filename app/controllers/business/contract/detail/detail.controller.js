@@ -1,29 +1,10 @@
 'use strict';
 
-angular.module('com.app').controller('ContractDetailCtrl', function ($rootScope, $scope, $state, $stateParams, api, toastr, ContractService) {
+angular.module('com.app').controller('ContractDetailCtrl', function ($scope, $state, api) {
   var vm = this;
 
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.contract.root, businessBC.contract.detail];
-
-  vm.getContractInfo = function () {
-    $rootScope.loading = true;
-    var contractId = $stateParams.id;
-    ContractService.getContractInfo(contractId).then(function (response) {
-      $rootScope.loading = false;
-      if (response.data.success) {
-        $scope.$broadcast('contractInfo', response.data.entity);
-      } else {
-        toastr.error(response.data.message);
-      }
-    }).catch(function (err) {
-      $rootScope.loading = false;
-      toastr.error(err.data);
-    });
-  }
-
-  $scope.$on('refreshContract', vm.getContractInfo);
-
 
   vm.goTab = function (tab) {
     if (tab == 'info') {

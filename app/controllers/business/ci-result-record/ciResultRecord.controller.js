@@ -2,8 +2,8 @@
 
 angular.module('com.app').controller('CiResultRecordCtrl', function ($uibModal, api, SampleService, toastr) {
   var vm = this;
-
-  vm.breadCrumbArr = [api.breadCrumbMap.itemToCheck.root];
+  var businessBC = api.breadCrumbMap.business;
+  vm.breadCrumbArr = [businessBC.root, businessBC.itemToCheck.root];
 
   vm.query = {
     reportId: null,
@@ -119,7 +119,7 @@ angular.module('com.app').controller('CiResultRecordCtrl', function ($uibModal, 
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/ci-result-record/edit/edit.html',
+      templateUrl: 'controllers/business/ci-result-record/edit/edit.html',
       controller: 'RecordCiResultCtrl as vm',
       resolve: {
         checkItems: function () {return [item];}
@@ -152,7 +152,7 @@ angular.module('com.app').controller('CiResultRecordCtrl', function ($uibModal, 
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/ci-result-record/edit/edit.html',
+      templateUrl: 'controllers/business/ci-result-record/edit/edit.html',
       controller: 'RecordCiResultCtrl as vm',
       resolve: {
         checkItems: function () {return angular.copy(vm.selectedItems);}

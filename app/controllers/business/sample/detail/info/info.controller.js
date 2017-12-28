@@ -1,13 +1,36 @@
 'use strict';
 
-angular.module('com.app').controller('SampleDetailInfoCtrl', function ($state, $scope, $uibModal, toastr, SampleService, users) {
+angular.module('com.app').controller('SampleDetailInfoCtrl', function ($state, $stateParams, $scope, $uibModal, toastr, SampleService, PrivilegeService) {
   var vm = this;
-  vm.users = users;
 
-  $scope.$emit('refreshSample');
-  $scope.$on('sampleInfo', function (event, sample) {
-  	vm.sample = sample;
-  });
+  vm.getSampleInfo = function () {
+    vm.loading = true;
+    SampleService.getSampleInfo($stateParams.id).then(function (response) {
+      vm.loading = false;
+      if (response.data.success) {
+        vm.sample = response.data.entity;
+      } else {
+        toastr.error(response.data.message);
+      }
+    }).then(function () {
+      return PrivilegeService.getUserList();
+    }).then(function (response) {
+      if (response.data.success) {
+        var res = [];
+        angular.forEach(response.data.entity.list, function (user) {
+          res.push(user.name);
+        });
+        vm.users = res;
+      } else {
+        toastr.error(response.data.message);
+      }
+    }).catch(function (err) {
+      vm.loading = false;
+      toastr.error(err.data);
+    });
+  };
+  vm.getSampleInfo();
+
 
   vm.checkTypeArr = ['监督检验', '委托检验', '发证检验', '认证检验', '省级抽检', '风险监测'];
   vm.sampleLinkArr = ['流通环节', '餐饮环节', '生产环节'];

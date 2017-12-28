@@ -3,7 +3,7 @@ angular.module('com.app').directive('appLayout', function appLayout() {
     restrict: 'EA',
     replace: true,
     scope: {},
-    template: '<div class="container"><div ui-view></div></div>',
+    template: '<div class="container" ui-view></div>',
     controller: 'AppLayoutController as vm',
     link: function(scope, element, attrs){
     	$(element).siblings(".overlay").show()

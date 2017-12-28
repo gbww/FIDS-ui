@@ -30,14 +30,15 @@ angular.module('com.app').factory('ContractService', function ($http) {
 			return $http.get('/api/v1/ahgz/contract/check/' + id);
 		},
 
-		createContract: function (contract, files) {
+		// 含有文件，使用multipart/form-data，但是手动设置会报错，使用undefined可以自动填充当前的boundary
+		createContract: function (data) {
 			return $http({
 				url: '/api/v1/ahgz/contract',
 				method: 'POST',
-				data: {
-					contractSample: contract,
-					files: files
-				}
+				headers: {
+					'Content-Type': undefined
+				},
+				data: data
 			})
 		},
 

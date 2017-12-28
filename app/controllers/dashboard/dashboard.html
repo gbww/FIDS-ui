@@ -1,81 +1,79 @@
-<div class="dashboard-list">
-	<div>
-	  <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
-		<div class="pt-2">
-			<div class="clearfix">
-				<div class="col-sm-6 col-md-6">
-					<div class="box">
-						<p class="text-center">待评审项目</p>
-						<div class="table-wrapper">
-							<ul class="statusBar clearfix">
-								<li ng-class="{'active': vm.ctimePeriod==='1d'}">
-									<a ng-click="vm.changeTimePeriod('contract', '1d')">
-										<span>1天</span>
-									</a>
-								</li>
-								<li ng-class="{'active': vm.ctimePeriod==='1w'}">
-									<a ng-click="vm.changeTimePeriod('contract', '1w')">
-										<span>1周</span>
-									</a>
-								</li>
-								<li ng-class="{'active': vm.ctimePeriod==='1M'}">
-									<a ng-click="vm.changeTimePeriod('contract', '1M')">
-										<span>1个月</span>
-									</a>
-								</li>
-								<li ng-class="{'active': vm.ctimePeriod==='3M'}">
-									<a ng-click="vm.changeTimePeriod('contract', '3M')">
-										<span>3个月</span>
-									</a>
-								</li>
-								<li ng-class="{'active': vm.ctimePeriod==='6M'}">
-									<a ng-click="vm.changeTimePeriod('contract', '6M')">
-										<span>6个月</span>
-									</a>
-								</li>
-							</ul>
-							<div id="contract-chart"></div>	
-						</div>
-					</div>
-				</div>
+<div class="inner-container dashboard-list">
+  <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+  <div class="pt-2">
+    <div class="clearfix">
+      <div class="col-sm-6 col-md-6">
+        <div class="box">
+          <p class="text-center">待评审项目</p>
+          <div class="table-wrapper">
+            <ul class="statusBar clearfix">
+              <li ng-class="{'active': vm.ctimePeriod==='1d'}">
+                <a ng-click="vm.changeTimePeriod('contract', '1d')">
+                  <span>1天</span>
+                </a>
+              </li>
+              <li ng-class="{'active': vm.ctimePeriod==='1w'}">
+                <a ng-click="vm.changeTimePeriod('contract', '1w')">
+                  <span>1周</span>
+                </a>
+              </li>
+              <li ng-class="{'active': vm.ctimePeriod==='1M'}">
+                <a ng-click="vm.changeTimePeriod('contract', '1M')">
+                  <span>1个月</span>
+                </a>
+              </li>
+              <li ng-class="{'active': vm.ctimePeriod==='3M'}">
+                <a ng-click="vm.changeTimePeriod('contract', '3M')">
+                  <span>3个月</span>
+                </a>
+              </li>
+              <li ng-class="{'active': vm.ctimePeriod==='6M'}">
+                <a ng-click="vm.changeTimePeriod('contract', '6M')">
+                  <span>6个月</span>
+                </a>
+              </li>
+            </ul>
+            <div id="contract-chart"></div>
+          </div>
+        </div>
+      </div>
 
-				<div class="col-sm-6 com-md-6">
-					<div class="box">
-						<p class="text-center">部门检测样品</p>
-						<div class="table-wrapper">
-							<ul class="statusBar clearfix">
-								<li ng-class="{'active': vm.citimePeriod==='1d'}">
-									<a ng-click="vm.changeTimePeriod('checkitem', '1d')">
-										<span>1天</span>
-									</a>
-								</li>
-								<li ng-class="{'active': vm.citimePeriod==='1w'}">
-									<a ng-click="vm.changeTimePeriod('checkitem', '1w')">
-										<span>1周</span>
-									</a>
-								</li>
-								<li ng-class="{'active': vm.citimePeriod==='1M'}">
-									<a ng-click="vm.changeTimePeriod('checkitem', '1M')">
-										<span>1个月</span>
-									</a>
-								</li>
-								<li ng-class="{'active': vm.citimePeriod==='3M'}">
-									<a ng-click="vm.changeTimePeriod('checkitem', '3M')">
-										<span>3个月</span>
-									</a>
-								</li>
-								<li ng-class="{'active': vm.citimePeriod==='6M'}">
-									<a ng-click="vm.changeTimePeriod('checkitem', '6M')">
-										<span>6个月</span>
-									</a>
-								</li>
-							</ul>
-							<div class="no-data-tips" ng-if="!vm.allCiXData || vm.allCiXData.length == 0">暂无数据</div>
-							<div id="checkitem-chart"></div>	
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+      <div class="col-sm-6 com-md-6">
+        <div class="box">
+          <p class="text-center">部门检测样品</p>
+          <div class="table-wrapper">
+            <ul class="statusBar clearfix">
+              <li ng-class="{'active': vm.citimePeriod==='1d'}">
+                <a ng-click="vm.changeTimePeriod('checkitem', '1d')">
+                  <span>1天</span>
+                </a>
+              </li>
+              <li ng-class="{'active': vm.citimePeriod==='1w'}">
+                <a ng-click="vm.changeTimePeriod('checkitem', '1w')">
+                  <span>1周</span>
+                </a>
+              </li>
+              <li ng-class="{'active': vm.citimePeriod==='1M'}">
+                <a ng-click="vm.changeTimePeriod('checkitem', '1M')">
+                  <span>1个月</span>
+                </a>
+              </li>
+              <li ng-class="{'active': vm.citimePeriod==='3M'}">
+                <a ng-click="vm.changeTimePeriod('checkitem', '3M')">
+                  <span>3个月</span>
+                </a>
+              </li>
+              <li ng-class="{'active': vm.citimePeriod==='6M'}">
+                <a ng-click="vm.changeTimePeriod('checkitem', '6M')">
+                  <span>6个月</span>
+                </a>
+              </li>
+            </ul>
+            <div class="no-data-tips" ng-if="!vm.allCiXData || vm.allCiXData.length == 0">暂无数据</div>
+            <div id="checkitem-chart"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

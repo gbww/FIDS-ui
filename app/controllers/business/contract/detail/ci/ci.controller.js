@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ContractDetailCiCtrl', function ($rootScope, $scope, $uibModal, $q, api, CheckItemService, ContractService, toastr, dialog) {
+angular.module('com.app').controller('ContractDetailCiCtrl', function ($rootScope, $scope, $stateParams, $uibModal, $q, api, CheckItemService, ContractService, toastr, dialog) {
   var vm = this;
   vm.hasAddItemAuth = api.permissionArr.indexOf('CONTRACT-UPDATE-1') != -1;
 
@@ -11,26 +11,39 @@ angular.module('com.app').controller('ContractDetailCiCtrl', function ($rootScop
     }
   }
 
-
   vm.catalogLoading = true;
   $scope.$emit('refreshContract');
-  $scope.$on('contractInfo', function (event, contract) {
-    vm.contract = contract;
-    CheckItemService.getChildCatalog('-1').then(function (response) {
-      vm.catalogLoading = false;
-      var data = response.data.entity;
-      angular.forEach(data, function (item) {
-        angular.merge(item, {name: item.productName, isParent: item.isCatalog=='1'})
-      })
-      vm.tree = $.fn.zTree.init($("#inspectTree"), setting, data);
 
-      var checkItemArr = contract.detectProject ? contract.detectProject.split(',') : [];
-      if (checkItemArr.length > 0) {
-        vm.ciLoading = true;
+  vm.getContractInfo = function () {
+    vm.ciLoading = true;
+    ContractService.getContractInfo($stateParams.id).then(function (response) {
+      vm.ciLoading = false;
+      if (response.data.success) {
+        vm.contract = response.data.entity;
+
+        var checkItemArr = vm.contract.detectProject ? vm.contract.detectProject.split(',') : [];
+        if (checkItemArr.length > 0) {
+          vm.ciLoading = true;
+        }
+        vm.getContractCi(checkItemArr);
+      } else {
+        toastr.error(response.data.message);
       }
-      vm.getContractCi(checkItemArr);
-    })
-  })
+    }).catch(function (err) {
+      vm.ciLoading = false;
+      toastr.error(err.data);
+    });
+  }
+  vm.getContractInfo();
+
+  CheckItemService.getChildCatalog('-1').then(function (response) {
+    vm.catalogLoading = false;
+    var data = response.data.entity;
+    angular.forEach(data, function (item) {
+      angular.merge(item, {name: item.productName, isParent: item.isCatalog=='1'})
+    });
+    vm.tree = $.fn.zTree.init($("#inspectTree"), setting, data);
+  });
 
   vm.getContractCi = function (arr) {
     var num = 0;
