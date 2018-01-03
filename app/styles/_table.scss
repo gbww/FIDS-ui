@@ -1,6 +1,4 @@
 .pt-table{
-  font-size: 14px;
-  font-weight: 400;
   width: 100%;
   cursor: inherit;
   table-layout: fixed;
@@ -14,7 +12,6 @@
         position: relative;
         color: $thead-font-color;
         padding: 2px 5px;
-        font-size: 14px;
         font-weight: 700;
         white-space: nowrap;
         border-bottom: 1px solid $table-border-color;
@@ -73,7 +70,6 @@
         background-color: #b4ddff;
       }
       td{
-        font-size: 10px;
         padding: 2px 5px;
         outline: none;
         white-space: nowrap;

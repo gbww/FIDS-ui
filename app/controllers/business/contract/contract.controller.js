@@ -201,7 +201,7 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
   }
 
   vm.delete = function (contract) {
-    var result = dialog.confirm('确认删除合同 ' + contract.protocolId + ' ?');
+    var result = dialog.confirm('确认删除合同 ' + contract.id + ' ?');
     result.then(function (res) {
       if (res) {
         ContractService.deleteContract(contract.id).then(function (response) {

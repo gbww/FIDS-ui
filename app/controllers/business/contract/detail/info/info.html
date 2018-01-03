@@ -1,284 +1,592 @@
 <div class="loading" ng-if="vm.loading"><i></i></div>
-<div class="contract-info-list" ng-if="!vm.loading">
-	<form name="form" novalidate>
-		<table class="form-table">
+<div class="business-contract-info-list" ng-if="!vm.loading">
+  <form name="form" novalidate>
+    <table class="form-table">
 			<tr>
 				<td class="item-title">
-					<span class="item-required">合同编号</span>
+          <span class="item-required">合同编号</span>
 				</td>
 				<td>
-					<input class="input" name="id" ng-model="vm.contract.id" disabled>
+					<input class="input" ng-model="vm.contract.id" disabled>
 				</td>
 				<td class="item-title">
-					<span class="item-required">样品名称</span>
-				</td>
-				<td>
-					<input class="input" name="sample_name" ng-model="vm.contract.sampleName" required>
-					<div ng-if="form.sample_name.$dirty || vm.submitted" ng-messages="form.sample_name.$error">
-						<label class="error-messages" ng-message="required"><i></i>不能为空</label>
-					</div>
-				</td>
+          <span class="item-required">检验类别</span>
+        </td>
+        <td>
+          <div custom-select name="detect_type" avail-arr="vm.detectTypeArr" model="vm.contract" key="detectType"></div>
+          <div ng-if="form.detect_type.$dirty || vm.submitted" ng-messages="form.detect_type.$error">
+            <label class="error-messages" ng-message="required">
+              <i></i>不能为空</label>
+          </div>
+        </td>
 			</tr>
-			<tr>
-				<td class="item-title">
-					<span class="item-required">检验类别</span>
+      <tr>
+        <td class="item-title">
+          <span>检测目的</span>
+        </td>
+        <td>
+          <input class="input" name="detect_purpose" ng-model="vm.contract.detectPurpose">
 				</td>
-				<td>
-					<div custom-select name="detect_type" avail-arr="vm.detectTypeArr" model="vm.contract" key="detectType"></div>
-					<div ng-if="form.detect_type.$dirty || vm.submitted" ng-messages="form.detect_type.$error">
-						<label class="error-messages" ng-message="required"><i></i>不能为空</label>
-					</div>
-				</td>
-				<td class="item-title">
-					<span>检测目的</span>
-				</td>
-				<td>
-					<input class="input" name="detect_purpose" ng-model="vm.contract.detectPurpose">
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>检测依据</span>
-				</td>
-				<td>
-					<input class="input" name="detect_by" ng-model="vm.contract.detectBy">
-				</td>
-				<td class="item-title">
-					<span class="item-required">执行标准</span>
-				</td>
-				<td>
-					<div custom-select name="execute_standard" avail-arr="vm.executeStandardArr" model="vm.contract" key="executeStandard"></div>
-					<div ng-if="form.execute_standard.$dirty || vm.submitted" ng-messages="form.execute_standard.$error">
-						<label class="error-messages" ng-message="required"><i></i>不能为空</label>
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>加工工艺</span>
-				</td>
-				<td>
-					<input class="input" name="process_technology" ng-model="vm.contract.processTechnology">
-				</td>
-				<td class="item-title">
-					<span>样品性状</span>
-				</td>
-				<td>
-					<input class="input" name="sample_traits" ng-model="vm.contract.sampleTraits">
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>质量等级</span>
-				</td>
-				<td>
-					<input class="input" name="quality_level" ng-model="vm.contract.qualityLevel">
-				</td>
-				<td class="item-title">
-					<span>规格数量</span>
-				</td>
-				<td>
-					<input class="input" name="specification_quantity" ng-model="vm.contract.specificationQuantity">
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>生产日期或批号</span>
-				</td>
-				<td>
-					<input class="input date" ng-model="vm.contract.productDate" datepicker>
-				</td>
-				<td class="item-title">
-					<span>保存条件</span>
-				</td>
-				<td>
-					<div custom-select avail-arr="vm.storageConditionArr" model="vm.contract" key="storageCondition"></div>
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>保存期</span>
-				</td>
-				<td>
-					<input class="input" name="storage_time" ng-model="vm.contract.storageTime">
-				</td>
-				<td class="item-title">
-					<span>样品处理要求</span>
-				</td>
-				<td>
-					<input class="input" name="process_demand" ng-model="vm.contract.processDemand">
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>是否同意使用非标准方法</span>
-				</td>
-				<td>
-					<input type="radio" id="standard1" ng-model="vm.contract.isUseStandard" value="1"><label for="standard1">是</label>&emsp;&emsp;
-					<input type="radio" id="standard0" ng-model="vm.contract.isUseStandard" value="0"><label for="standard0">否</label>
-				</td>
-				<td class="item-title">
+				<td class="item-title" ng-if="vm.type == 'government'">
 					<span>是否同意分包</span>
 				</td>
-				<td>
-					<input type="radio" id="sub1" ng-model="vm.contract.isSubcontracting" value="1"><label for="sub1">是</label>&emsp;&emsp;
-					<input type="radio" id="sub0" ng-model="vm.contract.isSubcontracting" value="0"><label for="sub0">否</label>
+				<td ng-if="vm.type == 'government'">
+					<input type="radio" id="sub1" ng-model="vm.contract.isSubcontracting" value="1">
+					<label for="sub1">是</label>&emsp;&emsp;
+					<input type="radio" id="sub0" ng-model="vm.contract.isSubcontracting" value="0">
+					<label for="sub0">否</label>
 				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>是否需要加急</span>
-				</td>
-				<td>
-					<input type="radio" id="expedited1" ng-model="vm.contract.isExpedited" value="1"><label for="expedited1">是</label>&emsp;&emsp;
-					<input type="radio" id="expedited0" ng-model="vm.contract.isExpedited" value="0"><label for="expedited0">否</label>
-				</td>
-				<td class="item-title">
-					<span>是否需要评价</span>
-				</td>
-				<td>
-					<input type="radio" id="evaluate1" ng-model="vm.contract.isEvaluation" value="1"><label for="evaluate1">是</label>&emsp;&emsp;
-					<input type="radio" id="evaluate0" ng-model="vm.contract.isEvaluation" value="0"><label for="evaluate0">否</label>
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>提供的其它有关资料</span>
-				</td>
-				<td colspan="3">
-					<textarea class="input" rows="2" name="other_data" ng-model="vm.contract.otherData"></textarea>
-				</td>
-			</tr>
-		</table>
+				<td class="item-title" ng-if="vm.type != 'government'"></td>
+				<td ng-if="vm.type != 'government'"></td>
+      </tr>
+      <tbody ng-if="vm.type != 'government'">
+        <tr>
+          <td class="item-title">
+            <span>是否同意分包</span>
+          </td>
+          <td>
+            <input type="radio" id="sub1" ng-model="vm.contract.isSubcontracting" value="1">
+            <label for="sub1">是</label>&emsp;&emsp;
+            <input type="radio" id="sub0" ng-model="vm.contract.isSubcontracting" value="0">
+            <label for="sub0">否</label>
+          </td>
+          <td class="item-title">
+            <span>是否同意使用非标准方法</span>
+          </td>
+          <td>
+            <input type="radio" id="standard1" ng-model="vm.contract.isUseStandard" value="1">
+            <label for="standard1">是</label>&emsp;&emsp;
+            <input type="radio" id="standard0" ng-model="vm.contract.isUseStandard" value="0">
+            <label for="standard0">否</label>
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>是否需要评价</span>
+          </td>
+          <td>
+            <input type="radio" id="evaluate1" ng-model="vm.contract.isEvaluation" value="1">
+            <label for="evaluate1">是</label>&emsp;&emsp;
+            <input type="radio" id="evaluate0" ng-model="vm.contract.isEvaluation" value="0">
+            <label for="evaluate0">否</label>
+          </td>
+          <td class="item-title">
+            <span>是否需要加急</span>
+          </td>
+          <td>
+            <input type="radio" id="expedited1" ng-model="vm.contract.isExpedited" value="1">
+            <label for="expedited1">是</label>&emsp;&emsp;
+            <input type="radio" id="expedited0" ng-model="vm.contract.isExpedited" value="0">
+            <label for="expedited0">否</label>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-		<table class="form-table">
-			<tr>
-				<td class="item-title">
-					<span>生产单位</span>
-				</td>
-				<td>
-					<input class="input" name="product_unit" ng-model="vm.contract.productUnit">
-				</td>
-				<td class="item-title">
-					<span>送检单位</span>
-				</td>
-				<td>
-					<input class="input" name="inspection_unit" ng-model="vm.contract.inspectionUnit">
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>采样地点</span>
-				</td>
-				<td>
-					<input class="input" name="sampling_address" ng-model="vm.contract.samplingAddress">
-				</td>
-				<td class="item-title">
-					<span>送检单位地址</span>
-				</td>
-				<td>
-					<input class="input" name="inspection_unit_address" ng-model="vm.contract.inspectionUnitAddress">
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>邮编</span>
-				</td>
-				<td>
-					<input class="input" name="zip_code" ng-model="vm.contract.zipCode">
-				</td>
-				<td class="item-title">
-					<span>电话</span>
-				</td>
-				<td>
-					<input class="input" name="phone" ng-model="vm.contract.phone">
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>传真</span>
-				</td>
-				<td>
-					<input class="input" name="fax" ng-model="vm.contract.fax">
-				</td>
-				<td class="item-title">
-					<span>联系人</span>
-				</td>
-				<td>
-					<input class="input" name="contact_person" ng-model="vm.contract.contactPerson">
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>取报告方式</span>
-				</td>
-				<td>
-					<input type="radio" id="self" ng-model="vm.contract.reportMethod" value="self"><label for="self">自取</label>&emsp;&emsp;
-					<input type="radio" id="mail" ng-model="vm.contract.reportMethod" value="mail"><label for="mail">邮寄</label>
-				</td>
-				<td class="item-title">
-					<span>需检测报告份数</span>
-				</td>
-				<td>
-					<input type="number" class="input" name="report_count" ng-model="vm.contract.reportCount" ng-pattern="/^[0-9]*$/">
-					<div ng-if="form.report_count.$dirty || vm.submitted" ng-messages="form.report_count.$error">
-						<label class="error-messages" ng-message="pattern"><i></i>请输入整数</label>
+    <table class="pt-table border-table no-vertical-line" ng-if="vm.type === 'enterprise'">
+      <thead>
+        <tr>
+          <th style="width:40px">序号</th>
+          <th class="item-required">样品名称</th>
+          <th>规格数量</th>
+          <th class="item-required">执行标准</th>
+          <th>检测依据</th>
+          <th>加工工艺</th>
+          <th>质量等级</th>
+          <th>生产日期/批号</th>
+          <th>保存期</th>
+          <th>样品形状</th>
+          <th>保存条件</th>
+          <th>样品处理要求</th>
+          <th style="width: 60px">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="sample in vm.sampleArr track by $index">
+          <td>{{ $index }}</td>
+          <td>
+            <input class="input" ng-model="sample.name">
+          </td>
+          <td>
+            <input class="input" ng-model="sample.specificationQuantity">
+          </td>
+          <td>
+            <div custom-select avail-arr="vm.executeStandardArr" model="sample" key="executeStandard"></div>
+          </td>
+          <td>
+            <input class="input" ng-model="sample.detectBy">
+          </td>
+          <td>
+            <input class="input" ng-model="sample.processTechnology">
+          </td>
+          <td>
+            <input class="input" ng-model="sample.qualityLevel">
+          </td>
+          <td>
+            <input class="input date" ng-model="sample.productDate" datepicker>
+          </td>
+          <td>
+            <input class="input" ng-model="sample.storageTime">
+          </td>
+          <td>
+            <input class="input" ng-model="sample.sampleShape">
+          </td>
+          <td>
+            <div custom-select avail-arr="vm.storageConditionArr" model="sample" key="storageCondition"></div>
+          </td>
+          <td>
+            <input class="input" ng-model="sample.processDemand">
+          </td>
+          <td>
+            <i class="fa fa-minus-circle" ng-click="vm.deleteSample($index)"></i>
+            <i class="fa fa-plus-circle" ng-click="vm.addSample()" ng-if="$last"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table class="form-table">
+      <tbody ng-if="vm.type == 'enterprise'">
+        <tr>
+          <td class="item-title">
+            <span>生产单位</span>
+          </td>
+          <td>
+            <input class="input" name="product_unit" ng-model="vm.contract.productUnit">
+          </td>
+          <td class="item-title">
+            <span>送检单位</span>
+          </td>
+          <td>
+            <input class="input" name="inspection_unit" ng-model="vm.contract.inspectionUnit">
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>采样地点</span>
+          </td>
+          <td>
+            <input class="input" name="sampling_address" ng-model="vm.contract.samplingAddress">
+          </td>
+          <td class="item-title">
+            <span>送检单位地址</span>
+          </td>
+          <td>
+            <input class="input" name="inspection_unit_address" ng-model="vm.contract.inspectionUnitAddress">
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>邮编</span>
+          </td>
+          <td>
+            <input class="input" name="zip_code" ng-model="vm.contract.zipCode">
+          </td>
+          <td class="item-title">
+            <span>电话</span>
+          </td>
+          <td>
+            <input class="input" name="phone" ng-model="vm.contract.phone">
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>传真</span>
+          </td>
+          <td>
+            <input class="input" name="fax" ng-model="vm.contract.fax">
+          </td>
+          <td class="item-title">
+            <span>联系人</span>
+          </td>
+          <td>
+            <input class="input" name="contact_person" ng-model="vm.contract.contactPerson">
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>取报告方式</span>
+          </td>
+          <td>
+            <input type="radio" id="self" ng-model="vm.contract.reportMethod" value="self">
+            <label for="self">自取</label>&emsp;&emsp;
+            <input type="radio" id="mail" ng-model="vm.contract.reportMethod" value="mail">
+            <label for="mail">邮寄</label>
+          </td>
+          <td class="item-title">
+            <span>检测报告份数</span>
+          </td>
+          <td class="report-count">
+            <!-- <input type="number" class="input" name="report_count" ng-model="vm.contract.reportCount" ng-pattern="/^[0-9]*$/">
+						<div ng-if="form.report_count.$dirty || vm.submitted" ng-messages="form.report_count.$error">
+							<label class="error-messages" ng-message="pattern">
+								<i></i>请输入整数</label>
+						</div> -->
+            <div class="col-sm-6 col-md-6">
+              <span>合格</span>&emsp;
+              <input type="number" class="input" ng-model="vm.passReportCount">
+            </div>
+            <div class="col-sm-6 col-md-6 text-right">
+              <span>不合格</span>&emsp;
+              <input type="number" class="input" ng-model="vm.unpassReportCount">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>受理人</span>
+          </td>
+          <td>
+            <input class="input" name="acceptor" ng-model="vm.contract.acceptor">
+          </td>
+          <td class="item-title">
+            <span>受理日期</span>
+          </td>
+          <td>
+            <input class="input date" ng-model="vm.contract.acceptanceDate" datepicker>
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>送检日期</span>
+          </td>
+          <td>
+            <input class="input date" ng-model="vm.contract.inspectionDate" datepicker>
+          </td>
+          <td class="item-title">
+            <span>检测费用</span>
+          </td>
+          <td>
+            <input class="input" name="cost" ng-model="vm.contract.cost" ng-pattern="/^\d+(\.\d)?\d*$/">
+            <div ng-if="form.cost.$dirty || vm.submitted" ng-messages="form.cost.$error">
+              <label class="error-messages" ng-message="pattern">
+                <i></i>请输入正确的数字</label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody ng-if="vm.type == 'government'">
+        <tr>
+          <td class="item-title">
+            <span>委托单位名称</span>
+          </td>
+          <td>
+            <input class="input" name="entrustment" ng-model="vm.contract.entrustment">
+          </td>
+          <td class="item-title">
+            <span>委托单位地址</span>
+          </td>
+          <td>
+            <input class="input" name="entrustment_address" ng-model="vm.contract.entrustmentAddress">
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>流水号</span>
+          </td>
+          <td>
+            <input class="input" name="serial_number" ng-model="vm.contract.serialNumber">
+          </td>
+          <td class="item-title">
+            <span>项目负责人</span>
+          </td>
+          <td>
+            <input class="input" name="project_leader" ng-model="vm.contract.projectLeader">
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>联系人</span>
+          </td>
+          <td>
+            <input class="input" name="contact_person" ng-model="vm.contract.contactPerson">
+          </td>
+          <td class="item-title">
+            <span>电话</span>
+          </td>
+          <td>
+            <input class="input" name="phone" ng-model="vm.contract.phone">
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>项目名称</span>
+          </td>
+          <td>
+            <input class="input" name="project_name" ng-model="vm.contract.projectName">
+          </td>
+          <td class="item-title">
+            <span>任务类别</span>
+          </td>
+          <td>
+            <div custom-select avail-arr="vm.taskCategoryArr" model="vm.contract" key="taskCategory"></div>
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>样品类型</span>
+          </td>
+          <td>
+            <div custom-select avail-arr="vm.sampleTypeArr" model="vm.contract" key="sampleType"></div>
+          </td>
+          <td class="item-title">
+            <span>抽检环节</span>
+          </td>
+          <td>
+            <input type="radio" id="sc" ng-model="vm.sample.inspection" value="生产环节">
+            <label for="sc">生产环节</label>&emsp;
+            <input type="radio" id="lt" ng-model="vm.sample.inspection" value="流通环节">
+            <label for="lt">流通环节</label>&emsp;
+            <input type="radio" id="cy" ng-model="vm.sample.inspection" value="餐饮环节">
+            <label for="cy">餐饮环节</label>&emsp;
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>任务批次</span>
+          </td>
+          <td>
+            <input class="input" name="task_batch" ng-model="vm.contract.taskBatch">
+          </td>
+          <td class="item-title">
+            <span>结算方式</span>
+          </td>
+          <td>
+            <input class="input" name="settlement_method" ng-model="vm.contract.settlementMethod">
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>是否单独结算</span>
+          </td>
+          <td>
+            <input type="radio" id="separateSettlement1" ng-model="vm.sample.isSeparateSettlement" value="1">
+            <label for="separateSettlement1">是</label>&emsp;
+            <input type="radio" id="separateSettlement0" ng-model="vm.sample.isSeparateSettlement" value="0">
+            <label for="separateSettlement0">否</label>&emsp;
+          </td>
+          <td class="item-title">
+            <span>签订日期</span>
+          </td>
+          <td>
+            <input class="input date" ng-model="vm.contract.signDate" datepicker>
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>合同有效期</span>
+          </td>
+          <td>
+            <input class="input date" ng-model="vm.contract.contractTerm" datepicker>
+          </td>
+          <td class="item-title">
+            <span>检测报告份数</span>
+          </td>
+          <td class="report-count">
+            <!-- <input type="number" class="input" name="report_count" ng-model="vm.contract.reportCount" ng-pattern="/^[0-9]*$/">
+						<div ng-if="form.report_count.$dirty || vm.submitted" ng-messages="form.report_count.$error">
+							<label class="error-messages" ng-message="pattern">
+								<i></i>请输入整数</label>
+						</div> -->
+            <div class="col-sm-6 col-md-6">
+              <span>合格</span>&emsp;
+              <input type="number" class="input" ng-model="vm.passReportCount">
+            </div>
+            <div class="col-sm-6 col-md-6 text-right">
+              <span>不合格</span>&emsp;
+              <input type="number" class="input" ng-model="vm.unpassReportCount">
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>检测费用</span>
+          </td>
+          <td>
+            <input class="input" name="cost" ng-model="vm.contract.cost" ng-pattern="/^\d+(\.\d)?\d*$/">
+            <div ng-if="form.cost.$dirty || vm.submitted" ng-messages="form.cost.$error">
+              <label class="error-messages" ng-message="pattern">
+                <i></i>请输入正确的数字</label>
+            </div>
+          </td>
+          <td class="item-title"></td>
+          <td></td>
+        </tr>
+      </tbody>
+      <tbody ng-if="vm.type == 'pb'">
+        <tr>
+          <td class="item-title">
+            <span>委托单位名称</span>
+          </td>
+          <td>
+            <input class="input" name="entrustment" ng-model="vm.contract.entrustment">
+          </td>
+          <td class="item-title">
+            <span>委托单位地址</span>
+          </td>
+          <td>
+            <input class="input" name="entrustment_address" ng-model="vm.contract.entrustmentAddress">
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>联系人</span>
+          </td>
+          <td>
+            <input class="input" name="contact_person" ng-model="vm.contract.contactPerson">
+          </td>
+          <td class="item-title">
+            <span>电话</span>
+          </td>
+          <td>
+            <input class="input" name="phone" ng-model="vm.contract.phone">
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>项目负责人</span>
+          </td>
+          <td>
+            <input class="input" name="project_leader" ng-model="vm.contract.projectLeader">
+          </td>
+          <td class="item-title">
+            <span>产品类别</span>
+          </td>
+          <td>
+            <div custom-select avail-arr="vm.productTypeArr" model="vm.contract" key="productType"></div>
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>开户银行</span>
+          </td>
+          <td>
+            <input class="input" name="deposit_bank" ng-model="vm.contract.depositBank">
+          </td>
+          <td class="item-title">
+            <span>账号</span>
+          </td>
+          <td>
+            <input class="input" name="account" ng-model="vm.contract.account">
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>认证类别</span>
+          </td>
+          <td>
+            <div custom-select avail-arr="vm.authCategoryArr" model="vm.contract" key="authCategory"></div>
+          </td>
+          <td class="item-title">
+            <span>认证类型</span>
+          </td>
+          <td>
+            <div custom-select avail-arr="vm.authTypeArr" model="vm.contract" key="authType"></div>
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>企业提供的文本资料</span>
+          </td>
+          <td>
+            <div custom-select avail-arr="vm.enterpriseFileArr" model="vm.contract" key="enterpriseFile"></div>
+          </td>
+          <td class="item-title">
+            <span>时限要求</span>
+          </td>
+          <td>
+            <input class="input" name="limit_time" ng-model="vm.contract.limitTime">
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>现场检查时间</span>
+          </td>
+          <td>
+            <input class="input date" ng-model="vm.contract.inspectTime" datepicker>
+          </td>
+          <td class="item-title">
+            <span>续展到期时间</span>
+          </td>
+          <td>
+            <input class="input date" ng-model="vm.contract.expireTime" datepicker>
+          </td>
+        </tr>
+        <tr>
+          <td class="item-title">
+            <span>合同签订时间</span>
+          </td>
+          <td>
+            <input class="input date" ng-model="vm.contract.contractSignTime" datepicker>
+          </td>
+          <td class="item-title">
+            <span>检测报告份数</span>
+          </td>
+          <td class="report-count">
+            <!-- <input type="number" class="input" name="report_count" ng-model="vm.contract.reportCount" ng-pattern="/^[0-9]*$/">
+						<div ng-if="form.report_count.$dirty || vm.submitted" ng-messages="form.report_count.$error">
+							<label class="error-messages" ng-message="pattern">
+								<i></i>请输入整数</label>
+						</div> -->
+            <div class="col-sm-6 col-md-6">
+              <span>合格</span>&emsp;
+              <input type="number" class="input" ng-model="vm.passReportCount">
+            </div>
+            <div class="col-sm-6 col-md-6 text-right">
+              <span>不合格</span>&emsp;
+              <input type="number" class="input" ng-model="vm.unpassReportCount">
+            </div>
+          </td>
+          <tr>
+            <td class="item-title">
+              <span>报告寄送地址</span>
+            </td>
+            <td>
+              <input class="input" name="report_send_address" ng-model="vm.contract.reportSendAddress">
+            </td>
+            <td class="item-title">
+              <span>发票寄送地址</span>
+            </td>
+            <td>
+              <input class="input" name="invoice_send_addresss" ng-model="vm.contract.invoiceSendAddresss">
+            </td>
+            <td class="item-title"></td>
+            <td></td>
+          </tr>
+      </tbody>
+
+      <tr>
+        <td class="item-title">
+          <span>附件</span>
+        </td>
+        <td colspan="3">
+          <a class="btn btn-default-light" custom-file-btn>
+            <span>
+              <i class="fa fa-plus"></i>添加附件</span>
+					</a>
+					<div class="file-item" ng-repeat="item in vm.appendix track by $index">
+            <span>{{ item.substring(item.lastIndexOf('\\')+1) }}</span>&emsp;
+            <i class="fa fa-times" ng-click="vm.deleteAppendix($index)"></i>
 					</div>
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>送检人签字</span>
-				</td>
-				<td>
-					<input class="input" name="inspection_user" ng-model="vm.contract.inspectionUser">
-				</td>
-				<td class="item-title">
-					<span>送检日期</span>
-				</td>
-				<td>
-					<input class="input date" ng-model="vm.contract.inspectionDate" datepicker>
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>受理人</span>
-				</td>
-				<td>
-					<input class="input" name="acceptor" ng-model="vm.contract.acceptor">
-				</td>
-				<td class="item-title">
-					<span>受理日期</span>
-				</td>
-				<td>
-					<input class="input date" ng-model="vm.contract.acceptanceDate" datepicker>
-				</td>
-			</tr>
-			<tr>
-				<td class="item-title">
-					<span>检测费用</span>
-				</td>
-				<td>
-					<input class="input" name="cost" ng-model="vm.contract.cost" ng-pattern="/^\d+(\.\d)?\d*$/">
-					<div ng-if="form.cost.$dirty || vm.submitted" ng-messages="form.cost.$error">
-						<label class="error-messages" ng-message="pattern"><i></i>请输入正确的数字</label>
-					</div>
-				</td>
-				<td class="item-title"></td>
-				<td></td>
-				<!-- <td colspan="2"></td> -->
-			</tr>
-				<td class="item-title">
-					<span>备注</span>
-				</td>
-				<td colspan="3">
-					<textarea class="input" ng-model="vm.contract.extra" rows="2"></textarea>
-				</td>
-			</tr>
-		</table>
-	</form>
-	<div class="btn-area text-center" role-auth="CONTRACT-UPDATE-1">
-		<button class="btn btn-2x btn-default-dark" ng-click="vm.ok(form)">确认</button>
-		<button class="btn btn-2x btn-default-light" ui-sref="app.business.contract">取消</button>
-	</div>
+          <div class="file-item" ng-repeat="file in vm.files track by $index">
+            <span>{{ file.name }}</span>&emsp;
+            <i class="fa fa-times" ng-click="vm.deleteFile($index)"></i>
+          </div>
+          <input type="file" class="select-file" ngf-select name="file" custom-file-change="vm.addFile" multiple>
+        </td>
+      </tr>
+      <tr>
+        <td class="item-title">
+          <span>备注</span>
+        </td>
+        <td colspan="3">
+          <textarea class="input" ng-model="vm.contract.extra" rows="2"></textarea>
+        </td>
+      </tr>
+    </table>
+  </form>
+  <div class="btn-area text-center" role-auth="CONTRACT-UPDATE-1">
+    <button class="btn btn-2x btn-default-dark" ng-click="vm.ok(form)">确认</button>
+    <button class="btn btn-2x btn-default-light" ui-sref="app.business.contract">取消</button>
+  </div>
 </div>

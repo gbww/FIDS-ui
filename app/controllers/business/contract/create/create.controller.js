@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ContractCreateCtrl', function ($state, $stateParams, $timeout, api, toastr, ContractService, Upload) {
+angular.module('com.app').controller('ContractCreateCtrl', function ($state, $stateParams, $timeout, api, toastr, ContractService) {
   var vm = this;
 
   var businessBC = api.breadCrumbMap.business;
@@ -102,7 +102,14 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
         isSubcontracting: parseInt(vm.contract.isSubcontracting),
         isExpedited: parseInt(vm.contract.isExpedited),
         isEvaluation: parseInt(vm.contract.isEvaluation),
-        reportCount: [(vm.passReportCount||0), (vm.unpassReportCount||0)].join(';')
+        reportCount: [(vm.passReportCount||0), (vm.unpassReportCount||0)].join(';'),
+        acceptanceDate: vm.contract.acceptanceDate ? (vm.contract.acceptanceDate.split(' ')[0] + '\'T\'' + vm.contract.acceptanceDate.split(' ')[1] + 'Z') : null,
+        inspectionDate: vm.contract.inspectionDate ? (vm.contract.inspectionDate.split(' ')[0] + '\'T\'' + vm.contract.inspectionDate.split(' ')[1] + 'Z') : null,
+        signDate: vm.contract.signDate ? (vm.contract.signDate.split(' ')[0] + '\'T\'' + vm.contract.signDate.split(' ')[1] + 'Z') : null,
+        contractTerm: vm.contract.contractTerm ? (vm.contract.contractTerm.split(' ')[0] + '\'T\'' + vm.contract.contractTerm.split(' ')[1] + 'Z') : null,
+        inspectTime: vm.contract.inspectTime ? (vm.contract.inspectTime.split(' ')[0] + '\'T\'' + vm.contract.inspectTime.split(' ')[1] + 'Z') : null,
+        expireTime: vm.contract.expireTime ? (vm.contract.expireTime.split(' ')[0] + '\'T\'' + vm.contract.expireTime.split(' ')[1] + 'Z') : null,
+        contractSignTime: vm.contract.contractSignTime ? (vm.contract.contractSignTime.split(' ')[0] + '\'T\'' + vm.contract.contractSignTime.split(' ')[1] + 'Z') : null
       }),
       sampleList: sampleList
     };
@@ -110,18 +117,11 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
     formData.append('contractSample', JSON.stringify(contractData));
     angular.forEach(vm.files, function (file) {
       formData.append('files', file);
-    })
+    });
 
-    // Upload.upload({
-    //   url: '/api/v1/ahgz/contract',
-  	// 	data: {
-    //     contractSample: JSON.stringify(contractData),
-    //     files: vm.files
-  	// 	}
-  	// }).then(function (response) {
 		ContractService.createContract(formData).then(function (response) {
 			if (response.data.success) {
-				toastr.success('合同录入成功！');
+				toastr.success('合同 ' + response.data.entity + ' 录入成功！');
 				$state.go('app.business.contract');
 			} else {
 				toastr.error(response.data.message);

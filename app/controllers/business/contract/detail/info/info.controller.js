@@ -2,13 +2,23 @@
 
 angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state, $stateParams, $scope, toastr, ContractService) {
   var vm = this;
+  vm.appendix = [];
 
   vm.getContractInfo = function () {
     vm.loading = true;
     ContractService.getContractInfo($stateParams.id).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
-        vm.contract = response.data.entity;
+        vm.contract = response.data.entity.contract;
+        var appendix = vm.contract.appendix ? vm.contract.appendix.replace(/;$/, '').split(';') : [];
+        angular.forEach(appendix, function (item) {
+          vm.appendix.push(item);
+        })
+        vm.sampleArr = response.data.entity.sampleList;
+        if (vm.sampleArr.length === 0) {
+          vm.addSample();
+        }
+        vm.type = vm.contract.type;
       } else {
         toastr.error(response.data.message);
       }
@@ -30,6 +40,29 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
   vm.authCategoryArr = ['绿色食品认证', '有机食品认证', '无公害食品认证'];
   vm.authTypeArr = ['首次认证', '再次认证', '其他'];
   vm.enterpriseFileArr = ['现场审查意见', '现场调查报告', '其他'];
+
+  vm.addSample = function () {
+    vm.sampleArr.push({name: '', specificationQuantity: '', executeStandard: '', detectBy: '', processTechnology: '', qualityLevel: '', productDate: '', storageTime: '', sampleShape: '', storageCondition: '', processDemand: ''});
+  }
+  vm.deleteSample = function (idx) {
+    vm.sampleArr.splice(idx, 1);
+    if (vm.sampleArr.length === 0) {
+      vm.addSample();
+    }
+  }
+
+  vm.files = [];
+  vm.addFile = function (event) {
+    angular.forEach(event.target.files, function (item) {
+      vm.files.push(item);
+    });
+  }
+  vm.deleteFile = function (idx) {
+    vm.files.splice(idx, 1);
+  }
+  vm.deleteAppendix = function (idx) {
+    vm.appendix.splice(idx, 1);
+  }
 
   vm.ok = function (form) {
     if (form.$invalid) {
