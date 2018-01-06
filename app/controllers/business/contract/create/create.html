@@ -24,20 +24,14 @@
         <tbody ng-if="vm.type == 'government'">
           <tr>
             <td class="item-title">
-              <span>是否同意分包</span>
+              <span>食品类检测</span>
             </td>
-            <td ng-if="vm.type == 'government'">
-              <input type="radio" id="sub1" ng-model="vm.contract.isSubcontracting" value="1">
-              <label for="sub1">是</label>&emsp;&emsp;
-              <input type="radio" id="sub0" ng-model="vm.contract.isSubcontracting" value="0">
-              <label for="sub0">否</label>
+            <td>
+              <input type="radio" id="foodYes" ng-model="vm.isFood" value="true">
+              <label for="foodYes">是</label>&emsp;&emsp;
+              <input type="radio" id="foodNo" ng-model="vm.isFood" value="false">
+              <label for="foodNo">否</label>
             </td>
-            <td class="item-title"></td>
-            <td></td>
-          </tr>
-        </tbody>
-        <tbody ng-if="vm.type != 'government'">
-          <tr>
             <td class="item-title">
               <span>是否同意分包</span>
             </td>
@@ -47,6 +41,30 @@
               <input type="radio" id="sub0" ng-model="vm.contract.isSubcontracting" value="0">
               <label for="sub0">否</label>
             </td>
+          </tr>
+        </tbody>
+        <tbody ng-if="vm.type != 'government'">
+          <tr>
+            <td class="item-title">
+              <span>食品类检测</span>
+            </td>
+            <td>
+              <input type="radio" id="foodYes" ng-model="vm.isFood" value="true">
+              <label for="foodYes">是</label>&emsp;&emsp;
+              <input type="radio" id="foodNo" ng-model="vm.isFood" value="false">
+              <label for="foodNo">否</label>
+            </td>
+            <td class="item-title">
+              <span>是否同意分包</span>
+            </td>
+            <td>
+              <input type="radio" id="sub1" ng-model="vm.contract.isSubcontracting" value="1">
+              <label for="sub1">是</label>&emsp;&emsp;
+              <input type="radio" id="sub0" ng-model="vm.contract.isSubcontracting" value="0">
+              <label for="sub0">否</label>
+            </td>
+          </tr>
+          <tr>
             <td class="item-title">
               <span>是否同意使用非标准方法</span>
             </td>
@@ -56,8 +74,6 @@
               <input type="radio" id="standard0" ng-model="vm.contract.isUseStandard" value="0">
               <label for="standard0">否</label>
             </td>
-          </tr>
-          <tr>
             <td class="item-title">
               <span>是否需要评价</span>
             </td>
@@ -67,6 +83,8 @@
               <input type="radio" id="evaluate0" ng-model="vm.contract.isEvaluation" value="0">
               <label for="evaluate0">否</label>
             </td>
+          </tr>
+          <tr>
             <td class="item-title">
               <span>是否需要加急</span>
             </td>
@@ -76,6 +94,8 @@
               <input type="radio" id="expedited0" ng-model="vm.contract.isExpedited" value="0">
               <label for="expedited0">否</label>
             </td>
+            <td class="item-title"></td>
+            <td></td>
           </tr>
         </tbody>
       </table>

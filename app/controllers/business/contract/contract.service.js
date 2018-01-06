@@ -42,6 +42,13 @@ angular.module('com.app').factory('ContractService', function ($http) {
 			})
 		},
 
+		deleteAppendix: function (contractId, filename) {
+			return $http({
+				url: '/api/v1/ahgz/contract/' + contractId + '/appendix?filename=' + filename,
+				method: 'DELETE'
+			});
+		},
+
 		deleteContract: function (id) {
 			return $http({
 				url: '/api/v1/ahgz/contract/' + id,

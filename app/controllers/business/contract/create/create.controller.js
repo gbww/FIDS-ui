@@ -6,6 +6,7 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.contract.root, businessBC.contract.create];
   vm.type = $stateParams.type;
+  vm.isFood = 'true';
 
   vm.storageConditionArr = ['常温', '冷冻', '冷藏'];
   vm.detectTypeArr = ['委托检验', '发证检验', '其他'];
@@ -102,18 +103,12 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
         isSubcontracting: parseInt(vm.contract.isSubcontracting),
         isExpedited: parseInt(vm.contract.isExpedited),
         isEvaluation: parseInt(vm.contract.isEvaluation),
-        reportCount: [(vm.passReportCount||0), (vm.unpassReportCount||0)].join(';'),
-        acceptanceDate: vm.contract.acceptanceDate ? (vm.contract.acceptanceDate.split(' ')[0] + '\'T\'' + vm.contract.acceptanceDate.split(' ')[1] + 'Z') : null,
-        inspectionDate: vm.contract.inspectionDate ? (vm.contract.inspectionDate.split(' ')[0] + '\'T\'' + vm.contract.inspectionDate.split(' ')[1] + 'Z') : null,
-        signDate: vm.contract.signDate ? (vm.contract.signDate.split(' ')[0] + '\'T\'' + vm.contract.signDate.split(' ')[1] + 'Z') : null,
-        contractTerm: vm.contract.contractTerm ? (vm.contract.contractTerm.split(' ')[0] + '\'T\'' + vm.contract.contractTerm.split(' ')[1] + 'Z') : null,
-        inspectTime: vm.contract.inspectTime ? (vm.contract.inspectTime.split(' ')[0] + '\'T\'' + vm.contract.inspectTime.split(' ')[1] + 'Z') : null,
-        expireTime: vm.contract.expireTime ? (vm.contract.expireTime.split(' ')[0] + '\'T\'' + vm.contract.expireTime.split(' ')[1] + 'Z') : null,
-        contractSignTime: vm.contract.contractSignTime ? (vm.contract.contractSignTime.split(' ')[0] + '\'T\'' + vm.contract.contractSignTime.split(' ')[1] + 'Z') : null
+        reportCount: [(vm.passReportCount||0), (vm.unpassReportCount||0)].join(';')
       }),
       sampleList: sampleList
     };
     var formData = new FormData();
+    formData.append('isFood', vm.isFood);
     formData.append('contractSample', JSON.stringify(contractData));
     angular.forEach(vm.files, function (file) {
       formData.append('files', file);

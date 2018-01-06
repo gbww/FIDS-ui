@@ -564,7 +564,7 @@
             <span>
               <i class="fa fa-plus"></i>添加附件</span>
 					</a>
-					<div class="file-item" ng-repeat="item in vm.appendix track by $index">
+					<div class="file-item" ng-repeat="item in vm.appendix track by $index" ng-click="vm.downloadFile(item)">
             <span>{{ item.substring(item.lastIndexOf('\\')+1) }}</span>&emsp;
             <i class="fa fa-times" ng-click="vm.deleteAppendix($index)"></i>
 					</div>

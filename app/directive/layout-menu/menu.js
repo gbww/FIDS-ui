@@ -26,7 +26,7 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
     vm.isBusinessActive = $state.includes('app.business');
     vm.isBusinessContractActive = $state.includes('app.business.contract');
     vm.isBusinessSampleActive = $state.includes('app.business.sample');
-    vm.isBusinessItemToCheckActive = $state.includes('app.business.distribute');
+    vm.isBusinessDistributeActive = $state.includes('app.business.distribute');
     vm.isBusinessItemToCheckActive = $state.includes('app.business.itemToCheck');
     vm.isBusinessReportActive = $state.includes('app.business.report');
 

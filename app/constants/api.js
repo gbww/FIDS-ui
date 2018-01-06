@@ -37,6 +37,9 @@ angular.module('com.app').constant('api', {
       itemToCheck: {
         root: {name: '检测结果录入'}
       },
+      distribute: {
+        root: {name: '检测项分配'}
+      }
     },
     privilege: {
     	root: {name: '用户管理'},

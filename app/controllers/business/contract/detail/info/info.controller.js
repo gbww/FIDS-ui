@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state, $stateParams, $scope, toastr, ContractService) {
+angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state, $stateParams, $scope, $q, toastr, ContractService, Upload) {
   var vm = this;
   vm.appendix = [];
 
@@ -10,15 +10,30 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
       vm.loading = false;
       if (response.data.success) {
         vm.contract = response.data.entity.contract;
+        if (vm.contract.reportCount) {
+          vm.passReportCount = parseInt(vm.contract.reportCount.split(';')[0] || 0);
+          vm.unpassReportCount = parseInt(vm.contract.reportCount.split(';')[1] || 0);
+        } else {
+          vm.passReportCount = 0;
+          vm.unpassReportCount = 0;
+        }
+        vm.type = vm.contract.type;
+
         var appendix = vm.contract.appendix ? vm.contract.appendix.replace(/;$/, '').split(';') : [];
         angular.forEach(appendix, function (item) {
           vm.appendix.push(item);
-        })
+        });
+        vm.initAppendix = angular.copy(vm.appendix);
+
         vm.sampleArr = response.data.entity.sampleList;
         if (vm.sampleArr.length === 0) {
           vm.addSample();
         }
-        vm.type = vm.contract.type;
+        angular.forEach(vm.sampleArr, function (sample) {
+          if (sample.productDate) {
+            sample.productDate = sample.productDate.split("'T'").join(' ').replace(/Z$/, '');
+          }
+        });
       } else {
         toastr.error(response.data.message);
       }
@@ -51,6 +66,14 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
     }
   }
 
+  vm.downloadFile = function (filepath) {
+    var filename = filepath.substring(filepath.lastIndexOf('\\')+1);
+    var link = document.createElement('a');
+    link.href = '/api/v1/ahgz/contract/' + vm.contract.id + '/appendix?filename=' + filename;
+    link.download = filename;
+    link.click();
+  }
+
   vm.files = [];
   vm.addFile = function (event) {
     angular.forEach(event.target.files, function (item) {
@@ -69,19 +92,73 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
       vm.submitted = true;
       return;
     }
-    var data = angular.merge({}, vm.contract, {
-      isUseStandard: parseInt(vm.contract.isUseStandard),
-      isSubcontracting: parseInt(vm.contract.isSubcontracting),
-      isExpedited: parseInt(vm.contract.isExpedited),
-      isEvaluation: parseInt(vm.contract.isEvaluation)
+
+    var sampleList = angular.copy(vm.sampleArr);
+    angular.forEach(sampleList, function (sample, idx) {
+      if (!sample.name || !sample.executeStandard) {
+        vm.sampleArr.splice(idx, 1);
+      } else {
+      	if (!sample.specificationQuantity) delete sample.specificationQuantity;
+      	if (!sample.detectBy) delete sample.detectBy;
+      	if (!sample.processTechnology) delete sample.processTechnology;
+      	if (!sample.qualityLevel) delete sample.qualityLevel;
+      	if (!sample.productDate) {
+          delete sample.productDate;
+        } else {
+          sample.productDate = sample.productDate.split(' ')[0] + '\'T\'' + sample.productDate.split(' ')[1] + 'Z';
+        }
+      	if (!sample.storageTime) delete sample.storageTime;
+      	if (!sample.sampleShape) delete sample.sampleShape;
+      	if (!sample.storageCondition) delete sample.storageCondition;
+      	if (!sample.processDemand) delete sample.processDemand;      	
+      }
     });
 
-  	ContractService.editContract(vm.contract.id, data).then(function (response) {
-  		if (response.data.success) {
+    var contractData = {
+      contract: angular.merge({}, vm.contract, {
+        isUseStandard: parseInt(vm.contract.isUseStandard),
+        isSubcontracting: parseInt(vm.contract.isSubcontracting),
+        isExpedited: parseInt(vm.contract.isExpedited),
+        isEvaluation: parseInt(vm.contract.isEvaluation),
+        appendix: null,
+        reportCount: [(vm.passReportCount||0), (vm.unpassReportCount||0)].join(';')
+      }),
+      sampleList: sampleList
+    };
+
+    var deletedFiles = [], promiseArr = [];
+    // 更新合同内容
+    promiseArr.push(ContractService.editContract(vm.contract.id, contractData));
+    // 添加附件
+    angular.forEach(vm.files, function (file) {
+      promiseArr.push(Upload.upload({
+        url: 'api/v1/ahgz/contract/' + vm.contract.id + '/appendix',
+        data: {
+          file: file
+        }
+      }));
+    });
+
+    // 删除附件
+    if (!angular.equals(vm.appendix, vm.initAppendix)) {
+      angular.forEach(vm.initAppendix, function (filepath) {
+        var filename = filepath.substring(filepath.lastIndexOf('\\')+1);
+        if (vm.appendix.indexOf(filepath) === -1) {
+          deletedFiles.push(filename);
+        }
+      });
+    }
+
+    angular.forEach(deletedFiles, function (file) {
+      promiseArr.push(ContractService.deleteAppendix(vm.contract.id, file));
+    });
+
+  	$q.all(promiseArr).then(function (responses) {
+  		if (responses[0].data.success) {
         $state.go('app.business.contract');
   			toastr.success('合同修改成功！');
   		} else {
-  			toastr.error(response.data.message);
+  			toastr.error(responses[0].data.message);
   		}
   	}).catch(function (err) {
   		toastr.error(err.data);
