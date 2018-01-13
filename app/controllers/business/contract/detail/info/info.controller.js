@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state, $stateParams, $scope, $q, toastr, ContractService) {
+angular.module('com.app').controller('ContractDetailInfoCtrl', function ($rootScope, $state, $stateParams, $scope, $q, toastr, ContractService) {
   var vm = this;
   vm.appendix = [];
 
@@ -88,13 +88,41 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
     vm.appendix.splice(idx, 1);
   };
 
+  vm.sampleHasChanged = function (sample) {
+    if (sample.productDate) {
+      sample.productDate = sample.productDate.split(' ')[0] + '\'T\'' + sample.productDate.split(' ')[1] + 'Z';
+    }
+    for (var i=0,len=vm.initSampleArr.length; i<len; i++) {
+      if (vm.initSampleArr[i].id === sample.id && !angular.equals(sample, vm.initSampleArr[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+  vm.handleSample = function (sample) {
+    if (!sample.specificationQuantity) delete sample.specificationQuantity;
+    if (!sample.detectBy) delete sample.detectBy;
+    if (!sample.processTechnology) delete sample.processTechnology;
+    if (!sample.qualityLevel) delete sample.qualityLevel;
+    if (!sample.productDate) {
+      delete sample.productDate;
+    } else {
+      sample.productDate = sample.productDate.split(' ')[0] + '\'T\'' + sample.productDate.split(' ')[1] + 'Z';
+    }
+    if (!sample.storageTime) delete sample.storageTime;
+    if (!sample.sampleShape) delete sample.sampleShape;
+    if (!sample.storageCondition) delete sample.storageCondition;
+    if (!sample.processDemand) delete sample.processDemand;
+    return sample;
+  }
+
   vm.ok = function (form) {
     if (form.$invalid) {
       vm.submitted = true;
       return;
     }
 
-    var existSampleIds = [];  
+    var existSampleIds = [], addedSampleList = [], modifiedSampleList = [];  
     var sampleList = angular.copy(vm.sampleArr);
     angular.forEach(sampleList, function (sample, idx) {
       if (!sample.name || !sample.executeStandard) {
@@ -102,23 +130,17 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
       } else {
         if (sample.id) {
           existSampleIds.push(sample.id);
-        }
-      	if (!sample.specificationQuantity) delete sample.specificationQuantity;
-      	if (!sample.detectBy) delete sample.detectBy;
-      	if (!sample.processTechnology) delete sample.processTechnology;
-      	if (!sample.qualityLevel) delete sample.qualityLevel;
-      	if (!sample.productDate) {
-          delete sample.productDate;
+          if (vm.sampleHasChanged(angular.copy(sample))) {
+            modifiedSampleList.push(vm.handleSample(sample));
+          }
         } else {
-          sample.productDate = sample.productDate.split(' ')[0] + '\'T\'' + sample.productDate.split(' ')[1] + 'Z';
+          addedSampleList.push(vm.handleSample(sample));
         }
-      	if (!sample.storageTime) delete sample.storageTime;
-      	if (!sample.sampleShape) delete sample.sampleShape;
-      	if (!sample.storageCondition) delete sample.storageCondition;
-      	if (!sample.processDemand) delete sample.processDemand;      	
+      	      	
       }
     });
 
+    // 删除的sample
     var deletedSampleIds = [];
     if (!angular.equals(vm.initSampleArr, sampleList)) {
       angular.forEach(vm.initSampleArr, function (sample) {
@@ -136,9 +158,11 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
         isEvaluation: parseInt(vm.contract.isEvaluation),
         appendix: null,
         reportCount: [(vm.passReportCount||0), (vm.unpassReportCount||0)].join(';')
-      }),
-      sampleList: sampleList
+      })
     };
+    if (modifiedSampleList.length > 0 || addedSampleList.length > 0) {
+      contractData.sampleList = modifiedSampleList.concat(addedSampleList);
+    }
 
     var deletedFiles = [];
     if (!angular.equals(vm.appendix, vm.initAppendix)) {
@@ -163,7 +187,9 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
       formData.append('files', file);
     });
 
+    $rootScope.loading = true;  
     ContractService.editContract(formData).then(function (response) {
+      $rootScope.loading = false;  
   		if (response.data.success) {
         $state.go('app.business.contract');
   			toastr.success('合同修改成功！');
@@ -171,6 +197,7 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
   			toastr.error(response.data.message);
   		}
   	}).catch(function (err) {
+      $rootScope.loading = false;  
   		toastr.error(err.data);
   	});
   }

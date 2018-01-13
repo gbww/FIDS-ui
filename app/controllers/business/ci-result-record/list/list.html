@@ -1,0 +1,195 @@
+<div class="item-to-check-sample-list">
+  <div class="toolbar clearfix">
+    <button class="btn btn-default-dark" ng-click="vm.batch()" role-auth="SAMPLE-UPDATEITEMRESULT-1">
+      <i class="fa fa-edit"></i>
+      <span>批量录入</span>
+    </button>
+
+    <ul class="statusBar clearfix">
+      <li ng-class="{'active': vm.status === 1}">
+        <a ng-click="vm.searchStatus(1)">
+          <i class="icon icon-todo-list"></i>
+          <span>待办</span>
+        </a>
+      </li>
+      <li ng-class="{'active': vm.status === 2}">
+        <a ng-click="vm.searchStatus(2)">
+          <i class="icon icon-finished-list"></i>
+          <span>已办</span>
+        </a>
+      </li>
+      <li ng-class="{'active': vm.status === 5}">
+        <a ng-click="vm.searchStatus(5)">
+          <i class="icon icon-all-list"></i>
+          <span>所有</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="pull-right multiple-search">
+      <input class="input" placeholder="报告编号" ng-model="vm.query.reportId" ng-keyup="vm.eventSearch($event)">
+      <input class="input" placeholder="抽样单编号" ng-model="vm.query.receiveSampleId" ng-keyup="vm.eventSearch($event)">
+      <button class="btn btn-default-dark" ng-click="vm.search()">
+        <i class="fa fa-search"></i>
+        <sapn>查询</sapn>
+      </button>
+    </div>
+  </div>
+  <table class="pt-table" st-table="vm.checkItems" st-pipe="vm.getCheckItemList">
+    <thead st-search-watch="vm.searchObject">
+      <tr>
+        <th style="width: 24px;">
+          <input type="checkbox" ng-click="vm.selectAll()" ng-model="vm.allSelected">
+        </th>
+        <th style="width: 100px">
+          <div st-sort="reportId">报告编号
+            <i class="fa fa-sort"></i>
+          </div>
+          <adjust-line></adjust-line>
+        </th>
+        <th style="width: 100px">
+          <div st-sort="receiveSampleId">抽样单编号
+            <i class="fa fa-sort"></i>
+          </div>
+          <adjust-line></adjust-line>
+        </th>
+        <th>
+          <div>名称</div>
+          <adjust-line></adjust-line>
+        </th>
+        <th style="width: 80px;">
+          <div st-sort="method">检测方法
+            <i class="fa fa-sort"></i>
+          </div>
+        </th>
+        <th>
+          <div>单位</div>
+          <adjust-line></adjust-line>
+        </th>
+        <th>
+          <div>标准值</div>
+          <adjust-line></adjust-line>
+        </th>
+        <th>
+          <div>检出限</div>
+          <adjust-line></adjust-line>
+        </th>
+        <th>
+          <div>定量限</div>
+          <adjust-line></adjust-line>
+        </th>
+        <th>
+          <div>设备</div>
+          <adjust-line></adjust-line>
+        </th>
+        <th style="width: 90px;">
+          <div>状态</div>
+          <adjust-line></adjust-line>
+        </th>
+        <th>
+          <div>结果</div>
+          <adjust-line></adjust-line>
+        </th>
+        <th>
+          <div>实测值</div>
+          <adjust-line></adjust-line>
+        </th>
+        <th style="width: 80px;">
+          <div st-sort="testRoom">检测部门
+            <i class="fa fa-sort"></i>
+          </div>
+          <adjust-line></adjust-line>
+        </th>
+        <th style="width: 80px;">
+          <div st-sort="testUser">检测员
+            <i class="fa fa-sort"></i>
+          </div>
+          <adjust-line></adjust-line>
+        </th>
+        <th>
+          <div st-sort="updatedAt">更新时间
+            <i class="fa fa-sort"></i>
+          </div>
+          <adjust-line></adjust-line>
+        </th>
+        <th style="width: 100px">
+          <div>操作</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-if="vm.loading">
+        <td colspan="17" class="text-center">
+          <i class="fa fa-pulse fa-spinner"></i>
+        </td>
+      </tr>
+      <tr ng-if="!vm.loading && vm.checkItems.length == 0">
+        <td colspan="17" class="text-center">暂无检测项</td>
+      </tr>
+      <tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.loading">
+        <td>
+          <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)">
+        </td>
+        <td>{{ item.reportId }}</td>
+        <td>{{ item.receiveSampleId }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.method }}</td>
+        <td>{{ item.unit }}</td>
+        <td>{{ item.standardValue }}</td>
+        <td>{{ item.detectionLimit }}</td>
+        <td>{{ item.quantitationLimit }}</td>
+        <td>{{ item.device }}</td>
+        <td>
+          <i class="icon" ng-class="{'initial icon-status-unhandle': item.status==1,
+								'done icon-status-success': item.status==2}">
+          </i>
+          <span ng-if="item.status == 1">待检测</span>
+          <span ng-if="item.status == 2">检测完成</span>
+        </td>
+        <td>
+          <i class="icon" ng-class="{'initial icon-status-doing': item.itemResult !== '合格'&&item.itemResult !== '不合格',
+								'done icon-status-success': item.itemResult === '合格',
+								'failed icon-status-failed': item.itemResult === '不合格'}" ng-if="item.itemResult">
+          </i>
+          <span ng-class="{'failed': item.itemResult === '不合格'}">{{ item.itemResult }}</span>
+        </td>
+        <td>{{ item.measuredValue }}</td>
+        <td>{{ item.testRoom }}</td>
+        <td>{{ item.testUser }}</td>
+        <td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
+        <td class="dropdown-col" ng-if="item.status == 1">
+          <div class="btn-group" role-auth="SAMPLE-UPDATEITEMRESULT-1">
+            <button class="btn btn-default" ng-click="vm.recordResult(item)" role-auth="SAMPLE-UPDATEITEMRESULT-1">
+              <i class="fa fa-edit"></i>
+              <span>录入</span>
+            </button>
+            <button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-ADDITEM-1">
+              <i class="caret"></i>
+            </button>
+            <ul class="dropdown-menu">
+              <li ng-click="vm.distribute(item)" role-auth="SAMPLE-ADDITEM-1">
+                <a href>
+                  <i class="icon icon-distribute"></i>
+                  <span>重新分配</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </td>
+        <td ng-if="item.status == 2">
+          <button class="btn btn-default" ng-click="vm.recordResult(item)" role-auth="SAMPLE-UPDATEITEMRESULT-1">
+            <i class="fa fa-edit"></i>
+            <span>编辑</span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="17">
+          <div st-idp st-total-count="vm.total"></div>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>

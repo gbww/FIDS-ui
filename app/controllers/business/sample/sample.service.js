@@ -129,6 +129,21 @@ angular.module('com.app').factory('SampleService', function ($http) {
 			})
 		},
 
+		// 获取检测人员的检测项sample集合
+		getUserSample: function (tableParams, status, searchObject) {
+			return $http({
+				url: '/api/v1/ahgz/sampleItem/sample',
+				params: {
+          pageSize: tableParams.pageSize,
+          pageNum: tableParams.pageNum,
+          order: tableParams.order,
+					status: status,
+					reportId: searchObject.reportId,
+					receiveSampleId: searchObject.receiveSampleId
+        }
+			})
+		},
+
 		// 获取检测人员的检测项列表任务
 		getUserCi: function (tableParams, status, searchObject) {
 			return $http({
@@ -136,7 +151,7 @@ angular.module('com.app').factory('SampleService', function ($http) {
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
-          order: tableParams.order,
+					order: tableParams.order,
 					status: status,
 					reportId: searchObject.reportId,
 					receiveSampleId: searchObject.receiveSampleId

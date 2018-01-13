@@ -38,7 +38,8 @@ angular.module('com.app').constant('api', {
         root: {name: '检测结果录入'}
       },
       distribute: {
-        root: {name: '检测项分配'}
+        root: {name: '检测项分配', url: 'app.business.itemToCheck'},
+        detail: {name: '详情'}
       }
     },
     privilege: {
