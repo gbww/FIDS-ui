@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state, $stateParams, $scope, $q, toastr, ContractService, Upload) {
+angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state, $stateParams, $scope, $q, toastr, ContractService) {
   var vm = this;
   vm.appendix = [];
 
@@ -26,6 +26,7 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
         vm.initAppendix = angular.copy(vm.appendix);
 
         vm.sampleArr = response.data.entity.sampleList;
+        vm.initSampleArr = angular.copy(vm.sampleArr);
         if (vm.sampleArr.length === 0) {
           vm.addSample();
         }
@@ -41,7 +42,7 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
       vm.loading = false;
       toastr.error(err.data);
     });
-  }
+  };
   vm.getContractInfo();
 
   vm.storageConditionArr = ['常温', '冷冻', '冷藏'];
@@ -58,13 +59,13 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
 
   vm.addSample = function () {
     vm.sampleArr.push({name: '', specificationQuantity: '', executeStandard: '', detectBy: '', processTechnology: '', qualityLevel: '', productDate: '', storageTime: '', sampleShape: '', storageCondition: '', processDemand: ''});
-  }
+  };
   vm.deleteSample = function (idx) {
     vm.sampleArr.splice(idx, 1);
     if (vm.sampleArr.length === 0) {
       vm.addSample();
     }
-  }
+  };
 
   vm.downloadFile = function (filepath) {
     var filename = filepath.substring(filepath.lastIndexOf('\\')+1);
@@ -72,20 +73,20 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
     link.href = '/api/v1/ahgz/contract/' + vm.contract.id + '/appendix?filename=' + filename;
     link.download = filename;
     link.click();
-  }
+  };
 
   vm.files = [];
   vm.addFile = function (event) {
     angular.forEach(event.target.files, function (item) {
       vm.files.push(item);
     });
-  }
+  };
   vm.deleteFile = function (idx) {
     vm.files.splice(idx, 1);
-  }
+  };
   vm.deleteAppendix = function (idx) {
     vm.appendix.splice(idx, 1);
-  }
+  };
 
   vm.ok = function (form) {
     if (form.$invalid) {
@@ -93,11 +94,15 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
       return;
     }
 
+    var existSampleIds = [];  
     var sampleList = angular.copy(vm.sampleArr);
     angular.forEach(sampleList, function (sample, idx) {
       if (!sample.name || !sample.executeStandard) {
         vm.sampleArr.splice(idx, 1);
       } else {
+        if (sample.id) {
+          existSampleIds.push(sample.id);
+        }
       	if (!sample.specificationQuantity) delete sample.specificationQuantity;
       	if (!sample.detectBy) delete sample.detectBy;
       	if (!sample.processTechnology) delete sample.processTechnology;
@@ -114,6 +119,15 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
       }
     });
 
+    var deletedSampleIds = [];
+    if (!angular.equals(vm.initSampleArr, sampleList)) {
+      angular.forEach(vm.initSampleArr, function (sample) {
+        if (existSampleIds.indexOf(sample.id) === -1) {
+          deletedSampleIds.push(sample.id);
+        }
+      });
+    }
+
     var contractData = {
       contract: angular.merge({}, vm.contract, {
         isUseStandard: parseInt(vm.contract.isUseStandard),
@@ -126,20 +140,7 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
       sampleList: sampleList
     };
 
-    var deletedFiles = [], promiseArr = [];
-    // 更新合同内容
-    promiseArr.push(ContractService.editContract(vm.contract.id, contractData));
-    // 添加附件
-    angular.forEach(vm.files, function (file) {
-      promiseArr.push(Upload.upload({
-        url: 'api/v1/ahgz/contract/' + vm.contract.id + '/appendix',
-        data: {
-          file: file
-        }
-      }));
-    });
-
-    // 删除附件
+    var deletedFiles = [];
     if (!angular.equals(vm.appendix, vm.initAppendix)) {
       angular.forEach(vm.initAppendix, function (filepath) {
         var filename = filepath.substring(filepath.lastIndexOf('\\')+1);
@@ -149,20 +150,29 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($state,
       });
     }
 
-    angular.forEach(deletedFiles, function (file) {
-      promiseArr.push(ContractService.deleteAppendix(vm.contract.id, file));
+    var formData = new FormData();
+    formData.append('id', vm.contract.id);
+    formData.append('contractSample', JSON.stringify(contractData));
+    if (deletedSampleIds.length > 0) {
+      formData.append('deleteSampleIdList', deletedSampleIds.join(';'));
+    }
+    if (deletedFiles.length > 0) {
+      formData.append('deleteFileNameList', deletedFiles.join(';'));
+    }
+    angular.forEach(vm.files, function (file) {
+      formData.append('files', file);
     });
 
-  	$q.all(promiseArr).then(function (responses) {
-  		if (responses[0].data.success) {
+    ContractService.editContract(formData).then(function (response) {
+  		if (response.data.success) {
         $state.go('app.business.contract');
   			toastr.success('合同修改成功！');
   		} else {
-  			toastr.error(responses[0].data.message);
+  			toastr.error(response.data.message);
   		}
   	}).catch(function (err) {
   		toastr.error(err.data);
-  	})
+  	});
   }
 
 });

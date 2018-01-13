@@ -60,10 +60,13 @@ angular.module('com.app').factory('ContractService', function ($http) {
 			return $http.get('/api/v1/ahgz/contract/' + id);
 		},
 
-		editContract: function (id, data) {
+		editContract: function (data) {
 			return $http({
-				url: '/api/v1/ahgz/contract/' + id,
-				method: 'PUT',
+				url: '/api/v1/ahgz/contract/update',
+				method: 'POST',
+				headers: {
+					'Content-Type': undefined
+				},
 				data: data
 			})
 		},

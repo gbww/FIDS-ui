@@ -49,7 +49,7 @@ angular.module('com.app').controller('DistributeCtrl', function ($rootScope, $sc
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-  	SampleService.getSampleList(tableParams, vm.searchObject, vm.status).then(function (response) {
+  	SampleService.getUndistributeSamples(tableParams, vm.searchObject).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.samples = response.data.entity.list;

@@ -21,6 +21,21 @@ angular.module('com.app').factory('SampleService', function ($http) {
 			})
 		},
 
+		getUndistributeSamples: function (tableParams, searchConditions) {
+			return $http({
+				url: '/api/v1/ahgz/sample/listForDistribute',
+				params: {
+          reportId: searchConditions.reportId,
+          sampleName: searchConditions.sampleName,
+          entrustedUnit: searchConditions.entrustedUnit,
+          inspectedUnit: searchConditions.inspectedUnit,
+          productionUnit: searchConditions.productionUnit,
+          receiveSampleId: searchConditions.receiveSampleId,
+          executeStandard: searchConditions.executeStandard
+        }
+			})
+		},
+
 		getReportList: function (tableParams, searchConditions, reportStatus) {
 			return $http({
 				url: '/api/v1/ahgz/sample/reports',
