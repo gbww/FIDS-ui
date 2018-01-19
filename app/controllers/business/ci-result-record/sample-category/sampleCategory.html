@@ -53,7 +53,9 @@
         <td colspan="6" class="text-center">待检测接样单</td>
       </tr>
       <tr ng-repeat="sample in vm.samples track by $index" ng-if="!vm.loading">
-        <td>{{ sample.reportId }}</td>
+        <td>
+          <a ui-sref="app.business.itemToCheck.sample.list({id: sample.receiveSampleId})">{{ sample.reportId }}</a>
+        </td>
         <td>{{ sample.sampleName }}</td>
         <td>{{ sample.entrustedUnit }}</td>
         <td>{{ sample.receiveDate }}</td>

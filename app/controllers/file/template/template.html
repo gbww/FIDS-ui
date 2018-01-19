@@ -3,7 +3,7 @@
 
 	<div class="pt-2">
 		<div class="toolbar clearfix">
-			<button class="btn btn-default-dark" ng-click="vm.upload()">
+			<button class="btn btn-default-dark" ng-click="vm.upload()" role-auth="TEMPLATE-UPLOAD-1">
 				<i class="fa fa-upload"></i>
 				<span>上传模板</span>
 			</button>
@@ -58,12 +58,12 @@
 					<td>{{ item.description }}</td>
 					<td>{{ item.createdAt | date:'medium' }}</td>
 					<td class="dropdown-col">
-						<div class="btn-group">
-							<button class="btn btn-default" ng-click="vm.edit(item)">
+						<div class="btn-group" role-auth="TEMPLATE-UPDATE-1 TEMPLATE-DELETE-1">
+							<button class="btn btn-default" ng-click="vm.edit(item)" role-auth="TEMPLATE-UPDATE-1">
 								<i class="fa fa-edit"></i>
 								<span>编辑</span>
 							</button>
-							<button class="btn dropdown-toggle" data-toggle="dropdown">
+							<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="TEMPLATE-DELETE-1">
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">

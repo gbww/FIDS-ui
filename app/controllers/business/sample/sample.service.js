@@ -25,6 +25,9 @@ angular.module('com.app').factory('SampleService', function ($http) {
 			return $http({
 				url: '/api/v1/ahgz/sample/listForDistribute',
 				params: {
+          pageSize: tableParams.pageSize,
+          pageNum: tableParams.pageNum,
+          order: tableParams.order,
           reportId: searchConditions.reportId,
           sampleName: searchConditions.sampleName,
           entrustedUnit: searchConditions.entrustedUnit,

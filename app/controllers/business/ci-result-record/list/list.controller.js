@@ -1,11 +1,12 @@
 'use strict';
 
-angular.module('com.app').controller('CiResultListCtrl', function ($uibModal, SampleService, toastr) {
+angular.module('com.app').controller('CiResultListCtrl', function ($stateParams, $uibModal, SampleService, toastr) {
   var vm = this;
+  vm.receiveSampleId = $stateParams.id;
 
   vm.query = {
     reportId: null,
-    receiveSampleId: null
+    receiveSampleId: vm.receiveSampleId || null
   };
   vm.searchObject = {};
 
@@ -39,6 +40,7 @@ angular.module('com.app').controller('CiResultListCtrl', function ($uibModal, Sa
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
+
   	SampleService.getUserCi(tableParams, vm.status, vm.query).then(function (response) {
       vm.loading = false;
       if (response.data.success) {

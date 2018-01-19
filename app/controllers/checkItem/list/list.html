@@ -3,11 +3,11 @@
 
 	<div class="pt-2">
 		<div class="toolbar clearfix">
-			<button class="btn btn-default-dark" ng-click="vm.addCheckItem()">
+			<button class="btn btn-default-dark" ng-click="vm.addCheckItem()" role-auth="CHECKITEM-ADD-1">
 				<i class="fa fa-plus"></i>
 				<span>添加检测项</span>
 			</button>
-			<button class="btn btn-default-light" custom-file-btn>
+			<button class="btn btn-default-light" custom-file-btn role-auth="CHECKITEM-IMPORT-1">
 				<i class="fa fa-file-excel-o"></i>
 				<span>批量导入</span>
 			</button>
@@ -81,11 +81,11 @@
 					<td>{{ item.defaultPrice }}</td>
 					<td>{{ item.department || '--' }}</td>
 					<td class="dropdown-col">
-						<div class="btn-group">
-							<button class="btn btn-default" ng-click="vm.editCheckItem(item)">
+						<div class="btn-group" role-auth="CHECKITEM-UPDATE-1 CHECKITEM-DELETE-1">
+							<button class="btn btn-default" ng-click="vm.editCheckItem(item)" role-auth="CHECKITEM-UPDATE-1">
 								<i class="fa fa-edit"></i><span>编辑</span>
 							</button>
-							<button class="btn dropdown-toggle" data-toggle="dropdown">
+							<button class="btn dropdown-toggle" data-toggle="dropdown"  role-auth="CHECKITEM-DELETE-1">
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">

@@ -3,11 +3,11 @@
 
 	<div class="pt-2">
 		<div class="check-list">
-			<div class="check-tree">
+			<div class="check-tree" role-auth="CHECKITEM-CATALOG-SELECT-1">
 				<div class="loading" ng-if="vm.catalogLoading"><i></i></div>
 				<div id="inspectTree" class="ztree"></div>
 			</div>
-			<div class="check-info">
+			<div class="check-info" ng-class="{'no-padding': !vm.hasCheckItemAuth}">
 				<table class="pt-table">
 					<thead>
 						<tr>
@@ -38,7 +38,7 @@
 							<td>{{ item.default_price }}</td>
 							<td>{{ item.department || '--' }}</td>
 							<td>
-								<button class="btn btn-default" ng-click="vm.deleteCheckItem(item)"><i class="fa fa-trash"></i><span>删除</span></button>
+								<button class="btn btn-default" ng-click="vm.deleteCheckItem(item)" role-auth="CHECKITEM-MAPPING-DELETE-1"><i class="fa fa-trash"></i><span>删除</span></button>
 							</td>
 						</tr>
 					</tbody>
@@ -46,16 +46,16 @@
 			</div>
 
 			<ul id="folder" class="context-menu">
-				<li ng-click="vm.addChildNode()">添加下级目录</li>
-				<li ng-click="vm.addSiblingNode()">添加同级目录</li>
-				<li ng-click="vm.editNode()">重命名</li>
-				<li ng-click="vm.deleteNode()">删除</li>
+				<li ng-click="vm.addChildNode()" role-auth="CHECKITEM-CATALOG-ADD-1">添加下级目录</li>
+				<li ng-click="vm.addSiblingNode()" role-auth="CHECKITEM-CATALOG-ADD-1">添加同级目录</li>
+				<li ng-click="vm.editNode()" role-auth="CHECKITEM-CATALOG-UPDATE-1">重命名</li>
+				<li ng-click="vm.deleteNode()" role-auth="CHECKITEM-CATALOG-DELETE-1">删除</li>
 			</ul>
 			<ul id="file" class="context-menu">
-				<li ng-click="vm.addSiblingNode()">添加同级目录</li>
-				<li ng-click="vm.addCheckItem()">添加检测项</li>
-				<li ng-click="vm.editNode()">重命名</li>
-				<li ng-click="vm.deleteNode()">删除</li>
+				<li ng-click="vm.addSiblingNode()" role-auth="CHECKITEM-CATALOG-ADD-1">添加同级目录</li>
+				<li ng-click="vm.addCheckItem()" role-auth="CHECKITEM-MAPPING-ADD-1">添加检测项</li>
+				<li ng-click="vm.editNode()" role-auth="CHECKITEM-CATALOG-UPDATE-1">重命名</li>
+				<li ng-click="vm.deleteNode()" role-auth="CHECKITEM-CATALOG-DELETE-1">删除</li>
 			</ul>
 		</div>
 	</div>

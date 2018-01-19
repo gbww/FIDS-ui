@@ -348,6 +348,10 @@ i+span {
   vertical-align: middle;
 }
 
+.ng-invalid.ng-dirty {
+  border-color: $unhealthy;
+}
+
 @keyframes scaleIn {
   0% {
     @include scale(0.97);

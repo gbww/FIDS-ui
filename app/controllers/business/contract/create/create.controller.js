@@ -10,7 +10,7 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
 
   vm.storageConditionArr = ['常温', '冷冻', '冷藏'];
   vm.detectTypeArr = ['委托检验', '发证检验', '其他'];
-  vm.executeStandardArr = ['GB/T 23587-2009', '其他'];
+  vm.executeStandardArr = ['GB/T 23587-2009'];
 
   vm.taskCategoryArr = ['监督抽检', '投诉举报', '风险监测'];
   vm.sampleTypeArr = ['普通食品&工业加工食品', '餐饮加工食品', '食品相关产品', '食用农产品', '其他'];

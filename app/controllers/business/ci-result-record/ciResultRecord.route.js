@@ -17,11 +17,11 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 	});
 
 	$stateProvider.state('app.business.itemToCheck.sample.list', {
-		url: '/:id/list',
+		url: '/list/:id',
 		views: {
 			'@app.business.itemToCheck': {
-				templateUrl: 'controllers/business/ci-result-record/sample-category/list/list.html',
-				controller: 'CiResultSampleDetailListCtrl as vm'
+				templateUrl: 'controllers/business/ci-result-record/list/list.html',
+				controller: 'CiResultListCtrl as vm'
 			}
 		}
 	});

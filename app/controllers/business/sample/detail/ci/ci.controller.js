@@ -2,7 +2,7 @@
 
 angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope, $stateParams, $scope, $uibModal, $q, $cookies, api, CheckItemService, SampleService, toastr, dialog) {
   var vm = this;
-  vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1;
+  vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1 && api.permissionArr.indexOf('CHECKITEM-CATALOG-SELECT-1') != -1;
   vm.clonedSampleId = $cookies.get('clonedSampleId');
 
   vm.getSampleCi = function () {

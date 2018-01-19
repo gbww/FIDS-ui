@@ -5,7 +5,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root];
-  vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1;
+  vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1 && api.permissionArr.indexOf('CHECKITEM-CATALOG-SELECT-1') != -1;
 
   vm.clonedSampleId = $cookies.get('clonedSampleId');
   vm.searchObject = {}

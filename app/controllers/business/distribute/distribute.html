@@ -60,7 +60,7 @@
           <thead st-search-watch="vm.searchObject">
             <tr>
               <th>
-                <div st-sort="sampleType">报告编号
+                <div st-sort="reportId">报告编号
                   <i class="fa fa-sort"></i>
                 </div>
                 <adjust-line></adjust-line>
@@ -85,13 +85,13 @@
               <td>{{ sample.receiveSampleId }}</td>
             </tr>
           </tbody>
-          <tfoot ng-show="false">
+          <!-- <tfoot>
             <tr>
               <td colspan="2">
                 <div st-idp st-total-count="vm.total"></div>
               </td>
             </tr>
-          </tfoot>
+          </tfoot> -->
         </table>
       </div>
       <div class="check-info">

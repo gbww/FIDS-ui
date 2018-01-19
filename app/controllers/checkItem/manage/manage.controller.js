@@ -5,6 +5,7 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
 
   var checkItemBC = api.breadCrumbMap.checkItem;
   vm.breadCrumbArr = [checkItemBC.root, checkItemBC.manage];
+  vm.hasCheckItemAuth = api.permissionArr.indexOf('CHECKITEM-CATALOG-SELECT-1') != -1;
 
   vm.isCatalog = true;
 
