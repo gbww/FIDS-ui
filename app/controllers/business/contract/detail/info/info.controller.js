@@ -2,6 +2,7 @@
 
 angular.module('com.app').controller('ContractDetailInfoCtrl', function ($rootScope, $state, $stateParams, $scope, $q, toastr, ContractService) {
   var vm = this;
+  vm.status = $stateParams.status;
   vm.appendix = [];
 
   vm.getContractInfo = function () {
@@ -191,7 +192,7 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($rootSc
     ContractService.editContract(formData).then(function (response) {
       $rootScope.loading = false;  
   		if (response.data.success) {
-        $state.go('app.business.contract');
+        $state.go('app.business.contract', {type: vm.type, status: vm.status});
   			toastr.success('合同修改成功！');
   		} else {
   			toastr.error(response.data.message);

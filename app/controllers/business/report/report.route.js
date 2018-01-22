@@ -3,12 +3,13 @@
 angular.module('com.app').config(function ($stateProvider) {
 	$stateProvider.state('app.business.report', {
 		url: '/report',
+		params: {status: null},
 		templateUrl: 'controllers/business/report/report.html',
 		controller: 'ReportCtrl as vm'
 	});
 
 	$stateProvider.state('app.business.report.detail', {
-		url: '/{:id}',
+		url: ':status/:id',
 		views: {
 			'@app.business': {
 				templateUrl: 'controllers/business/report/detail/detail.html',

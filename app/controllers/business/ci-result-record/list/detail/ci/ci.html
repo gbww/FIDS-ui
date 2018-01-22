@@ -1,0 +1,58 @@
+<div class="contract-check-list check-list">
+	<div class="check-info no-padding">
+		<table class="pt-table">
+			<thead>
+				<tr>
+          <th style="width: 70px;">
+	          序号
+	        </th>
+					<th>
+						<div>抽样单编号</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>名称</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>检测方法</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>单位</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>标准值</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>检测部门</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>更新时间</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-if="vm.ciLoading">
+					<td colspan="8" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+				</tr>
+				<tr ng-if="!vm.ciLoading && vm.checkItems.length == 0">
+					<td colspan="8" class="text-center">暂无检测项</td>
+				</tr>
+				<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
+          <td>{{ $index + 1 }}</td>
+					<td>{{ vm.sample.receiveSampleId }}</td>
+					<td>{{ item.name }}</td>
+					<td>{{ item.method }}</td>
+					<td>{{ item.unit }}</td>
+					<td>{{ item.standardValue }}</td>
+					<td>{{ item.testRoom }}</td>
+					<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

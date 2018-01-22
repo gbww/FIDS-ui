@@ -90,7 +90,7 @@
           </tr>
           <tr ng-repeat="contract in vm.contracts track by $index" ng-if="!vm.loading">
             <td>
-              <a href ui-sref="app.business.contract.detail.info({id: contract.id})">{{ contract.id }}</a>
+              <a href ui-sref="app.business.contract.detail.info({type: contract.type, status: vm.statusFilter, id: contract.id})">{{ contract.id }}</a>
             </td>
             <td>{{ contract.sampleName }}</td>
             <td>{{ contract.detectType }}</td>
@@ -117,7 +117,7 @@
                   <i class="icon icon-record"></i>
                   <span>录入评审意见</span>
                 </button>
-                <button class="btn btn-default" ui-sref="app.business.contract.detail.info({id: contract.id})" ng-if="contract.status != 0 && (!contract.task || contract.status != '1')"
+                <button class="btn btn-default" ui-sref="app.business.contract.detail.info({type: contract.type, status: vm.statusFilter, id: contract.id})" ng-if="contract.status != 0 && (!contract.task || contract.status != '1')"
                   role-auth="CONTRACT-UPDATE-1">
                   <i class="fa fa-edit"></i>
                   <span>编辑</span>
@@ -126,7 +126,7 @@
                   <i class="caret"></i>
                 </button>
                 <ul class="dropdown-menu">
-                  <li ui-sref="app.business.contract.detail.info({id: contract.id})" role-auth="CONTRACT-UPDATE-1">
+                  <li ui-sref="app.business.contract.detail.info({type: contract.type, status: vm.statusFilter, id: contract.id})" role-auth="CONTRACT-UPDATE-1">
                     <a href>
                       <i class="fa fa-edit"></i>
                       <span>编辑</span>

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $uibModal, $timeout, api, toastr, SampleService) {
+angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $stateParams, $uibModal, $timeout, api, toastr, SampleService) {
   var vm = this;
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.report.root];
@@ -26,7 +26,7 @@ angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $ui
   vm.reportIdArr = [], vm.sampleNameArr = [], vm.entrustedUnitArr = [], vm.inspectedUnitArr = [],
     vm.productionUnitArr = [], vm.sampleIdArr = [], vm.exeStandardArr = [];
 
-  vm.status = 0;
+  vm.status = parseInt($stateParams.status) || 0;
   vm.samples = [];
   vm.loading = true;
   vm.getSampleList = function (tableState) {

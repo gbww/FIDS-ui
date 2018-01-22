@@ -35,7 +35,8 @@ angular.module('com.app').constant('api', {
         detail: {name: '报告详情', url: 'app.business.report.detail'}
       },
       itemToCheck: {
-        root: {name: '检测结果录入'}
+        root: {name: '检测结果录入', url: 'app.business.itemToCheck.list'},
+        detail: {name: '抽样单详情'}
       },
       distribute: {
         root: {name: '检测项分配', url: 'app.business.itemToCheck'},

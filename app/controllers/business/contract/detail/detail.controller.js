@@ -1,10 +1,15 @@
 'use strict';
 
-angular.module('com.app').controller('ContractDetailCtrl', function ($scope, $state, api) {
+angular.module('com.app').controller('ContractDetailCtrl', function ($scope, $state, $stateParams, api) {
   var vm = this;
 
   var businessBC = api.breadCrumbMap.business;
-  vm.breadCrumbArr = [businessBC.root, businessBC.contract.root, businessBC.contract.detail];
+  var contract = angular.copy(businessBC.contract.root);
+  contract.params = {
+    type: $stateParams.type,
+    status: $stateParams.status
+  };
+  vm.breadCrumbArr = [businessBC.root, contract, businessBC.contract.detail];
 
   vm.goTab = function (tab) {
     if (tab == 'info') {

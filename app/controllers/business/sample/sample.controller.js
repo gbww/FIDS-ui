@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope, $state, $cookies, $uibModal, $timeout, api, dialog, toastr, SampleService, CheckItemService) {
+angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope, $state, $stateParams, $cookies, $uibModal, $timeout, api, dialog, toastr, SampleService, CheckItemService) {
   var vm = this;
 
   var businessBC = api.breadCrumbMap.business;
@@ -31,7 +31,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.reportIdArr = [], vm.sampleNameArr = [], vm.entrustedUnitArr = [], vm.inspectedUnitArr = [],
   vm.productionUnitArr = [], vm.sampleIdArr = [], vm.exeStandardArr =[];
 
-  vm.status = 0;
+  vm.status = parseInt($stateParams.status) || 0;
   vm.samples = [];
   vm.loading = true;
   vm.ciLoading = true;
@@ -179,7 +179,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   })
 
   vm.goDetail = function (id) {
-    $state.go('app.business.sample.detail.info', {id: id});
+    $state.go('app.business.sample.detail.info', {status: vm.status, id: id});
   }
 
   vm.delete = function (sample, event) {

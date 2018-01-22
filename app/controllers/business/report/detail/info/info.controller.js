@@ -2,6 +2,7 @@
 
 angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, $state, $stateParams, api, toastr, SampleService, PrivilegeService) {
   var vm = this;
+  vm.status = $stateParams.status;
 
   vm.getSampleInfo = function () {
     vm.loading = true;
@@ -67,7 +68,7 @@ angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, $
 		SampleService.editSample(data).then(function (response) {
   		if (response.data.success) {
   			toastr.success('报告修改成功！');
-        $state.go('app.business.report');
+        $state.go('app.business.report', {status: vm.status});
   		} else {
   			toastr.error(response.data.message);
   		}
@@ -90,7 +91,7 @@ angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, $
     SampleService.editSample(angular.merge({}, vm.sample, {reportStatus: reportStatus})).then(function (response) {
       if (response.data.success) {
         toastr.success('报告已驳回！');
-        $state.go('app.business.report');
+        $state.go('app.business.report', {status: vm.status});
       } else {
         toastr.error(response.data.message);
       }

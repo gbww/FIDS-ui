@@ -95,13 +95,6 @@ angular.module('com.app').controller('DistributeCtrl', function ($rootScope, $sc
   	})
   }
 
-  vm.searchStatus = function (filter) {
-    if (vm.status != filter) {
-      vm.status = filter;
-      vm.refreshTable('toggle');
-    }
-  }
-
   vm.back = function () {
     vm.advance = false;
     angular.merge(vm.searchConditions, {
@@ -146,36 +139,7 @@ angular.module('com.app').controller('DistributeCtrl', function ($rootScope, $sc
     vm.getSampleCi();
   }
 
-  vm.goDetail = function (id) {
-    $state.go('app.business.sample.detail.info', {id: id});
-  }
 
-
-  /*
-   ** 接样单检测项
-   */
-
-  var setting = {
-    callback: {
-      onExpand: expandNode,
-      onClick: clickNode
-    }
-  }
-
-  // 树形结构
-  // vm.catalogLoading = true;
-  // if (vm.hasAddItemAuth) {
-  //   CheckItemService.getChildCatalog('-1').then(function (response) {
-  //     vm.catalogLoading = false;
-  //     var data = response.data.entity;
-  //     angular.forEach(data, function (item) {
-  //       angular.merge(item, {name: item.productName, isParent: item.isCatalog=='1'})
-  //     })
-  //     vm.tree = $.fn.zTree.init($("#inspectTree"), setting, data);
-  //   })
-  // }
-
-  // 根据
   vm.checkItems = [];
   vm.getSampleCi = function () {
     vm.ciLoading = true;
@@ -187,35 +151,6 @@ angular.module('com.app').controller('DistributeCtrl', function ($rootScope, $sc
         toastr.error(response.data.message);
       }
     })
-  }
-
-  function expandNode (event, treeId, treeNode) {
-   
-  }
-
-
-  // 点击检测项集合节点，弹出集合的检测项供用户添加
-  function clickNode (event, treeId, treeNode) {
-  }
-
-
-  vm.edit = function (ci) {
-    var modalInstance = $uibModal.open({
-      animation: true,
-      size: 'md',
-      backdrop: 'static',
-      templateUrl: 'controllers/business/sample/detail/ci/edit/edit.html',
-      controller: 'EditSampleCiCtrl as vm',
-      resolve: {
-        sampleId: function () {return vm.selectedSample.receiveSampleId;},
-        checkItem: function () {return ci;}
-      }
-    });
-
-    modalInstance.result.then(function (res) {
-      toastr.success('检测项修改成功！');
-      vm.getSampleCi();
-    });
   }
 
   vm.distribute = function (item) {

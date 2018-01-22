@@ -1,9 +1,13 @@
 'use strict';
 
-angular.module('com.app').controller('SampleDetailCtrl', function ($scope, $state, api) {
+angular.module('com.app').controller('SampleDetailCtrl', function ($scope, $state, $stateParams, api) {
   var vm = this;
   var businessBC = api.breadCrumbMap.business;
-  vm.breadCrumbArr = [businessBC.root, businessBC.sample.root, businessBC.sample.detail];
+  var sample = angular.copy(businessBC.sample.root);
+  sample.params = {
+    status: parseInt($stateParams.status)
+  };
+  vm.breadCrumbArr = [businessBC.root, sample, businessBC.sample.detail];
 
   vm.goTab = function (tab) {
     if (tab == 'info') {

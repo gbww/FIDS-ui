@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $uibModal, $timeout, api, dialog, toastr, ContractService) {
+angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $stateParams, $uibModal, $timeout, api, dialog, toastr, ContractService) {
   var vm = this;
 
   var businessBC = api.breadCrumbMap.business;
@@ -19,8 +19,8 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
     }
   }
 
-  vm.type = 'enterprise';
-  vm.statusFilter = 'all';
+  vm.type = $stateParams.type || 'enterprise';
+  vm.statusFilter = $stateParams.status || 'all';
   vm.contracts = [];
   vm.loading = true;
   vm.getContractList = function (tableState) {
@@ -112,6 +112,7 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
     if (vm.type === type) {
       return;
     }
+    vm.statusFilter = 'all';
     if (type === 'enterprise') {
       vm.type = 'enterprise';
     } else if (type === 'government') {

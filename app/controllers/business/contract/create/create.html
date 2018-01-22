@@ -350,11 +350,11 @@
               <span>抽检环节</span>
             </td>
             <td>
-              <input type="radio" id="sc" ng-model="vm.sample.inspection" value="生产环节">
+              <input type="radio" id="sc" ng-model="vm.contract.inspection" value="生产环节">
               <label for="sc">生产环节</label>&emsp;
-              <input type="radio" id="lt" ng-model="vm.sample.inspection" value="流通环节">
+              <input type="radio" id="lt" ng-model="vm.contract.inspection" value="流通环节">
               <label for="lt">流通环节</label>&emsp;
-              <input type="radio" id="cy" ng-model="vm.sample.inspection" value="餐饮环节">
+              <input type="radio" id="cy" ng-model="vm.contract.inspection" value="餐饮环节">
               <label for="cy">餐饮环节</label>&emsp;
             </td>
           </tr>
@@ -599,7 +599,7 @@
     </form>
     <div class="btn-area text-center">
       <button class="btn btn-2x btn-default-dark" ng-click="vm.ok(form)">确认</button>
-      <button class="btn btn-2x btn-default-light" ui-sref="app.business.contract">取消</button>
+      <button class="btn btn-2x btn-default-light" ui-sref="app.business.contract({type: vm.type})">取消</button>
     </div>
   </div>
 </div>

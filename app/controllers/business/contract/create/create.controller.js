@@ -79,7 +79,7 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
 		var sampleList = angular.copy(vm.sampleArr);
     angular.forEach(sampleList, function (sample, idx) {
       if (!sample.name || !sample.executeStandard) {
-        vm.sampleArr.splice(idx, 1);
+        sampleList.splice(idx, 1);
       } else {
       	if (!sample.specificationQuantity) delete sample.specificationQuantity;
       	if (!sample.detectBy) delete sample.detectBy;
@@ -107,6 +107,9 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
       }),
       sampleList: sampleList
     };
+    // if (sampleList.length > 0) {
+    //   contractData.sampleList = sampleList;
+    // }
     var formData = new FormData();
     formData.append('isFood', vm.isFood);
     formData.append('contractSample', JSON.stringify(contractData));
@@ -117,7 +120,7 @@ angular.module('com.app').controller('ContractCreateCtrl', function ($state, $st
 		ContractService.createContract(formData).then(function (response) {
 			if (response.data.success) {
 				toastr.success('合同 ' + response.data.entity + ' 录入成功！');
-				$state.go('app.business.contract');
+				$state.go('app.business.contract', {type: vm.type});
 			} else {
 				toastr.error(response.data.message);
 			}

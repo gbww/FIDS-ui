@@ -17,7 +17,7 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
     }
   };
 
-  vm.status = 1;
+  vm.status = parseInt($stateParams.status) ||1;
   vm.checkItems = [];
   vm.loading = true;
   vm.getCheckItemList = function (tableState) {

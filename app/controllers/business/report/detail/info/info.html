@@ -397,6 +397,6 @@
     </button>
     <button class="btn btn-2x btn-default-light" ng-click="vm.reset(form, 'unpass')" role-auth="SAMPLE-UPDATESAMPLE-1" ng-if="vm.sample.reportStatus == 1">不通过</button>
     <button class="btn btn-2x btn-default-light" ng-click="vm.reset(form, 'unapprove')" role-auth="SAMPLE-UPDATESAMPLE-1" ng-if="vm.sample.reportStatus == 2">不批准</button>
-    <button class="btn btn-2x btn-default-light" ui-sref="app.business.report">取消</button>
+    <button class="btn btn-2x btn-default-light" ui-sref="app.business.report({status: vm.status})">取消</button>
   </div>
 </div>

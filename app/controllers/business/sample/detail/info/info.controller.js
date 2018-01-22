@@ -2,6 +2,7 @@
 
 angular.module('com.app').controller('SampleDetailInfoCtrl', function ($state, $stateParams, $scope, $uibModal, toastr, SampleService, PrivilegeService) {
   var vm = this;
+  vm.status = $stateParams.status;
 
   vm.getSampleInfo = function () {
     vm.loading = true;
@@ -69,7 +70,7 @@ angular.module('com.app').controller('SampleDetailInfoCtrl', function ($state, $
 
 		SampleService.editSample(vm.sample).then(function (response) {
   		if (response.data.success) {
-        $state.go('app.business.sample');
+        $state.go('app.business.sample', {status: vm.status});
   			toastr.success('接样单修改成功！');
   		} else {
   			toastr.error(response.data.message);
