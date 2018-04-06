@@ -52,7 +52,7 @@ angular.module('com.app').controller('CustomAddCatalogCiCtrl', function ($scope,
     if (vm.allChecked){
       vm.checkedItems = [];
       angular.forEach(vm.checkItems, function (checkItem, idx) {
-        vm.checkedItems.push(checkItem.id);
+        vm.checkedItems.push(checkItem);
         vm.itemChecked[idx] = true;
       });
     } else {
@@ -63,16 +63,16 @@ angular.module('com.app').controller('CustomAddCatalogCiCtrl', function ($scope,
     }
   }
 
-  vm.checkItem = function (event, idx, id) {
+  vm.checkItem = function (event, idx, item) {
     if(event.target.checked){
-      vm.checkedItems.push(id);
+      vm.checkedItems.push(item);
       vm.itemChecked[idx] = true;
       if(vm.checkedItems.length == vm.checkItems.length){
         vm.allChecked = true;
       }
     } else {
       for (var i=0,len=vm.checkedItems.length; i<len; i++){
-        if (id == vm.checkedItems[i]) {
+        if (item.id == vm.checkedItems[i].id) {
           vm.checkedItems.splice(i, 1);
           break;
         }

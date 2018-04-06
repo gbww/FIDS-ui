@@ -63,7 +63,7 @@
 			</tr>
 			<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.loading">
 				<td>
-					<input type="checkbox" ng-checked="vm.itemChecked[$index]" ng-click="vm.checkItem($event, $index, item.id)">
+					<input type="checkbox" ng-checked="vm.itemChecked[$index]" ng-click="vm.checkItem($event, $index, item)">
 				</td>
 				<td>{{ item.name }}</td>
 				<td>{{ item.method }}</td>

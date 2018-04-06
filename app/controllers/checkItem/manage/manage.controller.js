@@ -240,12 +240,11 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
 
     modalInstance.result.then(function (res) {
     	var promiseArr = [];
-    	angular.forEach(res, function (checkItemId) {
-    		var data = {
-    			catalogId: node.id,
-    			checkItemId: checkItemId,
-    			laborary: null
-    		}
+    	angular.forEach(res, function (item) {
+    		var data = angular.merge({}, item, {
+          catalogId: node.id,
+          checkItemId: item.id
+    		});
     		promiseArr.push(CheckItemService.recordCiToCatalog(data));
     	})
     	$q.all(promiseArr).then(function () {
