@@ -50,6 +50,14 @@ angular.module('com.app').factory('CheckItemService', function ($http) {
 			})
 		},
 
+		editCatalogCi: function (data) {
+			return $http({
+				url: '/api/v1/ahgz/checkitemscatalog/item/mapping',
+				method: 'PUT',
+				data: data
+			})
+		},
+
 		deleteCatalogCi: function (id) {
 			return $http({
 				url: '/api/v1/ahgz/checkitemscatalog/item/mapping/' + id,

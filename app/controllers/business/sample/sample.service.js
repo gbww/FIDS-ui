@@ -5,6 +5,7 @@ angular.module('com.app').factory('SampleService', function ($http) {
 		getSampleList: function (tableParams, searchConditions, status) {
 			return $http({
 				url: '/api/v1/ahgz/sample',
+				method: 'GET',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
@@ -24,6 +25,7 @@ angular.module('com.app').factory('SampleService', function ($http) {
 		getUndistributeSamples: function (tableParams, searchConditions) {
 			return $http({
 				url: '/api/v1/ahgz/sample/listForDistribute',
+				method: 'GET',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
@@ -39,9 +41,23 @@ angular.module('com.app').factory('SampleService', function ($http) {
 			})
 		},
 
+		getUndistributeCi: function (tableParams, searchConditions) {
+			return $http({
+				url: '/api/v1/ahgz/sample/items/unassigned',
+				method: 'GET',
+				params: {
+          pageSize: tableParams.pageSize,
+          pageNum: tableParams.pageNum,
+          order: tableParams.order,
+          reportId: searchConditions.reportId
+        }
+			})
+		},
+
 		getReportList: function (tableParams, searchConditions, reportStatus) {
 			return $http({
 				url: '/api/v1/ahgz/sample/reports',
+				method: 'GET',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
@@ -53,7 +69,8 @@ angular.module('com.app').factory('SampleService', function ($http) {
           productionUnit: searchConditions.productionUnit,
           receiveSampleId: searchConditions.receiveSampleId,
           executeStandard: searchConditions.executeStandard,
-					reportStatus: reportStatus
+					reportStatus: reportStatus,
+					status: 1
         }
 			})
 		},
@@ -107,10 +124,19 @@ angular.module('com.app').factory('SampleService', function ($http) {
 			return $http.get('/api/v1/ahgz/sample/items/item/' + id);
 		},
 
-		// 批量录入和更改(同一抽样单)
+		// 批量录入
+		recordSampleCi: function (sampleId, data) {
+			return $http({
+				url: '/api/v1/ahgz/sample/item/add/' + sampleId,
+				method: 'POST',
+				data: data
+			})
+		},
+
+		// 更改
 		updateSampleCi: function (sampleId, data) {
 			return $http({
-				url: '/api/v1/ahgz/sample/item/' + sampleId,
+				url: '/api/v1/ahgz/sample/item/update/' + sampleId,
 				method: 'POST',
 				data: data
 			})

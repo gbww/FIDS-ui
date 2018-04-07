@@ -13,10 +13,10 @@
 				<i class="icon icon-paste"></i>
 				<span>追加复制检测项</span>
 			</button>
-			<button class="btn btn-default-light" ng-click="vm.batchDistribute()" role-auth="SAMPLE-ADDITEM-1">
+			<!-- <button class="btn btn-default-light" ng-click="vm.batchDistribute()" role-auth="SAMPLE-ADDITEM-1">
 				<i class="icon icon-distribute"></i>
 				<span>批量分配检测人员</span>
-			</button>
+			</button> -->
 		</div>
 		<table class="pt-table">
 			<thead>
@@ -46,7 +46,23 @@
 						<adjust-line></adjust-line>
 					</th>
 					<th>
+						<div>默认价格</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>状态</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>是否分包</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
 						<div>检测部门</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>检测员</div>
 						<adjust-line></adjust-line>
 					</th>
 					<th>
@@ -58,10 +74,10 @@
 			</thead>
 			<tbody>
 				<tr ng-if="vm.ciLoading">
-					<td colspan="9" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+					<td colspan="13" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 				</tr>
 				<tr ng-if="!vm.ciLoading && vm.checkItems.length == 0">
-					<td colspan="9" class="text-center">暂无检测项</td>
+					<td colspan="13" class="text-center">暂无检测项</td>
 				</tr>
 				<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
           <td>
@@ -73,7 +89,20 @@
 					<td>{{ item.method }}</td>
 					<td>{{ item.unit }}</td>
 					<td>{{ item.standardValue }}</td>
-					<td>{{ item.testRoom }}</td>
+					<td>{{ item.defaultPrice }}</td>
+					<td>
+						<i class="icon"
+							ng-class="{'initial icon-status-doing': item.status==0,
+							'handling icon-status-unhandle': item.status==1,
+							'done icon-status-success': item.status==2}">
+						</i>
+						<span ng-if="item.status == 0">未分配</span>
+						<span ng-if="item.status == 1">待检测</span>
+						<span ng-if="item.status == 2">检测完成</span>
+					</td>
+					<td>{{ item.subpackage === '1' ? '是' : '否' }}</td>
+					<td>{{ item.testRoom || '--' }}</td>
+					<td>{{ item.testUser || '--' }}</td>
 					<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
 					<td class="dropdown-col">
 						<div class="btn-group">
@@ -84,9 +113,9 @@
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li ng-click="vm.distribute(item)" role-auth="SAMPLE-ADDITEM-1">
+								<!-- <li ng-click="vm.distribute(item)" role-auth="SAMPLE-ADDITEM-1">
 									<a href><i class="icon icon-distribute"></i><span>分配检测人员</span></a>
-								</li>
+								</li> -->
 								<li ng-click="vm.delete(item)" role-auth="SAMPLE-DELETEITEM-1">
 									<a href><i class="fa fa-trash"></i><span>删除</span></a>
 								</li>

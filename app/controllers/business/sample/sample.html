@@ -177,10 +177,10 @@
 						<i class="icon icon-paste"></i>
 						<span>追加复制检测项</span>
 					</button>
-					<button class="btn btn-default-light" ng-click="vm.batchDistribute()">
+					<!-- <button class="btn btn-default-light" ng-click="vm.batchDistribute()">
 						<i class="icon icon-distribute"></i>
 						<span>批量分配检测人员</span>
-					</button>
+					</button> -->
 				</div>
 				<table class="pt-table">
 					<thead>
@@ -214,7 +214,7 @@
 								<adjust-line></adjust-line>
 							</th>
 							<th>
-								<div>分包</div>
+								<div>是否分包</div>
 								<adjust-line></adjust-line>
 							</th>
 							<th>
@@ -256,7 +256,7 @@
 								<span ng-if="item.status == 1">待检测</span>
 								<span ng-if="item.status == 2">检测完成</span>
 							</td>
-							<td>{{ item.subpackage }}</td>
+							<td>{{ item.subpackage === '1' ? '是' : '否' }}</td>
 							<td>{{ item.testRoom || '--' }}</td>
 							<td>{{ item.testUser || '--' }}</td>
 							<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
@@ -269,9 +269,9 @@
 										<i class="caret"></i>
 									</button>
 									<ul class="dropdown-menu">
-										<li ng-click="vm.distribute(item)" role-auth="SAMPLE-ADDITEM-1">
+										<!-- <li ng-click="vm.distribute(item)" role-auth="SAMPLE-ADDITEM-1">
 											<a href><i class="icon icon-distribute"></i><span>检测分配</span></a>
-										</li>
+										</li> -->
 										<li ng-click="vm.deleteCI(item)" role-auth="SAMPLE-DELETEITEM-1">
 											<a href><i class="fa fa-trash"></i><span>删除</span></a>
 										</li>

@@ -54,7 +54,7 @@
       </tr>
       <tr ng-repeat="sample in vm.samples track by $index" ng-if="!vm.loading">
         <td>
-          <a ui-sref="app.business.itemToCheck.sample.list({id: sample.receiveSampleId})">{{ sample.reportId }}</a>
+          <a ui-sref="app.business.itemToCheck.sample.list({reportId: sample.reportId, receiveSampleId: sample.receiveSampleId})">{{ sample.reportId }}</a>
         </td>
         <td>{{ sample.sampleName }}</td>
         <td>{{ sample.entrustedUnit }}</td>

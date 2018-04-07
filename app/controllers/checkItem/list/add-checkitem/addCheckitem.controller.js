@@ -2,7 +2,9 @@
 
 angular.module('com.app').controller('DBAddCheckItemCtrl', function ($scope, $uibModalInstance, CheckItemService, toastr, organizations) {
   var vm = this;
-	vm.checkItem = {};
+	vm.checkItem = {
+		subpackage: 0
+	};
 	vm.organizations = organizations;
 
   vm.characterArr = ['>', '>=', '<', '<=', '~', '!', '/', '$', '%', '^', '*', '(', ')', '[', ']'];

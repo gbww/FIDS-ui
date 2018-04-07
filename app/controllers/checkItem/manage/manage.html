@@ -19,13 +19,14 @@
 							<th>定量限</th>
 							<th>设备</th>
 							<th>默认价格</th>
+							<th>依据法律法规</th>
 							<th>检测部门</th>
-							<th>操作</th>
+							<th style="width: 100px">操作</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr ng-if="vm.checkItems.length == 0">
-							<td colspan="10" class="text-center">暂无检测项</td>
+							<td colspan="11" class="text-center">暂无检测项</td>
 						</tr>
 						<tr ng-repeat="item in vm.checkItems track by item.id">
 							<td>{{ item.name }}</td>
@@ -36,9 +37,22 @@
 							<td>{{ item.quantitation_limit }}</td>
 							<td>{{ item.device }}</td>
 							<td>{{ item.default_price }}</td>
+							<td>{{ item.law }}</td>
 							<td>{{ item.department || '--' }}</td>
-							<td>
-								<button class="btn btn-default" ng-click="vm.deleteCheckItem(item)" role-auth="CHECKITEM-MAPPING-DELETE-1"><i class="fa fa-trash"></i><span>删除</span></button>
+							<td class="dropdown-col">
+								<div class="btn-group" role-auth="CHECKITEM-UPDATE-1 CHECKITEM-DELETE-1">
+									<button class="btn btn-default" ng-click="vm.editCheckItem(item)" role-auth="CHECKITEM-MAPPING-ADD-1">
+										<i class="fa fa-edit"></i><span>编辑</span>
+									</button>
+									<button class="btn dropdown-toggle" data-toggle="dropdown"  role-auth="CHECKITEM-MAPPING-DELETE-1">
+										<i class="caret"></i>
+									</button>
+									<ul class="dropdown-menu">
+										<li ng-click="vm.deleteCheckItem(item)">
+											<a href><i class="fa fa-trash"></i><span>删除</span></a>
+										</li>
+									</ul>
+								</div>
 							</td>
 						</tr>
 					</tbody>

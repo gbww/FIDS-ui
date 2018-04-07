@@ -28,7 +28,7 @@
 
     <div class="pull-right multiple-search">
       <input class="input" placeholder="报告编号" ng-model="vm.query.reportId" ng-keyup="vm.eventSearch($event)">
-      <input class="input" placeholder="抽样单编号" ng-model="vm.query.receiveSampleId" ng-keyup="vm.eventSearch($event)" ng-if="!vm.receiveSampleId">
+      <input class="input" placeholder="抽样单编号" ng-model="vm.query.receiveSampleId" ng-keyup="vm.eventSearch($event)">
       <button class="btn btn-default-dark" ng-click="vm.search()">
         <i class="fa fa-search"></i>
         <sapn>查询</sapn>

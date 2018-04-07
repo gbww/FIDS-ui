@@ -1,24 +1,24 @@
 'use strict';
 
-angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $state, $cookies, $uibModal, api, toastr, SampleService, PrivilegeService) {
+angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $state, $cookies, $uibModal, api, toastr, SampleService) {
   var vm = this;
 
-  vm.loading = true;
-  PrivilegeService.getUserList().then(function (response) {
-    vm.loading = false;
-    if (response.data.success) {
-      var res = [];
-      angular.forEach(response.data.entity.list, function (user) {
-        res.push(user.name);
-      });
-      vm.users = res;
-    } else {
-      toastr.error(response.data.message);
-    }
-  }).catch(function (err) {
-    toastr.error(err.data);
-    vm.loading = false;
-  });
+  // vm.loading = true;
+  // PrivilegeService.getUserList().then(function (response) {
+  //   vm.loading = false;
+  //   if (response.data.success) {
+  //     var res = [];
+  //     angular.forEach(response.data.entity.list, function (user) {
+  //       res.push(user.name);
+  //     });
+  //     vm.users = res;
+  //   } else {
+  //     toastr.error(response.data.message);
+  //   }
+  // }).catch(function (err) {
+  //   toastr.error(err.data);
+  //   vm.loading = false;
+  // });
 
   vm.clonedSampleId = $cookies.get('clonedSampleId');
 

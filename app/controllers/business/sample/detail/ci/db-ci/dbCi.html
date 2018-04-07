@@ -54,16 +54,24 @@
 					<adjust-line></adjust-line>
 				</th>
 				<th>
+					<div>是否分包</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
+					<div>依据法律法规</div>
+					<adjust-line></adjust-line>
+				</th>
+				<th>
 					<div>检测部门</div>
 				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-if="vm.loading">
-				<td colspan="10" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+				<td colspan="12" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 			</tr>
 			<tr ng-if="!vm.loading && vm.checkItems.length == 0">
-				<td colspan="10" class="text-center">暂无检测项</td>
+				<td colspan="12" class="text-center">暂无检测项</td>
 			</tr>
 			<tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.loading">
 				<td>
@@ -77,12 +85,14 @@
 				<td>{{ item.quantitationLimit }}</td>
 				<td>{{ item.device }}</td>
 				<td>{{ item.defaultPrice }}</td>
+				<td>{{ item.subpackage === '1' ? '是' : '否' }}</td>
+				<td>{{ item.law }}</td>
 				<td>{{ item.department }}</td>
 			</tr>
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="10">
+				<td colspan="12">
 					<div st-idp st-total-count="vm.total"></div>
 				</td>
 			</tr>

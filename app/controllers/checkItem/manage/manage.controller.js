@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootScope, $scope, $state, $uibModal, $q, $filter, api, CheckItemService, toastr, dialog) {
+angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootScope, $scope, $state, $uibModal, $q, $filter, api, CheckItemService, PrivilegeService, toastr, dialog) {
   var vm = this;
 
   var checkItemBC = api.breadCrumbMap.checkItem;
@@ -293,6 +293,38 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
     }).catch(function (err) {
     	toastr.error(err.data);
     })
+  }
+
+  vm.editCheckItem = function (item) {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      size: 'md',
+      backdrop: 'static',
+      templateUrl: 'controllers/checkItem/manage/edit-checkitem/editCheckitem.html',
+      controller: 'ManageEditCheckItemCtrl as vm',
+      resolve: {
+        checkItem: function () {return item;},
+        organizations: ['$rootScope', '$q', function ($rootScope, $q) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getOrganizationList().then(function (response) {
+            $rootScope.loading = false;
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              $rootScope.loading = false;
+              deferred.reject();
+            }
+          });
+          return deferred.promise;
+        }]
+      }
+    });
+
+    modalInstance.result.then(function (res) {
+      vm.getCatalogCheckItems(vm.selectedNode.id);
+      toastr.success('检测项修改成功！');
+    });
   }
 
   vm.deleteCheckItem = function (item) {

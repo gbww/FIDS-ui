@@ -17,7 +17,7 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 	});
 
 	$stateProvider.state('app.business.itemToCheck.sample.list', {
-		url: '/list/:id',
+		url: '/list/:reportId/:receiveSampleId',
 		views: {
 			'@app.business.itemToCheck': {
 				templateUrl: 'controllers/business/ci-result-record/list/list.html',

@@ -98,7 +98,7 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
       });
     }
     $rootScope.loading = true;
-    SampleService.updateSampleCi(vm.sample.receiveSampleId, data).then(function (response) {
+    SampleService.recordSampleCi(vm.sample.receiveSampleId, data).then(function (response) {
       $rootScope.loading = false;
       if (response.data.success) {
         vm.getSampleCi();

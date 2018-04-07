@@ -1,37 +1,28 @@
 'use strict';
 
-angular.module('com.app').controller('CiResultListCtrl', function ($stateParams, $uibModal, SampleService, toastr) {
+angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($rootScope, $uibModal, $timeout, api, toastr, SampleService, CheckItemService, PrivilegeService) {
   var vm = this;
 
-  vm.query = {
-    reportId: $stateParams.reportId || null,
-    receiveSampleId: $stateParams.receiveSampleId || null
-  };
-  vm.searchObject = {};
+  var businessBC = api.breadCrumbMap.business;
+  vm.breadCrumbArr = [businessBC.root, businessBC.distribute.root];
 
-  vm.refreshTable = function (flag) {
-    vm.searchObject.timestamp = new Date();
-    if (flag === 'toggle') {
-      vm.searchObject.toggle = true;
-    }
-  };
+  vm.searchObject = {}
+  vm.searchConditions = {
+    reportId: ''
+  }
 
-  vm.status = parseInt($stateParams.status) ||1;
-  vm.checkItems = [];
+
+  vm.status = 5;
+  vm.samples = [];
   vm.loading = true;
-  vm.getCheckItemList = function (tableState) {
+  vm.ciLoading = true;
+  vm.getCiList = function (tableState) {
     var orderBy = tableState.sort.predicate;
     var reverse = tableState.sort.reverse ? 'desc' : 'asc';
-    if (orderBy === 'reportId') {
+    if (orderBy == 'reportId') {
       orderBy = 'report_id';
-    } else if (orderBy === 'receiveSampleId') {
-      orderBy = 'receive_sample_id';
-    } else if (orderBy === 'testRoom') {
-      orderBy = 'test_room';
-    } else if (orderBy === 'testUser') {
-      orderBy = 'test_user';
-    } else if (orderBy === 'updatedAt') {
-      orderBy = 'updated_at';
+    } else if (orderBy == 'createdAt') {
+      orderBy = 'created_at';
     }
 
     var tableParams = {
@@ -39,16 +30,12 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-
-  	SampleService.getUserCi(tableParams, vm.status, vm.query).then(function (response) {
-      vm.loading = false;
+  	SampleService.getUndistributeCi(tableParams, vm.searchObject).then(function (response) {
+      vm.ciLoading = false;
       if (response.data.success) {
-        vm.checkItems = response.data.entity.list;
+        vm.checkItems = response.data.entity;
         vm.total = response.data.entity.total;
         tableState.pagination.numberOfPages = response.data.entity.pages;
-        if (tableState.pagination.start > vm.total) {
-          tableState.pagination.start = 0;
-        }
       } else {
         vm.total = 0;
         toastr.error(response.data.message);
@@ -59,20 +46,15 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
   	})
   }
 
-  vm.searchStatus = function (filter) {
-    if (vm.status != filter) {
-      vm.status = filter;
-      vm.refreshTable('toggle');
-    }
-  }
 
   vm.search=function(){
-    vm.refreshTable();
+    vm.searchObject = angular.copy(vm.searchConditions);
   }
+
   vm.eventSearch=function(e){
     var keycode = window.event?e.keyCode:e.which;
     if(keycode==13){
-      vm.refreshTable();
+      vm.search();
     }
   }
 
@@ -86,7 +68,7 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       resolve: {
         sampleId: function () {return item.receiveSampleId;},
         checkItems: function () {return [item];},
-        departments: ['$rootScope', '$q', 'PrivilegeService', function ($rootScope, $q, PrivilegeService) {
+        departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;
           var deferred = $q.defer();
           PrivilegeService.getOrganizationList().then(function (response) {
@@ -108,41 +90,28 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
     modalInstance.result.then(function (res) {
       $timeout(function () {
         toastr.success('检测项分配成功！');
-        vm.getSampleCi();
+        vm.getCiList();
       }, 500)
     });
   }
 
-  vm.recordResult = function (item) {
-    var modalInstance = $uibModal.open({
-      animation: true,
-      size: 'md',
-      backdrop: 'static',
-      templateUrl: 'controllers/business/ci-result-record/edit/edit.html',
-      controller: 'RecordCiResultCtrl as vm',
-      resolve: {
-        checkItems: function () {return [item];}
-      }
-    });
-
-    modalInstance.result.then(function () {
-      toastr.success('检测项结果录入成功！');
-      vm.refreshTable();
-    });
-  }
-
-  vm.batch = function () {
+  vm.batchDistribute = function () {
     if (vm.selectedItems.length === 0) {
       toastr.warning('请选择检测项！');
       return;
     }
 
-    var val = '';
+    var testRoom = '', testUser = '', sampleId = '';
     for (var i=0,len=vm.selectedItems.length; i<len; i++) {
       if (i == 0) {
-        val = vm.selectedItems[i].standardValue;
-      } else if (val !== vm.selectedItems[i].standardValue) {
-        toastr.error('请确认所选检测项标准值相同或相等！');
+        sampleId = vm.selectedItems[i].receiveSampleId;
+        testRoom = vm.selectedItems[i].testRoom;
+        testUser = vm.selectedItems[i].testUser;
+      } else if (sampleId !== vm.selectedItems[i].receiveSampleId) {
+        toastr.error('请确认所选检测项属于同一接样单！');
+        return;
+      } else if (testRoom !== vm.selectedItems[i].testRoom || testUser !== vm.selectedItems[i].testUser) {
+        toastr.error('请确认所选检测项分配的检测室检测人员为同一人！');
         return;
       }
     }
@@ -151,17 +120,34 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/business/ci-result-record/edit/edit.html',
-      controller: 'RecordCiResultCtrl as vm',
+      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
+      controller: 'CiDistributeCtrl as vm',
       resolve: {
-        checkItems: function () {return angular.copy(vm.selectedItems);}
+        sampleId: function () {return sampleId;},
+        checkItems: function () {return angular.copy(vm.selectedItems);},
+        departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getOrganizationList().then(function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              deferred.reject();
+              toastr.error(response.data.message);
+            }
+          }).catch(function (err) {
+            deferred.reject();
+            toastr.error(err.data);
+          });
+          return deferred.promise;
+        }]
       }
     });
 
     modalInstance.result.then(function () {
       vm.itemSelected = [], vm.selectedItems = [], vm.allSelected = false;
-      toastr.success('检测项结果录入成功！');
-      vm.refreshTable();
+      toastr.success('检测项分配成功！');
+      vm.getSampleCi();
     });
   }
 

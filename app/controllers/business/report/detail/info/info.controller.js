@@ -10,6 +10,9 @@ angular.module('com.app').controller('ReportDetailInfoCtrl', function ($scope, $
       vm.loading = false;
       if (response.data.success) {
         vm.sample = response.data.entity;
+        if (!vm.sample.drawUser) {
+          vm.sample.drawUser = api.userInfo.name
+        }
       } else {
         toastr.error(response.data.message);
       }
