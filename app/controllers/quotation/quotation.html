@@ -1,0 +1,127 @@
+<div class="inner-container quotation-list">
+    <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+    <div class="pt-2">
+      <div class="toolbar clearfix">
+        <button class="btn btn-default-dark" ui-sref="app.quotation.detail({type: 'create'})">
+          <i class="fa fa-plus"></i>
+          <span>新建报价单</span>
+        </button>
+        <div class="pull-right">
+          <input class="input" placeholder="请输入客户名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
+          <button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+        </div>
+      </div>
+  
+      <table class="pt-table" st-table="vm.quotations" st-pipe="vm.getQuotationList">
+        <thead st-search-watch="vm.searchObject">
+          <tr>
+            <th style="width:40px">序号</th>
+            <th>
+              <div st-sort="id">报价单编号
+                <i class="fa fa-sort"></i>
+              </div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>报价人</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>报价日期</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>总金额</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>成本价</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>利润</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>公司名称</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>联系人</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div st-sort="status">状态
+                <i class="fa fa-sort"></i>
+              </div>
+              <adjust-line></adjust-line>
+            </th>
+            <th style="width:100px">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-if="vm.loading">
+            <td colspan="11" class="text-center">
+              <i class="fa fa-pluse fa-spinner"></i>
+            </td>
+          </tr>
+          <tr ng-if="!vm.loading && vm.quotations.length === 0">
+            <td colspan="11" class="text-center">暂无报价单</td>
+          </tr>
+          <tr ng-repeat="quotation in vm.quotations track by $index" ng-if="!vm.loading">
+            <td>{{ $index + 1 }}</td>
+            <td>
+              <a href ui-sref="app.quotation.create({id: quotation.id})">{{ quotation.id }}</a>
+            </td>
+            <td>{{ quotation.salesman }}</td>
+            <td>{{ quotation.area }}</td>
+            <td>{{ quotation.quotationNum }}</td>
+            <td>{{ quotation.invoiceTitle }}</td>
+            <td>{{ quotation.bankName }}</td>
+            <td>{{ quotation.bankAccount }}</td>
+            <td>{{ quotation.address }}</td>
+            <td>{{ quotation.createdAt }}</td>
+            <td class="dropdown-col">
+              <div class="btn-group">
+                <button class="btn btn-default" ng-click="vm.edit(quotation)">
+                  <i class="fa fa-edit"></i>
+                  <span>编辑</span>
+                </button>
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                  <i class="caret"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li ng-click="vm.preview(quotation)">
+                    <a href>
+                      <i class="fa fa-file-pdf-o"></i>
+                      <span>预览</span>
+                    </a>
+                  </li>
+                  <li ng-click="vm.print(quotation)">
+                    <a href>
+                      <i class="fa fa-print"></i>
+                      <span>打印</span>
+                    </a>
+                  </li>
+                  <li ng-click="vm.delete(quotation)">
+                    <a href>
+                      <i class="fa fa-trash"></i>
+                      <span>删除</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="11">
+              <div st-idp st-total-count="vm.total"></div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  

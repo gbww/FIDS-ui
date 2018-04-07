@@ -1,0 +1,23 @@
+.quotation-detail {
+  .no-vertical-line {
+    .input {
+      width: 100%;
+      min-width: 100%;
+    } 
+  }
+}
+
+.quotation-preview-content {
+  width: 900px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 20px; 
+  text-align: center;
+  font-size: 14px;
+  >div {
+    background-color: White;
+    width: 100%;
+    height: 100%;
+    padding: 50px;
+  }
+}

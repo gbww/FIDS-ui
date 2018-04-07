@@ -1,0 +1,132 @@
+<div class="inner-container quotation-detail">
+  <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+  <div class="pt-2">
+    <div class="step-1" ng-show="vm.step===1">
+      <form name="form" novalidate>
+        <table class="form-table">
+          <tr>
+            <td class="item-title">
+              <span class="item-required">客户名称</span>
+            </td>
+            <td>
+              <input class="input">
+            </td>
+            <td class="item-title">
+              <span class="item-required">联系人</span>
+            </td>
+            <td>
+              <input class="input">
+            </td>
+          </tr>
+          <tr>
+            <td class="item-title">
+              <span>客户电话</span>
+            </td>
+            <td>
+              <input class="input">
+            </td>
+            <td class="item-title">
+              <span>客户传真</span>
+            </td>
+            <td>
+              <input class="input">
+            </td>
+          </tr>
+          <tr>
+            <td class="item-title">
+              <span>客户邮箱</span>
+            </td>
+            <td>
+              <input class="input">
+            </td>
+            <td class="item-title">
+              <span>客户地址</span>
+            </td>
+            <td>
+              <input class="input">
+            </td>
+          </tr>
+          <tr>
+            <td class="item-title">
+              <span>报价人</span>
+            </td>
+            <td>
+              <input class="input">
+            </td>
+            <td class="item-title">
+              <span>报价日期</span>
+            </td>
+            <td>
+              <input class="input">
+            </td>
+          </tr>
+        </table>
+
+        <table class="pt-table border-table no-vertical-line">
+          <thead>
+            <tr>
+              <th style="width:40px">序号</th>
+              <th class="item-required">品名</th>
+              <th>规格</th>
+              <th>数量</th>
+              <th>单位</th>
+              <th>单价</th>
+              <th>金额</th>
+              <th>备注</th>
+              <th style="width: 60px">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in vm.itemArr track by $index">
+              <td>{{ $index }}</td>
+              <td>
+                <input class="input" ng-model="item.name">
+              </td>
+              <td>
+                <input class="input" ng-model="item.gg">
+              </td>
+              <td>
+                <input class="input" ng-model="item.quantity">
+              </td>
+              <td>
+                <input class="input" ng-model="item.unit">
+              </td>
+              <td>
+                <input class="input" ng-model="item.price">
+              </td>
+              <td>
+                <input class="input" ng-model="item.total">
+              </td>
+              <td>
+                <input class="input" ng-model="item.remark">
+              </td>
+              <td>
+                <i class="fa fa-minus-circle" ng-click="vm.deleteItem($index)"></i>
+                <i class="fa fa-plus-circle" ng-click="vm.addItem()" ng-if="$last"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      <div class="btn-area text-center">
+        <button class="btn btn-2x btn-default-dark" ng-click="vm.step=2">下一步</button>
+        <button class="btn btn-2x btn-default-light" ui-sref="app.quotation">取消</button>
+      </div>
+    </div>
+    <div class="step-2" ng-show="vm.step===2">
+      <p>报价单顶部</p>
+      <div class="top">
+        <textarea id="tmpl-top" style="width:100%;height:200px;"></textarea>
+      </div></br>
+      <p>报价单底部</p>
+      <div class="bottom">
+        <textarea id="tmpl-bottom" style="width:100%;height:200px;"></textarea>
+      </div>
+      <div class="btn-area text-center">
+        <button class="btn btn-2x btn-default-dark" ng-click="vm.preview()">预览</button>
+        <button class="btn btn-2x btn-default-dark" ng-click="vm.ok(form)">确认</button>
+        <button class="btn btn-2x btn-default-light" ui-sref="app.quotation">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
