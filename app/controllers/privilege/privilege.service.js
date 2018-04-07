@@ -120,6 +120,45 @@ angular.module('com.app').factory('PrivilegeService', function ($http) {
 			return $http.get('/api/v1/organizations/' + organizationId + '/users');
 		},
 
+		// 用户类型：编制人、审核人、批准人
+		getUserType: function (tableParams, searchConditions) {
+			return $http({
+				url: '/api/v1/ahgz/usertype/select',
+				method: 'GET',
+				params: {
+          pageSize: tableParams.pageSize,
+          pageNum: tableParams.pageNum,
+					order: tableParams.order,
+					type: searchConditions.type,
+					name: searchConditions.name
+				}
+			})
+		},
+
+		createUserType: function (data) {
+			return $http({
+				url: '/api/v1/ahgz/usertype/add',
+				method: 'POST',
+				data: data
+			})
+		},
+
+		editUserType: function (data) {
+			return $http({
+				url: '/api/v1/ahgz/usertype/update',
+				method: 'PUT',
+				data: data
+			})
+		},
+
+		deleteUserType: function (id) {
+			return $http({
+				url: '/api/v1/ahgz/usertype/delete',
+				method: 'POST',
+				data: [id]
+			});
+		},
+
 		/*
 		 ***  角色管理
 		 */

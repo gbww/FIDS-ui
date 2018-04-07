@@ -1,0 +1,75 @@
+<div class="modal-header">
+  <div class="close" ng-click="vm.cancel()">&times;</div>
+  <h4>添加用户类型</h4>
+</div>
+
+<div class="modal-body user-type-create">
+  <div name="userForm" ng-show="vm.step === 0">
+		<div class="toolbar pull-right">
+			<input class="input" placeholder="请输入中文名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
+			<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+		</div>
+    <table class="pt-table" st-table="vm.users" st-pipe="vm.getUserList">
+      <thead st-search-watch="vm.searchObject">
+        <tr>
+          <th>用户名称</th>
+          <th>中文姓名</th>
+          <th>邮箱</th>
+          <th>描述</th>
+          <th>所在部门</th>
+          <th>职责</th>
+          <th>创建时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-if="vm.loading">
+          <td colspan="7" class="text-center">
+            <i class="fa fa-pulse fa-spinner"></i>
+          </td>
+        </tr>
+        <tr ng-if="!vm.loading && vm.users.length == 0">
+          <td colspan="7" class="text-center">暂无用户</td>
+        </tr>
+        <tr ng-repeat="user in vm.users track by $index" ng-if="!vm.loading" ng-click="vm.selectedUser = user" ng-class="{'selected': vm.selectedUser.id === user.id}">
+          <td>{{ user.username }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.description }}</td>
+          <td>{{ user.organization.name }}</td>
+          <td>{{ user.role.name }}</td>
+          <td>{{ user.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="7">
+            <div st-idp st-total-count="vm.total"></div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+	</div>
+
+  <form name="form" class="form-horizontal" ng-show="vm.step === 1">
+    <div class="form-group">
+      <label class="item-required col-sm-3 control-label">用户类型</label>
+      <div class="col-sm-8">
+        <div custom-select class-name="form-control" name="type" avail-arr="vm.userTypeArr" model="vm.user" key="type"></div>
+        <div ng-if="form.type.$dirty || vm.submitted" ng-messages="form.type.$error">
+          <label class="error-messages" ng-message="required">
+            <i></i>不能为空</label>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer" ng-if="vm.step === 0">
+  <button class="btn btn-2x btn-default-dark" ng-disabled="!vm.selectedUser" ng-click="vm.next()">下一步</button>
+  <button class="btn btn-2x btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>
+<div class="modal-footer" ng-if="vm.step === 1">
+  <button class="btn btn-2x btn-default-dark" ng-disabled="!vm.selectedUser" ng-click="vm.preview()">上一步</button>
+  <button class="btn btn-2x btn-default-dark" ng-disabled="form.$invalid" ng-click="vm.ok()">确认</button>
+  <button class="btn btn-2x btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

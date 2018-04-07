@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <div class="close" ng-click="vm.cancel()">&times;</div>
+  <h4>修改用户类型</h4>
+</div>
+
+<div class="modal-body">
+  <form name="form" class="form-horizontal">
+    <div class="form-group">
+      <label class="item-required col-sm-3 control-label">用户类型</label>
+      <div class="col-sm-8">
+        <div custom-select class-name="form-control" name="type" avail-arr="vm.userTypeArr" model="vm.user" key="type"></div>
+        <div ng-if="form.type.$dirty || vm.submitted" ng-messages="form.type.$error">
+          <label class="error-messages" ng-message="required">
+            <i></i>不能为空</label>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-2x btn-default-dark" ng-disabled="form.$invalid" ng-click="vm.ok()">确认</button>
+  <button class="btn btn-2x btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

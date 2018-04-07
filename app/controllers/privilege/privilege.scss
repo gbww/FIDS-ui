@@ -6,3 +6,9 @@
     display: none !important;
   }
 }
+
+.user-type-create .pt-table tbody {
+  .selected {
+		background-color: #e0e0e0;
+  }
+}
