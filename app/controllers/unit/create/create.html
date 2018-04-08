@@ -1,0 +1,29 @@
+<div class="modal-header">
+	<div class="close" ng-click="vm.cancel()">&times;</div>
+	<h4>添加单位</h4>
+</div>
+
+<div class="modal-body">
+	<form name="form" class="form-horizontal">
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">单位名称</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="name" ng-model="vm.unit.unitName" required>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="form.name.$dirty" ng-messages="form.name.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">单位描述</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="description" ng-model="vm.unit.unitDesc">
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-2x btn-default-dark" ng-disabled="form.$invalid" ng-click="vm.ok()">确认</button>
+	<button class="btn btn-2x btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

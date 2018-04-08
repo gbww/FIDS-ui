@@ -9,12 +9,16 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
       $state.go('app.dashboard');
     } else if (module == 'client') {
       $state.go('app.client');
+    } else if (module == 'unit') {
+      $state.go('app.unit');
     }
   }
 
   vm.highLightMenu = function(){
   	vm.isDashboardActive = $state.includes('app.dashboard');
     vm.isItemToCheckActive = $state.includes('app.itemToCheck');
+    vm.isClientActive = $state.includes('app.client');
+    vm.isUnitActive = $state.includes('app.unit');
 
     vm.isCheckItemActive = $state.includes('app.checkItem');
     vm.isCheckItemListActive = $state.includes('app.checkItem.list');

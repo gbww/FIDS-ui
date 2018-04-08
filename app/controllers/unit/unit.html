@@ -1,0 +1,70 @@
+<div class="inner-container unit-list">
+    <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+    <div class="pt-2">
+      <div class="toolbar clearfix">
+        <button class="btn btn-default-dark" ng-click="vm.create()">
+          <i class="fa fa-plus"></i>
+          <span>添加单位</span>
+        </button>
+      </div>
+  
+      <table class="pt-table" st-table="vm.units" st-pipe="vm.getUnitList">
+        <thead st-search-watch="vm.searchObject">
+          <tr>
+            <th>
+              <div st-sort="unitName">单位名称
+                <i class="fa fa-sort"></i>
+              </div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>单位描述</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th style="width:100px">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-if="vm.loading">
+            <td colspan="3" class="text-center">
+              <i class="fa fa-pluse fa-spinner"></i>
+            </td>
+          </tr>
+          <tr ng-if="!vm.loading && vm.units.length === 0">
+            <td colspan="3" class="text-center">暂无客户</td>
+          </tr>
+          <tr ng-repeat="unit in vm.units track by $index" ng-if="!vm.loading">
+            <td>{{ unit.unitName }}</td>
+            <td>{{ unit.unitDesc }}</td>
+            <td class="dropdown-col">
+              <div class="btn-group">
+                <button class="btn btn-default" ng-click="vm.edit(unit)">
+                  <i class="fa fa-edit"></i>
+                  <span>编辑</span>
+                </button>
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                  <i class="caret"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li ng-click="vm.delete(unit)">
+                    <a href>
+                      <i class="fa fa-trash"></i>
+                      <span>删除</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3">
+              <div st-idp st-total-count="vm.total"></div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  

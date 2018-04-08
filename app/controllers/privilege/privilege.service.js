@@ -151,11 +151,11 @@ angular.module('com.app').factory('PrivilegeService', function ($http) {
 			})
 		},
 
-		deleteUserType: function (id) {
+		deleteUserType: function (ids) {
 			return $http({
 				url: '/api/v1/ahgz/usertype/delete',
 				method: 'POST',
-				data: [id]
+				data: ids
 			});
 		},
 

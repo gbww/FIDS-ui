@@ -86,7 +86,7 @@ angular.module('com.app').controller('PrivilegeUserCategoryCtrl', function ($roo
     var result = dialog.confirm('确认删除用户 "' + user.name + '" 的类型?');
     result.then(function (res) {
       if (res) {
-        PrivilegeService.deleteUserType(user.id).then(function (response) {
+        PrivilegeService.deleteUserType([user.id]).then(function (response) {
           if (response.data.success) {
             vm.refreshTable('delete');
             toastr.success('用户删除成功！');

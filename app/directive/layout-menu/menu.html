@@ -60,6 +60,15 @@
         </ul>
       </div>
 
+      <div class="panel">
+        <div ng-class="{'active': vm.isUnitActive}">
+          <a title="单位库管理" ng-click="vm.open('unit')">
+            <i class="icon icon-client"></i>
+            <span>单位库管理</span>
+          </a>
+        </div>
+      </div>
+
       <div class="panel" role-auth="TEMPLATE-SELECT-1">
         <div data-parent="#accordion" data-toggle="collapse" data-target="#fileManage" aria-expanded="{{vm.isFileActive}}">
           <a>

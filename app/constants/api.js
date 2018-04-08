@@ -10,6 +10,9 @@ angular.module('com.app').constant('api', {
       list: {name: '检测项管理', url: 'app.checkItem.list'},
       manage: {name: '自定义管理', url: 'app.checkItem.manage'}
     },
+    unit: {
+      root: {name: '单位库管理'}
+    },
     func: {
       root: {name: '文件管理'},
       template: {name: '模板管理', url: 'app.func.template'}
