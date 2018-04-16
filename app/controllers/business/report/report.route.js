@@ -25,7 +25,6 @@ angular.module('com.app').config(function ($stateProvider) {
 				var deferred = $q.defer();
 
 				PrivilegeService.getAllTypeUser('批准人').then(function (response) {
-					$rootScope.loading = false;
 					if (response.data.success) {
 						var users = response.data.entity;
 						if (users.length === 0) {
@@ -36,9 +35,30 @@ angular.module('com.app').config(function ($stateProvider) {
 						}
 					}
 				}).catch(function () {
-					$rootScope.loading = false;
 					deferred.reject();
 					toastr.error('请求批准人列表失败！');
+				});
+
+				return deferred.promise;
+			}],
+			templates: ['$rootScope', '$q', '$stateParams', 'TemplateService', function ($rootScope, $q, $stateParams, TemplateService) {
+				$rootScope.loading = true;
+				var deferred = $q.defer();
+
+				TemplateService.filterTemplate().then(function (response) {
+					if (response.data.success) {
+						var templates = [];
+						angular.forEach(response.data.entity.list, function (item) {
+							templates.push(item)
+						})
+						if (templates.length === 0) {
+							deferred.resolve([]);
+						} else {
+							deferred.resolve(templates);
+						}
+					}
+				}).catch(function () {
+					deferred.resolve([]);
 				});
 
 				return deferred.promise;

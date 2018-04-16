@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('com.app').controller('ReportInspectionCtrl', function ($state, $stateParams, $q, api, toastr, SampleService, ReportService, users) {
+angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScope, $state, $stateParams, $q, api, toastr, ReportService, users, templates) {
   var vm = this;
+  $rootScope.loading = false;
 
   vm.status = $stateParams.status;
   vm.type = $stateParams.type;
@@ -25,12 +26,21 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($state, $
   vm.getReportInfo = function () {
     vm.loading = true;
     $q.all({
-      report: SampleService.getSampleInfo($stateParams.id),
+      report: ReportService.getReportInfo($stateParams.id),
       checkItem: ReportService.getReportCi($stateParams.id)
     }).then(function (response) {
       vm.loading = false;
       if (response.report.data.success) {
-        vm.report = response.report.data.entity;
+        vm.report = response.report.data.entity.receiveSample;
+
+        var reportExtend = response.report.data.entity.reportExtend;
+        if (reportExtend) {
+          angular.forEach(templates, function (item) {
+            if (item.id === reportExtend.templateId) {
+              vm.template = item.name;
+            }
+          });
+        }
       } else {
         toastr.error(response.report.data.message);
       }

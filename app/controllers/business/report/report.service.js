@@ -150,7 +150,7 @@ angular.module('com.app').factory('ReportService', function ($http) {
     },
 
     getReportHtml: function (receiveSampleId) {
-      return $http.get(baseUrl + '/exportHtml?receiveSampleId=' + receiveSampleId + '&type=html');
+      return $http.get(baseUrl + '/preview?receiveSampleId=' + receiveSampleId + '&type=html');
     }
 
   }
