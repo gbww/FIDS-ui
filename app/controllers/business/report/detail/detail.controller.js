@@ -137,12 +137,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
    */
 
   vm.updateReport = function () {
-    var data = angular.copy(vm.report);
-    if (vm.type === 'bz') {
-      data.drawUser = api.userInfo.username;
-      data.reportStatus = 1;
-    }
-    ReportService.updateReport(data).then(function (response) {
+    ReportService.updateReport(vm.report).then(function (response) {
       if (response.data.success) {
         toastr.success('报告修改成功！');
         $state.go('app.business.report', { status: vm.status });
@@ -190,9 +185,16 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
       // 绑定模板
       if (!vm.initTemplateId) {
         ReportService.bindReportTmpl(data).then(function () {
-          return ReportService.startProcess(vm.report.receiveSampleId);
+          return ReportService.updateReport(vm.report);
         }).then(function () {
-          vm.updateReport();
+          return ReportService.startProcess(vm.report.receiveSampleId);
+        }).then(function (response) {
+          if (response.data.success) {
+            toastr.success('报告修改成功！');
+            $state.go('app.business.report', { status: vm.status });
+          } else {
+            toastr.error(response.data.message);
+          }
         }).catch(function (err) {
           toastr.error(err.data);
         })
@@ -210,19 +212,21 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
       }
     } else {
       var data = {
-        // editPerson: api.userInfo.username,
         examinePersonName: vm.report.examineUser,
         reportProcessId: vm.report.reportProcessId,
         receiveSampleId: vm.report.receiveSampleId,
         comment: vm.comment,
       };
-      ReportService.runEditTask(vm.taskId, data).then(function (response) {
+      ReportService.updateReport(angular.merge(vm.report, {drawUser: api.userInfo.username})).then(function () {
+        return ReportService.runEditTask(vm.taskId, data);
+      }).then(function (response) {
         if (response.data.success) {
-          vm.updateReport();
+          toastr.success('报告修改成功！');
+          $state.go('app.business.report', { status: vm.status });
         } else {
           toastr.error(response.data.message);
         }
-      })
+      });
     }
   }
 

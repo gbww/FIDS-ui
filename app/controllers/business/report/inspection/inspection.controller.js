@@ -65,20 +65,19 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($state, $
         pass: vm.pass === 'true' ? true : false,
         comment: vm.comment,
       };
-      if (!data.pass && !vm.approvalUser) {
+      if (!data.pass && !vm.report.approvalUser) {
         delete data.approvePersonName;
       }
-      ReportService.runExamineTask(vm.taskId, data).then(function (response) {
+
+      ReportService.updateReport(vm.report).then(function (response) {
+        return ReportService.runExamineTask(vm.taskId, data);
+      }).then(function (response) {
         if (response.data.success) {
-          if (vm.report.approvalUser) {
-            ReportService.updateReport(angular.merge(vm.report, {reportStatus: 2})).then(function (response) {
-              $state.go('app.business.report', { status: vm.status });
-            })
-          }
+          $state.go('app.business.report', { status: vm.status });
         } else {
           toastr.error(response.data.message);
         }
-      })
+      });
     } else if (vm.type === 'pz') {
       var data = {
         pass: vm.pass === 'true' ? true : false,
