@@ -140,6 +140,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
     var data = angular.copy(vm.report);
     if (vm.type === 'bz') {
       data.drawUser = api.userInfo.username;
+      data.reportStatus = 1;
     }
     ReportService.updateReport(data).then(function (response) {
       if (response.data.success) {
@@ -230,6 +231,18 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
    * 检测项操作
   */
 
+  function getSampleCi () {
+    ReportService.getReportCi($stateParams.id).then(function (response) {
+      if (response.data.success) {
+        vm.checkItems = response.data.entity;
+      } else {
+        toastr.error(response.data.message);
+      }
+    }).catch(function (err) {
+      toastr.error(err.data);
+    });
+  }
+
   vm.edit = function (ci) {
     var modalInstance = $uibModal.open({
       animation: true,
@@ -245,7 +258,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
 
     modalInstance.result.then(function (res) {
       toastr.success('检测项修改成功！');
-      vm.getSampleCi();
+      getSampleCi();
     });
   }
 
@@ -255,7 +268,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
       if (res) {
         SampleService.deleteSampleCi(vm.report.receiveSampleId, [ci.id]).then(function (response) {
           if (response.data.success) {
-            vm.getSampleCi();
+            getSampleCi();
             toastr.success('接样单检测项删除成功！');
           } else {
             toastr.error(response.data.message);

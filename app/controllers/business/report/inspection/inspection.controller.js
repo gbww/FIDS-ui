@@ -71,7 +71,7 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($state, $
       ReportService.runExamineTask(vm.taskId, data).then(function (response) {
         if (response.data.success) {
           if (vm.report.approvalUser) {
-            ReportService.updateReport(vm.report).then(function (response) {
+            ReportService.updateReport(angular.merge(vm.report, {reportStatus: 2})).then(function (response) {
               $state.go('app.business.report', { status: vm.status });
             })
           }
