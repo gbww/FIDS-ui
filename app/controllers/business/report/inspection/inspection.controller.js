@@ -56,7 +56,11 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($state, $
     link.click();
   };
 
-  vm.ok = function () {
+  vm.ok = function (form) {
+    if (form.$invalid) {
+      vm.submitted = true;
+      return;
+    }
     if (vm.type === 'sh') {
       var data = {
         approvePersonName: vm.report.approvalUser,

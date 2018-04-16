@@ -453,6 +453,23 @@
           </tr>
           <tr>
             <td class="item-title">
+              <span>判定</span>
+            </td>
+            <td>
+              <select class="input" ng-model="vm.report.determine" ng-options="option for option in vm.determineArr" ng-change="vm.report.result = ''"></select>
+            </td>
+            <td class="item-title"></td>
+            <td></td>
+          <tr>
+            <td class="item-title">
+              <span>结论</span>
+            </td>
+            <td colspan="3">
+              <div custom-select avail-arr="vm.resultDict[vm.report.determine]" replace-reg="\&\[.+\]" replace-value="vm.report.executeStandard" type="textarea" model="vm.report" key="result"></div>
+            </td>
+          </tr>
+          <tr>
+            <td class="item-title">
               <span>备注</span>
             </td>
             <td colspan="3">
@@ -468,23 +485,6 @@
             </td>
           </tr>
           <tbody ng-if="vm.type === 'bz'">
-            <tr>
-              <td class="item-title">
-                <span>判定</span>
-              </td>
-              <td>
-                <select class="input" ng-model="vm.report.determine" ng-options="option for option in vm.determineArr" ng-change="vm.report.result = ''"></select>
-              </td>
-              <td class="item-title"></td>
-              <td></td>
-            <tr>
-              <td class="item-title">
-                <span>结论</span>
-              </td>
-              <td colspan="3">
-                <div custom-select avail-arr="vm.resultDict[vm.report.determine]" replace-reg="\&\[.+\]" replace-value="vm.report.executeStandard" type="textarea" model="vm.report" key="result"></div>
-              </td>
-            </tr>
             <tr>
               <td class="item-title">
                 <span>主检人</span>

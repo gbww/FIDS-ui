@@ -56,6 +56,14 @@ angular.module('com.app').factory('ReportService', function ($http) {
       return $http.get(baseUrl + '/list/' + receiveSampleId);
     },
 
+    updateReportCi: function (receiveSampleId, data) {
+      return $http({
+        url: baseUrl + '/list/' + receiveSampleId,
+        method: 'POST',
+        data: data
+      });
+    },
+
     
     // 更新报告：报告详情和模板，需要添加模板才能启动流程
     updateReport: function (data) {
@@ -137,8 +145,12 @@ angular.module('com.app').factory('ReportService', function ($http) {
       })
     },
 
+    getComments: function (taskId) {
+      return $http.get(baseUrl + '/process/task/' + taskId + '/comments');
+    },
+
     getReportHtml: function (receiveSampleId) {
-      return $http.get(baseUrl + '/exportHtml?receiveSampleId=' + receiveSampleId);
+      return $http.get(baseUrl + '/exportHtml?receiveSampleId=' + receiveSampleId + '&type=html');
     }
 
   }

@@ -185,16 +185,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
       // 绑定模板
       if (!vm.initTemplateId) {
         ReportService.bindReportTmpl(data).then(function () {
-          return ReportService.updateReport(vm.report);
-        }).then(function () {
-          return ReportService.startProcess(vm.report.receiveSampleId);
-        }).then(function (response) {
-          if (response.data.success) {
-            toastr.success('报告修改成功！');
-            $state.go('app.business.report', { status: vm.status });
-          } else {
-            toastr.error(response.data.message);
-          }
+          vm.updateReport();
         }).catch(function (err) {
           toastr.error(err.data);
         })
@@ -252,8 +243,8 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/business/sample/detail/ci/edit/edit.html',
-      controller: 'EditSampleCiCtrl as vm',
+      templateUrl: 'controllers/business/report/detail/edit/edit.html',
+      controller: 'EditReportCiCtrl as vm',
       resolve: {
         sampleId: function () { return vm.report.receiveSampleId; },
         checkItem: function () { return ci; }

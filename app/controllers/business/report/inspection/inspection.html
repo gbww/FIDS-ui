@@ -191,14 +191,6 @@
             </td>
           </tr>
           <tr>
-            <td class="item-title">备注</td>
-            <td colspan="3">{{ vm.report.remarks }}</td>
-          </tr>
-          <tr>
-            <td class="item-title">数据页备注</td>
-            <td colspan="3">{{ vm.report.dataRemarks }}</td>
-          </tr>
-          <tr>
             <td class="item-title">判定</td>
             <td>{{ vm.report.determine }}</td>
             <td class="item-title"></td>
@@ -207,6 +199,14 @@
           <tr>
             <td class="item-title">结论</td>
             <td colspan="3">{{ vm.report.result }}</td>
+          </tr>
+          <tr>
+            <td class="item-title">备注</td>
+            <td colspan="3">{{ vm.report.remarks }}</td>
+          </tr>
+          <tr>
+            <td class="item-title">数据页备注</td>
+            <td colspan="3">{{ vm.report.dataRemarks }}</td>
           </tr>
           <tr>
             <td class="item-title">主检人</td>
@@ -221,7 +221,7 @@
             <td>{{ vm.report.approvalUser }}</td>
           </tr>
 
-          <tbody ng-if="vm.type === 'sh'">
+          <tbody ng-show="vm.type === 'sh'">
             <tr>
               <td class="item-title">
                 <span class="item-required">是否同意</span>
@@ -233,10 +233,10 @@
                 <label for="no">不同意</label>
               </td>
               <td class="item-title">
-                <span  ng-class="{'item-required': vm.paas === 'true'}">批准人</span>
+                <span ng-class="{'item-required': vm.pass === 'true'}">批准人</span>
               </td>
               <td>
-                <select class="input" name="approvalUser" ng-model="vm.report.approvalUser" ng-options="option.name as option.name for option in vm.users" required="vm.pass === 'true'"></select>
+                <select class="input" name="approvalUser" ng-model="vm.report.approvalUser" ng-options="option.name as option.name for option in vm.users" ng-required="vm.pass === 'true'"></select>
                 <div ng-if="form.approvalUser.$dirty || vm.submitted" ng-messages="form.approvalUser.$error">
                   <label class="error-messages" ng-message="required">
                     <i></i>不能为空</label>
@@ -253,7 +253,7 @@
             </tr>
           </tbody>
 
-          <tbody ng-if="vm.type === 'pz'">
+          <tbody ng-show="vm.type === 'pz'">
             <tr>
               <td class="item-title">
                 <span class="item-required">是否同意</span>

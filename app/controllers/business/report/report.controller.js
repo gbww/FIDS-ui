@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $stateParams, $uibModal, $timeout, api, toastr, ReportService) {
+angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $stateParams, $uibModal, $timeout, api, toastr, dialog, ReportService) {
   var vm = this;
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.report.root];
@@ -195,6 +195,20 @@ angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $st
     }
   }
 
+  vm.startProcess = function (report) {
+    var result = dialog.confirm('确认启动报告 ' + report.reportId + ' 流程？');
+    result.then(function (res) {
+      if (res) {
+        ReportService.startProcess(report.receiveSampleId).then(function (response) {
+          if (response.data.success) {
+            toastr.success('报告 ' + report.reportId + ' 流程已启动!')
+            vm.refreshTable();
+          }
+        });
+      }
+    });
+  }
+
 
   vm.export = function (report) {
     var link = document.createElement('a');
@@ -205,20 +219,14 @@ angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $st
 
 
 
-  vm.preview = function (sample) {
-    var modalInstance = $uibModal.open({
-      animation: true,
-      size: 'md',
-      templateUrl: 'controllers/business/report/preview/preview.html',
-      controller: 'ReportPreviewCtrl as vm',
-      resolve: {
-        sampleId: function () {
-          return sample.receiveSampleId;
-        }
-      }
-    });
-    modalInstance.result.then(function () {
-      vm.refreshTable();
+  vm.preview = function (report) {
+    ReportService.getReportHtml(report.receiveSampleId).then(function (response) {
+      var LODOP=getLodop();
+      LODOP.PRINT_INIT("测试");	
+      LODOP.SET_PRINT_PAGESIZE(1,0,0,"A4")
+      LODOP.ADD_PRINT_HTM('2%', '2%','96%','96%',response.data);
+      LODOP.PREVIEW();
+      // LODOP.PRINT();
     });
   }
 });

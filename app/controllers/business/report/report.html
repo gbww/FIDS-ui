@@ -162,7 +162,7 @@
         </tr>
         <tr ng-repeat="report in vm.reports track by $index" ng-if="!vm.loading">
           <td>
-            <a href ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'ck'})">{{ report.reportId }}</a>
+            <a href ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'ck', taskId: report.task ? report.task.id : null})">{{ report.reportId }}</a>
           </td>
           <td>{{ report.sampleName }}</td>
           <td>{{ report.entrustedUnit }}</td>
@@ -176,7 +176,7 @@
 								'printing icon-status-doing': report.reportProcessId && report.reportStatus==3,
 								'done icon-status-success': report.reportProcessId && report.reportStatus==4}">
             </i>
-            <span ng-if="!report.reportProcessId">尚未选择模板</span>
+            <span ng-if="!report.reportProcessId">尚未启动流程</span>
             <span ng-if="report.reportProcessId && report.reportStatus == 0">待编制</span>
             <span ng-if="report.reportProcessId && report.reportStatus == 1">待审核</span>
             <span ng-if="report.reportProcessId && report.reportStatus == 2">待批准</span>
@@ -185,7 +185,11 @@
           </td>
           <td class="dropdown-col">
             <div class="btn-group">
-              <button class="btn btn-default" ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bj'})">
+              <button class="btn btn-default" ng-click="vm.startProcess(report)" ng-if="!report.reportProcessId">
+                <i class="icon icon-launch"></i>
+                <sapn>启动流程</sapn>
+              </button>
+              <button class="btn btn-default" ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bj'})" ng-if="report.reportProcessId">
                 <i class="fa fa-edit"></i>
                 <sapn>编辑</sapn>
               </button>
@@ -193,6 +197,12 @@
                 <i class="caret"></i>
               </button>
               <ul class="dropdown-menu">
+                <li ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bj'})" ng-if="!report.reportProcessId">
+                  <a href>
+                    <i class="fa fa-edit"></i>
+                    <span>编辑</span>
+                  </a>
+                </li>
                 <li ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bz', taskId: report.task.id})" ng-if="report.reportProcessId && report.reportStatus == 0 && vm.status === 0">
                   <a href>
                     <i class="fa fa-edit"></i>
