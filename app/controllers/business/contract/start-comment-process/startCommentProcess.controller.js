@@ -6,7 +6,6 @@ angular.module('com.app').controller('StartCommentProcessCtrl', function ($rootS
   vm.availUsers = users;
 
   vm.ok = function () {
-  	$uibModalInstance.close();
     var approveUsers = [];
     angular.forEach(vm.users, function (user) {
       approveUsers.push(user.id);

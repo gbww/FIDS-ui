@@ -5,32 +5,20 @@
 	}
 	table.pt-table tbody tr.selected {
 		background-color: #e0e0e0;
-	}
-	.switch input+label+span {
-		&:before {
-			content: '否';
-		}
-		&:after {
-			content: '是';
-		}
-	}
-  .create-group-btn {
-    display: inline-block;
-    position: relative;
-    .dropdown-menu {
-      left: -1px;
-      li a:hover {
-        color: $blue-color;
-        background-color: transparent;
-      }
-    }
   }
+
+  .toggle {
+    display: inline-block;
+    vertical-align: middle;
+  }
+	
 	.advanced-search {
 		margin-top: 10px;
     padding-right: 0;
     >div {
-    	&:first-child {
-        margin-bottom: 5px;
+      margin-bottom: 5px;
+    	&:last-child {
+        margin-bottom: 0;
       }
       >div {
         padding-left: 0;
@@ -39,9 +27,6 @@
           width: 100%;
         }
       }
-    }
-    .select-wrapper {
-      margin-right: 10px;
     }
     input {
     	background-image: none;
@@ -62,13 +47,42 @@
         color: #ccc;
       }
     }
-    a {
-      margin-top: 2px;
-    }
   }
 }
-.business-sample-detail-list {
+.business-sample-detail-list, .business-report-detail-list {
 	.tab-content {
 		@include flex(flex, column);
+  }
+
+  input[type='file'] {
+		display: none;
 	}
+	.file-item {
+		vertical-align: top;
+		display: inline-block;
+		padding: 2px 8px;
+		margin: 0px 5px 3px 0;
+		background-color: #f8f8f8; 
+		border-radius: 3px;
+			cursor: pointer;
+		&:hover {
+			background-color: #eee;
+		}
+		i:hover {
+			color: red;
+		}
+  }
+  
+  .toggle-header {
+    background-color: #f8f8f8;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    @include box-shadow(0 1px 3px #aaa);
+    cursor: pointer;
+  }
+  .toggle-body {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }

@@ -35,7 +35,8 @@ angular.module('com.app').constant('api', {
       },
       report: {
         root: {name: '报告', url: 'app.business.report'},
-        detail: {name: '报告详情', url: 'app.business.report.detail'}
+        inspection: {name: '查看报告', url: 'app.business.report.inspection'},
+        detail: {name: '编辑报告', url: 'app.business.report.detail'}
       },
       itemToCheck: {
         root: {name: '检测结果录入', url: 'app.business.itemToCheck.list'},

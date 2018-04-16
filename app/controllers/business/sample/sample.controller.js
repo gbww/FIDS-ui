@@ -289,7 +289,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       });
     }
     $rootScope.loading = true;
-    SampleService.updateSampleCi(vm.selectedSample.receiveSampleId, data).then(function (response) {
+    SampleService.recordSampleCi(vm.selectedSample.receiveSampleId, data).then(function (response) {
       $rootScope.loading = false;
       if (response.data.success) {
         vm.getSampleCi();
@@ -435,8 +435,8 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
-      controller: 'CiDistributeCtrl as vm',
+      templateUrl: 'controllers/business/distribute/act/act.html',
+      controller: 'CiDistributeActionCtrl as vm',
       resolve: {
         sampleId: function () {return vm.selectedSample.receiveSampleId;},
         checkItems: function () {return [item];},
@@ -488,8 +488,8 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
-      controller: 'CiDistributeCtrl as vm',
+      templateUrl: 'controllers/business/distribute/act/act.html',
+      controller: 'CiDistributeActionCtrl as vm',
       resolve: {
         sampleId: function () {return vm.selectedSample.receiveSampleId;},
         checkItems: function () {return angular.copy(vm.selectedItems);},

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (SampleService, toastr) {
+angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function ($rootScope, $timeout, $uibModal, CiDistributeService, SampleService, toastr) {
   var vm = this;
 
   vm.searchObject = {}
@@ -45,7 +45,7 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
       // "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-  	SampleService.getUndistributeSamples(tableParams, vm.searchObject).then(function (response) {
+  	CiDistributeService.getUndistributeSamples(tableParams, vm.searchObject).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.samples = response.data.entity;
@@ -155,8 +155,8 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
-      controller: 'CiDistributeCtrl as vm',
+      templateUrl: 'controllers/business/distribute/act/act.html',
+      controller: 'CiDistributeActionCtrl as vm',
       resolve: {
         sampleId: function () {return vm.selectedSample.receiveSampleId;},
         checkItems: function () {return [item];},
@@ -208,8 +208,8 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
-      controller: 'CiDistributeCtrl as vm',
+      templateUrl: 'controllers/business/distribute/act/act.html',
+      controller: 'CiDistributeActionCtrl as vm',
       resolve: {
         sampleId: function () {return vm.selectedSample.receiveSampleId;},
         checkItems: function () {return angular.copy(vm.selectedItems);},

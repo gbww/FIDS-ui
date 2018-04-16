@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('CiResultSampleCategoryCtrl', function (SampleService, toastr) {
+angular.module('com.app').controller('CiResultSampleCategoryCtrl', function (CiResultRecordService, toastr) {
   var vm = this;
 
   vm.query = {
@@ -29,7 +29,7 @@ angular.module('com.app').controller('CiResultSampleCategoryCtrl', function (Sam
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-    SampleService.getUserSample(tableParams, vm.status, vm.query).then(function (response) {
+    CiResultRecordService.getUserSample(tableParams, vm.status, vm.query).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.samples = response.data.entity.list;

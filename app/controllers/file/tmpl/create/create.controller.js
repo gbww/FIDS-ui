@@ -2,75 +2,7 @@
 
 angular.module('com.app').controller('TmplCreateCtrl', function ($uibModal, TemplateService, toastr, dialog) {
   var vm = this;
-/*
-  vm.initData = [
-    ['模板', '模板', '模板'],
-    ['模板', '模板', '模板'],
-    ['模板', '模板', '模板']
-  ]
-  vm.ht = new Handsontable(document.getElementById('tmpl'), {
-    data: vm.initData,
-    colHeaders: true,
-    rowHeaders: true,
-    contextMenu: {
-      items: {
-        merge_cells: {
-          name: '合并单元格'
-        },
-        row_above: {
-          name: '在上面插入行'
-        },
-        row_below: {
-          name: '在下面插入行'
-        },
-        col_left: {
-          name: '在左边插入列'
-        },
-        col_right: {
-          name: '在右边插入列'
-        },
-        remove_row: {
-          name: '删除行'
-        },
-        remove_col: {
-          name: '删除列'
-        },
-        alignment: {
-          name: '对齐方式'
-        },
-        undo: {
-          name: '撤销'
-        },
-        redo: {
-          name: '重做'
-        }
-      }
-    },
-    contextMenu: true,
-    mergeCells: true,
-    manualColumnResize: true,
-    manualRowResize: true
-    // manualColumnMove: true,
-    // manualRowMove: true
-    // persistentState: true
-  });
 
-  Handsontable.dom.addEvent(document.getElementById('save'), 'click', function () {
-    vm.obj = {
-      data: vm.ht.getData(),
-      mergedCells: vm.ht.mergeCells ? vm.ht.mergeCells.mergedCellInfoCollection : []
-    }
-    new Handsontable(document.getElementById('copy'), {
-      data: vm.obj.data,
-      colHeaders: true,
-      rowHeaders: true,
-      // colWidths: [55, 80, 80],
-      contextMenu: true,
-      mergeCells: vm.obj.mergedCells.length > 0 ? vm.obj.mergedCells : true
-    });
-    
-  })
-*/
   var options = {
     items: ['undo', 'redo', 'cut', 'copy', 'paste', 'formatblock', 'fontname', 'fontsize', 'forecolor', 'bold', 'italic', 'lineheight', 'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', 'table', 'pagebreak', 'image', 'preview', 'print', 'fullscreen'],
     uploadJson: '/upload', // 图片上传api地址

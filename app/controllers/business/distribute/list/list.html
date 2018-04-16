@@ -20,11 +20,15 @@
           <input type="checkbox" ng-click="vm.selectAll()" ng-model="vm.allSelected"> 序号
         </th>
         <th>
-          <div>名称</div>
+          <div st-sort="name">名称
+            <i class="fa fa-sort"></i>
+          </div>
           <adjust-line></adjust-line>
         </th>
         <th>
-          <div>检测方法</div>
+          <div st-sort="method">检测方法
+            <i class="fa fa-sort"></i>
+          </div>
           <adjust-line></adjust-line>
         </th>
         <th>

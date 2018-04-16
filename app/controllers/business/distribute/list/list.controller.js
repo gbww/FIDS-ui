@@ -1,20 +1,18 @@
 'use strict';
 
-angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($rootScope, $uibModal, $timeout, api, toastr, SampleService, CheckItemService, PrivilegeService) {
+angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($rootScope, $uibModal, $timeout, toastr, CiDistributeService, PrivilegeService) {
   var vm = this;
-
-  var businessBC = api.breadCrumbMap.business;
-  vm.breadCrumbArr = [businessBC.root, businessBC.distribute.root];
 
   vm.searchObject = {}
   vm.searchConditions = {
     reportId: ''
   }
 
+  vm.refreshTable = function (flag) {
+    vm.searchObject.timestamp = new Date();
+  }
 
-  vm.status = 5;
-  vm.samples = [];
-  vm.loading = true;
+
   vm.ciLoading = true;
   vm.getCiList = function (tableState) {
     var orderBy = tableState.sort.predicate;
@@ -30,10 +28,10 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-  	SampleService.getUndistributeCi(tableParams, vm.searchObject).then(function (response) {
+  	CiDistributeService.getUndistributeCi(tableParams, vm.searchObject).then(function (response) {
       vm.ciLoading = false;
       if (response.data.success) {
-        vm.checkItems = response.data.entity;
+        vm.checkItems = response.data.entity.list || [];
         vm.total = response.data.entity.total;
         tableState.pagination.numberOfPages = response.data.entity.pages;
       } else {
@@ -63,8 +61,8 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
-      controller: 'CiDistributeCtrl as vm',
+      templateUrl: 'controllers/business/distribute/act/act.html',
+      controller: 'CiDistributeActionCtrl as vm',
       resolve: {
         sampleId: function () {return item.receiveSampleId;},
         checkItems: function () {return [item];},
@@ -90,7 +88,7 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
     modalInstance.result.then(function (res) {
       $timeout(function () {
         toastr.success('检测项分配成功！');
-        vm.getCiList();
+        vm.refreshTable();
       }, 500)
     });
   }
@@ -120,8 +118,8 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
-      controller: 'CiDistributeCtrl as vm',
+      templateUrl: 'controllers/business/distribute/act/act.html',
+      controller: 'CiDistributeActionCtrl as vm',
       resolve: {
         sampleId: function () {return sampleId;},
         checkItems: function () {return angular.copy(vm.selectedItems);},

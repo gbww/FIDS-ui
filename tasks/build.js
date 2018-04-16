@@ -248,7 +248,7 @@ gulp.task('buildHome', function () {
     .pipe(plugins.plumber())
     // 压缩js、css
     .pipe(plugins.useref())
-    .pipe(plugins.if(isAppJs, plugins.es6()))
+    // .pipe(plugins.if(isAppJs, plugins.es6()))
     .pipe(plugins.if(isAppJs, plugins.ngAnnotate()))
     // .pipe(plugins.if(isJs, plugins.uglify()))
     .pipe(plugins.if('*.css', plugins.csso()))

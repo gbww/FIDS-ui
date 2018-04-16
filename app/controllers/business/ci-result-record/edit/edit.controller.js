@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('RecordCiResultCtrl', function ($uibModalInstance, SampleService, toastr, checkItems) {
+angular.module('com.app').controller('RecordCiResultCtrl', function ($uibModalInstance, CiResultRecordService, toastr, checkItems) {
   var vm = this;
 
   vm.resultArr = ['合格', '不合格'];
@@ -16,7 +16,7 @@ angular.module('com.app').controller('RecordCiResultCtrl', function ($uibModalIn
         status: 2
       });
     });
-    SampleService.batchRecordCiResult(data).then(function (response) {
+    CiResultRecordService.batchRecordCiResult(data).then(function (response) {
   		if (response.data.success) {
 		  	$uibModalInstance.close();
   		} else {

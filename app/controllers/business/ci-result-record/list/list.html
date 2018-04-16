@@ -131,7 +131,7 @@
           <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)">
         </td>
         <td>
-          <a ui-sref="app.business.itemToCheck.detail.info({status: vm.status, id: item.receiveSampleId})">{{ item.reportId }}</a>
+          <a ui-sref="app.business.itemToCheck.detail({status: vm.status, id: item.receiveSampleId})">{{ item.reportId }}</a>
         </td>
         <td>{{ item.receiveSampleId }}</td>
         <td>{{ item.name }}</td>
@@ -181,7 +181,7 @@
         <td ng-if="item.status == 2">
           <button class="btn btn-default" ng-click="vm.recordResult(item)" role-auth="SAMPLE-UPDATEITEMRESULT-1">
             <i class="fa fa-edit"></i>
-            <span>编辑</span>
+            <span>录入</span>
           </button>
         </td>
       </tr>

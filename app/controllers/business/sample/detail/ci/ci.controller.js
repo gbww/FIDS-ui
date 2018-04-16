@@ -4,10 +4,11 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
   var vm = this;
   vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1 && api.permissionArr.indexOf('CHECKITEM-CATALOG-SELECT-1') != -1;
   vm.clonedSampleId = $cookies.get('clonedSampleId');
+  vm.receiveSampleId = $stateParams.id;
 
   vm.getSampleCi = function () {
     vm.ciLoading = true;
-    SampleService.getSampleCiList(vm.sample.receiveSampleId).then(function (response) {
+    SampleService.getSampleCiList(vm.receiveSampleId).then(function (response) {
       vm.ciLoading = false;
       if (response.data.success) {
         vm.checkItems = response.data.entity;
@@ -16,21 +17,7 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
       }
     })
   }
-
-  vm.getSampleInfo = function () {
-    vm.ciLoading = true;
-    SampleService.getSampleInfo($stateParams.id).then(function (response) {
-      if (response.data.success) {
-        vm.sample = response.data.entity;
-        vm.getSampleCi();
-      } else {
-        toastr.error(response.data.message);
-      }
-    }).catch(function (err) {
-      toastr.error(err.data);
-    });
-  };
-  vm.getSampleInfo();
+  vm.getSampleCi();
 
   var setting = {
     callback: {
@@ -77,14 +64,14 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
     var data = [];
     if (isDb) {
       angular.forEach(checkItems, function (item) {
-        item.receiveSampleId = vm.sample.receiveSampleId;
+        item.receiveSampleId = vm.receiveSampleId;
         delete item.id;
       });
       data = [].concat(checkItems);
     } else {
       angular.forEach(checkItems, function (item) {
         var tempItem = {
-          receiveSampleId: vm.sample.receiveSampleId,
+          receiveSampleId: vm.receiveSampleId,
           name: item.name,
           method: item.method,
           unit: item.unit,
@@ -98,7 +85,7 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
       });
     }
     $rootScope.loading = true;
-    SampleService.recordSampleCi(vm.sample.receiveSampleId, data).then(function (response) {
+    SampleService.recordSampleCi(vm.receiveSampleId, data).then(function (response) {
       $rootScope.loading = false;
       if (response.data.success) {
         vm.getSampleCi();
@@ -196,7 +183,7 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
       templateUrl: 'controllers/business/sample/detail/ci/edit/edit.html',
       controller: 'EditSampleCiCtrl as vm',
       resolve: {
-        sampleId: function () {return vm.sample.receiveSampleId;},
+        sampleId: function () {return vm.receiveSampleId;},
         checkItem: function () {return ci;}
       }
     });
@@ -211,7 +198,7 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
     var result = dialog.confirm('确认从接样单中删除检测项 ' + ci.name + ' ?');
     result.then(function (res) {
       if (res) {
-        SampleService.deleteSampleCi(vm.sample.receiveSampleId, [ci.id]).then(function (response) {
+        SampleService.deleteSampleCi(vm.receiveSampleId, [ci.id]).then(function (response) {
           if (response.data.success) {
             vm.getSampleCi();
             toastr.success('接样单检测项删除成功！');
@@ -230,10 +217,10 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
-      controller: 'CiDistributeCtrl as vm',
+      templateUrl: 'controllers/business/distribute/act/act.html',
+      controller: 'CiDistributeActionCtrl as vm',
       resolve: {
-        sampleId: function () {return vm.sample.receiveSampleId;},
+        sampleId: function () {return vm.receiveSampleId;},
         checkItems: function () {return [item];},
         departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;
@@ -281,10 +268,10 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
-      controller: 'CiDistributeCtrl as vm',
+      templateUrl: 'controllers/business/distribute/act/act.html',
+      controller: 'CiDistributeActionCtrl as vm',
       resolve: {
-        sampleId: function () {return vm.sample.receiveSampleId;},
+        sampleId: function () {return vm.receiveSampleId;},
         checkItems: function () {return angular.copy(vm.selectedItems);},
         departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;

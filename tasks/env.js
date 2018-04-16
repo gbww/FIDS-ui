@@ -7,7 +7,7 @@ var sh = require('shelljs');
 
 var projectDir = process.cwd();
 var projectName = path.basename(projectDir);
-var buildDir = projectDir + '/dist';
+var buildDir = projectDir + '/ahgz';
 
 var frontJetDir = args.fjHome;
 var tempDir = projectDir + '/.tmp';

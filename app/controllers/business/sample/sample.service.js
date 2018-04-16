@@ -1,83 +1,34 @@
 'use strict';
 
 angular.module('com.app').factory('SampleService', function ($http) {
+	var baseUrl = '/api/v1/ahgz/receive';
 	return {
+		/**
+		 *  抽样单相关
+		 */
 		getSampleList: function (tableParams, searchConditions, status) {
 			return $http({
-				url: '/api/v1/ahgz/sample',
+				url: baseUrl + '/sample',
 				method: 'GET',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
           order: tableParams.order,
           reportId: searchConditions.reportId,
+          receiveSampleId: searchConditions.receiveSampleId,
           sampleName: searchConditions.sampleName,
           entrustedUnit: searchConditions.entrustedUnit,
           inspectedUnit: searchConditions.inspectedUnit,
           productionUnit: searchConditions.productionUnit,
-          receiveSampleId: searchConditions.receiveSampleId,
           executeStandard: searchConditions.executeStandard,
 					status: status
         }
 			})
 		},
 
-		getUndistributeSamples: function (tableParams, searchConditions) {
-			return $http({
-				url: '/api/v1/ahgz/sample/listForDistribute',
-				method: 'GET',
-				params: {
-          pageSize: tableParams.pageSize,
-          pageNum: tableParams.pageNum,
-          order: tableParams.order,
-          reportId: searchConditions.reportId,
-          sampleName: searchConditions.sampleName,
-          entrustedUnit: searchConditions.entrustedUnit,
-          inspectedUnit: searchConditions.inspectedUnit,
-          productionUnit: searchConditions.productionUnit,
-          receiveSampleId: searchConditions.receiveSampleId,
-          executeStandard: searchConditions.executeStandard
-        }
-			})
-		},
-
-		getUndistributeCi: function (tableParams, searchConditions) {
-			return $http({
-				url: '/api/v1/ahgz/sample/items/unassigned',
-				method: 'GET',
-				params: {
-          pageSize: tableParams.pageSize,
-          pageNum: tableParams.pageNum,
-          order: tableParams.order,
-          reportId: searchConditions.reportId
-        }
-			})
-		},
-
-		getReportList: function (tableParams, searchConditions, reportStatus) {
-			return $http({
-				url: '/api/v1/ahgz/sample/reports',
-				method: 'GET',
-				params: {
-          pageSize: tableParams.pageSize,
-          pageNum: tableParams.pageNum,
-          order: tableParams.order,
-          reportId: searchConditions.reportId,
-          sampleName: searchConditions.sampleName,
-          entrustedUnit: searchConditions.entrustedUnit,
-          inspectedUnit: searchConditions.inspectedUnit,
-          productionUnit: searchConditions.productionUnit,
-          receiveSampleId: searchConditions.receiveSampleId,
-          executeStandard: searchConditions.executeStandard,
-					reportStatus: reportStatus,
-					status: 1
-        }
-			})
-		},
-
 		createSample: function (data) {
 			return $http({
-				url: '/api/v1/ahgz/sample',
+				url: baseUrl + '/sample',
 				method: 'POST',
 				data: data
 			})
@@ -86,65 +37,62 @@ angular.module('com.app').factory('SampleService', function ($http) {
 		// 批量删除
 		deleteSample: function (ids) {
 			return $http({
-				url: '/api/v1/ahgz/sample/delete',
+				url: baseUrl + '/sample/delete',
 				method: 'POST',
 				data: ids
 			})
 		},
 
 		getSampleInfo: function (id) {
-			return $http.get('/api/v1/ahgz/sample/' + id);
+			return $http.get(baseUrl + '/sample/' + id);
 		},
 
 		editSample: function (data) {
 			return $http({
-				url: '/api/v1/ahgz/sample',
+				url: baseUrl + '/sample',
 				method: 'PUT',
 				data: data
 			})
 		},
 
-		setReportStatus: function (id, status) {
+		uploadSampleAppendix: function (data) {
 			return $http({
-				url: '/api/v1/ahgz/sample/status/' + id,
-				method: 'PUT',
-				data: {
-					status: status
-				}
+				url: baseUrl + '/attachment/upload',
+				method: 'POST',
+				headers: {
+					'Content-Type': undefined
+				},
+				data: data
 			})
 		},
 
-		// 接样单检测项
+
+
+
+		
+		/**
+		 *  接样单检测项
+		 */
 
 		getSampleCiList: function (sampleId) {
-			return $http.get('/api/v1/ahgz/sample/items/' + sampleId);
+			return $http.get(baseUrl + '/sample/items/' + sampleId);
 		},
 
 		getSampleCiInfo: function (id) {
-			return $http.get('/api/v1/ahgz/sample/items/item/' + id);
+			return $http.get(baseUrl + '/sample/items/item/' + id);
 		},
 
-		// 批量录入
 		recordSampleCi: function (sampleId, data) {
 			return $http({
-				url: '/api/v1/ahgz/sample/item/add/' + sampleId,
+				url: baseUrl + '/sample/item/add/' + sampleId,
 				method: 'POST',
 				data: data
 			})
 		},
 
-		// 更改
 		updateSampleCi: function (sampleId, data) {
 			return $http({
-				url: '/api/v1/ahgz/sample/item/update/' + sampleId,
-				method: 'POST',
-				data: data
-			})
-		},
-
-		batchRecordCiResult: function (data) {
-			return $http({
-				url: '/api/v1/ahgz/sample/item/result',
+				url: baseUrl + '/sample/item/update/' + sampleId,
 				method: 'POST',
 				data: data
 			})
@@ -152,63 +100,55 @@ angular.module('com.app').factory('SampleService', function ($http) {
 
 		deleteSampleCi: function (sampleId, data) {
 			return $http({
-				url: '/api/v1/ahgz/sample/items/' + sampleId + '/delete',
+				url: baseUrl + '/sample/items/' + sampleId + '/delete',
 				method: 'POST',
 				data: data
 			})
 		},
 
-		// 获取检测人员的检测项sample集合
-		getUserSample: function (tableParams, status, searchObject) {
+
+
+		/**
+		 *  样品类型管理
+		 */
+		getSampleManagerList: function (tableParams, searchConditions) {
 			return $http({
-				url: '/api/v1/ahgz/sampleItem/sample',
+				url: '/api/v1/ahgz/sampleManager/select',
+				method: 'GET',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
           order: tableParams.order,
-					status: status,
-					reportId: searchObject.reportId,
-					receiveSampleId: searchObject.receiveSampleId
-        }
+          managerType: searchConditions.managerType,
+				}
 			})
 		},
 
-		// 获取检测人员的检测项列表任务
-		getUserCi: function (tableParams, status, searchObject) {
+		addSampleManager: function (data) {
 			return $http({
-				url: '/api/v1/ahgz/sampleItem',
-				params: {
-          pageSize: tableParams.pageSize,
-          pageNum: tableParams.pageNum,
-					order: tableParams.order,
-					status: status,
-					reportId: searchObject.reportId,
-					receiveSampleId: searchObject.receiveSampleId
-        }
-			})
-		},
-
-		exportFile: function (sampleId, name) {
-			return $http({
-				url: '/api/v1/ahgz/sample/items/report/' + sampleId,
-				method: 'GET',
-				params: {
-					templateFileName: name,
-					type: 'excel'
-				}
+				url: '/api/v1/ahgz/sampleManager/add',
+				method: 'POST',
+				data: data
 			});
 		},
 
-		previewReport: function(sampleId, name) {
+
+		updateSampleManager: function (data) {
 			return $http({
-				url: '/api/v1/ahgz/sample/items/report/' + sampleId,
-				method: 'GET',
-				params: {
-					templateFileName: name,
-					type: 'pdf'
-				}
+				url: '/api/v1/ahgz/sampleManager/update',
+				method: 'POST',
+				data: data
 			});
-		}
+		},
+
+		deleteSampleManager: function (ids) {
+			return $http({
+				url: '/api/v1/ahgz/sampleManager/update',
+				method: 'POST',
+				data: ids
+			});
+		},
+
 
 	}
 });

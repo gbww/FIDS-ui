@@ -3,23 +3,6 @@
 angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $state, $cookies, $uibModal, api, toastr, SampleService) {
   var vm = this;
 
-  // vm.loading = true;
-  // PrivilegeService.getUserList().then(function (response) {
-  //   vm.loading = false;
-  //   if (response.data.success) {
-  //     var res = [];
-  //     angular.forEach(response.data.entity.list, function (user) {
-  //       res.push(user.name);
-  //     });
-  //     vm.users = res;
-  //   } else {
-  //     toastr.error(response.data.message);
-  //   }
-  // }).catch(function (err) {
-  //   toastr.error(err.data);
-  //   vm.loading = false;
-  // });
-
   vm.clonedSampleId = $cookies.get('clonedSampleId');
 
   var businessBC = api.breadCrumbMap.business;
@@ -27,6 +10,10 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $
 
   vm.checkTypeArr = ['监督检验', '委托检验', '发证检验', '认证检验', '省级抽检', '风险监测'];
   vm.sampleLinkArr = ['流通环节', '餐饮环节', '生产环节'];
+
+  vm.sampleLxArr = ['食用农产品', '工业加工食品', '餐饮加工食品', '保健食品', '食品添加剂', '食品相关产品', '其他'];
+  vm.packageClassifyArr = ['预包装', '散装'];
+
   vm.sampleWayArr = ['随机抽样', '掷骰抽样'];
   vm.specificationModelArr = ['计量称重', '散装', 'kg/袋', 'g/袋', 'ml/瓶', 'L/瓶', 'L/桶', 'g/盒', 'kg/盒', 'ml/盒', 'L/盒'];
   vm.executeStandardArr = ['GB/T 23587-2009'];
@@ -38,13 +25,20 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $
   vm.sampleNamesArr = ['鲍仕峰 陶云飞', '杨洋 李振凡', '张磊 徐斌'];
   vm.responsiblePersonArr = [];
   vm.receiveUserArr = [];
-  vm.subpackageArr = ['农标中心'];
 
   var initSample = {
     sampleType: '食品',
     status: 0
   }
+  // 抽样单
   vm.sample = angular.copy(initSample);
+
+  // 样品管理（留样和检样）
+  vm.sampleManager = {
+    managerType: '检样'
+  }
+
+  // sample和sampleManage相同字段有: sampleName receiveDate zhibaoqi sampleCirculateDate 
 
   vm.paste = function () {
     $rootScope.loading = true;
@@ -84,6 +78,16 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $
       vm.submitted = true;
       return;
     }
+    
+    vm.sampleManager = {
+      reportId: vm.sample.reportId,
+      sampleName: vm.sample.sampleName,
+      sampleCirculateDate: vm.sample.sampleCirculateDate,
+      receiveDate: vm.sample.receiveDate,
+    }
+    // TODO: 留样管理
+
+
     SampleService.createSample(vm.sample).then(function (response) {
        if (response.data.success) {
             toastr.success('接样单录入成功！');

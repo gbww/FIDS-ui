@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('CiResultListCtrl', function ($stateParams, $uibModal, SampleService, toastr) {
+angular.module('com.app').controller('CiResultListCtrl', function ($stateParams, $uibModal, CiResultRecordService, toastr) {
   var vm = this;
 
   vm.query = {
@@ -40,7 +40,7 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
 
-  	SampleService.getUserCi(tableParams, vm.status, vm.query).then(function (response) {
+  	CiResultRecordService.getUserCi(tableParams, vm.status, vm.query).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.checkItems = response.data.entity.list;
@@ -81,8 +81,8 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/business/sample/detail/ci/distribute/distribute.html',
-      controller: 'CiDistributeCtrl as vm',
+      templateUrl: 'controllers/business/distribute/act/act.html',
+      controller: 'CiDistributeActionCtrl as vm',
       resolve: {
         sampleId: function () {return item.receiveSampleId;},
         checkItems: function () {return [item];},

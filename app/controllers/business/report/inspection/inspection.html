@@ -1,4 +1,4 @@
-<div class="inner-container business-sample-detail-list">
+<div class="inner-container business-report-detail-list">
   <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
   <div class="pt-2">
     <div class="loading" ng-if="vm.loading">
@@ -6,7 +6,7 @@
     </div>
     <form name="form" novalidate ng-if="!vm.loading">
       <div class="toggle-header" ng-click="vm.showReport = !vm.showReport">
-				<i class="fa" ng-class="{'fa-caret-up': vm.showReport, 'fa-caret-down': !vm.showReport}"></i>
+        <i class="fa" ng-class="{'fa-caret-up': vm.showReport, 'fa-caret-down': !vm.showReport}"></i>
         <span>报告内容</span>
       </div>
       <div class="toggle-body" ng-show="vm.showReport">
@@ -184,16 +184,103 @@
             <td class="item-title">费用</td>
             <td>{{ vm.report.cost }}</td>
             <td class="item-title">附件</td>
-            <td>{{ vm.report.appendix.substring(vm.report.appendix.lastIndexOf('/')+1) }}</td>
+            <td>
+              <div class="file-item" ng-click="vm.downloadFile(vm.report.appendix)" ng-if="vm.report.appendix">
+                <span>{{ vm.report.appendix.substring(vm.report.appendix.lastIndexOf('/')+1) }}</span>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td class="item-title">备注</td>
+            <td colspan="3">{{ vm.report.remarks }}</td>
+          </tr>
+          <tr>
+            <td class="item-title">数据页备注</td>
+            <td colspan="3">{{ vm.report.dataRemarks }}</td>
+          </tr>
+          <tr>
+            <td class="item-title">判定</td>
+            <td>{{ vm.report.determine }}</td>
+            <td class="item-title"></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="item-title">结论</td>
+            <td colspan="3">{{ vm.report.result }}</td>
+          </tr>
+          <tr>
+            <td class="item-title">主检人</td>
+            <td>{{ vm.report.principalInspector }}</td>
+            <td class="item-title">编制人</td>
+            <td>{{ vm.report.drawUser }}</td>
+          </tr>
+          <tr ng-if="vm.type === 'ck' || vm.type === 'pz'">
+            <td class="item-title">审核人</td>
+            <td>{{ vm.report.examineUser }}</td>
+            <td class="item-title">批准人</td>
+            <td>{{ vm.report.approvalUser }}</td>
+          </tr>
+
+          <tbody ng-if="vm.type === 'sh'">
             <tr>
-              <td class="item-title">备注</td>
-              <td colspan="3">{{ vm.report.remarks }}</td>
+              <td class="item-title">
+                <span class="item-required">是否同意</span>
+              </td>
+              <td>
+                <input type="radio" id="yes" ng-model="vm.pass" value="true">
+                <label for="yes">同意</label>&emsp;&emsp;&emsp;
+                <input type="radio" id="no" ng-model="vm.pass" value="false">
+                <label for="no">不同意</label>
+              </td>
+              <td class="item-title">
+                <span  ng-class="{'item-required': vm.paas === 'true'}">批准人</span>
+              </td>
+              <td>
+                <select class="input" name="approvalUser" ng-model="vm.report.approvalUser" ng-options="option.name as option.name for option in vm.users" required="vm.pass === 'true'"></select>
+                <div ng-if="form.approvalUser.$dirty || vm.submitted" ng-messages="form.approvalUser.$error">
+                  <label class="error-messages" ng-message="required">
+                    <i></i>不能为空</label>
+                </div>
+              </td>
             </tr>
+            <tr>
+              <td class="item-title">
+                <span>意见</span>
+              </td>
+              <td colspan="3">
+                <textarea class="input" rows="2" ng-model="vm.comment"></textarea>
+              </td>
+            </tr>
+          </tbody>
+
+          <tbody ng-if="vm.type === 'pz'">
+            <tr>
+              <td class="item-title">
+                <span class="item-required">是否同意</span>
+              </td>
+              <td>
+                <input type="radio" id="yes" ng-model="vm.pass" value="true">
+                <label for="yes">同意</label>&emsp;&emsp;&emsp;
+                <input type="radio" id="no" ng-model="vm.pass" value="false">
+                <label for="no">不同意</label>
+              </td>
+              <td class="item-title"></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td class="item-title">
+                <span>意见</span>
+              </td>
+              <td colspan="3">
+                <textarea class="input" rows="2" ng-model="vm.comment"></textarea>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </div>
 
       <div class="toggle-header" ng-click="vm.showReportCi = !vm.showReportCi">
-				<i class="fa" ng-class="{'fa-caret-up': vm.showReportCi, 'fa-caret-down': !vm.showReportCi}"></i>
+        <i class="fa" ng-class="{'fa-caret-up': vm.showReportCi, 'fa-caret-down': !vm.showReportCi}"></i>
         <span>报告检测项</span>
       </div>
       <div class="toggle-body" ng-show="vm.showReportCi">
@@ -291,5 +378,9 @@
         </table>
       </div>
     </form>
+    <div class="btn-area text-center" ng-if="!vm.loading && (vm.type === 'sh' || vm.type === 'pz')">
+      <button class="btn btn-2x btn-default-dark" ng-click="vm.ok(form)">确认</button>
+      <button class="btn b5n-2x btn-default-light" ui-sref="app.business.report({status: vm.status})">取消</button>
+    </div>
   </div>
 </div>

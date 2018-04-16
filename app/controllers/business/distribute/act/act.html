@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <div class="close" ng-click="vm.cancel()">&times;</div>
+    <h4>检测项分配</h4>
+  </div>
+  <div class="modal-body">
+    <form name="distributeForm" class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-3 control-label item-required">选择部门</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="vm.testRoomId" ng-change="vm.getDepartmentUsers()" ng-options="option.id as option.name for option in vm.departments" required></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label item-required">选择检测员</label>
+        <div class="col-sm-8">
+          <select class="form-control" ng-model="vm.testUser" ng-options="option.name as option.name for option in vm.users" required></select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-2x btn-default-dark" ng-click="vm.ok()" ng-disabled="distributeForm.$invalid">确认</button>
+    <button class="btn btn-2x btn-default-light" ng-click="vm.cancel()">取消</button>
+  </div>
+  

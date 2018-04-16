@@ -194,6 +194,12 @@
   }
 }
 
+.narrow-table {
+  thead tr td, tbody tr td {
+    padding: 0;
+  }
+}
+
 .form-table {
   font-size: 13px;
   font-weight: 400;

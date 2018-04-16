@@ -466,6 +466,9 @@ i+span {
     background-repeat: no-repeat;
     background-position: right center;
   }
+  textarea+ul {
+    top: 47px;
+  }
   ul {
     position: absolute;
     z-index: 10;

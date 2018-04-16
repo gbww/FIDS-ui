@@ -135,6 +135,16 @@ angular.module('com.app').factory('PrivilegeService', function ($http) {
 			})
 		},
 
+		getAllTypeUser: function (type) {
+			return $http({
+				url: '/api/v1/ahgz/usertype/selectall',
+				method: 'GET',
+				params: {
+					type: type
+				}
+			})
+		},
+
 		createUserType: function (data) {
 			return $http({
 				url: '/api/v1/ahgz/usertype/add',

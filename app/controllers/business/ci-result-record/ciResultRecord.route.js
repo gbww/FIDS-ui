@@ -34,27 +34,13 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 	});
 
 	$stateProvider.state('app.business.itemToCheck.detail', {
-		url: ':status/:id',
+		url: '/:status/:id',
 		views: {
 			'@app.business': {
 				templateUrl: 'controllers/business/ci-result-record/list/detail/detail.html',
 				controller: 'CiSampleDetailCtrl as vm'
 			}
-		},
-		abstract: true
+		}
 	});
-
-	$stateProvider.state('app.business.itemToCheck.detail.info', {
-		url: '/info',
-		templateUrl: 'controllers/business/ci-result-record/list/detail/info/info.html',
-		controller: 'CiSampleDetailInfoCtrl as vm'
-	});
-
-	$stateProvider.state('app.business.itemToCheck.detail.ci', {
-		url: '/ci',
-		templateUrl: 'controllers/business/ci-result-record/list/detail/ci/ci.html',
-		controller: 'CiSampleDetailCiCtrl as vm'
-	});
-
 
 });

@@ -12,3 +12,30 @@
 		}
 	}
 }
+
+.business-report-list {
+	.switch {
+		label {
+			width: 90px;
+			&:before {
+				width: 44px;
+				border-radius: 22px;
+			}
+		}
+		span {
+			width: 90px;
+			&:before {
+				content: '未完成'
+			}
+			&:after {
+				content: '已完成'
+			}
+		}
+		input:checked{
+			+label:before{
+				transform: translateX(44px);
+				-webkit-transform: translateX(44px);
+			}
+		}
+	}
+}
