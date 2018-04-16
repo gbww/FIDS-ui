@@ -1,10 +1,10 @@
 <div class="inner-container business-report-detail-list">
   <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
   <div class="pt-2">
-    <div class="loading" ng-if="vm.loading">
+    <div class="loading" ng-show="vm.loading">
       <i></i>
     </div>
-    <form name="form" novalidate ng-if="!vm.loading">
+    <form name="form" novalidate ng-show="!vm.loading">
       <div class="toggle-header" ng-click="vm.showReport = !vm.showReport">
         <i class="fa" ng-class="{'fa-caret-up': vm.showReport, 'fa-caret-down': !vm.showReport}"></i>
         <span>报告内容</span>
@@ -378,7 +378,7 @@
         </table>
       </div>
     </form>
-    <div class="btn-area text-center" ng-if="!vm.loading && (vm.type === 'sh' || vm.type === 'pz')">
+    <div class="btn-area text-center" ng-show="!vm.loading && (vm.type === 'sh' || vm.type === 'pz')">
       <button class="btn btn-2x btn-default-dark" ng-click="vm.ok(form)">确认</button>
       <button class="btn b5n-2x btn-default-light" ui-sref="app.business.report({status: vm.status})">取消</button>
     </div>

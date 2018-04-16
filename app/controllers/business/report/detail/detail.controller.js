@@ -36,7 +36,6 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
         if (!vm.report.drawUser) {
           vm.report.drawUser = api.userInfo.username;
         }
-        ReportService.getReportHtml(vm.report.receiveSampleId);
 
         var reportExtend = response.report.data.entity.reportExtend;
         if (reportExtend) {
