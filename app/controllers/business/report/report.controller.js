@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $stateParams, $uibModal, $timeout, api, toastr, dialog, ReportService) {
+angular.module('com.app').controller('ReportCtrl', function ($stateParams, $q, api, toastr, dialog, ReportService) {
   var vm = this;
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.report.root];
@@ -217,16 +217,96 @@ angular.module('com.app').controller('ReportCtrl', function ($scope, $state, $st
     link.click();
   }
 
-
-
+  var LODOP;
   vm.preview = function (report) {
     ReportService.getReportHtml(report.receiveSampleId).then(function (response) {
-      var LODOP=getLodop();
-      LODOP.PRINT_INIT("测试");	
+      LODOP = getLodop();
+      LODOP.PRINT_INIT('lodop');	
       LODOP.SET_PRINT_PAGESIZE(1,0,0,"A4")
-      LODOP.ADD_PRINT_HTM('2%', '2%','96%','96%',response.data);
+      createOneTask(response.data);
+      LODOP.PREVIEW();
+    });
+  }
+
+  vm.print = function (report) {
+    ReportService.getReportHtml(report.receiveSampleId).then(function (response) {
+      LODOP = getLodop();
+      LODOP.PRINT_INIT('lodop');	
+      LODOP.SET_PRINT_PAGESIZE(1,0,0,"A4")
+      createOneTask(response.data);
+      LODOP.PRINT();
+    });
+  }
+
+  vm.batchPrint = function () {
+    var promiseArr = [];
+    angular.forEach(vm.selectedItems, function (id) {
+      promiseArr.push(ReportService.getReportHtml(id));
+    })
+    $q.all(promiseArr).then(function (responses) {
+      LODOP = getLodop();
+      LODOP.PRINT_INIT('lodop');	
+      LODOP.SET_PRINT_PAGESIZE(1,0,0,"A4")
+
+      angular.forEach(responses, function (item) {
+        createOneTask(item.data);
+      })
+
       LODOP.PREVIEW();
       // LODOP.PRINT();
+    })
+  }
+
+  function createOneTask (data) {
+    LODOP.NewPageA();
+    LODOP.ADD_PRINT_HTM('0', '0', '100%', '100%', replaceStr(data));
+  }
+
+  function replaceStr (str) {
+    str = str.replace(/\<div.+background\-image\:\s?url\(\'(.+)\'\).+?\<\/div\>/g, function (a, b, c, d) {
+      // var src = 'http://10.139.7.88:8089' + b.substring(b.indexOf('/'));
+      var src = location.origin + b.substring(b.indexOf('/'));
+      return '<img src="' + src + '" />';
     });
+    // return str.replace(/(\<br\/\>)+/g, '<div style="page-break-after:always"></div>');
+    // return str.replace(/(width\:\s?595px)/g, '$1; height\: 1048px');
+    return str.replace(/(width\:\s?595px)/g, 'width: 758px; height\: 1050px');
+  }
+
+  // 单选、复选
+  vm.itemSelected = [];
+  vm.selectedItems = [];
+  vm.selectAll = function () {
+    if (vm.allSelected){
+      vm.selectedItems = [];
+      angular.forEach(vm.reports, function (item, idx) {
+        vm.selectedItems.push(item.receiveSampleId);
+        vm.itemSelected[idx] = true;
+      });
+    } else {
+      vm.selectedItems = [];
+      angular.forEach(vm.reports, function (item, idx) {
+        vm.itemSelected[idx] = false;
+      });
+    }
+  }
+
+  vm.selectItem = function (event, idx, item) {
+    if(event.target.checked){
+      vm.selectedItems.push(item.receiveSampleId);
+      vm.itemSelected[idx] = true;
+      if(vm.selectedItems.length == vm.reports.length){
+        vm.allSelected = true;
+      }
+    } else {
+      for (var i=0,len=vm.selectedItems.length; i<len; i++){
+        if (item.receiveSampleId == vm.selectedItems[i]) {
+          vm.selectedItems.splice(i, 1);
+          break;
+        }
+      };
+      vm.itemSelected[idx] = false;
+      vm.allSelected = false;
+    }
   }
 });

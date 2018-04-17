@@ -47,6 +47,11 @@
         <span></span>
       </div>
 
+      <button class="btn btn-default-dark" ng-click="vm.batchPrint()" ng-if="vm.selectedItems.length > 0">
+        <i class="fa fa-print"></i>
+        <span>批量打印</span>
+      </button>
+
       <div class="pull-right" ng-show="!vm.advance">
         <input class="input" placeholder="请输入报告编号查询" ng-model="vm.searchConditions.reportId" ng-keyup="vm.eventSearch($event)">
         <button class="btn btn-default-dark" ng-click="vm.search()">
@@ -116,6 +121,9 @@
     <table class="pt-table" st-table="vm.reports" st-pipe="vm.getReportList">
       <thead st-search-watch="vm.searchObject">
         <tr>
+          <th style="width: 30px;">
+            <input type="checkbox" ng-click="vm.selectAll()" ng-model="vm.allSelected">
+          </th>
           <th>
             <div st-sort="sampleType">报告编号
               <i class="fa fa-sort"></i>
@@ -153,14 +161,17 @@
       </thead>
       <tbody>
         <tr ng-if="vm.loading">
-          <td colspan="8" class="text-center">
+          <td colspan="9" class="text-center">
             <i class="fa fa-pluse fa-spinner"></i>
           </td>
         </tr>
         <tr ng-if="!vm.loading && vm.reports.length === 0">
-          <td colspan="8" class="text-center">暂无报告</td>
+          <td colspan="9" class="text-center">暂无报告</td>
         </tr>
         <tr ng-repeat="report in vm.reports track by $index" ng-if="!vm.loading">
+          <td>
+            <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, report)">
+          </td>
           <td>
             <a href ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'ck', taskId: report.task ? report.task.id : null})">{{ report.reportId }}</a>
           </td>
@@ -233,6 +244,12 @@
                     <span>预览</span>
                   </a>
                 </li>
+                <li ng-click="vm.print(report)" ng-if="report.reportProcessId">
+                  <a href>
+                    <i class="fa fa-print"></i>
+                    <span>打印</span>
+                  </a>
+                </li>
               </ul>
             </div>
           </td>
@@ -240,7 +257,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="8">
+          <td colspan="9">
             <div st-idp st-total-count="vm.total"></div>
           </td>
         </tr>
