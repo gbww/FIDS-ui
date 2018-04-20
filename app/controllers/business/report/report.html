@@ -204,47 +204,41 @@
                 <i class="fa fa-edit"></i>
                 <sapn>编辑</sapn>
               </button>
-              <button class="btn dropdown-toggle" data-toggle="dropdown" ng-if="report.reportProcessId">
+              <button class="btn dropdown-toggle" data-toggle="dropdown" ng-if="report.reportProcessId && !(vm.status === 5 && report.reportStatus === 0)">
                 <i class="caret"></i>
               </button>
-              <ul class="dropdown-menu">
-                <li ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bj'})" ng-if="!report.reportProcessId">
-                  <a href>
-                    <i class="fa fa-edit"></i>
-                    <span>编辑</span>
-                  </a>
-                </li>
-                <li ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bz', taskId: report.task.id})" ng-if="report.reportProcessId && report.reportStatus == 0 && vm.status === 0">
+              <ul class="dropdown-menu" ng-if="report.reportProcessId && !(vm.status === 5 && vm.reportStatus === 0)">
+                <li ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bz', taskId: report.task.id})" ng-if="report.reportStatus == 0 && vm.status === 0">
                   <a href>
                     <i class="fa fa-edit"></i>
                     <span>编制</span>
                   </a>
                 </li>
-                <li ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'sh', taskId: report.task.id})" ng-if="report.reportProcessId && report.reportStatus == 1 && vm.status === 1">
+                <li ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'sh', taskId: report.task.id})" ng-if="report.reportStatus == 1 && vm.status === 1">
                   <a href>
                     <i class="icon icon-inspection"></i>
                     <span>审核</span>
                   </a>
                 </li>
-                <li ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'pz', taskId: report.task.id})" ng-if="report.reportProcessId && report.reportStatus == 2 && vm.status === 2">
+                <li ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'pz', taskId: report.task.id})" ng-if="report.reportStatus == 2 && vm.status === 2">
                   <a href>
                     <i class="icon icon-approve"></i>
                     <span>批准</span>
                   </a>
                 </li>
-                <li ng-click="vm.export(report)" ng-if="report.reportProcessId">
+                <li ng-click="vm.export(report)" ng-if="report.reportStatus > 0">
                   <a href>
                     <i class="fa fa-file-excel-o"></i>
                     <span>导出</span>
                   </a>
                 </li>
-                <li ng-click="vm.preview(report)" ng-if="report.reportProcessId">
+                <li ng-click="vm.preview(report)" ng-if="report.reportStatus > 0">
                   <a href>
                     <i class="fa fa-file-pdf-o"></i>
                     <span>预览</span>
                   </a>
                 </li>
-                <li ng-click="vm.print(report)" ng-if="report.reportProcessId">
+                <li ng-click="vm.print(report)" ng-if="report.reportProcessId && report.reportStatus > 0">
                   <a href>
                     <i class="fa fa-print"></i>
                     <span>打印</span>

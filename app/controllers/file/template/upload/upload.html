@@ -39,10 +39,11 @@
 				<span class="item-required"><i class="fa fa-plus"></i>上传文件</span>
 			</a>
 			<span>{{ vm.filename }}</span>
-			<input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.addFile" ngf-pattern="/\.xlsx?$/">
-			<div class="col-sm-9 col-sm-offset-3" ng-if="form.file.$dirty" ng-messages="form.file.$error">
+			<!-- <input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.addFile" ngf-pattern="/\.xlsx?$/"> -->
+			<input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.addFile">
+			<!-- <div class="col-sm-9 col-sm-offset-3" ng-if="form.file.$dirty" ng-messages="form.file.$error">
 				<label class="error-messages" ng-message="pattern">请添加后缀为.xls、.xlsx文件</label>
-			</div>
+			</div> -->
 		</div>
 	</form>
 </div>

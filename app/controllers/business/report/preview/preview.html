@@ -1,40 +1,4 @@
 <div class="modal-header">
 	<div class="close" ng-click="vm.cancel()">&times;</div>
-	<h4>选择预览报告</h4>
 </div>
-
-<div class="modal-body">
-	<form name="form" class="form-horizontal">
-		<div class="form-group">
-			<label class="col-sm-3 control-label">抽样单编号</label>
-			<div class="col-sm-8">
-				<label class="control-label" ng-bind="vm.sampleId"></label>
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label class="col-sm-3 control-label category">类别</label>
-			<div class="col-sm-8">
-				<input type="radio" id="cover" ng-model="vm.category" value="0" ng-change="vm.changeCategory('0')"><label for="cover">报告封面</label>&emsp;&emsp;
-				<input type="radio" id="report" ng-model="vm.category" value="1" ng-change="vm.changeCategory('1')"><label for="report">报告内容</label>&emsp;&emsp;
-				<input type="radio" id="both" ng-model="vm.category" value="2" ng-change="vm.changeCategory('2')"><label for="both">报告封面&内容</label>
-			</div>
-		</div>
-
-		<div class="form-group">
-			<label class="col-sm-3 control-label">模板名称</label>
-			<div class="col-sm-8">
-				<select class="form-control" ng-model="vm.templateName" ng-options="option.excelName as option.name for option in vm.templates" required></select>
-			</div>
-		</div>
-
-		<!-- <div class="form-group">
-			<input type="file" ngf-select ng-model="vm.file" name="file" value="选择文件">
-		</div> -->
-	</form>
-</div>
-
-<div class="modal-footer">
-	<button class="btn btn-2x btn-default-dark" ng-disabled="form.$invalid" ng-click="vm.ok()">确认</button>
-	<button class="btn btn-2x btn-default-light" ng-click="vm.cancel()">取消</button>
-</div>
+<iframe id="pdfIframe" ng-src="{{ vm.url }}"></iframe>

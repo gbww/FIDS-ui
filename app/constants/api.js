@@ -21,6 +21,10 @@ angular.module('com.app').constant('api', {
       root: {name: '客户管理', url: 'app.client'},
       detail: {name: '客户详情'}
     },
+    device: {
+      root: {name: '设备管理', url: 'app.device'},
+      detect: {name: '检验设备'}
+    },
     business: {
       root: {name: '业务管理'},
       contract: {

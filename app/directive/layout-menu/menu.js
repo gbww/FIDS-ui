@@ -11,6 +11,8 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
       $state.go('app.client');
     } else if (module == 'unit') {
       $state.go('app.unit');
+    } else if (module == 'device') {
+      $state.go('app.device');
     }
   }
 
@@ -19,6 +21,7 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
     vm.isItemToCheckActive = $state.includes('app.itemToCheck');
     vm.isClientActive = $state.includes('app.client');
     vm.isUnitActive = $state.includes('app.unit');
+    vm.isDeviceActive = $state.includes('app.device');
 
     vm.isCheckItemActive = $state.includes('app.checkItem');
     vm.isCheckItemListActive = $state.includes('app.checkItem.list');

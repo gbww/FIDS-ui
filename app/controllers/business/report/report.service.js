@@ -58,7 +58,7 @@ angular.module('com.app').factory('ReportService', function ($http) {
 
     updateReportCi: function (receiveSampleId, data) {
       return $http({
-        url: baseUrl + '/list/' + receiveSampleId,
+        url: baseUrl + '/item/' + receiveSampleId,
         method: 'POST',
         data: data
       });
@@ -149,8 +149,8 @@ angular.module('com.app').factory('ReportService', function ($http) {
       return $http.get(baseUrl + '/process/task/' + taskId + '/comments');
     },
 
-    getReportHtml: function (receiveSampleId) {
-      return $http.get(baseUrl + '/preview?receiveSampleId=' + receiveSampleId + '&type=html');
+    getReportData: function (receiveSampleId) {
+      return $http.get(baseUrl + '/preview?receiveSampleId=' + receiveSampleId + '&type=pdf');
     }
 
   }

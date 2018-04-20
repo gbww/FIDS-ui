@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ReportCtrl', function ($stateParams, $q, api, toastr, dialog, ReportService) {
+angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateParams, $q, $uibModal, $interval, api, toastr, dialog, ReportService) {
   var vm = this;
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.report.root];
@@ -217,9 +217,103 @@ angular.module('com.app').controller('ReportCtrl', function ($stateParams, $q, a
     link.click();
   }
 
+  vm.preview = function (report) {
+    vm.printedIds = [report.receiveSampleId];
+    window.DEFAULT_URL = '/api/v1/ahgz/report/preview?type=pdf&receiveSampleId=' + report.receiveSampleId;
+
+    vm.previewModal = $uibModal.open({
+      animation: true,
+      windowClass: 'pdf-preview',
+      templateUrl: 'controllers/business/report/preview/preview.html',
+      controller: 'PDFPreviewCtrl as vm',
+    });
+  }
+
+  vm.print = function (report) {
+    vm.printedIds = [report.receiveSampleId];
+    $rootScope.loading = true;
+    var iframe = document.createElement('iframe');
+    window.DEFAULT_URL = '/api/v1/ahgz/report/preview?type=pdf&receiveSampleId=' + report.receiveSampleId;
+    iframe.style.display = 'none';
+    iframe.id = 'printIframe';
+    iframe.src = 'http://' + location.host + '/pdfjs/web/viewer.html';
+    document.body.appendChild(iframe);
+    var iwin = document.getElementById('printIframe').contentWindow;
+
+    var interval = $interval(function () {
+      if (iwin.document.getElementById('viewer')  && iwin.PDFViewerApplication &&
+        iwin.PDFViewerApplication.pdfViewer && iwin.PDFViewerApplication.pdfViewer._pageViewsReady) {
+        $rootScope.loading = false;
+        iwin.print();
+        $interval.cancel(interval);
+      }
+    }, 100)
+  }
+
+  vm.batchPrint = function () {
+    vm.printedIds = angular.copy(vm.selectedItems);
+    $rootScope.loading = true;
+
+    var xhr;
+    if (window.XMLHttpRequest) {
+      xhr = new XMLHttpRequest();
+    } else {
+      xhr = new ActiveXObject('Microsoft.XMLHTTP');
+    }
+    xhr.onload = function () {
+      window.DEFAULT_URL = new Uint8Array(xhr.response);
+      var iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.id = 'printIframe';
+      iframe.src = 'http://' + location.host + '/pdfjs/web/viewer.html';
+      document.body.appendChild(iframe);
+      var iwin = document.getElementById('printIframe').contentWindow;
+
+      var interval = $interval(function () {
+        if (iwin.document.getElementById('viewer')  && iwin.PDFViewerApplication &&
+          iwin.PDFViewerApplication.pdfViewer && iwin.PDFViewerApplication.pdfViewer._pageViewsReady) {
+          $rootScope.loading = false;
+          iwin.print();
+          $interval.cancel(interval);
+        }
+      }, 100)
+    };
+
+    xhr.open('POST', '/api/v1/ahgz/report/preview');
+    xhr.setRequestHeader('Content-type', 'application/json')
+    xhr.responseType = 'arraybuffer';
+    xhr.send(JSON.stringify(vm.selectedItems));
+  }
+
+  function afterPrint () {
+    if (document.getElementById('printIframe')) {
+      document.body.removeChild(document.getElementById('printIframe'));
+    }
+    if (vm.previewModal) {
+      vm.previewModal.close();
+    }
+    console.log(vm.printedIds);return;
+    var result = dialog.confirm('是否已完成报告的所有打印工作?');
+    result.then(function (res) {
+      if (res) {
+        ReportService.getReportInfo(vm.printedReport.receiveSampleId).then(function (response) {
+          if (response.data.success) {
+            var data = response.data.entity;
+            data.reportStatus = 4;
+            ReportService.updateReport(data)
+          }
+        });
+      }
+    });
+  };
+  window.afterPrint = afterPrint;
+
+
+
+/*
   var LODOP;
   vm.preview = function (report) {
-    ReportService.getReportHtml(report.receiveSampleId).then(function (response) {
+    ReportService.getReportData(report.receiveSampleId, 'html').then(function (response) {
       LODOP = getLodop();
       LODOP.PRINT_INIT('lodop');	
       LODOP.SET_PRINT_PAGESIZE(1,0,0,"A4")
@@ -229,7 +323,7 @@ angular.module('com.app').controller('ReportCtrl', function ($stateParams, $q, a
   }
 
   vm.print = function (report) {
-    ReportService.getReportHtml(report.receiveSampleId).then(function (response) {
+    ReportService.getReportData(report.receiveSampleId, 'html').then(function (response) {
       LODOP = getLodop();
       LODOP.PRINT_INIT('lodop');	
       LODOP.SET_PRINT_PAGESIZE(1,0,0,"A4")
@@ -241,7 +335,7 @@ angular.module('com.app').controller('ReportCtrl', function ($stateParams, $q, a
   vm.batchPrint = function () {
     var promiseArr = [];
     angular.forEach(vm.selectedItems, function (id) {
-      promiseArr.push(ReportService.getReportHtml(id));
+      promiseArr.push(ReportService.getReportData(id, 'html'));
     })
     $q.all(promiseArr).then(function (responses) {
       LODOP = getLodop();
@@ -272,6 +366,7 @@ angular.module('com.app').controller('ReportCtrl', function ($stateParams, $q, a
     // return str.replace(/(width\:\s?595px)/g, '$1; height\: 1048px');
     return str.replace(/(width\:\s?595px)/g, 'width: 758px; height\: 1050px');
   }
+*/
 
   // 单选、复选
   vm.itemSelected = [];

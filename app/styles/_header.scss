@@ -10,6 +10,13 @@
   transition: left 0.7s ease-in-out;
   @include box-shadow(0 1px 0 rgba(188,202,210,0.4));
 
+  .title {
+    font-family: 'Microsoft Yahei';
+    font-size: 16px;
+    font-weight: 700;
+    margin-left: 10px;
+  }
+
   .account {
     position: relative;
     float: right;

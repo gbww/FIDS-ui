@@ -1,0 +1,132 @@
+<div class="inner-container client-list">
+    <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+    <div class="pt-2">
+      <div class="toolbar clearfix">
+        <button class="btn btn-default-dark" ng-click="vm.create()">
+          <i class="fa fa-plus"></i>
+          <span>添加设备</span>
+        </button>
+      </div>
+  
+      <table class="pt-table" st-table="vm.clients" st-pipe="vm.getClientList">
+        <thead st-search-watch="vm.searchObject">
+          <tr>
+            <th style="width:40px">序号</th>
+            <th>
+              <div st-sort="clientName">本单位编号
+                <i class="fa fa-sort"></i>
+              </div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>仪器名称</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>型号</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>出厂日期</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>出厂编号</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>生产厂家</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>技术指标</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>价格</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>购置日期</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>状态</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>存放科室</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>使用科室</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>管理人</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>备注</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th style="width:100px">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-if="vm.loading">
+            <td colspan="16" class="text-center">
+              <i class="fa fa-pluse fa-spinner"></i>
+            </td>
+          </tr>
+          <tr ng-if="!vm.loading && vm.clients.length === 0">
+            <td colspan="16" class="text-center">暂无设备</td>
+          </tr>
+          <tr ng-repeat="client in vm.clients track by $index" ng-if="!vm.loading">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ client.dwbh }}</td>
+            <td>{{ client.yqmc }}</td>
+            <td>{{ client.xh }}</td>
+            <td>{{ client.ccrq }}</td>
+            <td>{{ client.ccbh }}</td>
+            <td>{{ client.sccj }}</td>
+            <td>{{ client.jszb }}</td>
+            <td>{{ client.jg }}</td>
+            <td>{{ client.gzrq }}</td>
+            <td>{{ client.zt }}</td>
+            <td>{{ client.cfks }}</td>
+            <td>{{ client.syks }}</td>
+            <td>{{ client.glr }}</td>
+            <td>{{ client.bz }}</td>
+            <td class="dropdown-col">
+              <div class="btn-group">
+                <button class="btn btn-default" ng-click="vm.edit(client)">
+                  <i class="fa fa-edit"></i>
+                  <span>编辑</span>
+                </button>
+                <button class="btn dropdown-toggle" data-toggle="dropdown">
+                  <i class="caret"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li ng-click="vm.delete(client)">
+                    <a href>
+                      <i class="fa fa-trash"></i>
+                      <span>删除</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="16">
+              <div st-idp st-total-count="vm.total"></div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  
