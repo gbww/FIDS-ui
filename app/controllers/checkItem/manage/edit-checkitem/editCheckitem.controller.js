@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('com.app').controller('ManageEditCheckItemCtrl', function ($scope, $uibModalInstance, CheckItemService, toastr, checkItem, organizations) {
-  var vm = this;
+angular.module('com.app').controller('ManageEditCheckItemCtrl', function ($rootScope, $scope, $uibModalInstance, CheckItemService, toastr, checkItem, units, organizations) {
+	var vm = this;
+	$rootScope.loading = false;
 	vm.checkItem = angular.merge({}, checkItem, {
 		catalogId: checkItem.catalog_id,
 		checkItemId: checkItem.check_item_id,
@@ -21,8 +22,7 @@ angular.module('com.app').controller('ManageEditCheckItemCtrl', function ($scope
 	delete vm.checkItem.updated_at;
 	delete vm.checkItem.created_at;
 	vm.organizations = organizations;
-
-  vm.characterArr = ['>', '>=', '<', '<=', '~', '!', '/', '$', '%', '^', '*', '(', ')', '[', ']'];
+  vm.characterArr = units;
 
   vm.ok = function () {
   	CheckItemService.editCatalogCi(vm.checkItem).then(function (response) {

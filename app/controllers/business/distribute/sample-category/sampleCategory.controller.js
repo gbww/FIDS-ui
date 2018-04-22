@@ -41,16 +41,16 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
     }
 
     var tableParams = {
-      // "pageSize": tableState.pagination.number,
-      // "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
+      "pageSize": tableState.pagination.number,
+      "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
   	CiDistributeService.getUndistributeSamples(tableParams, vm.searchObject).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
-        vm.samples = response.data.entity;
-        // vm.total = response.data.entity.total;
-        // tableState.pagination.numberOfPages = response.data.entity.pages;
+        vm.samples = response.data.entity.list;
+        vm.total = response.data.entity.total;
+        tableState.pagination.numberOfPages = response.data.entity.pages;
 
         if (vm.samples.length > 0) {
           vm.selectedSample = vm.samples[0];
@@ -83,7 +83,7 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
           }
         })
       } else {
-        // vm.total = 0;
+        vm.total = 0;
         toastr.error(response.data.message);
       }
     }).catch(function (err) {

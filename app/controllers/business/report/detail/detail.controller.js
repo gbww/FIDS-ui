@@ -33,9 +33,9 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
       vm.loading = false;
       if (response.report.data.success) {
         vm.report = response.report.data.entity.receiveSample;
-        if (!vm.report.drawUser) {
-          vm.report.drawUser = api.userInfo.username;
-        }
+        // if (!vm.report.drawUser) {
+        //   vm.report.drawUser = api.userInfo.username;
+        // }
 
         var reportExtend = response.report.data.entity.reportExtend;
         if (reportExtend) {
@@ -55,6 +55,9 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
 
       if (!vm.report.dataRemarks && vm.checkItems) {
         completeDataRemarks();
+      }
+      if (!vm.report.devices && vm.checkItems && vm.type === 'bz') {
+        completeDevices();
       }
     }).catch(function (err) {
       vm.loading = false;
@@ -91,6 +94,19 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
     vm.report.dataRemarks = str;
   }
 
+
+  /**
+   * 根据检测项自动填充所用设备
+   */
+  function completeDevices () {
+    var deviceArr = [];
+    angular.forEach(vm.checkItems, function (checkItem) {
+      if (checkItem.device) {
+        deviceArr.push(checkItem.device);
+      }
+    })
+    vm.report.devices = deviceArr.join('，');
+  }
 
   vm.changeContract = function () {
     var modalInstance = $uibModal.open({
@@ -208,7 +224,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
         receiveSampleId: vm.report.receiveSampleId,
         comment: vm.comment,
       };
-      ReportService.updateReport(angular.merge(vm.report, {drawUser: api.userInfo.username})).then(function () {
+      ReportService.updateReport(vm.report).then(function () {
         return ReportService.runEditTask(vm.taskId, data);
       }).then(function (response) {
         if (response.data.success) {
@@ -247,7 +263,35 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
       controller: 'EditReportCiCtrl as vm',
       resolve: {
         sampleId: function () { return vm.report.receiveSampleId; },
-        checkItem: function () { return ci; }
+        checkItem: function () { return ci; },
+        units: ['$rootScope', '$q', 'UnitService', function ($rootScope, $q, UnitService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          UnitService.getUnitList().then(function (response) {
+            if (response.data.success) {
+              var res = [];
+              angular.forEach(response.data.entity, function (item) {
+                res.push(item.unitName);
+              })
+              deferred.resolve(res);
+            } else {
+              deferred.resolve([]);
+            }
+          });
+          return deferred.promise;
+        }],
+        organizations: ['$rootScope', '$q', 'PrivilegeService', function ($rootScope, $q, PrivilegeService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getOrganizationList().then(function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              deferred.reject();
+            }
+          });
+          return deferred.promise;
+        }]
       }
     });
 

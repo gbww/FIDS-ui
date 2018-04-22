@@ -29,7 +29,6 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
       report: ReportService.getReportInfo($stateParams.id),
       checkItem: ReportService.getReportCi($stateParams.id)
     }).then(function (response) {
-      vm.loading = false;
       if (response.report.data.success) {
         vm.report = response.report.data.entity.receiveSample;
 
@@ -49,6 +48,25 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
         vm.checkItems = response.checkItem.data.entity;
       } else {
         toastr.error(response.checkItem.data.message);
+      }
+      if (vm.report.reportProcessId) {
+        return ReportService.getComments(vm.report.reportProcessId)
+      } else {
+        return {
+          data: {
+            entity: [],
+            success: true
+          }
+        }
+      }
+    }).then(function (response) {
+      vm.loading = false;
+      if (response.data.success) {
+        vm.bzComment = response.data.bz;
+        vm.shComment = response.data.sh;
+        vm.pzComment = response.data.pz;
+      } else {
+        toastr.error(response.data.message);
       }
     }).catch(function (err) {
       vm.loading = false;

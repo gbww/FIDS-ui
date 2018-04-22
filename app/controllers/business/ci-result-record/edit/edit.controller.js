@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('com.app').controller('RecordCiResultCtrl', function ($uibModalInstance, CiResultRecordService, toastr, checkItems) {
+angular.module('com.app').controller('RecordCiResultCtrl', function ($uibModalInstance, CiResultRecordService, toastr, checkItems, units) {
   var vm = this;
+  vm.characterArr = units;
 
   vm.resultArr = ['合格', '不合格'];
   vm.checkItem = angular.copy(checkItems[0]);

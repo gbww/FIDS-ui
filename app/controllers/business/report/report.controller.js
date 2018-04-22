@@ -30,7 +30,11 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
   vm.reportIdArr = [], vm.sampleNameArr = [], vm.entrustedUnitArr = [], vm.inspectedUnitArr = [],
     vm.productionUnitArr = [], vm.sampleIdArr = [], vm.exeStandardArr = [], vm.sampleTypeArr = [], vm.checkTypeArr = [];
 
-  vm.status = !!$stateParams.status ? parseInt($stateParams.status) : 5;
+  if ($stateParams.status === 0) {
+    vm.status = 0;
+  } else {
+    vm.status = !!$stateParams.status ? parseInt($stateParams.status) : 5;
+  }
   // 是否显示已处理任务
   vm.showHandled = false;
   vm.reports = [];
@@ -47,61 +51,24 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
-    }, tempTotal = 0;
+    };
     ReportService.getReportList(tableParams, vm.searchObject, vm.status).then(function (response) {
-      if (response.data.success) {
-        vm.tempReports = response.data.entity.list;
-        tempTotal = response.data.entity.total;
-        tableState.pagination.numberOfPages = response.data.entity.pages;
-      } else {
-        tempTotal = 0;
-        toastr.error(response.data.message);
-      }
-
-      if (vm.status === 0 || vm.status === 1 || vm.status === 2) {
-        if (!vm.showHandled) {
-          return ReportService.getUserTask('0');
-        } else {
-          return ReportService.getUserTask('1');
-        }
-      } else {
-        return {
-          data: {
-            entity: [],
-            success: true
-          }
-        }
-      }
-    }).then(function (response) {
       vm.loading = false;
+      var tempReports = [];
       if (response.data.success) {
-        vm.userTasks = response.data.entity;
-        /*
-         ** 若用户有任务，则将任务信息放入报告中，
-         ** 即报告存在task，则表明该报告是用户的代办项
-         */
-        angular.forEach(vm.tempReports, function (report) {
-          angular.forEach(vm.userTasks, function (task) {
-            if (report.reportProcessId == task.processInstanceId) {
-              report.task = task;
+        if (vm.status === 0 || vm.status === 1 || vm.status === 2) {
+          angular.forEach(response.data.entity, function (item) {
+            if ((vm.showHandled && item.task['1'].length > 0) || (!vm.showHandled && item.task['0'].length > 0)) {
+              tempReports.push(item.report);
             }
-          })
-        });
-        /* 列出所有报告，不过滤 */
-        if (vm.status === 5 || vm.status === 4 || vm.status === 3) {
-          vm.reports = angular.copy(vm.tempReports);
+          });
         } else {
-          vm.reports = [];
-          angular.forEach(vm.tempReports, function (report) {
-            if (report.task) {
-              vm.reports.push(report);
-            } else {
-              tempTotal -= 1;
-            }
-          })
+          tempReports = response.data.entity.list;
         }
-        vm.total = tempTotal;
-        angular.forEach(vm.tempReports, function (item) {
+
+        vm.reports = tempReports;
+
+        angular.forEach(vm.reports, function (item) {
           if (vm.reportIdArr.indexOf(item.reportId) == -1) {
             vm.reportIdArr.push(item.reportId);
           }
@@ -130,7 +97,11 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
             vm.checkTypeArr.push(item.checkType);
           }
         })
+
+        vm.total = response.data.entity.total;
+        tableState.pagination.numberOfPages = response.data.entity.pages;
       } else {
+        vm.total = 0;
         toastr.error(response.data.message);
       }
     }).catch(function (err) {
@@ -292,15 +263,12 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     if (vm.previewModal) {
       vm.previewModal.close();
     }
-    console.log(vm.printedIds);return;
     var result = dialog.confirm('是否已完成报告的所有打印工作?');
     result.then(function (res) {
       if (res) {
-        ReportService.getReportInfo(vm.printedReport.receiveSampleId).then(function (response) {
+        ReportService.batchUpdateReportStatus(printedIds).then(function (response) {
           if (response.data.success) {
-            var data = response.data.entity;
-            data.reportStatus = 4;
-            ReportService.updateReport(data)
+            refreshTable();
           }
         });
       }

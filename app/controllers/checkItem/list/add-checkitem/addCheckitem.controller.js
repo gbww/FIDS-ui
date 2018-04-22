@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('com.app').controller('DBAddCheckItemCtrl', function ($scope, $uibModalInstance, CheckItemService, toastr, organizations) {
-  var vm = this;
+angular.module('com.app').controller('DBAddCheckItemCtrl', function ($rootScope, $scope, $uibModalInstance, CheckItemService, toastr, units, organizations) {
+	var vm = this;
+	$rootScope.loading = false;
 	vm.checkItem = {
 		subpackage: 0
 	};
 	vm.organizations = organizations;
-
-  vm.characterArr = ['>', '>=', '<', '<=', '~', '!', '/', '$', '%', '^', '*', '(', ')', '[', ']'];
+  vm.characterArr = units;
 
   vm.ok = function () {
   	CheckItemService.recordCheckItem(vm.checkItem).then(function (response) {

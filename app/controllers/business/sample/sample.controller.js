@@ -430,6 +430,36 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     })
   }
 
+  vm.batchDelete = function () {
+    if (vm.selectedItems.length === 0) {
+      toastr.warning('请选择检测项！');
+      return;
+    }
+
+    var result = dialog.confirm('确认从接样单中批量删除检测项?');
+    result.then(function (res) {
+      if (res) {
+        var ids = [];
+        angular.forEach(vm.selectedItems, function (item) {
+          ids.push(item.id)
+        });
+        SampleService.deleteSampleCi(vm.selectedSample.receiveSampleId, ids).then(function (response) {
+          if (response.data.success) {
+            vm.getSampleCi();
+            vm.selectedItems = [];
+            vm.itemSelected = [];
+            vm.allSelected = false;
+            toastr.success('接样单检测项删除成功！');
+          } else {
+            toastr.error(response.data.message);
+          }
+        }).catch(function (error) {
+          toastr.error(error.data.message)
+        });
+      }
+    })
+  }
+
   vm.distribute = function (item) {
     var modalInstance = $uibModal.open({
       animation: true,

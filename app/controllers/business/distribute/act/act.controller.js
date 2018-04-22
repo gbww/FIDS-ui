@@ -9,6 +9,7 @@ angular.module('com.app').controller('CiDistributeActionCtrl', function ($rootSc
 
 
   vm.getDepartmentUsers = function () {
+    vm.users = [];
     PrivilegeService.getOrganizationUsers(vm.testRoomId).then(function (response) {
       if (response.data.success) {
         vm.users = response.data.entity;

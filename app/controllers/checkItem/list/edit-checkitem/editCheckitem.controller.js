@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('com.app').controller('DBEditCheckItemCtrl', function ($scope, $uibModalInstance, CheckItemService, toastr, checkItem, organizations) {
-  var vm = this;
+angular.module('com.app').controller('DBEditCheckItemCtrl', function ($rootScope, $scope, $uibModalInstance, CheckItemService, toastr, checkItem, units, organizations) {
+	var vm = this;
+	$rootScope.loading = false;
 	vm.checkItem = angular.copy(checkItem);
 	vm.organizations = organizations;
-
-  vm.characterArr = ['>', '>=', '<', '<=', '~', '!', '/', '$', '%', '^', '*', '(', ')', '[', ']'];
+  vm.characterArr = units;
 
   vm.ok = function () {
   	CheckItemService.editCheckItem(vm.checkItem.id, vm.checkItem).then(function (response) {

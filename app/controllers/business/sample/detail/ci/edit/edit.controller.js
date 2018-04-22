@@ -1,10 +1,11 @@
 'use strict';
 
-angular.module('com.app').controller('EditSampleCiCtrl', function ($uibModalInstance, SampleService, toastr, sampleId, checkItem) {
-  var vm = this;
-  vm.checkItem = angular.copy(checkItem);
-
-  vm.characterArr = ['>', '>=', '<', '<=', '~', '!', '/', '$', '%', '^', '*', '(', ')', '[', ']'];
+angular.module('com.app').controller('EditSampleCiCtrl', function ($rootScope, $uibModalInstance, SampleService, toastr, sampleId, checkItem, units, organizations) {
+	var vm = this;
+	$rootScope.loading = false;
+	vm.checkItem = angular.copy(checkItem);
+	vm.organizations = organizations;
+  vm.characterArr = units;
 
   vm.ok = function () {
   	SampleService.updateSampleCi(sampleId, [vm.checkItem]).then(function (response) {

@@ -58,15 +58,29 @@ angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal,
       templateUrl: 'controllers/checkItem/list/add-checkitem/addCheckitem.html',
       controller: 'DBAddCheckItemCtrl as vm',
       resolve: {
+        units: ['$rootScope', '$q', 'UnitService', function ($rootScope, $q, UnitService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          UnitService.getUnitList().then(function (response) {
+            if (response.data.success) {
+              var res = [];
+              angular.forEach(response.data.entity, function (item) {
+                res.push(item.unitName);
+              })
+              deferred.resolve(res);
+            } else {
+              deferred.resolve([]);
+            }
+          });
+          return deferred.promise;
+        }],
         organizations: ['$rootScope', '$q', function ($rootScope, $q) {
           $rootScope.loading = true;
           var deferred = $q.defer();
           PrivilegeService.getOrganizationList().then(function (response) {
-            $rootScope.loading = false;
             if (response.data.success) {
               deferred.resolve(response.data.entity);
             } else {
-              $rootScope.loading = false;
               deferred.reject();
             }
           });
@@ -90,15 +104,29 @@ angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal,
       controller: 'DBEditCheckItemCtrl as vm',
       resolve: {
         checkItem: function () {return item;},
+        units: ['$rootScope', '$q', 'UnitService', function ($rootScope, $q, UnitService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          UnitService.getUnitList().then(function (response) {
+            if (response.data.success) {
+              var res = [];
+              angular.forEach(response.data.entity, function (item) {
+                res.push(item.unitName);
+              })
+              deferred.resolve(res);
+            } else {
+              deferred.resolve([]);
+            }
+          });
+          return deferred.promise;
+        }],
         organizations: ['$rootScope', '$q', function ($rootScope, $q) {
           $rootScope.loading = true;
           var deferred = $q.defer();
           PrivilegeService.getOrganizationList().then(function (response) {
-            $rootScope.loading = false;
             if (response.data.success) {
               deferred.resolve(response.data.entity);
             } else {
-              $rootScope.loading = false;
               deferred.reject();
             }
           });

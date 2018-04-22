@@ -121,7 +121,27 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       templateUrl: 'controllers/business/ci-result-record/edit/edit.html',
       controller: 'RecordCiResultCtrl as vm',
       resolve: {
-        checkItems: function () {return [item];}
+        checkItems: function () {return [item];},
+        units: ['$rootScope', '$q', 'UnitService', function ($rootScope, $q, UnitService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          UnitService.getUnitList().then(function (response) {
+            $rootScope.loading = false;
+            if (response.data.success) {
+              var res = [];
+              angular.forEach(response.data.entity, function (item) {
+                res.push(item.unitName);
+              })
+              deferred.resolve(res);
+            } else {
+              deferred.resolve([]);
+            }
+          }).catch(function () {
+            $rootScope.loading = false;
+            deferred.resolve([]);
+          });
+          return deferred.promise;
+        }],
       }
     });
 

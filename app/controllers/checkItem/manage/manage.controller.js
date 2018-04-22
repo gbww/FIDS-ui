@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootScope, $scope, $state, $uibModal, $q, $filter, api, CheckItemService, PrivilegeService, toastr, dialog) {
+angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootScope, $scope, $state, $uibModal, $q, $filter, api, CheckItemService, PrivilegeService, toastr, dialog, Upload) {
   var vm = this;
 
   var checkItemBC = api.breadCrumbMap.checkItem;
@@ -71,7 +71,7 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
 							angular.merge(item, {name: item.productName, isParent: true})
 						} else {
 	  					// 检测项集合节点
-							angular.merge(item, {name: item.productName})
+							angular.merge(item, {name: item.productName + '(' + item.id + ')'})
 						}
 		  			vm.tree.addNodes(treeNode, -1, item);
 	  			})
@@ -160,7 +160,7 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
       			if (catalog.isCatalog == '1') {
   	    			var nodeData = angular.merge({}, data, {name: data.productName, isParent: true})
       			} else {
-  	    			var nodeData = angular.merge({}, data, {name: data.productName});
+  	    			var nodeData = angular.merge({}, data, {name: data.productName + '(' + data.id + ')'});
       			}
   		    	vm.tree.addNodes(parentNode, -1, nodeData);
           }).catch(function () {
@@ -304,15 +304,29 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
       controller: 'ManageEditCheckItemCtrl as vm',
       resolve: {
         checkItem: function () {return item;},
+        units: ['$rootScope', '$q', 'UnitService', function ($rootScope, $q, UnitService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          UnitService.getUnitList().then(function (response) {
+            if (response.data.success) {
+              var res = [];
+              angular.forEach(response.data.entity, function (item) {
+                res.push(item.unitName);
+              })
+              deferred.resolve(res);
+            } else {
+              deferred.resolve([]);
+            }
+          });
+          return deferred.promise;
+        }],
         organizations: ['$rootScope', '$q', function ($rootScope, $q) {
           $rootScope.loading = true;
           var deferred = $q.defer();
           PrivilegeService.getOrganizationList().then(function (response) {
-            $rootScope.loading = false;
             if (response.data.success) {
               deferred.resolve(response.data.entity);
             } else {
-              $rootScope.loading = false;
               deferred.reject();
             }
           });
@@ -346,5 +360,21 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
     })
   }
 
+
+  vm.upload = function (event) {
+    Upload.upload({
+      url: '/api/v1/ahgz/checkitemscatalog/item/mapping/import',
+      data: {
+        file: vm.file
+      }
+    }).then(function (response) {
+  		if (response.data.success) {
+        var selectedNode = vm.tree.getSelectedNodes()[0];
+        vm.getCatalogCheckItems(selectedNode.id);
+  		} else {
+  			toastr.error(response.data.message);
+  		}
+    })
+  }
 
 });

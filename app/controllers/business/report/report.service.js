@@ -74,6 +74,17 @@ angular.module('com.app').factory('ReportService', function ($http) {
       })
     },
 
+    // 批量修改报告状态
+    batchUpdateReportStatus: function (ids) {
+      return $http({
+        url: baseUrl + '/status/muti',
+        method: 'GET',
+        params: {
+          receiveSampleIdList: ids
+        }
+      })
+    },
+
 
     // 指定报告对应模板，指定的时候启动流程
     bindReportTmpl: function (data) {
@@ -145,8 +156,8 @@ angular.module('com.app').factory('ReportService', function ($http) {
       })
     },
 
-    getComments: function (taskId) {
-      return $http.get(baseUrl + '/process/task/' + taskId + '/comments');
+    getComments: function (processId) {
+      return $http.get(baseUrl + '/process/task/' + processId + '/comments/all');
     },
 
     getReportData: function (receiveSampleId) {

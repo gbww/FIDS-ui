@@ -4,12 +4,14 @@ angular.module('com.app').factory('UnitService', function ($http) {
 	var baseUrl = '/api/v1/ahgz/gzunit';
 	return {
 		getUnitList: function (tableParams) {
+			var params = {};
+			if (tableParams) {
+				params.order = tableParams.order
+			};
 			return $http({
 				url: baseUrl + '/select',
 				method: 'GET',
-				params: {
-          order: tableParams.order
-				}
+				params: params
 			})
 		},
 

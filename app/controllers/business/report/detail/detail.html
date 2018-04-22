@@ -484,6 +484,14 @@
               <textarea class="input" rows="2" ng-model="vm.report.dataRemarks"></textarea>
             </td>
           </tr>
+          <tr ng-show="vm.type === 'bz' || vm.report.reportStatus > 0">
+            <td class="item-title">
+              <span>所用设备</span>
+            </td>
+            <td colspan="3">
+              <textarea class="input" rows="2" ng-model="vm.report.devices"></textarea>
+            </td>
+          </tr>
           <tbody ng-if="vm.type === 'bz'">
             <tr>
               <td class="item-title">

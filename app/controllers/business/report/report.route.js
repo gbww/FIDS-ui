@@ -17,7 +17,7 @@ angular.module('com.app').config(function ($stateProvider) {
 			}
 		},
 		resolve: {
-			users: ['$rootScope', '$q', '$stateParams', 'PrivilegeService', function ($rootScope, $q, $stateParams, PrivilegeService) {
+			users: ['$rootScope', '$q', '$stateParams', 'PrivilegeService', 'toastr', function ($rootScope, $q, $stateParams, PrivilegeService, toastr) {
 				if ($stateParams.type === 'ck') {
 					return [];
 				}
@@ -28,6 +28,7 @@ angular.module('com.app').config(function ($stateProvider) {
 					if (response.data.success) {
 						var users = response.data.entity;
 						if (users.length === 0) {
+							$rootScope.loading = false;
 							toastr.warning('请先新建批准人！');
 							deferred.reject();
 						} else {
@@ -36,6 +37,7 @@ angular.module('com.app').config(function ($stateProvider) {
 					}
 				}).catch(function () {
 					deferred.reject();
+					$rootScope.loading = false;
 					toastr.error('请求批准人列表失败！');
 				});
 
@@ -75,7 +77,7 @@ angular.module('com.app').config(function ($stateProvider) {
 			}
 		},
 		resolve: {
-			users: ['$rootScope', '$q', '$stateParams', 'PrivilegeService', function ($rootScope, $q, $stateParams, PrivilegeService) {
+			users: ['$rootScope', '$q', '$stateParams', 'PrivilegeService', 'toastr', function ($rootScope, $q, $stateParams, PrivilegeService, toastr) {
 				if ($stateParams.type !== 'bz') {
 					return [];
 				}
@@ -86,6 +88,7 @@ angular.module('com.app').config(function ($stateProvider) {
 					if (response.data.success) {
 						var users = response.data.entity;
 						if (users.length === 0) {
+							$rootScope.loading = false;
 							toastr.warning('请先新建审核人！');
 							deferred.reject();
 						} else {
@@ -94,6 +97,7 @@ angular.module('com.app').config(function ($stateProvider) {
 					}
 				}).catch(function () {
 					deferred.reject();
+					$rootScope.loading = false;
 					toastr.error('请求审核人列表失败！');
 				});
 
