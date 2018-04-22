@@ -20,6 +20,14 @@
           <input type="checkbox" ng-click="vm.selectAll()" ng-model="vm.allSelected"> 序号
         </th>
         <th>
+          <div>报告编号</div>
+          <adjust-line></adjust-line>
+        </th>
+        <th>
+          <div>抽样单编号</div>
+          <adjust-line></adjust-line>
+        </th>
+        <th>
           <div st-sort="name">名称
             <i class="fa fa-sort"></i>
           </div>
@@ -65,17 +73,19 @@
     </thead>
     <tbody>
       <tr ng-if="vm.ciLoading">
-        <td colspan="12" class="text-center">
+        <td colspan="14" class="text-center">
           <i class="fa fa-pulse fa-spinner"></i>
         </td>
       </tr>
       <tr ng-if="!vm.ciLoading && vm.checkItems.length == 0">
-        <td colspan="12" class="text-center">暂无检测项</td>
+        <td colspan="14" class="text-center">暂无检测项</td>
       </tr>
       <tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
         <td>
           <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)"> {{ $index + 1 }}
         </td>
+        <td>{{ item.reportId }}</td>
+        <td>{{ item.receiveSampleId }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.method }}</td>
         <td>{{ item.unit }}</td>
@@ -104,7 +114,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="12">
+        <td colspan="14">
           <div st-idp st-total-count="vm.total"></div>
         </td>
       </tr>

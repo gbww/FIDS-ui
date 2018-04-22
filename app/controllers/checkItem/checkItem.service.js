@@ -67,7 +67,8 @@ angular.module('com.app').factory('CheckItemService', function ($http) {
 
 		// 获取目录下的检测项
 		getCheckItemsTree: function (id) {
-			return $http.get('/api/v1/ahgz/checkitemscatalog/item/' + id + '/tree');
+			// return $http.get('/api/v1/ahgz/checkitemscatalog/item/' + id + '/tree');
+			return $http.get('/api/v1/ahgz/checkitemscatalog/item/mapping/' + id);
 		},
 
 

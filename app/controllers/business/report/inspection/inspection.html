@@ -227,30 +227,24 @@
             <td>{{ vm.report.approvalUser }}</td>
           </tr>
 
-          <tbody ng-show="vm.reportStatus > 0">
+          <tbody ng-show="vm.report.reportStatus > 0">
             <tr>
               <td class="item-title">
-                <span class="item-required">编制意见</span>
+                <span>编制意见</span>
               </td>
-              <td>
-                <textarea class="input" rows="2" ng-model="vm.bzComment"></textarea>
-              </td>
+              <td colspan="3">{{ vm.bzComment }}</td>
             </tr>
-            <tr ng-show="vm.reportStatus > 1">
+            <tr ng-show="vm.report.reportStatus > 1">
               <td class="item-title">
-                <span class="item-required">审核意见</span>
+                <span>审核意见</span>
               </td>
-              <td>
-                <textarea class="input" rows="2" ng-model="vm.shComment"></textarea>
-              </td>
+              <td colspan="3">{{ vm.shComment }}</td>
             </tr>
-            <tr ng-show="vm.reportStatus > 2">
+            <tr ng-show="vm.report.reportStatus > 2">
               <td class="item-title">
-                <span class="item-required">批准意见</span>
+                <span>批准意见</span>
               </td>
-              <td>
-                <textarea class="input" rows="2" ng-model="vm.pzComment"></textarea>
-              </td>
+              <td colspan="3">{{ vm.pzComment }}</td>
             </tr>
           </tbody>
 

@@ -12,7 +12,7 @@ angular.module('com.app').factory('ReportService', function ($http) {
      * 已完成: list/finish
      * 有权限控制
     */
-    getReportList: function (tableParams, searchConditions, reportStatus) {
+    getReportList: function (tableParams, searchConditions, reportStatus, isHandle) {
       var appendix = '/list/all';
       if (reportStatus === 0) {
         appendix = '/list/edit';
@@ -43,7 +43,8 @@ angular.module('com.app').factory('ReportService', function ($http) {
 					sampleType: searchConditions.sampleType,
 					checkType: searchConditions.checkType,
 					startTime: searchConditions.startTime,
-					endTime: searchConditions.endTime
+          endTime: searchConditions.endTime,
+          isHandle: isHandle
         }
 			})
     },

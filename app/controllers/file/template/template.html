@@ -7,10 +7,10 @@
 				<i class="fa fa-upload"></i>
 				<span>上传模板</span>
 			</button>
-			<button class="btn btn-default-light" ng-click="vm.showTutorial()">
+			<!-- <button class="btn btn-default-light" ng-click="vm.showTutorial()">
 				<i class="fa fa-info-circle"></i>
 				<span>模板制作说明</span>
-			</button>
+			</button> -->
 			<div class="pull-right">
 				<input class="input" placeholder="请输入名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
 				<button class="btn btn-default-dark" ng-click="vm.search()">
@@ -27,10 +27,6 @@
 						<adjust-line></adjust-line>
 					</th>
 					<th>
-						<div>类别</div>
-						<adjust-line></adjust-line>
-					</th>
-					<th>
 						<div>描述</div>
 						<adjust-line></adjust-line>
 					</th>
@@ -43,18 +39,13 @@
 			</thead>
 			<tbody>
 				<tr ng-if="vm.loading">
-					<td colspan="5" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+					<td colspan="4" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 				</tr>
 				<tr ng-if="!vm.loading && vm.templates.length == 0">
-					<td colspan="5" class="text-center">暂无模板</td>
+					<td colspan="4" class="text-center">暂无模板</td>
 				</tr>
 				<tr ng-repeat="item in vm.templates track by item.id" ng-if="!vm.loading">
 					<td>{{ item.name }}</td>
-					<td>
-						<span ng-if="item.category == '0'">封面</span>
-						<span ng-if="item.category == '1'">内容</span>
-						<span ng-if="item.category == '2'">封面&内容</span>
-					</td>
 					<td>{{ item.description }}</td>
 					<td>{{ item.createdAt | date:'medium' }}</td>
 					<td class="dropdown-col">

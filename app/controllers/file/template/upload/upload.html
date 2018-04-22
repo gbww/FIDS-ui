@@ -25,25 +25,24 @@
 			</div>
 		</div>
 
-		<div class="form-group">
+		<!-- <div class="form-group">
 			<label class="col-sm-3 control-label category">类别</label>
 			<div class="col-sm-8">
 				<input type="radio" id="cover" ng-model="vm.template.category" value="0"><label for="cover">报告封面</label>&emsp;&emsp;
 				<input type="radio" id="report" ng-model="vm.template.category" value="1"><label for="report">报告内容</label>&emsp;&emsp;
 				<input type="radio" id="both" ng-model="vm.template.category" value="2"><label for="both">报告封面&内容</label>
 			</div>
-		</div>
+		</div> -->
 
 		<div class="form-group">
 			<a class="btn btn-default-light" custom-file-btn>
 				<span class="item-required"><i class="fa fa-plus"></i>上传文件</span>
 			</a>
 			<span>{{ vm.filename }}</span>
-			<!-- <input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.addFile" ngf-pattern="/\.xlsx?$/"> -->
-			<input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.addFile">
-			<!-- <div class="col-sm-9 col-sm-offset-3" ng-if="form.file.$dirty" ng-messages="form.file.$error">
-				<label class="error-messages" ng-message="pattern">请添加后缀为.xls、.xlsx文件</label>
-			</div> -->
+			<input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.addFile" ngf-pattern="/\.jrxml?$/">
+			<div class="col-sm-9 col-sm-offset-3" ng-if="form.file.$dirty" ng-messages="form.file.$error">
+				<label class="error-messages" ng-message="pattern">请添加后缀为.jrxml文件</label>
+			</div>
 		</div>
 	</form>
 </div>

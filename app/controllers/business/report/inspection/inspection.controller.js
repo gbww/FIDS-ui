@@ -62,9 +62,16 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
     }).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
-        vm.bzComment = response.data.bz;
-        vm.shComment = response.data.sh;
-        vm.pzComment = response.data.pz;
+        var commentDict = {};
+        angular.forEach(response.data.entity, function (item) {
+          if (!commentDict[item.fullMessage.split(':')[0]]) {
+            commentDict[item.fullMessage.split(':')[0]] = [];
+          }
+          commentDict[item.fullMessage.split(':')[0]].push(item.fullMessage.split(':')[0]);
+        })
+        vm.bzComment = commentDict.bzyj;
+        vm.shComment = commentDict.shyj;
+        vm.pzComment = commentDict.pzyj;
       } else {
         toastr.error(response.data.message);
       }

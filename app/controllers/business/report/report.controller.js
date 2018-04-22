@@ -52,21 +52,25 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     };
-    ReportService.getReportList(tableParams, vm.searchObject, vm.status).then(function (response) {
+    var isHandle = null;
+    if (vm.status === 0 || vm.status === 1 || vm.status === 2) {
+      isHandle = vm.showHandled ? '1' : '0';
+    }
+    ReportService.getReportList(tableParams, vm.searchObject, vm.status, isHandle).then(function (response) {
       vm.loading = false;
       var tempReports = [];
       if (response.data.success) {
-        if (vm.status === 0 || vm.status === 1 || vm.status === 2) {
+        if (!vm.showHandled && (vm.status === 0 || vm.status === 1 || vm.status === 2)) {
           angular.forEach(response.data.entity, function (item) {
-            if ((vm.showHandled && item.task['1'].length > 0) || (!vm.showHandled && item.task['0'].length > 0)) {
-              tempReports.push(item.report);
-            }
+            tempReports.push(angular.merge({}, item.report, {task: item.task}));
           });
         } else {
           tempReports = response.data.entity.list;
         }
 
         vm.reports = tempReports;
+        vm.total = response.data.entity.total;
+        tableState.pagination.numberOfPages = response.data.entity.pages;
 
         angular.forEach(vm.reports, function (item) {
           if (vm.reportIdArr.indexOf(item.reportId) == -1) {
@@ -98,8 +102,6 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
           }
         })
 
-        vm.total = response.data.entity.total;
-        tableState.pagination.numberOfPages = response.data.entity.pages;
       } else {
         vm.total = 0;
         toastr.error(response.data.message);

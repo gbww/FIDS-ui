@@ -195,13 +195,13 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
 
     var testRoom = '', testUser = '';
     for (var i=0,len=vm.selectedItems.length; i<len; i++) {
-      if (i == 0) {
-        testRoom = vm.selectedItems[i].testRoom;
-        testUser = vm.selectedItems[i].testUser;
-      } else if (testRoom !== vm.selectedItems[i].testRoom || testUser !== vm.selectedItems[i].testUser) {
-        toastr.error('请确认所选检测项分配的检测室检测人员为同一人！');
-        return;
-      }
+      // if (i == 0) {
+      //   testRoom = vm.selectedItems[i].testRoom;
+      //   testUser = vm.selectedItems[i].testUser;
+      // } else if (testRoom !== vm.selectedItems[i].testRoom || testUser !== vm.selectedItems[i].testUser) {
+      //   toastr.error('请确认所选检测项分配的检测室检测人员为同一人！');
+      //   return;
+      // }
     }
 
     var modalInstance = $uibModal.open({

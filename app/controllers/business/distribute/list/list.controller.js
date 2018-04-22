@@ -103,14 +103,14 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
     for (var i=0,len=vm.selectedItems.length; i<len; i++) {
       if (i == 0) {
         sampleId = vm.selectedItems[i].receiveSampleId;
-        testRoom = vm.selectedItems[i].testRoom;
-        testUser = vm.selectedItems[i].testUser;
+        // testRoom = vm.selectedItems[i].testRoom;
+        // testUser = vm.selectedItems[i].testUser;
       } else if (sampleId !== vm.selectedItems[i].receiveSampleId) {
-        toastr.error('请确认所选检测项属于同一接样单！');
+        toastr.error('请确认所选检测项属于同一抽样单！');
         return;
-      } else if (testRoom !== vm.selectedItems[i].testRoom || testUser !== vm.selectedItems[i].testUser) {
-        toastr.error('请确认所选检测项分配的检测室检测人员为同一人！');
-        return;
+      // } else if (testRoom !== vm.selectedItems[i].testRoom || testUser !== vm.selectedItems[i].testUser) {
+      //   toastr.error('请确认所选检测项分配的检测室检测人员为同一人！');
+      //   return;
       }
     }
 
