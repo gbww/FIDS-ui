@@ -236,10 +236,12 @@
         }
       }
     }
-    &.three-col {
-      td.item-title + td {
-        width: 18.33%
-      }
+    pre {
+      font-family: inherit;
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+      border: 0;
     }
     .ui-select-container {
       .ui-select-match {

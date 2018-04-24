@@ -348,7 +348,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
           checkItems: ['$q', function ($q) {
             var defered = $q.defer();
             $rootScope.loading = true;
-            CheckItemService.getCheckItemsTree(treeNode.id).then(function (response) {
+            CheckItemService.getCatalogCiList(treeNode.id).then(function (response) {
               $rootScope.loading = false;
               if (response.data.success) {
                 defered.resolve(response.data.entity);
@@ -402,7 +402,35 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       controller: 'EditSampleCiCtrl as vm',
       resolve: {
         sampleId: function () {return vm.selectedSample.receiveSampleId;},
-        checkItem: function () {return ci;}
+        checkItem: function () {return ci;},
+        units: ['$rootScope', '$q', 'UnitService', function ($rootScope, $q, UnitService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          UnitService.getUnitList().then(function (response) {
+            if (response.data.success) {
+              var res = [];
+              angular.forEach(response.data.entity, function (item) {
+                res.push(item.unitName);
+              })
+              deferred.resolve(res);
+            } else {
+              deferred.resolve([]);
+            }
+          });
+          return deferred.promise;
+        }],
+        organizations: ['$rootScope', '$q', 'PrivilegeService', function ($rootScope, $q, PrivilegeService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          PrivilegeService.getOrganizationList().then(function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              deferred.reject();
+            }
+          });
+          return deferred.promise;
+        }]
       }
     });
 

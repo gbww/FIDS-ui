@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScope, $state, $stateParams, $q, api, toastr, ReportService, users, templates) {
+angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScope, $state, $stateParams, $q, $filter, api, toastr, ReportService, users, templates) {
   var vm = this;
   $rootScope.loading = false;
 
@@ -49,7 +49,7 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
       } else {
         toastr.error(response.checkItem.data.message);
       }
-      if (vm.report.reportProcessId) {
+      if (vm.report.reportStatus > 0 && vm.report.reportProcessId) {
         return ReportService.getComments(vm.report.reportProcessId)
       } else {
         return {
@@ -62,16 +62,22 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
     }).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
-        var commentDict = {};
-        angular.forEach(response.data.entity, function (item) {
-          if (!commentDict[item.fullMessage.split(':')[0]]) {
-            commentDict[item.fullMessage.split(':')[0]] = [];
-          }
-          commentDict[item.fullMessage.split(':')[0]].push(item.fullMessage.split(':')[0]);
+        var data = $filter('orderBy')(response.data.entity, 'time', true);
+        var res = '';
+        angular.forEach(data, function (item, idx) {
+          res += idx + '、' + item.message + '\n'
         })
-        vm.bzComment = commentDict.bzyj;
-        vm.shComment = commentDict.shyj;
-        vm.pzComment = commentDict.pzyj;
+        vm.comments = res;
+        // var commentDict = {};
+        // angular.forEach(response.data.entity, function (item) {
+        //   if (!commentDict[item.fullMessage.split(':')[0]]) {
+        //     commentDict[item.fullMessage.split(':')[0]] = [];
+        //   }
+        //   commentDict[item.fullMessage.split(':')[0]].push(item.fullMessage.split(':')[0]);
+        // })
+        // vm.bzComment = commentDict['编制意见'];
+        // vm.shComment = commentDict['审核意见'];
+        // vm.pzComment = commentDict['批准意见'];
       } else {
         toastr.error(response.data.message);
       }

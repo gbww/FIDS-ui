@@ -133,7 +133,7 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
           checkItems: [function () {
             var defered = $q.defer();
             $rootScope.loading = true;
-            CheckItemService.getCheckItemsTree(treeNode.id).then(function (response) {
+            CheckItemService.getCatalogCiList(treeNode.id).then(function (response) {
               $rootScope.loading = false;
               if (response.data.success) {
                 defered.resolve(response.data.entity);

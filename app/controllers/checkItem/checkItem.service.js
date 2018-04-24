@@ -2,12 +2,15 @@
 
 angular.module('com.app').factory('CheckItemService', function ($http) {
 	return {
+		/**    
+		 *  自定义检测项管理
+		 */
+
 		// 获取目录信息
 		getCICatalogInfo: function (id) {
 			return $http.get('/api/v1/ahgz/checkitemscatalog/' + id);
 		},
 
-		// 获取下一级子目录
 		getChildCatalog: function (id) {
 			return $http({
 				url: '/api/v1/ahgz/checkitemscatalog/children',
@@ -41,8 +44,7 @@ angular.module('com.app').factory('CheckItemService', function ($http) {
 			})
 		},
 
-		// 将检测项归入到某个集合
-		recordCiToCatalog: function (data) {
+		recordCatalogCi: function (data) {
 			return $http({
 				url: '/api/v1/ahgz/checkitemscatalog/item/mapping',
 				method: 'POST',
@@ -65,12 +67,15 @@ angular.module('com.app').factory('CheckItemService', function ($http) {
 			})
 		},
 
-		// 获取目录下的检测项
-		getCheckItemsTree: function (id) {
+		getCatalogCiList: function (id) {
 			// return $http.get('/api/v1/ahgz/checkitemscatalog/item/' + id + '/tree');
 			return $http.get('/api/v1/ahgz/checkitemscatalog/item/mapping/' + id);
 		},
 
+
+		/**    
+		 *  检测项管理
+		 */
 
 		// 获取所有的检测项
 		getCheckItemList: function (tableParams, searchName) {

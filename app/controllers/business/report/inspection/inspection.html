@@ -212,7 +212,7 @@
           </tr>
           <tr>
             <td class="item-title">数据页备注</td>
-            <td colspan="3">{{ vm.report.dataRemarks }}</td>
+            <td colspan="3"><pre>{{ vm.report.dataRemarks }}</pre></td>
           </tr>
           <tr>
             <td class="item-title">主检人</td>
@@ -230,11 +230,11 @@
           <tbody ng-show="vm.report.reportStatus > 0">
             <tr>
               <td class="item-title">
-                <span>编制意见</span>
+                <span>编制/审核/批准意见</span>
               </td>
-              <td colspan="3">{{ vm.bzComment }}</td>
+              <td colspan="3"><pre>{{ vm.comments }}</pre></td>
             </tr>
-            <tr ng-show="vm.report.reportStatus > 1">
+            <!-- <tr ng-show="vm.report.reportStatus > 1">
               <td class="item-title">
                 <span>审核意见</span>
               </td>
@@ -245,7 +245,7 @@
                 <span>批准意见</span>
               </td>
               <td colspan="3">{{ vm.pzComment }}</td>
-            </tr>
+            </tr> -->
           </tbody>
 
           <tbody ng-show="vm.type === 'sh'">

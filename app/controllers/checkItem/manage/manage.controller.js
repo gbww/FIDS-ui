@@ -7,6 +7,7 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
   vm.breadCrumbArr = [checkItemBC.root, checkItemBC.manage];
   vm.hasCheckItemAuth = api.permissionArr.indexOf('CHECKITEM-CATALOG-SELECT-1') != -1;
 
+  // 操作节点是否是目录
   vm.isCatalog = true;
 
   var setting = {
@@ -26,7 +27,7 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
 
   // 根据目录id获取该目录下的检测项
   vm.getCatalogCheckItems = function (id) {
-  	CheckItemService.getCheckItemsTree(id).then(function (response) {
+  	CheckItemService.getCatalogCiList(id).then(function (response) {
   		if (response.data.success) {
   			vm.checkItems = response.data.entity;
   		} else {
@@ -245,7 +246,7 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
           catalogId: node.id,
           checkItemId: item.id
     		});
-    		promiseArr.push(CheckItemService.recordCiToCatalog(data));
+    		promiseArr.push(CheckItemService.recordCatalogCi(data));
     	})
     	$q.all(promiseArr).then(function () {
     		vm.getCatalogCheckItems(node.id);
@@ -360,21 +361,31 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
     })
   }
 
+  vm.importFile = function (event) {
+    var file = event.target.files[0];
+    if (!/\.xlsx?$/.test(file.name)) {
+      toastr.error('请选择excel文件！');
+      return;
+    }
+    hideContextMenu();
+    var catalogId = vm.tree.getSelectedNodes()[0].id;
 
-  vm.upload = function (event) {
     Upload.upload({
       url: '/api/v1/ahgz/checkitemscatalog/item/mapping/import',
       data: {
-        file: vm.file
+        catalogId: catalogId,
+        file: event.target.files[0]
       }
     }).then(function (response) {
-  		if (response.data.success) {
-        var selectedNode = vm.tree.getSelectedNodes()[0];
-        vm.getCatalogCheckItems(selectedNode.id);
-  		} else {
-  			toastr.error(response.data.message);
-  		}
-    })
+      if (response.data.success) {
+        toastr.success('导入成功！');
+        vm.getCatalogCheckItems(catalogId);
+      } else {
+        toastr.error(response.data.message);
+      }
+    }).catch(function (err) {
+      toastr.error(err.data);
+    });
   }
 
 });

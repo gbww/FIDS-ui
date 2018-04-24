@@ -76,12 +76,13 @@ angular.module('com.app').factory('ReportService', function ($http) {
     },
 
     // 批量修改报告状态
-    batchUpdateReportStatus: function (ids) {
+    batchUpdateReportStatus: function (ids, status) {
       return $http({
         url: baseUrl + '/status/muti',
         method: 'GET',
         params: {
-          receiveSampleIdList: ids
+          receiveSampleIdList: ids,
+          reportStatus: status
         }
       })
     },

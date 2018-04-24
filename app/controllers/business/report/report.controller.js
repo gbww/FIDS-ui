@@ -60,9 +60,13 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
       vm.loading = false;
       var tempReports = [];
       if (response.data.success) {
-        if (!vm.showHandled && (vm.status === 0 || vm.status === 1 || vm.status === 2)) {
-          angular.forEach(response.data.entity, function (item) {
-            tempReports.push(angular.merge({}, item.report, {task: item.task}));
+        if (vm.status === 0 || vm.status === 1 || vm.status === 2) {
+          angular.forEach(response.data.entity.list, function (item) {
+            if (!vm.showHandled) {
+              tempReports.push(angular.merge({}, item.report, {task: item.task[0]}));
+            } else {
+              tempReports.push(item.report);
+            }
           });
         } else {
           tempReports = response.data.entity.list;
@@ -268,9 +272,9 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     var result = dialog.confirm('是否已完成报告的所有打印工作?');
     result.then(function (res) {
       if (res) {
-        ReportService.batchUpdateReportStatus(printedIds).then(function (response) {
+        ReportService.batchUpdateReportStatus(vm.printedIds, '4').then(function (response) {
           if (response.data.success) {
-            refreshTable();
+            vm.refreshTable();
           }
         });
       }
