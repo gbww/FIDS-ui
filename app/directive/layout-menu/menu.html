@@ -14,7 +14,7 @@
         </div>
       </div>
 
-      <div class="panel" role-auth="CONTRACT-SELECT-1 SAMPLE-SELECT-1">
+      <div class="panel" role-auth="CONTRACT-SELECT-1 SAMPLE-SELECT-1 SAMPLE-DISTRIBUTE-SELECT-1 SAMPLE-ITEMS-INPUT-SELECT-1 REPORT-LIST-ALL-GET-1 REPORT-LIST-EDIT-GET-1 REPORT-LIST-EXAMINE-GET-1 REPORT-LIST-APPROVE-GET-1 REPORT-LIST-PRINT-GET-1 REPORT-LIST-FINISH-GET-1">
         <div data-parent="#accordion" data-toggle="collapse" data-target="#businessManage" aria-expanded="{{vm.isBusinessActive}}">
           <a>
             <i class="icon icon-business"></i>
@@ -29,14 +29,13 @@
           <li ng-class="{'active': vm.isBusinessSampleActive}" role-auth="SAMPLE-SELECT-1">
             <a ui-sref="app.business.sample"><span>业务受理</span></a>
           </li>
-          <li ng-class="{'active': vm.isBusinessDistributeActive}">
+          <li ng-class="{'active': vm.isBusinessDistributeActive}" role-auth="SAMPLE-DISTRIBUTE-SELECT-1">
             <a ui-sref="app.business.distribute.sample"><span>检测项分配</span></a>
           </li>
-          <!-- <li ng-class="{'active': vm.isBusinessItemToCheckActive}" role-auth="SAMPLE-SELECTITEM-1"> -->
-          <li ng-class="{'active': vm.isBusinessItemToCheckActive}">
+          <li ng-class="{'active': vm.isBusinessItemToCheckActive}" role-auth="SAMPLE-ITEMS-INPUT-SELECT-1">
             <a ui-sref="app.business.itemToCheck.sample"><span>检测结果录入</span></a>
           </li>
-          <li ng-class="{'active': vm.isBusinessReportActive}" role-auth="SAMPLE-SELECT-1">
+          <li ng-class="{'active': vm.isBusinessReportActive}" role-auth="REPORT-LIST-ALL-GET-1 REPORT-LIST-EDIT-GET-1 REPORT-LIST-EXAMINE-GET-1 REPORT-LIST-APPROVE-GET-1 REPORT-LIST-PRINT-GET-1 REPORT-LIST-FINISH-GET-1">
             <a ui-sref="app.business.report"><span>报告管理</span></a>
           </li>
         </ul>
@@ -60,7 +59,7 @@
         </ul>
       </div>
 
-      <div class="panel">
+      <div class="panel" role-auth="GZUNIT-SELECT-1">
         <div ng-class="{'active': vm.isUnitActive}">
           <a title="单位库管理" ng-click="vm.open('unit')">
             <i class="icon icon-client"></i>
@@ -84,7 +83,7 @@
         </ul>
       </div>
 
-      <div class="panel">
+      <div class="panel" role-auth="CLIENT-SELECT-1">
         <div ng-class="{'active': vm.isClientActive}">
           <a title="客户管理" ng-click="vm.open('client')">
             <i class="icon icon-client"></i>
@@ -123,7 +122,7 @@
           </a>
         </div>
         <ul id="privilegeManage" ng-class="{'collapse in': vm.isPrivilegeActive, 'collapse': !vm.isPrivilegeActive}">
-          <li ng-class="{'active': vm.isPrivilegeCurrentUserActive}" role-auth="">
+          <li ng-class="{'active': vm.isPrivilegeCurrentUserActive}">
             <a ui-sref="app.privilege.currentUser"><span>个人信息管理</span></a>
           </li>
           <li ng-class="{'active': vm.isPrivilegeOrganizationActive}" role-auth="ORGANIZATION-SELECT-1">

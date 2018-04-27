@@ -35,73 +35,51 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
-    }, tempTotal = 0;
-    ContractService.getContractList(tableParams, vm.searchObject.searchKeywords, vm.type).then(function (response) {
+    };
+    var isHandle = null, total = 0;
+    if (vm.statusFilter === 'unhandled') {
+      isHandle = '0';
+    } else if (vm.statusFilter === 'done') {
+      isHandle = '1';
+    }
+    ContractService.getContractList(tableParams, vm.searchObject.searchKeywords, vm.type, isHandle).then(function (response) {
+      vm.loading = false;
+      total = response.data.entity.total;
+      var tempContracts = [];
       if (response.data.success) {
-        vm.tempContracts = response.data.entity.list;
-        tempTotal = response.data.entity.total;
+        angular.forEach(response.data.entity.list, function (item) {
+          if (vm.statusFilter !== 'all') {
+            if (item.task[0]) {
+              tempContracts.push(angular.merge({}, item.contract, {task: true}));
+            } else {
+              total -= 1;
+            }
+          } else {
+            tempContracts.push(item.contract);
+          }
+        });
+
+        vm.contracts = tempContracts;
+
+        vm.total = total;
         tableState.pagination.numberOfPages = response.data.entity.pages;
       } else {
         tempTotal = 0;
         toastr.error(response.data.message);
       }
-    }).then(function () {
-      // 获取用户相关流程
-      if (vm.statusFilter == 'unhandled') {  // 待办
-        return ContractService.getUserTask('0');
-      } else if (vm.statusFilter == 'done') {  // 已办
-        return ContractService.getUserTask('1');
-      } else {
-        return {
-          data: {
-            success: true,
-            entity: []
+      
+      /*
+        ** 若用户有合同的审批任务，则将任务信息放入合同中，
+        ** 即合同存在task，则表明该合同是用户的代办项
+        */
+      angular.forEach(vm.tempContracts, function (contract) {
+        angular.forEach(vm.userTasks, function (task) {
+          if (contract.processId == task.processInstanceId) {
+            contract.task = task;
           }
-        }
-      }
-    }).then(function (response) {
-      vm.loading = false;
-      if (response.data.success) {
-        vm.userTasks = response.data.entity;
-        /*
-         ** 若用户有合同的审批任务，则将任务信息放入合同中，
-         ** 即合同存在task，则表明该合同是用户的代办项
-         */
-        angular.forEach(vm.tempContracts, function (contract) {
-          angular.forEach(vm.userTasks, function (task) {
-            if (contract.processId == task.processInstanceId) {
-              contract.task = task;
-            }
-          })
-        });
-        /* 列出所有合同，不过滤 */
-        if (vm.statusFilter == 'all') {
-          vm.contracts = angular.copy(vm.tempContracts);
-        /* 列出待办合同，根据是否存在task过滤 */
-        } else if (vm.statusFilter == 'unhandled') {
-          vm.contracts = [];
-          angular.forEach(vm.tempContracts, function (contract) {
-            if (contract.task) {
-              vm.contracts.push(contract);
-            } else {
-              tempTotal -= 1;
-            }
-          })
-        /* 列出已办合同，根据是否存在task过滤 */
-        } else if (vm.statusFilter == 'done') {
-          vm.contracts = [];
-          angular.forEach(vm.tempContracts, function (contract) {
-            if (contract.task) {
-              vm.contracts.push(contract);
-            } else {
-              tempTotal -= 1;
-            }
-          })
-        }
-        vm.total = tempTotal;
-      } else {
-        toastr.error(response.data.message);
-      }
+        })
+      });
+
     }).catch(function (err) {
       vm.loading = false;
       toastr.error(err.data);

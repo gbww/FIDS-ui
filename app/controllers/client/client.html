@@ -2,36 +2,15 @@
   <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
   <div class="pt-2">
     <div class="toolbar clearfix">
-      <button class="btn btn-default-dark" ng-click="vm.create()">
+      <button class="btn btn-default-dark" ng-click="vm.create()" role-auth="CLIENT-ADD-1">
         <i class="fa fa-plus"></i>
         <span>添加客户</span>
       </button>
-
-      <!-- <ul class="statusBar clearfix">
-					<li ng-class="{'active': vm.statusFilter === 'all'}">
-						<a ng-click="vm.searchStatus('all')">
-							<i class="icon icon-all-list"></i>
-							<span>所有</span>
-						</a>
-					</li>
-					<li ng-class="{'active': vm.statusFilter === 'unhandled'}">
-						<a ng-click="vm.searchStatus('unhandled')">
-							<i class="icon icon-todo-list"></i>
-							<span>待办</span>
-						</a>
-					</li>
-					<li ng-class="{'active': vm.statusFilter === 'done'}">
-						<a ng-click="vm.searchStatus('done')">
-							<i class="icon icon-finished-list"></i>
-							<span>已办</span>
-						</a>
-					</li>
-				</ul>
-
-				<div class="pull-right">
-					<input class="input" placeholder="请输入客户名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
-					<button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
-				</div> -->
+      
+      <!-- <div class="pull-right">
+        <input class="input" placeholder="请输入客户名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
+        <button class="btn btn-default-dark" ng-click="vm.search()">查询</button>
+      </div> -->
     </div>
 
     <table class="pt-table" st-table="vm.clients" st-pipe="vm.getClientList">
@@ -110,11 +89,15 @@
           <td>{{ client.remark }}</td>
           <td class="dropdown-col">
             <div class="btn-group">
-              <button class="btn btn-default" ng-click="vm.edit(client)">
+              <button class="btn btn-default" ng-click="vm.edit(client)" role-auth="CLIENT-UPDATE-1">
                 <i class="fa fa-edit"></i>
                 <span>编辑</span>
               </button>
-              <button class="btn dropdown-toggle" data-toggle="dropdown">
+              <button class="btn btn-default" ng-click="vm.delete(client)" role-auth="CLIENT-DELETE-1" ng-if="!vm.hasUpdateAuth">
+                <i class="fa fa-trash"></i>
+                <span>删除</span>
+              </button>
+              <button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="CLIENT-DELETE-1">
                 <i class="caret"></i>
               </button>
               <ul class="dropdown-menu">

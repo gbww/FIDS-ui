@@ -165,6 +165,25 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
     })
   }
 
+  vm.runEditTask = function () {
+    var data = {
+      examinePersonName: vm.report.examineUser,
+      reportProcessId: vm.report.reportProcessId,
+      receiveSampleId: vm.report.receiveSampleId,
+      comment: vm.comment,
+    };
+    ReportService.updateReport(vm.report).then(function () {
+      return ReportService.runEditTask(vm.taskId, data);
+    }).then(function (response) {
+      if (response.data.success) {
+        toastr.success('报告修改成功！');
+        $state.go('app.business.report', { status: vm.status + 1 });
+      } else {
+        toastr.error(response.data.message);
+      }
+    });
+  }
+
   vm.ok = function (form) {
     if (form.$invalid) {
       vm.submitted = true;
@@ -183,57 +202,37 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
       })
     }
 
-
-    if (vm.type === 'bj') {
-      var data = {
-        reportId: vm.report.reportId
+    var templateData = {
+      reportId: vm.report.reportId
+    };
+    angular.forEach(vm.templates, function (item) {
+      if (item.id === vm.templateId) {
+        angular.merge(templateData, {
+          templateId: vm.templateId,
+          templateName: item.name,
+          templateDesc: item.description
+        })
       }
-      angular.forEach(vm.templates, function (item) {
-        if (item.id === vm.templateId) {
-          angular.merge(data, {
-            templateId: vm.templateId,
-            templateName: item.name,
-            templateDesc: item.description
-          })
-        }
-      });
+    });
 
-      // 绑定模板
-      if (!vm.initTemplateId) {
-        ReportService.bindReportTmpl(data).then(function () {
-          vm.updateReport();
+    // 绑定模板
+    if (!vm.initTemplateId) {
+      ReportService.bindReportTmpl(templateData).then(function () {
+        vm.type === 'bj' ? vm.updateReport() : vm.runEditTask();
+      }).catch(function (err) {
+        toastr.error(err.data);
+      })
+    } else {
+      // 更新模板
+      if (!angular.equals(vm.templateId, vm.initTemplateId)) {
+        ReportService.updateReportTmpl(vm.tmplId, templateData).then(function () {
+          vm.type === 'bj' ? vm.updateReport() : vm.runEditTask();
         }).catch(function (err) {
           toastr.error(err.data);
         })
       } else {
-        // 更新模板
-        if (!angular.equals(vm.templateId, vm.initTemplateId)) {
-          ReportService.updateReportTmpl(vm.tmplId, data).then(function () {
-            vm.updateReport();
-          }).catch(function (err) {
-            toastr.error(err.data);
-          })
-        } else {
-          vm.updateReport();
-        }
+        vm.type === 'bj' ? vm.updateReport() : vm.runEditTask();
       }
-    } else {
-      var data = {
-        examinePersonName: vm.report.examineUser,
-        reportProcessId: vm.report.reportProcessId,
-        receiveSampleId: vm.report.receiveSampleId,
-        comment: vm.comment,
-      };
-      ReportService.updateReport(vm.report).then(function () {
-        return ReportService.runEditTask(vm.taskId, data);
-      }).then(function (response) {
-        if (response.data.success) {
-          toastr.success('报告修改成功！');
-          $state.go('app.business.report', { status: vm.status });
-        } else {
-          toastr.error(response.data.message);
-        }
-      });
     }
   }
 

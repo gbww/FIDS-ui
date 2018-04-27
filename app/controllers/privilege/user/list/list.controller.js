@@ -4,7 +4,7 @@ angular.module('com.app').controller('PrivilegeUserListCtrl', function ($rootSco
   var vm = this;
 
   vm.searchObject = {
-    searchKeywords: ''
+    searchKeywords: null
   }
 
   vm.refreshTable = function (flag) {

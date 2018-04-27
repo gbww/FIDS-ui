@@ -22,15 +22,18 @@ angular.module('com.app').factory('CiDistributeService', function ($http) {
 			})
     },
     
-    getUndistributeCi: function (tableParams, searchConditions) {
+    getUndistributeCi: function (tableParams, searchConditions, status) {
 			return $http({
-				url: baseUrl + '/sample/items/unassigned',
+				url: baseUrl + '/sample/items/assign',
 				method: 'GET',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
           order: tableParams.order,
-          reportId: searchConditions.reportId
+          name: searchConditions.name,
+          method: searchConditions.method,
+          reportId: searchConditions.reportId,
+          status: status
         }
 			})
 		},

@@ -79,7 +79,8 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
           detectionLimit: item.detection_limit,
           quantitationLimit: item.quantitation_limit,
           device: item.device,
-          defaultPrice: item.default_price
+          defaultPrice: item.default_price,
+          department: item.department
         }
         data.push(tempItem);
       });

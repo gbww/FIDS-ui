@@ -180,7 +180,7 @@
       </tr>
       <tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
         <td>
-          <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)"> {{ $index + 1 }}
+          <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)" ng-disabled="item.status === 2"> {{ $index + 1 }}
         </td>
         <td>{{ item.name }}</td>
         <td>{{ item.method }}</td>
@@ -201,7 +201,7 @@
         <td>{{ item.testUser || '--' }}</td>
         <td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
         <td>
-          <button class="btn btn-default" ng-click="vm.distribute(item)">
+          <button class="btn btn-default" ng-click="vm.distribute(item)" ng-disabled="item.status === 2">
             <i class="icon icon-distribute"></i>
             <span>分配</span>
           </button>

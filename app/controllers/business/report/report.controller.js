@@ -2,6 +2,15 @@
 
 angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateParams, $q, $uibModal, $interval, api, toastr, dialog, ReportService) {
   var vm = this;
+  vm.hasCheckAuth = api.permissionArr.indexOf('REPORT-DETAIL-1') != -1;
+
+  vm.hasAllAuth = api.permissionArr.indexOf('REPORT-LIST-ALL-GET-1') != -1;
+  vm.hasEditAuth = api.permissionArr.indexOf('REPORT-LIST-EDIT-GET-1') != -1;
+  vm.hasExamineAuth = api.permissionArr.indexOf('REPORT-LIST-EXAMINE-GET-1') != -1;
+  vm.hasApproveAuth = api.permissionArr.indexOf('REPORT-LIST-APPROVE-GET-1') != -1;
+  vm.hasPrintAuth = api.permissionArr.indexOf('REPORT-LIST-PRINT-GET-1') != -1;
+  vm.hasFinishAuth = api.permissionArr.indexOf('REPORT-LIST-FINISH-GET-1') != -1;
+
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.report.root];
 
@@ -30,10 +39,23 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
   vm.reportIdArr = [], vm.sampleNameArr = [], vm.entrustedUnitArr = [], vm.inspectedUnitArr = [],
     vm.productionUnitArr = [], vm.sampleIdArr = [], vm.exeStandardArr = [], vm.sampleTypeArr = [], vm.checkTypeArr = [];
 
+  var status = 5;
+  if (!vm.hasAllAuth) {
+    status = 0; 
+  } else if (!vm.hasEditAuth) {
+    status = 1;
+  } else if (!vm.hasExamineAuth) {
+    status = 2;
+  } else if (!vm.hasApproveAuth) {
+    status = 3;
+  } else if (!vm.hasPrintAuth) {
+    status = 4;
+  }
+
   if ($stateParams.status === 0) {
     vm.status = 0;
   } else {
-    vm.status = !!$stateParams.status ? parseInt($stateParams.status) : 5;
+    vm.status = !!$stateParams.status ? parseInt($stateParams.status) : status;
   }
   // 是否显示已处理任务
   vm.showHandled = false;
@@ -218,8 +240,7 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     var iwin = document.getElementById('printIframe').contentWindow;
 
     var interval = $interval(function () {
-      if (iwin.document.getElementById('viewer')  && iwin.PDFViewerApplication &&
-        iwin.PDFViewerApplication.pdfViewer && iwin.PDFViewerApplication.pdfViewer._pageViewsReady) {
+      if (iwin.PDFViewerApplication && iwin.PDFViewerApplication.pdfViewer && iwin.PDFViewerApplication.pdfViewer._pageViewsReady) {
         $rootScope.loading = false;
         iwin.print();
         $interval.cancel(interval);
@@ -247,9 +268,9 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
       var iwin = document.getElementById('printIframe').contentWindow;
 
       var interval = $interval(function () {
-        if (iwin.document.getElementById('viewer')  && iwin.PDFViewerApplication &&
-          iwin.PDFViewerApplication.pdfViewer && iwin.PDFViewerApplication.pdfViewer._pageViewsReady) {
+        if (iwin.PDFViewerApplication && iwin.PDFViewerApplication.pdfViewer && iwin.PDFViewerApplication.pdfViewer._pageViewsReady) {
           $rootScope.loading = false;
+          vm.itemSelected = [], vm.selectedItems = [], vm.allSelected = false;
           iwin.print();
           $interval.cancel(interval);
         }

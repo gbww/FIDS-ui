@@ -10,9 +10,12 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
 
   vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
+    if (flag == 'toggle') {
+      vm.searchObject.toggle = true;
+    }
   }
 
-
+  vm.status = 0;
   vm.ciLoading = true;
   vm.getCiList = function (tableState) {
     var orderBy = tableState.sort.predicate;
@@ -28,7 +31,7 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-  	CiDistributeService.getUndistributeCi(tableParams, vm.searchObject).then(function (response) {
+  	CiDistributeService.getUndistributeCi(tableParams, vm.searchObject, vm.status).then(function (response) {
       vm.ciLoading = false;
       if (response.data.success) {
         vm.checkItems = response.data.entity.list || [];
@@ -54,6 +57,34 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
     if(keycode==13){
       vm.search();
     }
+  }
+
+  vm.searchStatus = function (filter) {
+    if (vm.status != filter) {
+      vm.status = filter;
+      vm.refreshTable('toggle');
+    }
+  }
+
+  vm.back = function () {
+    vm.advance = false;
+    angular.merge(vm.searchConditions, {
+      reportId: null,
+      name: null,
+      method: null
+    });
+  }
+
+  vm.search = function () {
+    vm.searchObject = angular.copy(vm.searchConditions);
+  }
+
+  vm.reset = function () {
+    angular.merge(vm.searchConditions, {
+      reportId: null,
+      name: null,
+      method: null
+    });
   }
 
   vm.distribute = function (item) {

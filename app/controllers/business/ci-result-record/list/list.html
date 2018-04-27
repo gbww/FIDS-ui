@@ -1,5 +1,10 @@
 <div class="item-to-check-sample-list">
   <div class="toolbar clearfix">
+    <button class="btn btn-default-dark" ui-sref="app.business.itemToCheck.sample" ng-if="vm.isSampleDetail">
+      <i class="fa fa-reply"></i>
+      <span>返回上一级</span>
+    </button>
+
     <button class="btn btn-default-dark" ng-click="vm.batch()" role-auth="SAMPLE-UPDATEITEMRESULT-1">
       <i class="fa fa-edit"></i>
       <span>批量录入</span>
@@ -165,11 +170,15 @@
               <i class="fa fa-edit"></i>
               <span>录入</span>
             </button>
-            <button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-ADDITEM-1">
+            <button class="btn btn-default" ng-click="vm.distribute(item)" role-auth="SAMPLE-DISTRIBUTE-SELECT-1" ng-if="!vm.hasRecordAuth">
+              <i class="icon icon-distribute"></i>
+              <span>重新分配</span>
+            </button>
+            <button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-DISTRIBUTE-SELECT-1">
               <i class="caret"></i>
             </button>
             <ul class="dropdown-menu">
-              <li ng-click="vm.distribute(item)" role-auth="SAMPLE-ADDITEM-1">
+              <li ng-click="vm.distribute(item)">
                 <a href>
                   <i class="icon icon-distribute"></i>
                   <span>重新分配</span>

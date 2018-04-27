@@ -95,7 +95,10 @@
 							<button class="btn btn-default" ng-click="vm.editCheckItem(item)" role-auth="CHECKITEM-UPDATE-1">
 								<i class="fa fa-edit"></i><span>编辑</span>
 							</button>
-							<button class="btn dropdown-toggle" data-toggle="dropdown"  role-auth="CHECKITEM-DELETE-1">
+							<button class="btn btn-default" ng-click="vm.deleteCheckItem(item)" role-auth="CHECKITEM-DELETE-1" ng-if="!vm.hasUpdateAuth">
+								<i class="fa fa-trash"></i><span>删除</span>
+							</button>
+							<button class="btn dropdown-toggle" data-toggle="dropdown"  role-auth="CHECKITEM-DELETE-1" ng-if="vm.hasUpdateAuth">
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">

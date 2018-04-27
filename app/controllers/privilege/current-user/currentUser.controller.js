@@ -36,7 +36,7 @@ angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($uibM
       animation: true,
       size: 'md',
       backdrop: 'static',
-      templateUrl: 'controllers/privilege/user/edit/edit.html',
+      templateUrl: 'controllers/privilege/user/list/edit/edit.html',
       controller: 'PrivilegeUserEditCtrl as vm',
       resolve: {
         user: function () { return angular.copy(vm.user); }

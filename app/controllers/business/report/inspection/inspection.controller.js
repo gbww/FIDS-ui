@@ -49,7 +49,7 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
       } else {
         toastr.error(response.checkItem.data.message);
       }
-      if (vm.report.reportStatus > 0 && vm.report.reportProcessId) {
+      if (vm.report.reportProcessId) {
         return ReportService.getComments(vm.report.reportProcessId)
       } else {
         return {
@@ -62,10 +62,10 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
     }).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
-        var data = $filter('orderBy')(response.data.entity, 'time', true);
+        var data = $filter('orderBy')(response.data.entity, 'time', false);
         var res = '';
-        angular.forEach(data, function (item, idx) {
-          res += idx + '、' + item.message + '\n'
+        angular.forEach(data, function (item) {
+          res += item.time + '  ' + item.message + '\n'
         })
         vm.comments = res;
         // var commentDict = {};
@@ -118,7 +118,7 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
         return ReportService.runExamineTask(vm.taskId, data);
       }).then(function (response) {
         if (response.data.success) {
-          $state.go('app.business.report', { status: vm.status });
+          $state.go('app.business.report', { status: vm.status + 1 });
         } else {
           toastr.error(response.data.message);
         }
@@ -132,7 +132,7 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
       };
       ReportService.runApproveTask(vm.taskId, data).then(function (response) {
         if (response.data.success) {
-          $state.go('app.business.report', { status: vm.status });
+          $state.go('app.business.report', { status: vm.status + 1 });
         } else {
           toastr.error(response.data.message);
         }

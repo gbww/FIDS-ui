@@ -2,6 +2,7 @@
 
 angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootScope, $scope, $state, $uibModal, $q, $filter, api, CheckItemService, PrivilegeService, toastr, dialog, Upload) {
   var vm = this;
+  vm.hasUpdateAuth = api.permissionArr.indexOf('CHECKITEM-MAPPING-ADD-1') != -1;
 
   var checkItemBC = api.breadCrumbMap.checkItem;
   vm.breadCrumbArr = [checkItemBC.root, checkItemBC.manage];

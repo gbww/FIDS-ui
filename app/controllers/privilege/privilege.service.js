@@ -58,7 +58,7 @@ angular.module('com.app').factory('PrivilegeService', function ($http) {
 					params: {
 	          pageSize: tableParams.pageSize,
 	          pageNum: tableParams.pageNum,
-	          name:searchName
+	          name: searchName
 	        }
 	      });
 			} else {

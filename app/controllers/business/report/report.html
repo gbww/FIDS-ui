@@ -3,37 +3,37 @@
   <div class="pt-2">
     <div class="toolbar clearfix">
       <ul class="statusBar clearfix">
-        <li ng-class="{'active': vm.status === 5}">
+        <li ng-class="{'active': vm.status === 5}" role-auth="REPORT-LIST-ALL-GET-1">
           <a ng-click="vm.searchStatus(5)">
             <i class="icon icon-all-list"></i>
             <span>所有</span>
           </a>
         </li>
-        <li ng-class="{'active': vm.status === 0}">
+        <li ng-class="{'active': vm.status === 0}" role-auth="REPORT-LIST-EDIT-GET-1">
           <a ng-click="vm.searchStatus(0)">
             <i class="fa fa-edit"></i>
             <span>待编制</span>
           </a>
         </li>
-        <li ng-class="{'active': vm.status === 1}">
+        <li ng-class="{'active': vm.status === 1}" role-auth="REPORT-LIST-EXAMINE-GET-1">
           <a ng-click="vm.searchStatus(1)">
             <i class="icon icon-inspection"></i>
             <span>待审核</span>
           </a>
         </li>
-        <li ng-class="{'active': vm.status === 2}">
+        <li ng-class="{'active': vm.status === 2}" role-auth="REPORT-LIST-APPROVE-GET-1">
           <a ng-click="vm.searchStatus(2)">
             <i class="icon icon-approve"></i>
             <span>待批准</span>
           </a>
         </li>
-        <li ng-class="{'active': vm.status === 3}">
+        <li ng-class="{'active': vm.status === 3}" role-auth="REPORT-LIST-PRINT-GET-1">
           <a ng-click="vm.searchStatus(3)">
             <i class="fa fa-print"></i>
             <span>待打印</span>
           </a>
         </li>
-        <li ng-class="{'active': vm.status === 4}">
+        <li ng-class="{'active': vm.status === 4}" role-auth="REPORT-LIST-FINISH-GET-1">
           <a ng-click="vm.searchStatus(4)">
             <i class="icon icon-finished-list"></i>
             <span>完成</span>
@@ -173,7 +173,8 @@
             <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, report)">
           </td>
           <td>
-            <a href ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'ck', taskId: report.task ? report.task.id : null})">{{ report.reportId }}</a>
+            <a href ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'ck', taskId: report.task ? report.task.id : null})" ng-if="vm.hasCheckAuth">{{ report.reportId }}</a>
+            <span ng-if="!vm.hasCheckAuth"></span>
           </td>
           <td>{{ report.sampleName }}</td>
           <td>{{ report.entrustedUnit }}</td>
@@ -196,34 +197,34 @@
           </td>
           <td class="dropdown-col">
             <div class="btn-group">
-              <button class="btn btn-default" ng-click="vm.startProcess(report)" ng-if="!report.reportProcessId">
+              <button class="btn btn-default" ng-click="vm.startProcess(report)" ng-if="!report.reportProcessId" role-auth="REPORT-PROCESS-START-1">
                 <i class="icon icon-launch"></i>
-                <sapn>启动流程</sapn>
+                <span>启动流程</span>
               </button>
-              <button class="btn btn-default" ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bj'})" ng-if="report.reportProcessId">
+              <button class="btn btn-default" ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bj'})" ng-if="report.reportProcessId && (vm.status === 5 || report.reportStatus > 2)" role-auth="REPORT-EDIT-1">
                 <i class="fa fa-edit"></i>
-                <sapn>编辑</sapn>
+                <span>编辑</span>
+              </button>
+              <button class="btn btn-default" ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bz', taskId: report.task.id})" ng-if="vm.status !== 5 && report.reportStatus === 0" role-auth="REPORT-TASK-EDIT-DO-1">
+                <i class="fa fa-edit"></i>
+                <span>编制</span>
+              </button>
+              <button class="btn btn-default" ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'sh', taskId: report.task.id})" ng-if="vm.status !== 5 && report.reportStatus === 1" role-auth="REPORT-TASK-EXAMINE-DO-1">
+                <i class="fa fa-edit"></i>
+                <span>审核</span>
+              </button>
+              <button class="btn btn-default" ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'pz', taskId: report.task.id})" ng-if="vm.status !== 5 && report.reportStatus === 2" role-auth="REPORT-TASK-APPROVE-DO-1">
+                <i class="fa fa-edit"></i>
+                <span>批准</span>
               </button>
               <button class="btn dropdown-toggle" data-toggle="dropdown" ng-if="report.reportProcessId && !(vm.status === 5 && report.reportStatus === 0)">
                 <i class="caret"></i>
               </button>
               <ul class="dropdown-menu" ng-if="report.reportProcessId && !(vm.status === 5 && vm.reportStatus === 0)">
-                <li ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bz', taskId: report.task.id})" ng-if="report.reportStatus == 0 && vm.status === 0">
+                <li ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bj'})" ng-if="vm.status !== 5 && (report.reportStatus === 0 || report.reportStatus === 1 || report.reportStatus === 2)" role-auth="REPORT-TASK-EDIT-DO-1">
                   <a href>
                     <i class="fa fa-edit"></i>
-                    <span>编制</span>
-                  </a>
-                </li>
-                <li ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'sh', taskId: report.task.id})" ng-if="report.reportStatus == 1 && vm.status === 1">
-                  <a href>
-                    <i class="icon icon-inspection"></i>
-                    <span>审核</span>
-                  </a>
-                </li>
-                <li ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'pz', taskId: report.task.id})" ng-if="report.reportStatus == 2 && vm.status === 2">
-                  <a href>
-                    <i class="icon icon-approve"></i>
-                    <span>批准</span>
+                    <span>编辑</span>
                   </a>
                 </li>
                 <li ng-click="vm.export(report)" ng-if="report.reportStatus > 0">
@@ -238,7 +239,7 @@
                     <span>预览</span>
                   </a>
                 </li>
-                <li ng-click="vm.print(report)" ng-if="report.reportProcessId && report.reportStatus > 0">
+                <li ng-click="vm.print(report)" ng-if="report.reportStatus > 0">
                   <a href>
                     <i class="fa fa-print"></i>
                     <span>打印</span>

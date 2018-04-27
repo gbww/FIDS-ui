@@ -140,9 +140,15 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
   vm.checkItems = [];
   vm.getSampleCi = function () {
     vm.ciLoading = true;
+    vm.finishCount = 0;
     SampleService.getSampleCiList(vm.selectedSample.receiveSampleId).then(function (response) {
       vm.ciLoading = false;
       if (response.data.success) {
+        angular.forEach(response.data.entity, function (item) {
+          if (item.status === 2) {
+            vm.finishCount += 1;
+          }
+        })
         vm.checkItems = response.data.entity;
       } else {
         toastr.error(response.data.message);
@@ -246,8 +252,10 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
     if (vm.allSelected){
       vm.selectedItems = [];
       angular.forEach(vm.checkItems, function (item, idx) {
-        vm.selectedItems.push(item);
-        vm.itemSelected[idx] = true;
+        if (item.status !== 2) {
+          vm.selectedItems.push(item);
+          vm.itemSelected[idx] = true;
+        }
       });
     } else {
       vm.selectedItems = [];
@@ -261,7 +269,7 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
     if(event.target.checked){
       vm.selectedItems.push(item);
       vm.itemSelected[idx] = true;
-      if(vm.selectedItems.length == vm.checkItems.length){
+      if(vm.selectedItems.length == vm.checkItems.length - vm.finishCount){
         vm.allSelected = true;
       }
     } else {

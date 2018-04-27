@@ -2,6 +2,7 @@
 
 angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal, api, CheckItemService, PrivilegeService, toastr, Upload, dialog) {
   var vm = this;
+  vm.hasUpdateAuth = api.permissionArr.indexOf('CHECKITEM-UPDATE-1') != -1;
 
   var checkItemBC = api.breadCrumbMap.checkItem;
   vm.breadCrumbArr = [checkItemBC.root, checkItemBC.list];

@@ -12,6 +12,11 @@ angular.module('com.app').controller('RecordCiResultCtrl', function ($uibModalIn
     var data = angular.copy(checkItems);
     angular.forEach(data, function (item) {
       angular.merge(item, {
+        detectionLimit: vm.checkItem.detectionLimit,
+        quantitationLimit: vm.checkItem.quantitationLimit,
+        device: vm.checkItem.device,
+        unit: vm.checkItem.unit,
+        standardValue: vm.checkItem.standardValue,
         measuredValue: vm.checkItem.measuredValue,
         itemResult: vm.checkItem.itemResult,
         status: 2

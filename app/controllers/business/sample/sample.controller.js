@@ -2,6 +2,8 @@
 
 angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope, $state, $stateParams, $cookies, $uibModal, $timeout, api, dialog, toastr, SampleService, CheckItemService) {
   var vm = this;
+  vm.hasAddSampleAuth = api.permissionArr.indexOf('SAMPLE-ADD-1') != -1;
+  vm.hasUpdateSampleAuth = api.permissionArr.indexOf('SAMPLE-UPDATESAMPLE-1') != -1;
 
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root];
@@ -43,6 +45,12 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       orderBy = 'report_id';
     } else if (orderBy == 'createdAt') {
       orderBy = 'created_at';
+    } else if (orderBy == 'entrustedUnit') {
+      orderBy = 'entrusted_unit';
+    } else if (orderBy == 'inspectedUnit') {
+      orderBy = 'inspected_unit';
+    } else if (orderBy == 'receiveSampleId') {
+      orderBy = 'receive_sample_id';
     }
 
     var tableParams = {

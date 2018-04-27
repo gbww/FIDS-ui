@@ -2,6 +2,7 @@
 
 angular.module('com.app').controller('ClientCtrl', function ($uibModal, api, dialog, toastr, ClientService) {
   var vm = this;
+  vm.hasUpdateAuth = api.permissionArr.indexOf('CLIENT-UPDATE-1') != -1;
 
   vm.breadCrumbArr = [api.breadCrumbMap.client.root];
 
@@ -36,11 +37,13 @@ angular.module('com.app').controller('ClientCtrl', function ($uibModal, api, dia
     	vm.loading = false;
       if (response.data.success) {
         angular.forEach(response.data.entity.list, function (client) {
-          var area = client.clientAddress.split(',');
-          if (area[0] == area[1]) {
-            client.address = area[0] + area[2];
-          } else {
-            client.address = area.join('');
+          if (client.clientAddress) {
+            var area = client.clientAddress.split(',');
+            if (area[0] == area[1]) {
+              client.address = area[0] + area[2];
+            } else {
+              client.address = area.join('');
+            }
           }
         })
         vm.clients = response.data.entity.list;

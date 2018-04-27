@@ -105,7 +105,20 @@ angular.module('com.app').controller('PrivilegeRoleCtrl', function ($rootScope, 
 		callback: {
 			onCheck: vm.checkNode
 		}
-	}
+  }
+  
+  var moduleName = {
+    'USER': '用户管理',
+    'ORGANIZATION': '部门管理',
+    'ROLE': '角色管理',
+    'SAMPLE': '接样管理',
+    'REPORT': '报告管理',
+    'CONTRACT': '合同管理',
+    'TEMPLATE': '模板管理',
+    'GZUNIT': '单位库管理',
+    'CLIENT': '客户管理',
+    'CHECKITEM': '检测项管理'
+  }
 
   vm.editEntity = function (id) {
     $rootScope.loading = true;
@@ -152,7 +165,7 @@ angular.module('com.app').controller('PrivilegeRoleCtrl', function ($rootScope, 
       vm.treeData = [];
       angular.forEach(entityMap, function (val, key) {
         vm.treeData.push({
-          name: key,
+          name: moduleName[key],
           checked: userEntityMap[key] ? (userEntityMap[key].length == val.length) : false,
           children: val
         })

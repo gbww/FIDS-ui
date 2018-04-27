@@ -374,7 +374,7 @@
               <div custom-select avail-arr="vm.reportBasenumberArr" model="vm.report" key="sampleBasenumber"></div>
             </td>
             <td class="item-title">
-              <span>接样时间</span>
+              <span>抽样时间</span>
             </td>
             <td>
               <input class="input date" ng-model="vm.report.sampleDate" datepicker>
@@ -628,7 +628,7 @@
               <td>{{ item.testUser }}</td>
               <td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
               <td>
-                <button class="btn btn-default " ng-click="vm.edit(item) " role-auth="SAMPLE-ADDITEM-1 ">
+                <button class="btn btn-default " ng-click="vm.edit(item) " role-auth="REPORT-LIST-ITEM-UPDATE-1 ">
                   <i class="fa fa-edit "></i>
                   <span>编辑</span>
                 </button>

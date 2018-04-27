@@ -78,7 +78,7 @@
 			<thead st-search-watch="vm.searchObject">
 				<tr>
 					<th>
-						<div st-sort="sampleType">报告编号<i class="fa fa-sort"></i></div>
+						<div st-sort="reportId">报告编号<i class="fa fa-sort"></i></div>
 						<adjust-line></adjust-line>
 					</th>
 					<th>
@@ -86,11 +86,11 @@
 						<adjust-line></adjust-line>
 					</th>
 					<th>
-						<div>委托单位</div>
+						<div st-sort="entrustedUnit">委托单位<i class="fa fa-sort"></i></div>
 						<adjust-line></adjust-line>
 					</th>
 					<th>
-						<div>受检单位</div>
+						<div st-sort="inspectedUnit">受检单位<i class="fa fa-sort"></i></div>
 						<adjust-line></adjust-line>
 					</th>
 					<th>
@@ -98,7 +98,7 @@
 						<adjust-line></adjust-line>
 					</th>
 					<th>
-						<div>抽样单编号</div>
+						<div st-sort="receiveSampleId">抽样单编号<i class="fa fa-sort"></i></div>
 						<adjust-line></adjust-line>
 					</th>
 					<th>
@@ -130,10 +130,16 @@
 					<td>{{ sample.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
 					<td class="dropdown-col">
 						<div class="btn-group">
-							<button class="btn btn-default" ng-click="vm.goDetail(sample.receiveSampleId)">
+							<button class="btn btn-default" ng-click="vm.goDetail(sample.receiveSampleId)" role-auth="SAMPLE-UPDATESAMPLE-1">
 								<i class="fa fa-edit"></i><span>编辑</span>
 							</button>
-							<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-ADD-1 SAMPLE-DELETESAMPLE-1" ng-click="vm.toggleDropdown($event)">
+							<button class="btn btn-default" ng-click="vm.clone(sample, $event)" role-auth="SAMPLE-ADD-1" ng-if="!vm.hasUpdateSampleAuth">
+								<i class="fa fa-clone"></i><span>复制</span>
+							</button>
+							<button class="btn btn-default" ng-click="vm.delete(sample, $event)" role-auth="SAMPLE-DELETESAMPLE-1" ng-if="!vm.hasUpdateSampleAuth && !vm.hasAddSampleAuth">
+								<i class="fa fa-trash"></i><span>删除</span>
+							</button>
+							<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-ADD-1 SAMPLE-DELETESAMPLE-1" ng-click="vm.toggleDropdown($event)" ng-if="vm.hasUpdateSampleAuth || vm.hasAddSampleAuth">
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">
@@ -168,12 +174,12 @@
 				<div id="inspectTree" class="ztree"></div>
 			</div>
 			<div class="check-info" ng-class="{'no-padding': !vm.hasAddItemAuth}">
-				<div class="toolbar" role-auth="SAMPLE-ADDITEM-1">
-					<button class="btn btn-default-dark" ng-click="vm.addSampleCI()">
+				<div class="toolbar" role-auth="SAMPLE-ADDITEM-1 SAMPLE-DELETEITEM-1">
+					<button class="btn btn-default-dark" ng-click="vm.addSampleCI()" role-auth="SAMPLE-ADDITEM-1">
 						<i class="fa fa-plus"></i>
 						<span>添加检测项</span>
 					</button>
-					<button class="btn btn-default-light" ng-click="vm.appendCI()" ng-show="vm.clonedSampleId && vm.clonedSampleId != vm.selectedSample.receiveSampleId">
+					<button class="btn btn-default-light" ng-click="vm.appendCI()" ng-show="vm.clonedSampleId && vm.clonedSampleId != vm.selectedSample.receiveSampleId" role-auth="SAMPLE-ADDITEM-1">
 						<i class="icon icon-paste"></i>
 						<span>追加复制检测项</span>
 					</button>
@@ -181,10 +187,6 @@
 						<i class="fa fa-trash"></i>
 						<span>批量删除</span>
 					</button>
-					<!-- <button class="btn btn-default-light" ng-click="vm.batchDistribute()">
-						<i class="icon icon-distribute"></i>
-						<span>批量分配检测人员</span>
-					</button> -->
 				</div>
 				<table class="pt-table">
 					<thead>
@@ -265,17 +267,14 @@
 							<td>{{ item.testUser || '--' }}</td>
 							<td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
 							<td class="dropdown-col">
-								<div class="btn-group" role-auth="SAMPLE-ADDITEM-1 SAMPLE-DELETEITEM-1">
-									<button class="btn btn-default" ng-click="vm.edit(item)" role-auth="SAMPLE-ADDITEM-1">
+								<div class="btn-group">
+									<button class="btn btn-default" ng-click="vm.edit(item)">
 										<i class="fa fa-edit"></i><span>编辑</span>
 									</button>
-									<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-ADDITEM-1 SAMPLE-DELETEITEM-1">
+									<button class="btn dropdown-toggle" data-toggle="dropdown" role-auth="SAMPLE-DELETEITEM-1">
 										<i class="caret"></i>
 									</button>
 									<ul class="dropdown-menu">
-										<!-- <li ng-click="vm.distribute(item)" role-auth="SAMPLE-ADDITEM-1">
-											<a href><i class="icon icon-distribute"></i><span>检测分配</span></a>
-										</li> -->
 										<li ng-click="vm.deleteCI(item)" role-auth="SAMPLE-DELETEITEM-1">
 											<a href><i class="fa fa-trash"></i><span>删除</span></a>
 										</li>

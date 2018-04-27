@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('com.app').controller('CiResultListCtrl', function ($stateParams, $uibModal, CiResultRecordService, toastr) {
+angular.module('com.app').controller('CiResultListCtrl', function ($stateParams, $uibModal, api, CiResultRecordService, toastr) {
   var vm = this;
+  vm.hasRecordAuth = api.permissionArr.indexOf('SAMPLE-UPDATEITEMRESULT-1') != -1;
+  vm.isSampleDetail = !!$stateParams.reportId;
 
   vm.query = {
     reportId: $stateParams.reportId || null,
@@ -106,10 +108,8 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
     });
 
     modalInstance.result.then(function (res) {
-      $timeout(function () {
-        toastr.success('检测项分配成功！');
-        vm.getSampleCi();
-      }, 500)
+      toastr.success('检测项重新分配成功！');
+      vm.refreshTable();
     });
   }
 
@@ -157,15 +157,15 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       return;
     }
 
-    var val = '';
-    for (var i=0,len=vm.selectedItems.length; i<len; i++) {
-      if (i == 0) {
-        val = vm.selectedItems[i].standardValue;
-      } else if (val !== vm.selectedItems[i].standardValue) {
-        toastr.error('请确认所选检测项标准值相同或相等！');
-        return;
-      }
-    }
+    // var val = '';
+    // for (var i=0,len=vm.selectedItems.length; i<len; i++) {
+    //   if (i == 0) {
+    //     val = vm.selectedItems[i].standardValue;
+    //   } else if (val !== vm.selectedItems[i].standardValue) {
+    //     toastr.error('请确认所选检测项标准值相同或相等！');
+    //     return;
+    //   }
+    // }
 
     var modalInstance = $uibModal.open({
       animation: true,
@@ -174,7 +174,27 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       templateUrl: 'controllers/business/ci-result-record/edit/edit.html',
       controller: 'RecordCiResultCtrl as vm',
       resolve: {
-        checkItems: function () {return angular.copy(vm.selectedItems);}
+        checkItems: function () {return angular.copy(vm.selectedItems);},
+        units: ['$rootScope', '$q', 'UnitService', function ($rootScope, $q, UnitService) {
+          $rootScope.loading = true;
+          var deferred = $q.defer();
+          UnitService.getUnitList().then(function (response) {
+            $rootScope.loading = false;
+            if (response.data.success) {
+              var res = [];
+              angular.forEach(response.data.entity, function (item) {
+                res.push(item.unitName);
+              })
+              deferred.resolve(res);
+            } else {
+              deferred.resolve([]);
+            }
+          }).catch(function () {
+            $rootScope.loading = false;
+            deferred.resolve([]);
+          });
+          return deferred.promise;
+        }]
       }
     });
 

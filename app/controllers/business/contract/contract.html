@@ -126,7 +126,7 @@
                   <i class="caret"></i>
                 </button>
                 <ul class="dropdown-menu">
-                  <li ui-sref="app.business.contract.detail.info({type: contract.type, status: vm.statusFilter, id: contract.id})" role-auth="CONTRACT-UPDATE-1">
+                  <li ui-sref="app.business.contract.detail.info({type: contract.type, status: vm.statusFilter, id: contract.id})" ng-if="contract.status === 0 || (contract.task && contract.status === 1)" role-auth="CONTRACT-UPDATE-1">
                     <a href>
                       <i class="fa fa-edit"></i>
                       <span>编辑</span>

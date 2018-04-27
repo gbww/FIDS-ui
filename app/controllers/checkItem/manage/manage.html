@@ -40,9 +40,12 @@
 							<td>{{ item.law }}</td>
 							<td>{{ item.department || '--' }}</td>
 							<td class="dropdown-col">
-								<div class="btn-group" role-auth="CHECKITEM-UPDATE-1 CHECKITEM-DELETE-1">
+								<div class="btn-group" role-auth="CHECKITEM-MAPPINT-ADD-1 CHECKITEM-MAPPING-DELETE-1">
 									<button class="btn btn-default" ng-click="vm.editCheckItem(item)" role-auth="CHECKITEM-MAPPING-ADD-1">
 										<i class="fa fa-edit"></i><span>编辑</span>
+									</button>
+									<button class="btn btn-default" ng-click="vm.deleteCheckItem(item)" role-auth="CHECKITEM-MAPPING-DELETE-1" ng-if="!vm.hasUpdateAuth">
+										<i class="fa fa-trash"></i><span>删除</span>
 									</button>
 									<button class="btn dropdown-toggle" data-toggle="dropdown"  role-auth="CHECKITEM-MAPPING-DELETE-1">
 										<i class="caret"></i>
@@ -63,14 +66,16 @@
 				<li ng-click="vm.addChildNode()" role-auth="CHECKITEM-CATALOG-ADD-1">添加下级目录</li>
 				<li ng-click="vm.addSiblingNode()" role-auth="CHECKITEM-CATALOG-ADD-1">添加同级目录</li>
 				<li ng-click="vm.editNode()" role-auth="CHECKITEM-CATALOG-UPDATE-1">重命名</li>
-				<li ng-click="vm.deleteNode()" role-auth="CHECKITEM-CATALOG-DELETE-1">删除</li>
+				<!-- <li ng-click="vm.deleteNode()" role-auth="CHECKITEM-CATALOG-DELETE-1">删除</li> -->
+				<li ng-click="vm.deleteNode()">删除</li>
 			</ul>
 			<ul id="file" class="context-menu">
 				<li ng-click="vm.addSiblingNode()" role-auth="CHECKITEM-CATALOG-ADD-1">添加同级目录</li>
 				<li ng-click="vm.addCheckItem()" role-auth="CHECKITEM-MAPPING-ADD-1">添加检测项</li>
 				<li custom-file-btn role-auth="CHECKITEM-IMPORT-1">导入检测项</li>
 				<li ng-click="vm.editNode()" role-auth="CHECKITEM-CATALOG-UPDATE-1">重命名</li>
-				<li ng-click="vm.deleteNode()" role-auth="CHECKITEM-CATALOG-DELETE-1">删除</li>
+				<!-- <li ng-click="vm.deleteNode()" role-auth="CHECKITEM-CATALOG-DELETE-1">删除</li> -->
+				<li ng-click="vm.deleteNode()">删除</li>
 				<li style="display: none">
 					<input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.importFile" ngf-pattern="/\.xlsx?$/">
 				</li>

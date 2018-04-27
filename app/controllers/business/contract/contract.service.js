@@ -13,7 +13,7 @@ angular.module('com.app').factory('ContractService', function ($http) {
 			});
 		},
 
-		getContractList: function (tableParams, searchName, type) {
+		getContractList: function (tableParams, searchName, type, isHandle) {
 			return $http({
 				url: '/api/v1/ahgz/contract',
 				params: {
@@ -21,7 +21,8 @@ angular.module('com.app').factory('ContractService', function ($http) {
           pageNum: tableParams.pageNum,
           order: tableParams.order,
 					sampleName: searchName,
-					type: type
+					type: type,
+					isHandle: isHandle
         }
 			})
 		},

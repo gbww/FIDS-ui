@@ -1,15 +1,65 @@
-<div>
-  <div class="toolbar">
-    <button class="btn btn-default-light" ng-click="vm.batchDistribute()">
+<div class="business-report-list">
+  <div class="toolbar clearfix">
+    <ul class="statusBar clearfix">
+      <li ng-class="{'active': vm.status === 0}">
+        <a ng-click="vm.searchStatus(0)">
+          <i class="icon initial icon-status-doing"></i>
+          <span>未分配</span>
+        </a>
+      </li>
+      <li ng-class="{'active': vm.status === 1}">
+        <a ng-click="vm.searchStatus(1)">
+          <i class="icon handling icon-status-unhandle"></i>
+          <span>待检测</span>
+        </a>
+      </li>
+      <li ng-class="{'active': vm.status === 2}">
+        <a ng-click="vm.searchStatus(2)">
+          <i class="icon done icon-status-success"></i>
+          <span>检测完成</span>
+        </a>
+      </li>
+    </ul>
+    <button class="btn btn-default-light" ng-click="vm.batchDistribute()" ng-if="vm.status !== 2">
       <i class="icon icon-distribute"></i>
       <span>批量分配检测人员</span>
     </button>
-    <div class="pull-right">
+
+    <div class="pull-right" ng-show="!vm.advance">
       <input class="input" placeholder="请输入报告编号查询" ng-model="vm.searchConditions.reportId" ng-keyup="vm.eventSearch($event)">
       <button class="btn btn-default-dark" ng-click="vm.search()">
         <i class="fa fa-search"></i>
         <span>查询</span>
       </button>
+      <a href class="toggle" ng-click="vm.advance = true">
+        <span>展开</span>&nbsp;
+        <i class="fa fa-chevron-down"></i>
+      </a>
+    </div>
+    <div class="advanced-search clearfix" ng-show="vm.advance">
+      <div class="clearfix">
+        <div class="col-sm-3">
+          <input class="input" placeholder="请输入报告编号" ng-model="vm.searchConditions.reportId">
+        </div>
+        <div class="col-sm-3">
+          <input class="input" placeholder="请输入检测项名称" ng-model="vm.searchConditions.name">
+        </div>
+        <div class="col-sm-3">
+          <input class="input" placeholder="请输入检测方法" ng-model="vm.searchConditions.method">
+        </div>
+        <button class="btn btn-default-dark" ng-click="vm.search()">
+          <i class="fa fa-search"></i>
+          <span>查询</span>
+        </button>
+        <button class="btn btn-default-dark" ng-click="vm.reset()">
+          <i class="fa fa-refresh"></i>
+          <span>重置</span>
+        </button>
+        <a href class="toggle" ng-click="vm.back()">
+          <span>收起</span>&nbsp;
+          <i class="fa fa-chevron-up"></i>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -52,10 +102,6 @@
           <adjust-line></adjust-line>
         </th>
         <th>
-          <div>状态</div>
-          <adjust-line></adjust-line>
-        </th>
-        <th>
           <div>分包</div>
           <adjust-line></adjust-line>
         </th>
@@ -68,17 +114,17 @@
           <adjust-line></adjust-line>
         </th>
         <th>更新时间</th>
-        <th style="width: 100px">操作</th>
+        <th style="width: 100px" ng-if="vm.status !== 2">操作</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-if="vm.ciLoading">
-        <td colspan="14" class="text-center">
+        <td colspan="{{ vm.status ===2 ? '12' : '13'}}" class="text-center">
           <i class="fa fa-pulse fa-spinner"></i>
         </td>
       </tr>
       <tr ng-if="!vm.ciLoading && vm.checkItems.length == 0">
-        <td colspan="14" class="text-center">暂无检测项</td>
+        <td colspan="{{ vm.status ===2 ? '12' : '13'}}" class="text-center">暂无检测项</td>
       </tr>
       <tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.ciLoading">
         <td>
@@ -91,20 +137,11 @@
         <td>{{ item.unit }}</td>
         <td>{{ item.standardValue }}</td>
         <td>{{ item.defaultPrice }}</td>
-        <td>
-          <i class="icon" ng-class="{'initial icon-status-doing': item.status==0,
-									'handling icon-status-unhandle': item.status==1,
-									'done icon-status-success': item.status==2}">
-          </i>
-          <span ng-if="item.status == 0">未分配</span>
-          <span ng-if="item.status == 1">待检测</span>
-          <span ng-if="item.status == 2">检测完成</span>
-        </td>
         <td>{{ item.subpackage === '1' ? '是' : '否' }}</td>
         <td>{{ item.testRoom || '--' }}</td>
         <td>{{ item.testUser || '--' }}</td>
         <td>{{ item.updatedAt | date:'yyyy-MM-dd hh:mm:ss' }}</td>
-        <td>
+        <td ng-if="vm.status !== 2">
           <button class="btn btn-default" ng-click="vm.distribute(item)">
             <i class="icon icon-distribute"></i>
             <span>分配</span>
@@ -114,7 +151,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="14">
+        <td colspan="{{ vm.status ===2 ? '12' : '13'}}">
           <div st-idp st-total-count="vm.total"></div>
         </td>
       </tr>

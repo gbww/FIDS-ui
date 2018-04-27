@@ -1,7 +1,8 @@
 .pt-table{
   width: 100%;
+  min-width: 100%;
   cursor: inherit;
-  // table-layout: fixed;
+  table-layout: fixed;
   border: 1px solid $table-border-color;
   margin-bottom: 20px;
   thead{
@@ -11,7 +12,7 @@
       th{
         position: relative;
         color: $thead-font-color;
-        padding: 2px 5px;
+        padding: 0px 3px;
         font-weight: 700;
         white-space: nowrap;
         border-bottom: 1px solid $table-border-color;
@@ -70,11 +71,11 @@
         background-color: #b4ddff;
       }
       td{
-        padding: 2px 5px;
+        padding: 0px 3px;
         outline: none;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        // white-space: nowrap;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
         word-break: break-all;
         word-wrap: break-word;
         color: $tbody-font-color;
@@ -210,7 +211,7 @@
   margin-bottom: 10px;
   tr {
     td {
-      padding: 3px 8px;
+      padding: 2px 8px;
       border-right: 1px solid $table-border-color;
       border-bottom: 1px solid $table-border-color;
       overflow: visible;
