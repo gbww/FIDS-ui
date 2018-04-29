@@ -19,9 +19,14 @@ angular.module('com.app').controller('SelectContractCtrl', function ($scope, $ui
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
     }
   	ContractService.getContractList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
-  		vm.loading = false;
+      vm.loading = false;
+      var tempContracts = [];
   		if (response.data.success) {
-        vm.contracts = response.data.entity.list;
+        angular.forEach(response.data.entity.list, function (item) {
+          tempContracts.push(item.contract);
+        });
+
+        vm.contracts = tempContracts;
         vm.total = response.data.entity.total;
         tableState.pagination.numberOfPages = response.data.entity.pages;
       } else {

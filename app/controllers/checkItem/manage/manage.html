@@ -66,16 +66,14 @@
 				<li ng-click="vm.addChildNode()" role-auth="CHECKITEM-CATALOG-ADD-1">添加下级目录</li>
 				<li ng-click="vm.addSiblingNode()" role-auth="CHECKITEM-CATALOG-ADD-1">添加同级目录</li>
 				<li ng-click="vm.editNode()" role-auth="CHECKITEM-CATALOG-UPDATE-1">重命名</li>
-				<!-- <li ng-click="vm.deleteNode()" role-auth="CHECKITEM-CATALOG-DELETE-1">删除</li> -->
-				<li ng-click="vm.deleteNode()">删除</li>
+				<li ng-click="vm.deleteNode()" role-auth="CHECKITEM-CATALOG-RECURSION-DELETE-1">删除</li>
 			</ul>
 			<ul id="file" class="context-menu">
 				<li ng-click="vm.addSiblingNode()" role-auth="CHECKITEM-CATALOG-ADD-1">添加同级目录</li>
 				<li ng-click="vm.addCheckItem()" role-auth="CHECKITEM-MAPPING-ADD-1">添加检测项</li>
 				<li custom-file-btn role-auth="CHECKITEM-IMPORT-1">导入检测项</li>
 				<li ng-click="vm.editNode()" role-auth="CHECKITEM-CATALOG-UPDATE-1">重命名</li>
-				<!-- <li ng-click="vm.deleteNode()" role-auth="CHECKITEM-CATALOG-DELETE-1">删除</li> -->
-				<li ng-click="vm.deleteNode()">删除</li>
+				<li ng-click="vm.deleteNode()" role-auth="CHECKITEM-CATALOG-RECURSION-DELETE-1">删除</li>
 				<li style="display: none">
 					<input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.importFile" ngf-pattern="/\.xlsx?$/">
 				</li>
