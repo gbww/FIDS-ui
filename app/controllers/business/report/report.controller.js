@@ -233,14 +233,17 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     $rootScope.loading = true;
     var iframe = document.createElement('iframe');
     window.DEFAULT_URL = '/api/v1/ahgz/report/preview?type=pdf&receiveSampleId=' + report.receiveSampleId;
-    iframe.style.display = 'none';
+    // iframe.style.display = 'none';
+    iframe.style.opacity = '0';
+    iframe.style.height = '1px';
     iframe.id = 'printIframe';
     iframe.src = 'http://' + location.host + '/pdfjs/web/viewer.html';
     document.body.appendChild(iframe);
     var iwin = document.getElementById('printIframe').contentWindow;
 
     var interval = $interval(function () {
-      if (iwin.PDFViewerApplication && iwin.PDFViewerApplication.pdfViewer && iwin.PDFViewerApplication.pdfViewer._pageViewsReady) {
+      var isReady = iwin.PDFViewerApplication && iwin.PDFViewerApplication.pdfViewer && iwin.PDFViewerApplication.pdfViewer._pageViewsReady;
+      if (isReady) {
         $rootScope.loading = false;
         iwin.print();
         $interval.cancel(interval);
@@ -261,14 +264,17 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     xhr.onload = function () {
       window.DEFAULT_URL = new Uint8Array(xhr.response);
       var iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
+      // iframe.style.display = 'none';
+      iframe.style.opacity = '0';
+      iframe.style.height = '1px';
       iframe.id = 'printIframe';
       iframe.src = 'http://' + location.host + '/pdfjs/web/viewer.html';
       document.body.appendChild(iframe);
       var iwin = document.getElementById('printIframe').contentWindow;
 
       var interval = $interval(function () {
-        if (iwin.PDFViewerApplication && iwin.PDFViewerApplication.pdfViewer && iwin.PDFViewerApplication.pdfViewer._pageViewsReady) {
+        var isReady = iwin.PDFViewerApplication && iwin.PDFViewerApplication.pdfViewer && iwin.PDFViewerApplication.pdfViewer._pageViewsReady;
+        if (isReady) {
           $rootScope.loading = false;
           vm.itemSelected = [], vm.selectedItems = [], vm.allSelected = false;
           iwin.print();

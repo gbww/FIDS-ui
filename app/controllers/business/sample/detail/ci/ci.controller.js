@@ -65,7 +65,9 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
     if (isDb) {
       angular.forEach(checkItems, function (item) {
         item.receiveSampleId = vm.receiveSampleId;
+        item.testRoom = item.department;
         delete item.id;
+        delete item.department;
       });
       data = [].concat(checkItems);
     } else {
@@ -80,7 +82,9 @@ angular.module('com.app').controller('SampleDetailCiCtrl', function ($rootScope,
           quantitationLimit: item.quantitation_limit,
           device: item.device,
           defaultPrice: item.default_price,
-          department: item.department
+          testRoom: item.department,
+          law: item.law,
+          package: item.package
         }
         data.push(tempItem);
       });

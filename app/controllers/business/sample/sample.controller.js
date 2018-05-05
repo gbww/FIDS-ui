@@ -276,7 +276,9 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       angular.forEach(checkItems, function (item) {
         item.receiveSampleId = vm.selectedSample.receiveSampleId;
         item.reportId = vm.selectedSample.reportId;
+        item.testRoom = item.department;
         delete item.id;
+        delete item.department;
       });
       data = [].concat(checkItems);
     } else {
@@ -291,7 +293,10 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
           detectionLimit: item.detection_limit,
           quantitationLimit: item.quantitation_limit,
           device: item.device,
-          defaultPrice: item.default_price
+          defaultPrice: item.default_price,
+          testRoom: item.department,
+          law: item.law,
+          package: item.package
         }
         data.push(tempItem);
       });

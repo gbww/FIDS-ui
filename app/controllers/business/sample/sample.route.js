@@ -20,7 +20,7 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 	});
 
 	$stateProvider.state('app.business.sample.detail', {
-		url: '/:type/:id',
+		url: '/:status/:id',
 		views: {
 			'@app.business': {
 				templateUrl: 'controllers/business/sample/detail/detail.html',
