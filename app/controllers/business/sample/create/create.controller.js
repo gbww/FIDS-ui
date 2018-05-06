@@ -45,7 +45,16 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $
     SampleService.getSampleInfo(vm.clonedSampleId).then(function (response) {
       $rootScope.loading = false;
       if (response.data.success) {
-        vm.sample = angular.merge(response.data.entity, {reportId: null, receiveSampleId: null, status: 0});
+        vm.sample = response.data.entity
+        delete vm.sample.reportId;
+        delete vm.sample.receiveSampleId;
+        delete vm.sample.status;
+        delete vm.sample.reportStatus;
+        delete vm.sample.drawUser;
+        delete vm.sample.examineUser;
+        delete vm.sample.approva;
+        delete vm.sample.reportProcessId;
+        delete vm.sample.devices;
       } else {
         toastr.error(response.data.message);
       }

@@ -75,6 +75,14 @@ angular.module('com.app').factory('ReportService', function ($http) {
       })
     },
 
+    updateDrawUser: function (data) {
+      return $http({
+        url: baseUrl + '/drawuser',
+        method: 'PUT',
+        params: data
+      })
+    },
+
     // 批量修改报告状态
     batchUpdateReportStatus: function (ids, status) {
       return $http({

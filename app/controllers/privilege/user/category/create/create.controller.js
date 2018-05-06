@@ -4,7 +4,7 @@ angular.module('com.app').controller('PrivilegeUserTypeCreateCtrl', function ($r
   var vm = this;
 	$rootScope.loading = false;
 	vm.step = 0;
-	vm.userTypeArr = ['审核人', '批准人'];
+	vm.userTypeArr = ['编制人', '审核人', '批准人'];
 	vm.searchObject = {
     searchKeywords: ''
   }

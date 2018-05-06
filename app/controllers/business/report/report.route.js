@@ -77,7 +77,31 @@ angular.module('com.app').config(function ($stateProvider) {
 			}
 		},
 		resolve: {
-			users: ['$rootScope', '$q', '$stateParams', 'PrivilegeService', 'toastr', function ($rootScope, $q, $stateParams, PrivilegeService, toastr) {
+			drawUsers: ['$rootScope', '$q', '$stateParams', 'PrivilegeService', 'toastr', function ($rootScope, $q, $stateParams, PrivilegeService, toastr) {
+				if ($stateParams.type === 'bz') {
+					return [];
+				}
+				$rootScope.loading = true;
+				var deferred = $q.defer();
+
+				PrivilegeService.getAllTypeUser('编制人').then(function (response) {
+					if (response.data.success) {
+						var users = response.data.entity;
+						if (users.length === 0) {
+							$rootScope.loading = false;
+							deferred.resolve([]);
+						} else {
+							deferred.resolve(users);
+						}
+					}
+				}).catch(function () {
+					deferred.resolve([]);
+					$rootScope.loading = false;
+				});
+
+				return deferred.promise;
+			}],
+			examineUsers: ['$rootScope', '$q', '$stateParams', 'PrivilegeService', 'toastr', function ($rootScope, $q, $stateParams, PrivilegeService, toastr) {
 				if ($stateParams.type !== 'bz') {
 					return [];
 				}

@@ -45,7 +45,11 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
     vm.catalogLoading = true;
   	CheckItemService.getChildCatalog('-1').then(function (response) {
       vm.catalogLoading = false;
-  		var data = response.data.entity;
+      var data = response.data.entity;
+      if (data.length === 0) {
+        vm.initial = true;
+        return;
+      }
       angular.forEach(data, function (item) {
         angular.merge(item, {name: item.productName, isParent: item.isCatalog=='1'})
         if (init && item.isCatalog == '0') {
@@ -131,6 +135,34 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
     }
   })
 
+  vm.initialCatalog = function () {
+    var modalInstance = $uibModal.open({
+      animation: true,
+      size: 'md',
+      backdrop: 'static',
+      templateUrl: 'controllers/checkItem/manage/add-catalog/addCatalog.html',
+      controller: 'CustomAddCatalogCtrl as vm',
+      resolve: {
+        isCatalog: function () {return true;},
+        isInitial: function () {return true;}
+      }
+    });
+
+    modalInstance.result.then(function (catalog) {
+      $rootScope.loading = true;
+    	var data = angular.merge({}, catalog, {parentId: '-1'});
+    	CheckItemService.addCICatalog(data).then(function (response) {
+        $rootScope.loading = false;
+        if (response.data.success) {
+          vm.initial = false;
+          vm.getCatalog();
+    		}	else {
+    			toastr.error(response.data.message);
+    		}
+      });
+    })
+  }
+
   vm.addChildNode = function () {
     hideContextMenu();
     var parentNode = vm.tree.getSelectedNodes()[0];
@@ -141,7 +173,8 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
       templateUrl: 'controllers/checkItem/manage/add-catalog/addCatalog.html',
       controller: 'CustomAddCatalogCtrl as vm',
       resolve: {
-        isCatalog: function () {return null;}
+        isCatalog: function () {return null;},
+        isInitial: function () {return false;}
       }
     });
 
@@ -188,7 +221,8 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
       templateUrl: 'controllers/checkItem/manage/add-catalog/addCatalog.html',
       controller: 'CustomAddCatalogCtrl as vm',
       resolve: {
-        isCatalog: function () {return vm.isCatalog;}
+        isCatalog: function () {return vm.isCatalog;},
+        isInitial: function () {return false;}
       }
     });
 

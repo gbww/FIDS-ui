@@ -39,8 +39,8 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
   vm.reportIdArr = [], vm.sampleNameArr = [], vm.entrustedUnitArr = [], vm.inspectedUnitArr = [],
     vm.productionUnitArr = [], vm.sampleIdArr = [], vm.exeStandardArr = [], vm.sampleTypeArr = [], vm.checkTypeArr = [];
 
-  var status = 5;
-  if (!vm.hasAllAuth) {
+  var status = 4;
+  if (!vm.hasPrintAuth) {
     status = 0; 
   } else if (!vm.hasEditAuth) {
     status = 1;
@@ -48,8 +48,8 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     status = 2;
   } else if (!vm.hasApproveAuth) {
     status = 3;
-  } else if (!vm.hasPrintAuth) {
-    status = 4;
+  } else if (!vm.hasAllAuth) {
+    status = 5;
   }
 
   if ($stateParams.status === 0) {

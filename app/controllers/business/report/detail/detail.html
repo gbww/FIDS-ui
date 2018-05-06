@@ -96,10 +96,10 @@
           </tr>
           <tr>
             <td class="item-title">
-              <span class="item-required">报告模板</span>
+              <span ng-class="{'item-required': (vm.report.reportStatus === 0 && vm.type === 'bz') || vm.report.reportStatus > 0}">报告模板</span>
             </td>
             <td>
-              <select class="input" name="template" ng-model="vm.templateId" ng-options="option.id as option.name for option in vm.templates" required></select>
+              <select class="input" name="template" ng-model="vm.templateId" ng-options="option.id as option.name for option in vm.templates" ng-required="(vm.report.reportStatus === 0 && vm.type === 'bz') || vm.report.reportStatus > 0"></select>
               <div ng-if="form.template.$dirty || vm.submitted" ng-messages="form.template.$error">
                 <label class="error-messages" ng-message="required">
                   <i></i>不能为空</label>
@@ -492,6 +492,17 @@
               <textarea class="input" rows="2" ng-model="vm.report.devices"></textarea>
             </td>
           </tr>
+          <tbody ng-show="vm.report.reportStatus === 0 && vm.type === 'bj'">
+            <tr>
+              <td class="item-title">
+                <span>编制人</span>
+              </td>
+              <td>
+                <select class="input" ng-model="vm.report.drawUser" ng-options="option.name as option.name for option in vm.drawUsers"></select>
+              </td>
+              <td class="item-title"></td>
+              <td></td>
+          </tbody>
           <tbody ng-if="vm.type === 'bz'">
             <tr>
               <td class="item-title">
@@ -511,7 +522,7 @@
               <td class="item-title">
                 <span class="item-required">审核人</span></td>
               <td>
-                <select class="input" name="examineUser" ng-model="vm.report.examineUser" ng-options="option.name as option.name for option in vm.users" required></select>
+                <select class="input" name="examineUser" ng-model="vm.report.examineUser" ng-options="option.name as option.name for option in vm.examineUsers" required></select>
                 <div ng-if="form.examineUser.$dirty || vm.submitted" ng-messages="form.examineUser.$error">
                   <label class="error-messages" ng-message="required">
                     <i></i>不能为空</label>

@@ -41,6 +41,18 @@
     &::-webkit-scrollbar-resizer  {
     }
 	}
+	.check-tree .empty {
+		position: absolute;
+		top: 150px;
+		height: 50px;
+		left: 40px;
+		right: 40px;
+		line-height: 50px;
+		border: 1px dashed #ccc;
+		border-radius: 5px;
+		text-align: center;
+		cursor: pointer;
+	}
 
 	.check-tree>#inspectTree {
 		padding: 10px;

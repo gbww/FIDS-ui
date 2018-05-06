@@ -5,7 +5,11 @@
 		<div class="check-list">
 			<div class="check-tree" role-auth="CHECKITEM-CATALOG-SELECT-1">
 				<div class="loading" ng-if="vm.catalogLoading"><i></i></div>
-				<div id="inspectTree" class="ztree"></div>
+				<div class="empty" ng-show="vm.initial" ng-click="vm.initialCatalog()">
+					<i class="fa fa-plus"></i>
+					<span>请添加目录</span>
+				</div>
+				<div id="inspectTree" class="ztree" ng-show="!vm.initial"></div>
 			</div>
 			<div class="check-info" ng-class="{'no-padding': !vm.hasCheckItemAuth}">
 				<table class="pt-table">

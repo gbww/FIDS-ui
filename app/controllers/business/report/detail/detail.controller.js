@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $state, $stateParams, $q, $uibModal, api, toastr, SampleService, ReportService, users, templates) {
+angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $state, $stateParams, $q, $uibModal, api, toastr, SampleService, ReportService, drawUsers, examineUsers, templates) {
   var vm = this;
   $rootScope.loading = false;
 
@@ -8,7 +8,8 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
   vm.status = $stateParams.status;
   vm.taskId = $stateParams.taskId;
   vm.templates = templates;
-  vm.users = users;
+  vm.drawUsers = drawUsers;
+  vm.examineUsers = examineUsers;
 
   var businessBC = api.breadCrumbMap.business;
   var report = angular.copy(businessBC.report.root);
@@ -33,9 +34,14 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
       vm.loading = false;
       if (response.report.data.success) {
         vm.report = response.report.data.entity.receiveSample;
-        // if (!vm.report.drawUser) {
-        //   vm.report.drawUser = api.userInfo.username;
-        // }
+        var flag = false;
+        angular.forEach(vm.drawUsers, function (user) {
+          if (user.name === vm.report.drawUser) {
+            flag = true;
+          }
+        })
+        !flag && vm.drawUsers.push({name: vm.report.drawUser});
+        vm.initDrawUser = vm.report.drawUser;
 
         var reportExtend = response.report.data.entity.reportExtend;
         if (reportExtend) {
@@ -165,6 +171,26 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
     })
   }
 
+  vm.updateDrawUser = function () {
+    var data = {
+      processId: vm.report.reportProcessId,
+      receiveSampleId: vm.report.receiveSampleId,
+      newDrawUser: vm.report.drawUser
+    };
+    var reportData = angular.copy(vm.report);
+    delete reportData.drawUser
+    ReportService.updateReport(reportData).then(function () {
+      return ReportService.updateDrawUser(data);
+    }).then(function (response) {
+      if (response.data.success) {
+        toastr.success('报告修改成功！');
+        $state.go('app.business.report', { status: vm.status });
+      } else {
+        toastr.error(response.data.message);
+      }
+    });
+  }
+
   vm.runEditTask = function () {
     var data = {
       examinePersonName: vm.report.examineUser,
@@ -202,36 +228,41 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
       })
     }
 
-    var templateData = {
-      reportId: vm.report.reportId
-    };
-    angular.forEach(vm.templates, function (item) {
-      if (item.id === vm.templateId) {
-        angular.merge(templateData, {
-          templateId: vm.templateId,
-          templateName: item.name,
-          templateDesc: item.description
-        })
-      }
-    });
-
-    // 绑定模板
-    if (!vm.initTemplateId) {
-      ReportService.bindReportTmpl(templateData).then(function () {
-        vm.type === 'bj' ? vm.updateReport() : vm.runEditTask();
-      }).catch(function (err) {
-        toastr.error(err.data);
-      })
+    // 没有template表明是在编制状态下进行编辑
+    if (!vm.templateId) {
+      vm.report.drawUser !== vm.initDrawUser ? vm.updateDrawUser() : vm.updateReport();
     } else {
-      // 更新模板
-      if (!angular.equals(vm.templateId, vm.initTemplateId)) {
-        ReportService.updateReportTmpl(vm.tmplId, templateData).then(function () {
-          vm.type === 'bj' ? vm.updateReport() : vm.runEditTask();
+      var templateData = {
+        reportId: vm.report.reportId
+      };
+      angular.forEach(vm.templates, function (item) {
+        if (item.id === vm.templateId) {
+          angular.merge(templateData, {
+            templateId: vm.templateId,
+            templateName: item.name,
+            templateDesc: item.description
+          })
+        }
+      });
+
+      // 绑定模板
+      if (!vm.initTemplateId) {
+        ReportService.bindReportTmpl(templateData).then(function () {
+          vm.type === 'bj' ? (vm.report.drawUser !== vm.initDrawUser ? vm.updateDrawUser() : vm.updateReport()) : vm.runEditTask();
         }).catch(function (err) {
           toastr.error(err.data);
         })
       } else {
-        vm.type === 'bj' ? vm.updateReport() : vm.runEditTask();
+        // 更新模板
+        if (!angular.equals(vm.templateId, vm.initTemplateId)) {
+          ReportService.updateReportTmpl(vm.tmplId, templateData).then(function () {
+            vm.type === 'bj' ? vm.updateReport() : vm.runEditTask();
+          }).catch(function (err) {
+            toastr.error(err.data);
+          })
+        } else {
+          vm.type === 'bj' ? vm.updateReport() : vm.runEditTask();
+        }
       }
     }
   }

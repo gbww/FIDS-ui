@@ -3,10 +3,10 @@
   <div class="pt-2">
     <div class="toolbar clearfix">
       <ul class="statusBar clearfix">
-        <li ng-class="{'active': vm.status === 5}" role-auth="REPORT-LIST-ALL-GET-1">
-          <a ng-click="vm.searchStatus(5)">
-            <i class="icon icon-all-list"></i>
-            <span>所有</span>
+        <li ng-class="{'active': vm.status === 4}" role-auth="REPORT-LIST-FINISH-GET-1">
+          <a ng-click="vm.searchStatus(4)">
+            <i class="icon icon-finished-list"></i>
+            <span>完成</span>
           </a>
         </li>
         <li ng-class="{'active': vm.status === 0}" role-auth="REPORT-LIST-EDIT-GET-1">
@@ -33,10 +33,10 @@
             <span>待打印</span>
           </a>
         </li>
-        <li ng-class="{'active': vm.status === 4}" role-auth="REPORT-LIST-FINISH-GET-1">
-          <a ng-click="vm.searchStatus(4)">
-            <i class="icon icon-finished-list"></i>
-            <span>完成</span>
+        <li ng-class="{'active': vm.status === 5}" role-auth="REPORT-LIST-ALL-GET-1">
+          <a ng-click="vm.searchStatus(5)">
+            <i class="icon icon-all-list"></i>
+            <span>所有</span>
           </a>
         </li>
       </ul>
