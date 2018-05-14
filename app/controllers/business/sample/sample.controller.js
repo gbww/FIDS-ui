@@ -320,10 +320,11 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       if (response.data.success) {
         var checkItems = response.data.entity;
         angular.forEach(checkItems, function (item) {
-          item.standard_value = item.standardValue,
-          item.detection_limit = item.detectionLimit,
-          item.quantitation_limit = item.quantitationLimit,
-          item.default_price = item.defaultPrice
+          item.standard_value = item.standardValue;
+          item.detection_limit = item.detectionLimit;
+          item.quantitation_limit = item.quantitationLimit;
+          item.default_price = item.defaultPrice;
+          item.department = item.testRoom;
         });
         var modalInstance = $uibModal.open({
           animation: true,
