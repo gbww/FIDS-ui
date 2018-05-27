@@ -121,7 +121,7 @@ angular.module('com.app').factory('PrivilegeService', function ($http) {
 		},
 
 		// 用户类型：编制人、审核人、批准人
-		getUserType: function (tableParams, searchConditions) {
+		getUserType: function (tableParams, name) {
 			return $http({
 				url: '/api/v1/ahgz/usertype/select',
 				method: 'GET',
@@ -129,8 +129,9 @@ angular.module('com.app').factory('PrivilegeService', function ($http) {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
 					order: tableParams.order,
-					type: searchConditions.type,
-					name: searchConditions.name
+					// type: searchConditions.type,
+					// name: searchConditions.name
+					name: name
 				}
 			})
 		},

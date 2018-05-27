@@ -8,7 +8,7 @@
 		<div class="form-group">
 			<label class="item-required col-sm-3 control-label">部门名称</label>
 			<div class="col-sm-8">
-				<input class="form-control" name="name" ng-model="vm.organization.name" required ng-minlenght="2" ng-maxlength="30" ng-pattern="/^[\u4e00-\u9fa5_\-a-zA-Z0-9]+$/">
+				<input class="form-control" name="name" ng-model="vm.organization.name" required ng-minlenght="2" ng-maxlength="30" ng-pattern="/^[\u4e00-\u9fa5_\-a-zA-Z0-9]+$/" disabled>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3" ng-if="organizationEdit.name.$dirty" ng-messages="organizationEdit.name.$error">
 				<label class="error-messages" ng-message="minlength"><i></i>长度至少2位</label>

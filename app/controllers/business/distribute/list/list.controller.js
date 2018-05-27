@@ -137,8 +137,8 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
         // testRoom = vm.selectedItems[i].testRoom;
         // testUser = vm.selectedItems[i].testUser;
       } else if (sampleId !== vm.selectedItems[i].receiveSampleId) {
-        toastr.error('请确认所选检测项属于同一抽样单！');
-        return;
+        // toastr.error('请确认所选检测项属于同一抽样单！');
+        // return;
       // } else if (testRoom !== vm.selectedItems[i].testRoom || testUser !== vm.selectedItems[i].testUser) {
       //   toastr.error('请确认所选检测项分配的检测室检测人员为同一人！');
       //   return;
@@ -176,7 +176,7 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
     modalInstance.result.then(function () {
       vm.itemSelected = [], vm.selectedItems = [], vm.allSelected = false;
       toastr.success('检测项分配成功！');
-      vm.getSampleCi();
+      vm.refreshTable();
     });
   }
 
