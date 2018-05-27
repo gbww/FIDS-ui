@@ -320,14 +320,22 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
   vm.deleteNode = function () {
     hideContextMenu();
     var node = vm.tree.getSelectedNodes()[0];
-    CheckItemService.deleteCICatalog(node.id).then(function (response) {
-    	if (response.data.success) {
-		    vm.tree.removeNode(node);
-    	} else {
-    		toastr.error(response.data.message);
-    	}
-    }).catch(function (err) {
-    	toastr.error(err.data);
+    var isFolder = node.isCatalog === '1';
+    var msg = (node.isCatalog === '1') ? ('将同时删除 ' + node.name + ' 下所有内容，确认删除？') : ('确认删除项目 ' + node.name + ' ?');
+    var result = dialog.confirm(msg);
+    result.then(function (res) {
+      if (res) {
+        CheckItemService.deleteCICatalog(node.id).then(function (response) {
+          if (response.data.success) {
+            vm.tree.removeNode(node);
+            vm.checkItems = [];
+          } else {
+            toastr.error(response.data.message);
+          }
+        }).catch(function (err) {
+          toastr.error(err.data);
+        })
+      }
     })
   }
 
