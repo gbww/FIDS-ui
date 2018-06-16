@@ -10,8 +10,8 @@ angular.module('smart-table').run(['$templateCache', function ($templateCache) {
 
         // '<li ng-repeat="page in pages" ng-class="{active: page==currentPage}"><a href="javascript: void(0);" ', 'ng-click="selectPage(page)">{{page}}</a></li>',
 
-        '<li><a style="float:right;" ng-click="selectPage(numPages)">尾页</a></li>',
         '<li class="next" ng-class="{disabled:currentPage>=numPages}" ng-disabled="currentPage>=numPages"><a ng-click="currentPage===numPages || selectPage(currentPage + 1)" >下一页</a></li>',
+        '<li><a style="float:right;" ng-click="selectPage(numPages)">尾页</a></li>',
         '</ul>',
 
 

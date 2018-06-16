@@ -7,22 +7,22 @@
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 @import "../../bower_components/font-awesome/scss/font-awesome.scss";
 // endbower
-@import "mixin";
-@import "bootstrap";
-@import "iconfont";
+@import "_mixin";
+@import "_bootstrap";
+@import "_iconfont";
 
-@import "header";
-@import "navbar";
+@import "_header";
+@import "_navbar";
 
-@import "common";
-@import "app";
-@import "breadCrumb";
-@import "spinner";
-@import "button";
-@import "table";
-@import "tab";
-@import "switch";
-@import "timeline";
+@import "_common";
+@import "_app";
+@import "_breadCrumb";
+@import "_spinner";
+@import "_button";
+@import "_table";
+@import "_tab";
+@import "_switch";
+@import "_timeline";
 
-@import "ztree";
-@import "multiple-select";
+@import "_ztree";
+@import "_multiple-select";

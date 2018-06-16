@@ -1,0 +1,52 @@
+<div class="modal-header">
+  <div class="close" ng-click="vm.cancel()">&times;</div>
+  <h4>填充</h4>
+</div>
+<div class="modal-body ci-result-patch" draggable-modal>
+  <div>
+    <label>填充方向：</label>
+    <input type="radio" id="down" ng-model="vm.direction" value="down">
+    <label for="down">向下填充</label>&emsp;&emsp;
+    <input type="radio" id="up" ng-model="vm.direction" value="up">
+    <label for="up">向上填充</label>
+  </div>
+  <div>
+    <label>填充方式：</label>
+    <input type="radio" id="yes" ng-model="vm.type" value="true">
+    <label for="yes">覆盖填充</label>&emsp;&emsp;
+    <input type="radio" id="no" ng-model="vm.type" value="false">
+    <label for="no">非覆盖填充</label>
+  </div>
+  <table class="pt-table border-table no-vertical-line">
+    <thead>
+      <tr>
+        <th>填充列名</th>
+        <th>填充列值</th>
+        <th style="width: 60px">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="item in vm.result track by $index">
+        <td>
+          <select class="input" ng-model="item.column" ng-options="column.value as column.key for column in vm.columns" ng-change="vm.changeColumn(item)"></select>
+        </td>
+        <td>
+          <div custom-select class-name="inline input" avail-arr="vm.characterArr" model="item" key="value" ng-if="item.column === 'unit'"></div>
+          <div custom-select mode="append" class-name="inline input" avail-arr="vm.characterArr" model="item" key="value" ng-if="item.column === 'standardValue'"></div>
+          <div custom-select avail-arr="vm.resultArr" class-name="input" model="item" key="value" ng-if="item.column === 'itemResult'"></div>
+          <input class="input" ng-model="item.value" ng-if="['unit', 'standardValue', 'itemResult'].indexOf(item.column) === -1" />
+        </td>
+        <td>
+          <i class="fa fa-minus-circle" ng-click="vm.deleteItem($index)"></i>
+          <i class="fa fa-plus-circle" ng-click="vm.addItem()" ng-if="$last"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-2x btn-default-dark" ng-click="vm.ok()" ng-disabled="form.$invalid">确认</button>
+  <button class="btn btn-2x btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

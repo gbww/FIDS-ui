@@ -21,6 +21,8 @@ angular.module('com.app').controller('CiResultSampleCategoryCtrl', function (CiR
     var reverse = tableState.sort.reverse ? 'desc' : 'asc';
     if (orderBy == 'reportId') {
       orderBy = 'report_id'
+    } else if (orderBy == 'finishDate') {
+      orderBy = 'finish_date'
     } else if (orderBy == 'createdAt') {
       orderBy = 'created_at'
     }
@@ -32,7 +34,25 @@ angular.module('com.app').controller('CiResultSampleCategoryCtrl', function (CiR
     CiResultRecordService.getUserSample(tableParams, vm.status, vm.query).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
-        vm.samples = response.data.entity.list;
+        var now = new Date().getTime()
+        var day = 1000*3600*24
+        vm.samples = response.data.entity.list.map(function (sample, idx) {
+          var date = new Date(sample.finishDate).getTime()
+          var interval = (date - now) / day
+
+          if (interval <= 0) {
+            sample.emergency = 0
+          } else if (interval <= 1) {
+            sample.emergency = 1
+          } else if (interval <= 3) {
+            sample.emergency = 2
+          } else if (interval <= 7) {
+            sample.emergency = 3
+          } else {
+            sample.emergency = 4
+          }
+          return sample
+        })
         vm.total = response.data.entity.total;
         tableState.pagination.numberOfPages = response.data.entity.pages;
       } else {

@@ -17,6 +17,9 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
   vm.searchObject = {}
 
   vm.refreshTable = function (flag) {
+    vm.allSelected = false;
+    vm.itemSelected = [];
+    vm.selectedItems = [];
     vm.searchObject.timestamp = new Date();
     if (flag == 'toggle') {
       vm.searchObject.toggle = true;

@@ -1,5 +1,10 @@
-<div class="">
+<div class="ci-result-record-sample">
   <div class="toolbar clearfix">
+    <button class="btn" style="background-color: #000000">已过期</button>
+    <button class="btn" style="background-color: #ff0000">紧急(1天内)</button>
+    <button class="btn" style="background-color: #b538b5">急迫(1~3天)</button>
+    <button class="btn" style="background-color: #d49c00">告警(3~7天)</button>
+    <button class="btn" style="background-color: #00ab00">一般(7天以上)</button>
     <div class="pull-right multiple-search">
       <input class="input" placeholder="报告编号" ng-model="vm.query.reportId" ng-keyup="vm.eventSearch($event)">
       <input class="input" placeholder="抽样单编号" ng-model="vm.query.receiveSampleId" ng-keyup="vm.eventSearch($event)">
@@ -36,7 +41,9 @@
           <adjust-line></adjust-line>
         </th>
         <th>
-          <div>结束时间</div>
+          <div st-sort="finishDate">结束时间
+            <i class="fa fa-sort"></i>
+          </div>
           <adjust-line></adjust-line>
         </th>
         <th>
@@ -56,7 +63,7 @@
       <tr ng-if="!vm.loading && vm.samples.length === 0">
         <td colspan="7" class="text-center">暂无待录入检测项接样单</td>
       </tr>
-      <tr ng-repeat="sample in vm.samples track by $index" ng-if="!vm.loading">
+      <tr ng-repeat="sample in vm.samples track by $index" ng-class="{'outdate': sample.emergency === 0, 'major': sample.emergency === 1, 'minor': sample.emergency === 2, 'warn': sample.emergency === 3, 'common': sample.emergency === 4}" ng-if="!vm.loading">
         <td>
           <a ui-sref="app.business.itemToCheck.sample.list({reportId: sample.reportId, receiveSampleId: sample.receiveSampleId})">{{ sample.reportId }}</a>
         </td>
@@ -64,7 +71,7 @@
         <td>{{ sample.sampleName }}</td>
         <td>{{ sample.entrustedUnit }}</td>
         <td>{{ sample.receiveDate }}</td>
-        <td>{{ sample.finishDate }}</td>
+        <td ng-class="{'outdate': sample.emergency === 0, 'major': sample.emergency === 1, 'minor': sample.emergency === 2, 'warn': sample.emergency === 3, 'common': sample.emergency === 4}">{{ sample.finishDate }}</td>
         <td>{{ sample.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
       </tr>
     </tbody>

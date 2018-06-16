@@ -1,0 +1,63 @@
+.ci-result-record-sample {
+  .pt-table tbody tr {
+    &.outdate {
+      box-shadow: inset 3px 0 #000000;
+    }
+    &.major {
+      box-shadow: inset 3px 0 #ff0000;
+    }
+    &.minor {
+      box-shadow: inset 3px 0 #b538b5;
+    }
+    &.warn {
+      box-shadow: inset 3px 0 #d49c00;
+    }
+    &.common {
+      box-shadow: inset 3px 0 #00ab00;
+    }
+  }
+}
+
+#batchRecordModal {
+  z-index: 1041;
+  .modal-dialog {
+    width: 90%;
+    margin-top: 50px;
+  }
+}
+.ci-result-patch{
+  tr th:first-child {
+    width: 25%;
+  }
+  td select, td input {
+    min-width: 100%;
+    width: 100%;
+  }
+}
+
+
+.pt-table.editable-table {
+  tbody tr {
+    &:hover {
+      background-color: initial;
+    }
+    &:selected {
+      background-color: #e0e0e0;
+    }
+  }
+  input:not(.input):not(.inline), select {
+    border-color: transparent;
+    box-shadow: none;
+    width: 100%;
+    min-width: 100%;
+    &:focus {
+      border-color: #66afe9;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    }
+  }
+  input.input, input.inline {
+    width: 100%;
+    min-width: 100%;
+  }
+}

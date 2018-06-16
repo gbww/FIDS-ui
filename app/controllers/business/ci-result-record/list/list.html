@@ -1,4 +1,4 @@
-<div class="item-to-check-sample-list">
+<div class="business-report-list">
   <div class="toolbar clearfix">
     <button class="btn btn-default-dark" ui-sref="app.business.itemToCheck.sample" ng-if="vm.isSampleDetail">
       <i class="fa fa-reply"></i>
@@ -31,13 +31,46 @@
       </li>
     </ul>
 
-    <div class="pull-right multiple-search">
-      <input class="input" placeholder="报告编号" ng-model="vm.query.reportId" ng-keyup="vm.eventSearch($event)">
-      <input class="input" placeholder="抽样单编号" ng-model="vm.query.receiveSampleId" ng-keyup="vm.eventSearch($event)">
+    <div class="pull-right" ng-show="!vm.advance">
+      <input class="input" placeholder="请输入报告编号查询" ng-model="vm.query.reportId" ng-keyup="vm.eventSearch($event)">
       <button class="btn btn-default-dark" ng-click="vm.search()">
         <i class="fa fa-search"></i>
-        <sapn>查询</sapn>
+        <span>查询</span>
       </button>
+      <a href class="toggle" ng-click="vm.advance = true">
+        <span>展开</span>&nbsp;
+        <i class="fa fa-chevron-down"></i>
+      </a>
+    </div>
+    <div class="advanced-search clearfix" ng-show="vm.advance">
+      <div class="clearfix">
+        <div class="col-sm-3">
+          <input class="input" placeholder="请输入报告编号" ng-model="vm.query.reportId">
+        </div>
+        <div class="col-sm-3">
+          <input class="input" placeholder="请输入抽样单编号" ng-model="vm.query.receiveSampleId">
+        </div>
+        <div class="col-sm-3">
+          <input class="input" placeholder="请输入检测项名称" ng-model="vm.query.name">
+        </div>
+        <button class="btn btn-default-dark" ng-click="vm.search()">
+          <i class="fa fa-search"></i>
+          <span>查询</span>
+        </button>
+        <button class="btn btn-default-dark" ng-click="vm.reset()">
+          <i class="fa fa-refresh"></i>
+          <span>重置</span>
+        </button>
+        <a href class="toggle" ng-click="vm.back()">
+          <span>收起</span>&nbsp;
+          <i class="fa fa-chevron-up"></i>
+        </a>
+      </div>
+      <div class="clearfix">
+        <div class="col-sm-3">
+          <input class="input" placeholder="请输入检测方法" ng-model="vm.query.method">
+        </div>
+      </div>
     </div>
   </div>
   <table class="pt-table" st-table="vm.checkItems" st-pipe="vm.getCheckItemList">
@@ -66,6 +99,7 @@
           <div st-sort="method">检测方法
             <i class="fa fa-sort"></i>
           </div>
+          <adjust-line></adjust-line>
         </th>
         <th>
           <div>单位</div>
@@ -203,4 +237,120 @@
       </tr>
     </tfoot>
   </table>
+
+  <div class="modal fade" id="batchRecordModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" ng-click="vm.close()">&times;</button>
+          <h4>批量录入检测结果</h4>
+        </div>
+        <div class="modal-body">
+          <table class="pt-table editable-table">
+            <thead>
+              <tr>
+                <th style="width: 100px">
+                  <div>报告编号</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th style="width: 100px">
+                  <div>抽样单编号</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th>
+                  <div>名称</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th style="width: 80px;">
+                  <div>检测方法</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th>
+                  <div>单位</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th>
+                  <div>标准值</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th>
+                  <div>检出限</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th>
+                  <div>定量限</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th>
+                  <div>设备</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th style="width: 90px;">
+                  <div>状态</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th>
+                  <div>结果</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th>
+                  <div>实测值</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in vm.selectedItemsCopy track by item.id" ng-class="{'selected': vm.selectedRow === $index}">
+                <td>{{ item.reportId }}</td>
+                <td>{{ item.receiveSampleId }}</td>
+                <td>
+                  <input ng-model="item.name" />
+                </td>
+                <td>
+                  <input ng-model="item.method" />
+                </td>
+                <td>
+                  <div custom-select class-name="inline" avail-arr="vm.characterArr" model="item" key="unit"></div>
+                </td>
+                <td>
+                  <div custom-select mode="append" class-name="inline" avail-arr="vm.characterArr" model="item" key="standardValue"></div>
+                </td>
+                <td>
+                  <input ng-model="item.detectionLimit" />
+                </td>
+                <td>
+                  <input ng-model="item.quantitationLimit" />
+                </td>
+                <td>
+                  <input ng-model="item.device" />
+                </td>
+                <td>
+                  <i class="icon" ng-class="{'initial icon-status-unhandle': item.status==1,
+                                  'done icon-status-success': item.status==2}">
+                  </i>
+                  <span ng-if="item.status == 1">待检测</span>
+                  <span ng-if="item.status == 2">检测完成</span>
+                </td>
+                <td>
+                  <div custom-select avail-arr="vm.resultArr" model="item" key="itemResult"></div>
+                </td>
+                <td>
+                  <input ng-model="item.measuredValue" />
+                </td>
+                <td>
+                  <a href ng-click="vm.patch(item, $index)">填充</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-2x btn-default-dark" ng-click="vm.batchOk()">确认</button>
+          <button class="btn btn-2x btn-default-light" ng-click="vm.batchClose()">取消</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

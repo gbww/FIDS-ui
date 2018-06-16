@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('CiResultListCtrl', function ($stateParams, $uibModal, api, CiResultRecordService, toastr) {
+angular.module('com.app').controller('CiResultListCtrl', function ($stateParams, $uibModal, api, CiResultRecordService, UnitService, toastr) {
   var vm = this;
   vm.hasRecordAuth = api.permissionArr.indexOf('SAMPLE-UPDATEITEMRESULT-1') != -1;
   vm.isSampleDetail = !!$stateParams.reportId;
@@ -12,6 +12,9 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
   vm.searchObject = {};
 
   vm.refreshTable = function (flag) {
+    vm.allSelected = false;
+    vm.itemSelected = [];
+    vm.selectedItems = [];
     vm.searchObject.timestamp = new Date();
     if (flag === 'toggle') {
       vm.searchObject.toggle = true;
@@ -63,19 +66,41 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
 
   vm.searchStatus = function (filter) {
     if (vm.status != filter) {
+      vm.allSelected = false;
+      vm.itemSelected = [];
+      vm.selectedItems = [];
       vm.status = filter;
       vm.refreshTable('toggle');
     }
   }
 
-  vm.search=function(){
-    vm.refreshTable();
-  }
   vm.eventSearch=function(e){
     var keycode = window.event?e.keyCode:e.which;
     if(keycode==13){
       vm.refreshTable();
     }
+  }
+  vm.back = function () {
+    vm.advance = false;
+    angular.merge(vm.query, {
+      reportId: null,
+      receiveSampleId: null,
+      name: null,
+      method: null
+    });
+  }
+
+  vm.search = function () {
+    vm.searchObject = angular.copy(vm.query);
+  }
+
+  vm.reset = function () {
+    angular.merge(vm.query, {
+      reportId: null,
+      receiveSampleId: null,
+      name: null,
+      method: null
+    });
   }
 
   vm.distribute = function (item) {
@@ -156,53 +181,8 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       toastr.warning('请选择检测项！');
       return;
     }
-
-    // var val = '';
-    // for (var i=0,len=vm.selectedItems.length; i<len; i++) {
-    //   if (i == 0) {
-    //     val = vm.selectedItems[i].standardValue;
-    //   } else if (val !== vm.selectedItems[i].standardValue) {
-    //     toastr.error('请确认所选检测项标准值相同或相等！');
-    //     return;
-    //   }
-    // }
-
-    var modalInstance = $uibModal.open({
-      animation: true,
-      size: 'md',
-      backdrop: 'static',
-      templateUrl: 'controllers/business/ci-result-record/edit/edit.html',
-      controller: 'RecordCiResultCtrl as vm',
-      resolve: {
-        checkItems: function () {return angular.copy(vm.selectedItems);},
-        units: ['$rootScope', '$q', 'UnitService', function ($rootScope, $q, UnitService) {
-          $rootScope.loading = true;
-          var deferred = $q.defer();
-          UnitService.getUnitList().then(function (response) {
-            $rootScope.loading = false;
-            if (response.data.success) {
-              var res = [];
-              angular.forEach(response.data.entity, function (item) {
-                res.push(item.unitName);
-              })
-              deferred.resolve(res);
-            } else {
-              deferred.resolve([]);
-            }
-          }).catch(function () {
-            $rootScope.loading = false;
-            deferred.resolve([]);
-          });
-          return deferred.promise;
-        }]
-      }
-    });
-
-    modalInstance.result.then(function () {
-      vm.itemSelected = [], vm.selectedItems = [], vm.allSelected = false;
-      toastr.success('检测项结果录入成功！');
-      vm.refreshTable();
-    });
+    vm.selectedItemsCopy = angular.copy(vm.selectedItems)
+    $("#batchRecordModal").modal('show');
   }
 
   // 单选、复选
@@ -240,6 +220,82 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       vm.itemSelected[idx] = false;
       vm.allSelected = false;
     }
+  }
+  
+  vm.characterArr = [];
+  vm.resultArr = ['合格', '不合格'];
+
+  UnitService.getUnitList().then(function (response) {
+    if (response.data.success) {
+      var res = [];
+      angular.forEach(response.data.entity, function (item) {
+        res.push(item.unitName);
+      })
+      vm.characterArr = res;
+    }
+  });
+
+  vm.patch = function (item, index) {
+    vm.selectedRow = index;
+    var modalInstance = $uibModal.open({
+      animation: true,
+      size: 'md',
+      backdrop: 'static',
+      templateUrl: 'controllers/business/ci-result-record/patch/patch.html',
+      controller: 'RecordCiResultPatchCtrl as vm',
+      resolve: {
+        item: function () {
+          return item
+        },
+        units: function () {
+          return vm.characterArr 
+        }
+      }
+    })
+
+
+    modalInstance.result.then(function (res) {
+      vm.selectedRow = null
+      angular.forEach(vm.selectedItemsCopy, function (item, idx) {
+        if ((res.direction === 'up' && idx <= index) || (res.direction === 'down' && idx >= index)) {
+          // 覆盖式填充
+          if (res.type === 'true') {
+            angular.merge(item, res.val)          
+          } else {
+          // 非覆盖式填充
+            for (var key in res.val) {
+              if (!item[key] || idx === index) {
+                item[key] = res.val[key]
+              }
+            }
+          }
+        }
+      })
+    }, function () {
+      vm.selectedRow = null
+    })
+  }
+
+
+  vm.batchClose = function () {
+  	$("#batchRecordModal").modal('hide');
+  }
+
+  vm.batchOk = function () {
+    var res = angular.copy(vm.selectedItemsCopy)
+    angular.forEach(res, function (item) {
+      angular.merge(item, {status: 2})
+    })
+    CiResultRecordService.batchRecordCiResult(res).then(function (response) {
+  		if (response.data.success) {
+        vm.batchClose()
+        vm.refreshTable()
+  		} else {
+  			toastr.error(response.data.message);
+  		}
+  	}).catch(function (err) {
+  		toastr.error(err.data);
+  	})
   }
 
 });

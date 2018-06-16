@@ -9,6 +9,9 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
   }
 
   vm.refreshTable = function (flag) {
+    vm.allSelected = false;
+    vm.itemSelected = [];
+    vm.selectedItems = [];
     vm.searchObject.timestamp = new Date();
     if (flag == 'toggle') {
       vm.searchObject.toggle = true;
@@ -61,6 +64,9 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
 
   vm.searchStatus = function (filter) {
     if (vm.status != filter) {
+      vm.allSelected = false;
+      vm.itemSelected = [];
+      vm.selectedItems = [];
       vm.status = filter;
       vm.refreshTable('toggle');
     }
@@ -73,10 +79,6 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       name: null,
       method: null
     });
-  }
-
-  vm.search = function () {
-    vm.searchObject = angular.copy(vm.searchConditions);
   }
 
   vm.reset = function () {
