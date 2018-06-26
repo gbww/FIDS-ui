@@ -59,6 +59,9 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
         toastr.error(response.checkItem.data.message);
       }
 
+      if (!vm.report.remarks && vm.checkItems) {
+        completeRemarks()
+      }
       if (!vm.report.dataRemarks && vm.checkItems) {
         completeDataRemarks();
       }
@@ -73,6 +76,43 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
   vm.getReportInfo();
 
 
+  /**
+   * 根据检测项自动填充备注
+   */
+  function completeRemarks() {
+    var str = '', idx = 1;
+    var measureFlag = false, kqslFlag = false, halFlag1 = false, halFlag2 = false, halFlag3 = false;
+    angular.forEach(vm.checkItems, function (checkItem) {
+      if (checkItem.measuredValue === '未检出') {
+        measureFlag = true
+      }
+      if (checkItem.name === '磺胺类（总量）') {
+        if (checkItem.method === 'GB/T 21316') {
+          halFlag2 = true
+        } else if (checkItem.method === '农业部 1025 号公告-23-2008以及农业部 1077 号公告-1-2008') {
+          halFlag3 = true
+        } else {
+          halFlag1 = true
+        }
+      }
+    })
+    if (measureFlag) {
+      str += (idx++) + '、“未检出”表示实测值小于检出限/定量限。'
+    }
+    if (kqslFlag) {
+      str += (idx++) + '、孔雀石绿系指孔雀石绿及其代谢物隐色孔雀石绿残留量之和，以孔雀石绿表示。'
+    }
+    if (halFlag1) {
+      str += (idx++) + '、磺胺类（总量）项目包括：磺胺嘧啶、磺胺二甲嘧啶、磺胺甲基嘧啶、磺胺甲恶唑、磺胺间二甲氧嘧啶、磺胺邻二甲氧嘧啶、磺胺间甲氧嘧啶、磺胺氯哒嗪、磺胺喹恶啉之和。检验结果以上述 9 种磺胺的测定结果之和表示。'
+    }
+    if (halFlag2) {
+      str += (idx++) + '、磺胺类（总量）项目包括：磺胺甲基嘧啶（磺胺甲嘧啶）、磺胺甲恶唑（磺胺甲鯻唑）、磺胺二甲嘧啶、磺胺间二甲氧嘧啶（磺胺地索辛）、磺胺间甲氧嘧啶、磺胺喹恶啉（磺胺喹沙啉）、甲氧苄啶。'
+    }
+    if (halFlag3) {
+      str += (idx++) + '、磺胺类（总量）项目包括：磺胺嘧啶、磺胺二甲嘧啶、磺胺甲基嘧啶、磺胺甲恶唑、磺胺间二甲氧嘧啶、磺胺邻二甲氧嘧啶、磺胺间甲氧嘧啶、磺胺氯哒嗪、磺胺喹恶啉之和。'
+    }
+    vm.report.remarks = str;
+  }
   /**
    * 根据检测项自动填充数据页备注
    */
