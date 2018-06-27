@@ -7,6 +7,7 @@ angular.module('com.app')
         // ngModelCtrl.$render = function () {
         //   elem.html(ngModelCtrl.$viewValue || '');
         // }
+        
         var updateModel = function () {
           scope.$apply(function () {
             ngModelCtrl.$setViewValue(elem.val());
@@ -14,7 +15,8 @@ angular.module('com.app')
         };
         $(elem).datetimepicker({
           useCurrent: false,
-          format: 'YYYY-MM-DD HH:mm:ss'
+          format: 'YYYY-MM-DD HH:mm:ss',
+          locale: 'zh-cn'
         });
         $(elem).on("dp.change",function (e) {
           updateModel();

@@ -59,9 +59,6 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
         toastr.error(response.checkItem.data.message);
       }
 
-      if (!vm.report.remarks && vm.checkItems) {
-        completeRemarks()
-      }
       if (!vm.report.dataRemarks && vm.checkItems) {
         completeDataRemarks();
       }
@@ -76,10 +73,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
   vm.getReportInfo();
 
 
-  /**
-   * 根据检测项自动填充备注
-   */
-  function completeRemarks() {
+  function completeDataRemarks() {
     var str = '', idx = 1;
     var measureFlag = false, kqslFlag = false, halFlag1 = false, halFlag2 = false, halFlag3 = false;
     angular.forEach(vm.checkItems, function (checkItem) {
@@ -111,34 +105,34 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
     if (halFlag3) {
       str += (idx++) + '、磺胺类（总量）项目包括：磺胺嘧啶、磺胺二甲嘧啶、磺胺甲基嘧啶、磺胺甲恶唑、磺胺间二甲氧嘧啶、磺胺邻二甲氧嘧啶、磺胺间甲氧嘧啶、磺胺氯哒嗪、磺胺喹恶啉之和。'
     }
-    vm.report.remarks = str;
+    vm.report.dataRemarks = str;
   }
   /**
    * 根据检测项自动填充数据页备注
    */
-  function completeDataRemarks() {
-    var quantitationLimitStr = [], detectionLimitStr = [];
-    angular.forEach(vm.checkItems, function (checkItem) {
-      if (checkItem.measuredValue === '未检出') {
-        var str = checkItem.name + ' ' + checkItem.standardValue + checkItem.unit;
-        if (checkItem.quantitationLimit) {
-          quantitationLimitStr.push(str)
-        } else if (checkItem.detectionLimit) {
-          detectionLimitStr.push(str)
-        }
-      }
-    });
-    var str = '';
-    if (quantitationLimitStr.length > 0) {
-      str += '1、方法定量限：' + quantitationLimitStr.join('，') + '。';
-      if (detectionLimitStr.length > 0) {
-        str += '2、方法检出限：' + detectionLimitStr.join('，') + '。';
-      }
-    } else if (detectionLimitStr.length > 0) {
-      str += '1、方法检出限：' + detectionLimitStr.join('，') + '。';
-    }
-    vm.report.dataRemarks = str;
-  }
+  // function completeDataRemarks() {
+  //   var quantitationLimitStr = [], detectionLimitStr = [];
+  //   angular.forEach(vm.checkItems, function (checkItem) {
+  //     if (checkItem.measuredValue === '未检出') {
+  //       var str = checkItem.name + ' ' + checkItem.standardValue + checkItem.unit;
+  //       if (checkItem.quantitationLimit) {
+  //         quantitationLimitStr.push(str)
+  //       } else if (checkItem.detectionLimit) {
+  //         detectionLimitStr.push(str)
+  //       }
+  //     }
+  //   });
+  //   var str = '';
+  //   if (quantitationLimitStr.length > 0) {
+  //     str += '1、方法定量限：' + quantitationLimitStr.join('，') + '。';
+  //     if (detectionLimitStr.length > 0) {
+  //       str += '2、方法检出限：' + detectionLimitStr.join('，') + '。';
+  //     }
+  //   } else if (detectionLimitStr.length > 0) {
+  //     str += '1、方法检出限：' + detectionLimitStr.join('，') + '。';
+  //   }
+  //   vm.report.dataRemarks = str;
+  // }
 
 
   /**
