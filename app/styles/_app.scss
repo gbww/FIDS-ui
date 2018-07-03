@@ -3,6 +3,7 @@
 // 这里定义仅用在当前应用中的样式，但页面特有的样式不要定义在这里
 
 // inject:page:scss
+@import "../controllers/review/review.scss";
 @import "../controllers/quotation/quotation.scss";
 @import "../controllers/privilege/privilege.scss";
 @import "../controllers/login/login.scss";

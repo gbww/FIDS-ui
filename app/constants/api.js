@@ -17,6 +17,17 @@ angular.module('com.app').constant('api', {
       root: {name: '文件管理'},
       template: {name: '模板管理', url: 'app.func.template'}
     },
+    review: {
+      root: {name: '企业审核管理', url: 'app.review'},
+      company: {
+        root: {name: '企业管理', url: 'app.review.company'},
+        report: {
+          root: {name: '企业报告', url: 'app.review.company.report'},
+          project: {name: '项目', url: 'app.review.company.report.project'}
+        }
+      },
+      project: {name: '项目明细', url: 'app.review.project'}
+    },
     client: {
       root: {name: '客户管理', url: 'app.client'},
       detail: {name: '客户详情'}

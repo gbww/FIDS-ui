@@ -1,0 +1,95 @@
+<div class="modal-header">
+	<div class="close" ng-click="vm.cancel()">&times;</div>
+	<h4>编辑企业</h4>
+</div>
+
+<div class="modal-body">
+	<form name="form" class="form-horizontal">
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">企业名称</label>
+			<div class="col-sm-8">
+				<input class="form-control" name="name" ng-model="vm.company.comName" disabled>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="item-required col-sm-3 control-label">企业类型</label>
+			<div class="col-sm-8">
+				<select class="form-control" name="type"
+								ng-model="vm.company.comType"
+								ng-change="vm.changeType()"
+								ng-options="option for option in vm.typeArr">
+				</select>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="form.name.$dirty" ng-messages="form.name.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">法人/负责人</label>
+			<div class="col-sm-8">
+				<input class="form-control" ng-model="vm.company.comPrincipal">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">社会信用代码</label>
+			<div class="col-sm-8">
+				<input class="form-control" ng-model="vm.company.comCreditCode">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">许可/登记证号</label>
+			<div class="col-sm-8">
+				<input class="form-control" ng-model="vm.company.comLicence">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">生产/经营地址</label>
+			<div class="col-sm-8">
+				<input class="form-control" ng-model="vm.company.comAddress">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">规模大小</label>
+			<div class="col-sm-8">
+				<select class="form-control"
+								ng-model="vm.company.comScale"
+								ng-change="vm.setScaleScore()"
+								ng-options="option for option in vm.scaleArr">
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">规模评分</label>
+			<div class="col-sm-8">
+				<input class="form-control" ng-model="vm.company.comScaleScore" disabled>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">品种业态</label>
+			<div class="col-sm-8">
+				<select class="form-control"
+								ng-model="vm.company.comVariety"
+								ng-change="vm.setVarietyScore()"
+								ng-options="option for option in vm.varietyArr">
+				</select>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">品种业态评分</label>
+			<div class="col-sm-8">
+				<input class="form-control" ng-model="vm.company.comVarietyScore" disabled>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label">电话</label>
+			<div class="col-sm-8">
+				<input class="form-control" ng-model="vm.company.comTelephone">
+			</div>
+		</div>
+	</form>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-2x btn-default-dark" ng-disabled="form.$invalid" ng-click="vm.ok()">确认</button>
+	<button class="btn btn-2x btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

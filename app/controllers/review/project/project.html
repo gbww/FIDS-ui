@@ -1,0 +1,70 @@
+<div class="inner-container project-list">
+	<bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+
+	<div class="pt-2">
+		<div class="toolbar clearfix">
+			<div class="pull-right">
+				<input class="input" placeholder="请输入检查项目查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
+				<button class="btn btn-default-dark" ng-click="vm.search()">
+					<i class="fa fa-search"></i>
+					<span>查询</span>
+				</button>
+			</div>
+		</div>
+		<table class="pt-table" st-table="vm.projects" st-pipe="vm.getProjectList">
+			<thead st-search-watch="vm.searchObject">
+				<tr>
+					<th>
+						<div>检查项目</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>企业类型</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>条款编号</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>检查内容</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
+						<div>分值（标准分）</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-if="vm.loading">
+					<td colspan="5" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+				</tr>
+				<tr ng-if="!vm.loading && vm.projects.length == 0">
+					<td colspan="5" class="text-center">暂无项目</td>
+				</tr>
+				<tr ng-repeat="item in vm.projects track by item.id" ng-if="!vm.loading">
+					<td>{{ item.projectName }}</td>
+					<td>{{ item.comType }}</td>
+					<td>{{ item.numberRegulation }}</td>
+					<td>{{ item.content }}</td>
+					<td>
+						<span style="margin-right: 5px">{{ item.standardScore }}</span>
+						<i class="fa fa-info-circle" data-toggle="tooltip"
+																				 data-title={{item.checkWay}}
+																				 ng-mouseenter="vm.showInfo($event)"
+																				 data-placement="left">
+						</i>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="5">
+						<div st-idp st-total-count="vm.total"></div>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+

@@ -83,6 +83,24 @@
         </ul>
       </div>
 
+      <div class="panel">
+        <div data-parent="#accordion" data-toggle="collapse" data-target="#reviewManage" aria-expanded="{{vm.isReviewActive}}">
+          <a>
+            <i class="icon icon-client"></i>
+            <span>企业评审管理</span>
+            <i class="fa fa-chevron-right"></i>
+          </a>
+        </div>
+        <ul id="reviewManage" ng-class="{'collapse in': vm.isReviewActive, 'collapse': !vm.isReviewActive}">
+          <li ng-class="{'active': vm.isCompanyActive}">
+            <a ui-sref="app.review.company"><span>企业管理</span></a>
+          </li>
+          <li ng-class="{'active': vm.isProjectActive}">
+            <a ui-sref="app.review.project"><span>项目明细</span></a>
+          </li>
+        </ul>
+      </div>
+
       <div class="panel" role-auth="CLIENT-SELECT-1">
         <div ng-class="{'active': vm.isClientActive}">
           <a title="客户管理" ng-click="vm.open('client')">

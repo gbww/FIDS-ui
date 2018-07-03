@@ -30,6 +30,10 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
     vm.isFileActive = $state.includes('app.file');
     vm.isTemplateActive = $state.includes('app.file.template');
 
+    vm.isReviewActive = $state.includes('app.review');
+    vm.isCompanyActive = $state.includes('app.review.company');
+    vm.isProjectActive = $state.includes('app.review.project');
+
     vm.isBusinessActive = $state.includes('app.business');
     vm.isBusinessContractActive = $state.includes('app.business.contract');
     vm.isBusinessSampleActive = $state.includes('app.business.sample');

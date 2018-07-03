@@ -38,6 +38,7 @@ gulp.task('sass', function () {
   return gulp.src(env.folders.app + '/styles/**/*.scss')
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.sass({
+      loadPath: env.folders.app + '/styles',
       includePaths: [
         env.folders.app + '/styles'
       ],
