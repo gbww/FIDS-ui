@@ -18,7 +18,7 @@ angular.module('com.app').constant('api', {
       template: {name: '模板管理', url: 'app.func.template'}
     },
     review: {
-      root: {name: '企业审核管理', url: 'app.review'},
+      root: {name: '企业审核管理'},
       company: {
         root: {name: '企业管理', url: 'app.review.company'},
         report: {

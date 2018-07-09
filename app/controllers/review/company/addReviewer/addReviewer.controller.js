@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ProjectReviewerCtrl', function ($q, $uibModalInstance, $stateParams, ReviewService, toastr, reportId, reviewers) {
+angular.module('com.app').controller('ProjectReviewerCtrl', function ($q, $uibModalInstance, ReviewService, toastr, companyId, reportId, reviewers) {
 	var vm = this;
 	vm.type = reviewers ? 'edit' : 'create'
 	
@@ -27,7 +27,7 @@ angular.module('com.app').controller('ProjectReviewerCtrl', function ($q, $uibMo
 
   vm.ok = function () {
 		if (vm.type === 'create') {
-			ReviewService.lanuchReview($stateParams.companyId).then(function (response) {
+			ReviewService.addReport(companyId).then(function (response) {
 				if (response.data.success) {
 					var reviewReportId = response.data.entity
 					var data = []
@@ -83,14 +83,16 @@ angular.module('com.app').controller('ProjectReviewerCtrl', function ($q, $uibMo
 				}))
 			}
 			if (deletedUserIds.length > 0) {
-				promises = promises.concat(ReviewService.deleteReviewers(deletedUserIds))
+				// promises = promises.concat(ReviewService.deleteReviewers(deletedUserIds))
+				promises = promises.concat(deletedUserIds.map(function (item) {
+					return ReviewService.deleteReviewer(item)
+				}))
 			}
 
 			if (promises.length > 0) {
 				$q.all(promises).then(function (res) {
-					if (res.data.success) {
-						$uibModalInstance.close();
-					}
+					toastr.success('更新成功')
+					$uibModalInstance.close();
 				})
 			} else {
 				$uibModalInstance.dismiss();

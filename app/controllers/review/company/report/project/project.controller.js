@@ -29,10 +29,15 @@ angular.module('com.app').controller('ReviewCompanyReportProjectCtrl', function 
   }
   vm.getProjectList()
 
+  vm.showInfo = function (evt) {
+    $(evt.target).tooltip('show')
+  }
+
   vm.submit = function () {
     ReviewService.editReportProject(vm.projects).then(function (response) {
       if (response.data.success) {
         toastr.success('报告 ' + vm.reportId + ' 项目更新成功');
+      } else {
         toastr.error(response.data.message);
       }
     }).catch(function (err) {

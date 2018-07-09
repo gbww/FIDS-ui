@@ -150,24 +150,20 @@ angular.module('com.app').controller('ReviewCompanyCtrl', function ($rootScope, 
 
 
   vm.lanuchReview = function (company) {
-    var result = dialog.confirm('确认对企业 ' + company.comName + ' 发起审核?');
-    result.then(function (res) {
-      if (res) {
-        var modalInstance = $uibModal.open({
-          animation: true,
-          size: 'lg',
-          backdrop: 'static',
-          templateUrl: 'controllers/review/company/addReviewer/addReviewer.html',
-          controller: 'ProjectReviewerCtrl as vm',
-          resolve: {
-            reportId: function () {return null},
-            reviewers: function () {return null}
-          }
-        })
-        modalInstance.result.then(function (reportId) {
-          $state.go('app.review.company.report.project', {companyId: company.id, reportId: reportId})
-        })
+    var modalInstance = $uibModal.open({
+      animation: true,
+      size: 'lg',
+      backdrop: 'static',
+      templateUrl: 'controllers/review/company/addReviewer/addReviewer.html',
+      controller: 'ProjectReviewerCtrl as vm',
+      resolve: {
+        companyId: function () {return company.id},
+        reportId: function () {return null},
+        reviewers: function () {return null}
       }
+    })
+    modalInstance.result.then(function (reportId) {
+      $state.go('app.review.company.report.project', {companyId: company.id, reportId: reportId})
     })
   }
 

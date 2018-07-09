@@ -9,6 +9,10 @@
               <div>项目名称</div>
               <adjust-line></adjust-line>
             </th>
+            <th style="width: 80px">
+              <div>标准分</div>
+              <adjust-line></adjust-line>
+            </th>
             <th>
               <div>实际得分</div>
               <adjust-line></adjust-line>
@@ -35,7 +39,14 @@
             <td colspan="6" class="text-center">暂无项目</td>
           </tr>
           <tr ng-repeat="item in vm.projects track by item.id" ng-if="!vm.loading">
-            <td>{{ item.projectName }}</td>
+            <td>
+              <span>{{ item.projectName }}</span>
+              <i class="fa fa-info-circle" data-toggle="tooltip"
+                                          data-title={{item.checkWay}}
+                                          ng-mouseenter="vm.showInfo($event)"
+                                          data-placement="right">
+            </td>
+            <td>{{ item.standardScore }}</td>
             <td>
               <input type="number" class="input" ng-model="item.score" />
             </td>

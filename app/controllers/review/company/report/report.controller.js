@@ -63,14 +63,13 @@ angular.module('com.app').controller('ReviewCompanyReportCtrl', function ($state
       templateUrl: 'controllers/review/company/addReviewer/addReviewer.html',
       controller: 'ProjectReviewerCtrl as vm',
       resolve: {
+        companyId: function () {return vm.companyId },
         reportId: function () {return null},
         reviewers: function () {return null}
       }
     })
     modalInstance.result.then(function (reportId) {
-      if (reportId) {
-        $state.go('app.review.company.report.project', {companyId: vm.companyId, reportId: reportId})
-      }
+      $state.go('app.review.company.report.project', {companyId: vm.companyId, reportId: reportId})
     })
   }
 
@@ -102,12 +101,10 @@ angular.module('com.app').controller('ReviewCompanyReportCtrl', function ($state
           templateUrl: 'controllers/review/company/addReviewer/addReviewer.html',
           controller: 'ProjectReviewerCtrl as vm',
           resolve: {
+            companyId: function () {return vm.companyId },
             reportId: function () {return reportId},
             reviewers: function () {return response.data.entity},
           }
-        })
-        modalInstance.result.then(function () {
-          $state.go('app.review.company.report.project', {companyId: vm.companyId, reportId: response.data})
         })
       } else {
         toastr.error(response.data.message)

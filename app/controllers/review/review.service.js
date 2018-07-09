@@ -54,15 +54,7 @@ angular.module('com.app').factory('ReviewService', function ($http) {
     getProjectList: function () {
       return $http.get(baseUrl + '/project/detail/select/comType')
     },
-    lanuchReview: function (id) {
-      return $http({
-        url: baseUrl + '/review/report/add',
-        method: 'POST',
-        params: {
-          companyId: id
-        }
-      })
-    },
+    
 
 
     // 现场评估人
@@ -75,6 +67,9 @@ angular.module('com.app').factory('ReviewService', function ($http) {
         method: 'POST',
         data: data
       })
+    },
+    deleteReviewer: function (id) {
+      return $http.delete(baseUrl + '/commentuser/delete/' + id)
     },
     deleteReviewers: function (ids) {
       return $http({
@@ -92,6 +87,15 @@ angular.module('com.app').factory('ReviewService', function ($http) {
     },
 
     // 报告相关
+    addReport: function (id) {
+      return $http({
+        url: baseUrl + '/review/report/add',
+        method: 'POST',
+        params: {
+          companyId: id
+        }
+      })
+    },
     getReportList: function (tableParams, companyId, searchName) {
 			return $http({
 				url: baseUrl + '/review/report/selectByCompanyId/' + companyId,
