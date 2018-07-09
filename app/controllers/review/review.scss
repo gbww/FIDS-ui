@@ -4,3 +4,25 @@
     width: 100%;
   }
 }
+
+.review-project-table.pt-table {
+  tbody tr {
+    &:hover {
+      background-color: transparent;
+    }
+    td {
+      padding: 8px 5px;
+    }
+  }
+  .input {
+    width: 100%;
+  }
+  textarea.input {
+    height: initial;
+  }
+}
+
+.report-project-list .btn-area {
+  text-align: center;
+  padding: 5px 0;
+}

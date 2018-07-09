@@ -1,17 +1,15 @@
 'use strict';
 
 angular.module('com.app').factory('ReviewService', function ($http) {
-  var baseUrl = "/api/v1/ahgz/company/commentuser";
-  var companyBaseUrl = "/api/v1/ahgz/company/nfor";
+  var baseUrl = "/api/v1/ahgz/company";
   return {
     getCompanyList: function (tableParams, searchName) {
-      return $http.get('')
 			return $http({
-				url: companyBaseUrl + '/select/infors',
+				url: baseUrl + '/info/select/cominfors',
 				method: 'GET',
 				params: {
 					pageSize: tableParams.pageSize,
-          pageNum: tableParams.pageNum,
+          pageCount: tableParams.pageNum,
           name: searchName
 				}
 			});
@@ -19,7 +17,7 @@ angular.module('com.app').factory('ReviewService', function ($http) {
 
 		createCompany: function (data) {
 			return $http({
-				url: companyBaseUrl + '/add',
+				url: baseUrl + '/info/add',
 				method: 'POST',
 				data: data
 			});
@@ -27,14 +25,14 @@ angular.module('com.app').factory('ReviewService', function ($http) {
 
 		deleteCompany: function (id) {
 			return $http({
-				url: companyBaseUrl + '/delete' + id,
-				method: 'DELETE'
+				url: baseUrl + '/info/delete/' + id,
+        method: 'DELETE'
 			});
 		},
 
 		editCompany: function (data) {
 			return $http({
-				url: companyBaseUrl + '/update',
+				url: baseUrl + '/info/update',
 				method: 'PUT',
 				data: data
 			});
@@ -42,61 +40,78 @@ angular.module('com.app').factory('ReviewService', function ($http) {
 
 		getCompanyInfo: function (id) {
 			return $http({
-				url: companyBaseUrl + '/select/' + id,
+				url: baseUrl + '/info/select/' + id,
 				method: 'GET'
 			})
     },
     
     getScaleList: function () {
-      return $http.get('')
+      return $http.get(baseUrl + '/scale/selectAll')
     },
     getVarietyList: function () {
-      return $http.get('')
+      return $http.get(baseUrl + '/variety/format/selectAll')
     },
     getProjectList: function () {
-      return $http.get('')
+      return $http.get(baseUrl + '/project/detail/select/comType')
+    },
+    lanuchReview: function (id) {
+      return $http({
+        url: baseUrl + '/review/report/add',
+        method: 'POST',
+        params: {
+          companyId: id
+        }
+      })
     },
 
 
     // 现场评估人
     getReviewerList: function (reportId) {
-      return $http.get('')
+      return $http.get(baseUrl + '/commentuser/selectByReviewReportId/' + reportId)
     },
-    addReviewer: function (data) {
+    addReviewers: function (data) {
       return $http({
-        url: '',
+        url: baseUrl + '/commentuser/add/batch',
         method: 'POST',
         data: data
       })
     },
-    deleteReviewer: function (id) {
-      return $http.delete('')
+    deleteReviewers: function (ids) {
+      return $http({
+        url: baseUrl + '/commentuser/batchDelete',
+        method: 'DELETE',
+        data: ids
+      })
     },
     editReviewer: function (data) {
       return $http({
-        url: '',
+        url: baseUrl + '/commentuser/update',
         method: 'PUT',
         data: data
       })
     },
 
     // 报告相关
-    getReportList: function (companyId) {
-      return $http.get('')
+    getReportList: function (tableParams, companyId, searchName) {
+			return $http({
+				url: baseUrl + '/review/report/selectByCompanyId/' + companyId,
+				method: 'GET',
+				params: {
+					pageSize: tableParams.pageSize,
+          pageNum: tableParams.pageNum,
+          name: searchName
+				}
+			});
     },
-    addReport: function (data) {
-      return $http({
-        url: '',
-        method: 'POST',
-        data: data
-      })
+    getReportInfo: function (reportId) {
+      return $http.get(baseUrl + '/review/report/selectById/' + reportId)
     },
     deleteReport: function (id) {
-      return $http.delete('')
+      return $http.delete(baseUrl + '/review/report/delete/' + id)
     },
     editReport: function (data) {
       return $http({
-        url: '',
+        url: baseUrl + '/review/report/update',
         method: 'PUT',
         data: data
       })
@@ -104,11 +119,11 @@ angular.module('com.app').factory('ReviewService', function ($http) {
 
     // 报告项目
     getReportProjectList: function (reportId) {
-      return $http.get('')
+      return $http.get(baseUrl + '/project/review/select/' + reportId)
     },
-    editReportProject: function (reportId, projectId, data) {
+    editReportProject: function (data) {
       return $http({
-        url: '',
+        url: baseUrl + '/project/review/update',
         method: 'PUT',
         data: data
       })

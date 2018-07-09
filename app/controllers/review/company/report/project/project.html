@@ -2,8 +2,8 @@
     <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
   
     <div class="pt-2">
-      <table class="pt-table" st-table="vm.projects" st-pipe="vm.getProjectList">
-        <thead st-search-watch="vm.searchObject">
+      <table class="pt-table review-project-table">
+        <thead>
           <tr>
             <th>
               <div>项目名称</div>
@@ -25,7 +25,6 @@
               <div>改进建议</div>
               <adjust-line></adjust-line>
             </th>
-            <th style="width: 120px">操作</th>
           </tr>
         </thead>
         <tbody>
@@ -37,28 +36,25 @@
           </tr>
           <tr ng-repeat="item in vm.projects track by item.id" ng-if="!vm.loading">
             <td>{{ item.projectName }}</td>
-            <td>{{ item.score }}</td>
-            <td>{{ item.scoreLevel }}</td>
-            <td>{{ item.remark }}</td>
-            <td>{{ item.advise }}</td>
-            <td class="dropdown-col">
-              <div class="btn-group">
-                <button class="btn btn-default" ng-click="vm.edit(item)">
-                  <i class="fa fa-edit"></i>
-                  <span>编辑</span>
-                </button>
-              </div>
+            <td>
+              <input type="number" class="input" ng-model="item.score" />
+            </td>
+            <td>
+              <input class="input" ng-model="item.scoreLevel" />
+            </td>
+            <td>
+              <textarea class="input" ng-model="item.remark"></textarea>
+            </td>
+            <td>
+              <textarea class="input" rows="2" ng-model="item.advise"></textarea>
             </td>
           </tr>
         </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="6">
-              <div st-idp st-total-count="vm.total"></div>
-            </td>
-          </tr>
-        </tfoot>
       </table>
+      <div class="btn-area" ng-if="vm.projects.length > 0">
+        <button class="btn btn-default-dark" ng-click="vm.submit()">确定</button>
+        <button class="btn btn-default-light" ng-click="vm.getProjectList()">重置</button>
+      </div>
     </div>
   </div>
   

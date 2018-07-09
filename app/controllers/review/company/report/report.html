@@ -77,7 +77,7 @@
           <tr ng-if="!vm.loading && vm.reports.length == 0">
             <td colspan="13" class="text-center">暂无评审报告</td>
           </tr>
-          <tr ng-repeat="item in vm.reports track by item.id" ng-if="!vm.loading">
+          <tr ng-repeat="item in vm.reports track by item.reviewReportId" ng-if="!vm.loading">
             <td>
               <a href ui-sref="app.review.company.report.project({companyId: vm.companyId, reportId: item.reviewReportId})">{{ item.reviewReportId }}</a>
             </td>
@@ -102,6 +102,9 @@
                   <i class="caret"></i>
                 </button>
                 <ul class="dropdown-menu">
+                  <li ng-click="vm.editReviewer(item.reviewReportId)">
+                    <a href><i class="fa fa-edit"></i><span>查看评审员</span></a>
+                  </li>
                   <li ng-click="vm.delete(item)">
                     <a href><i class="fa fa-trash"></i><span>删除</span></a>
                   </li>

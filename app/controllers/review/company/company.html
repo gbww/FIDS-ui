@@ -8,13 +8,13 @@
 				<span>添加企业</span>
 			</button>
 			
-			<div class="pull-right">
+			<!-- <div class="pull-right">
 				<input class="input" placeholder="请输入企业名称查询" ng-model="vm.query" ng-keyup="vm.eventSearch($event)">
 				<button class="btn btn-default-dark" ng-click="vm.search()">
 					<i class="fa fa-search"></i>
 					<span>查询</span>
 				</button>
-			</div>
+			</div> -->
 		</div>
 		<table class="pt-table" st-table="vm.companys" st-pipe="vm.getCompanyList">
 			<thead st-search-watch="vm.searchObject">
@@ -64,7 +64,7 @@
 						<adjust-line></adjust-line>
 					</th>
 					<th>
-						<div>更新时间</div>
+						<div>创建时间</div>
 						<adjust-line></adjust-line>
 					</th>
 					<th style="width: 120px">操作</th>

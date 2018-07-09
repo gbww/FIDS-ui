@@ -3,14 +3,14 @@
 angular.module('com.app').controller('CompanyEditCtrl', function ($uibModalInstance, ReviewService, toastr, company, varietyList, scaleList) {
 	var vm = this;
 
-	vm.typeArr = ['食品生产', '食品销售', '餐饮服务']
+	vm.typeArr = ['食品生产企业', '食品销售者', '餐饮服务单位']
   vm.company = company;
 	var lastType = vm.company.comType, initial = true
 	
 	var varietyMap = {foodProduce: [], others: []}, varietyArr = [],
 		scaleMap = {foodProduce: [], foodSale: [], foodService: []}, scaleArr = [];
 	angular.forEach(varietyList, function (item) {
-		if (item.comType === '食品生产') {
+		if (item.comType === '食品生产企业') {
 			varietyMap.foodProduce.push({
 				variety: item.comVariety, score: item.score
 			}) 
@@ -21,11 +21,11 @@ angular.module('com.app').controller('CompanyEditCtrl', function ($uibModalInsta
 		}
 	})
 	angular.forEach(scaleList, function (item) {
-		if (item.comType === '食品生产') {
+		if (item.comType === '食品生产企业') {
 			scaleMap.foodProduce.push({
 				scale: item.scale, score: item.score
 			}) 
-		} else if (item.comType === '食品销售') {
+		} else if (item.comType === '食品销售者') {
 			scaleMap.foodSale.push({
 				scale: item.scale, score: item.score
 			}) 
@@ -38,12 +38,12 @@ angular.module('com.app').controller('CompanyEditCtrl', function ($uibModalInsta
 
 
 	function setVarietyArr () {
-		if ((vm.company.comType === '食品销售' && lastType === '餐饮服务') ||
-				(vm.company.comType === '餐饮服务' && lastType === '食品销售')) {
+		if ((vm.company.comType === '食品销售者' && lastType === '餐饮服务单位') ||
+				(vm.company.comType === '餐饮服务单位' && lastType === '食品销售者')) {
 					return
 				}
 		var items, res = []
-		if (vm.company.comType === '食品生产') {
+		if (vm.company.comType === '食品生产企业') {
 			items = varietyMap.foodProduce
 		} else {
 			items = varietyMap.others
@@ -60,7 +60,7 @@ angular.module('com.app').controller('CompanyEditCtrl', function ($uibModalInsta
 	}
 	vm.setVarietyScore = function  () {
 		var items
-		if (vm.company.comType === '食品生产') {
+		if (vm.company.comType === '食品生产企业') {
 			items = varietyMap.foodProduce
 		} else {
 			items = varietyMap.others
@@ -75,9 +75,9 @@ angular.module('com.app').controller('CompanyEditCtrl', function ($uibModalInsta
 
 	function setScaleArr () {
 		var items, res = []
-		if (vm.company.comType === '食品生产') {
+		if (vm.company.comType === '食品生产企业') {
 			items = scaleMap.foodProduce
-		}	else if (vm.company.comType === '食品销售') {
+		}	else if (vm.company.comType === '食品销售者') {
 			items = scaleMap.foodSale
 		} else {
 			items = scaleMap.foodService
@@ -94,9 +94,9 @@ angular.module('com.app').controller('CompanyEditCtrl', function ($uibModalInsta
 	}
 	vm.setScaleScore = function  () {
 		var items
-		if (vm.company.comType === '食品生产') {
+		if (vm.company.comType === '食品生产企业') {
 			items = scaleMap.foodProduce
-		}	else if (vm.company.comType === '食品销售') {
+		}	else if (vm.company.comType === '食品销售者') {
 			items = scaleMap.foodSale
 		} else {
 			items = scaleMap.foodService
@@ -118,7 +118,7 @@ angular.module('com.app').controller('CompanyEditCtrl', function ($uibModalInsta
 	vm.changeType()
 
   vm.ok = function () {
-  	ReviewService.createCompany(vm.company).then(function (response) {
+  	ReviewService.editCompany(vm.company).then(function (response) {
   		if (response.data.success) {
 		  	$uibModalInstance.close();
   		} else {

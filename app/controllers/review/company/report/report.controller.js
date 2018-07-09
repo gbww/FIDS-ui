@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ReviewCompanyReportCtrl', function ($stateParams, $uibModal, api, ReviewService, toastr, dialog) {
+angular.module('com.app').controller('ReviewCompanyReportCtrl', function ($state, $stateParams, $uibModal, api, ReviewService, toastr, dialog) {
   var vm = this;
   vm.companyId = $stateParams.companyId
 
@@ -27,25 +27,16 @@ angular.module('com.app').controller('ReviewCompanyReportCtrl', function ($state
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
     }
-    ReviewService.getReportList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
+    ReviewService.getReportList(tableParams, vm.companyId, vm.searchObject.searchKeywords).then(function (response) {
       vm.loading = false;
-      vm.reports = [
-        {
-          reviewReportId: 1, companyId: 1, evaluateProductType: 'type', evaluateStage: 'stage', evaluateSketch: 'sketch',
-          checkDate: new Date(), endDate: new Date(), companyRepresent: 'represent', reviewResult: 'result',
-          score: 8, fastResult: 'fastResult', fuheUser: 'fuheUser', pizhunUser: 'pizhunUser', reportStatus: 'reportStatus'
-        }
-      ]
-      vm.total = 1;
-      tableState.pagination.numberOfPages = 1;
-      // if (response.data.success) {
-      //   vm.reports = response.data.entity.list;
-      //   vm.total = response.data.entity.total;
-      //   tableState.pagination.numberOfPages = response.data.entity.pages;
-      // } else {
-      //   vm.total = 0;
-      //   toastr.error(response.data.message);
-      // }
+      if (response.data.success) {
+        vm.reports = response.data.entity.list;
+        vm.total = response.data.entity.total;
+        tableState.pagination.numberOfPages = response.data.entity.pages;
+      } else {
+        vm.total = 0;
+        toastr.error(response.data.message);
+      }
     }).catch(function (err) {
       vm.loading = false;
       toastr.error(err.data);
@@ -65,28 +56,22 @@ angular.module('com.app').controller('ReviewCompanyReportCtrl', function ($state
 
   // 创建完成之后进入该报告项目列表页
   vm.create = function () {
-    // ReviewService.getReportId(item.id).then(function (response) {
-    //   if (response.data.success) {
-        var modalInstance = $uibModal.open({
-          animation: true,
-          size: 'lg',
-          backdrop: 'static',
-          templateUrl: 'controllers/review/company/addReviewer/addReviewer.html',
-          controller: 'ProjectReviewerCtrl as vm',
-          resolve: {
-            // reportId: function () {return response.data},
-            reportId: function () {return '123'},
-          }
-        })
-        modalInstance.result.then(function () {
-          $state.go('app.review.company.report.project', {companyId: company.id, reportId: '123'})
-        })
-    //   } else {
-    //     toastr.error(response.data.message)
-    //   }
-    // }).catch(function (err) {
-    //   toastr.error(err.data)
-    // })
+    var modalInstance = $uibModal.open({
+      animation: true,
+      size: 'lg',
+      backdrop: 'static',
+      templateUrl: 'controllers/review/company/addReviewer/addReviewer.html',
+      controller: 'ProjectReviewerCtrl as vm',
+      resolve: {
+        reportId: function () {return null},
+        reviewers: function () {return null}
+      }
+    })
+    modalInstance.result.then(function (reportId) {
+      if (reportId) {
+        $state.go('app.review.company.report.project', {companyId: vm.companyId, reportId: reportId})
+      }
+    })
   }
 
   vm.edit = function (item) {
@@ -104,6 +89,31 @@ angular.module('com.app').controller('ReviewCompanyReportCtrl', function ($state
     modalInstance.result.then(function () {
       vm.refreshTable();
       toastr.success("报告修改成功！");
+    })
+  }
+
+  vm.editReviewer = function (reportId) {
+    ReviewService.getReviewerList(reportId).then(function (response) {
+      if (response.data.success) {
+        var modalInstance = $uibModal.open({
+          animation: true,
+          size: 'lg',
+          backdrop: 'static',
+          templateUrl: 'controllers/review/company/addReviewer/addReviewer.html',
+          controller: 'ProjectReviewerCtrl as vm',
+          resolve: {
+            reportId: function () {return reportId},
+            reviewers: function () {return response.data.entity},
+          }
+        })
+        modalInstance.result.then(function () {
+          $state.go('app.review.company.report.project', {companyId: vm.companyId, reportId: response.data})
+        })
+      } else {
+        toastr.error(response.data.message)
+      }
+    }).catch(function (err) {
+      toastr.error(err.data)
     })
   }
 

@@ -26,22 +26,22 @@ angular.module('com.app').controller('ReviewProjectCtrl', function ($uibModal, a
     }
     ReviewService.getProjectList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
       vm.loading = false;
-      vm.projects = [
-        {
-          id: 1, comType: '食品销售', projectName: 'name', numberRegulation: 'numberRegulation',
-          content: 'content', standardScore: 8, checkWay: 'checkWay'
-        }
-      ]
-      vm.total = 1;
-      tableState.pagination.numberOfPages = 1;
-      // if (response.data.success) {
-      //   vm.projects = response.data.entity.list;
-      //   vm.total = response.data.entity.total;
-      //   tableState.pagination.numberOfPages = response.data.entity.pages;
-      // } else {
-      //   vm.total = 0;
-      //   toastr.error(response.data.message);
-      // }
+      // vm.projects = [
+      //   {
+      //     id: 1, comType: '食品销售', projectName: 'name', numberRegulation: 'numberRegulation',
+      //     content: 'content', standardScore: 8, checkWay: 'checkWay'
+      //   }
+      // ]
+      // vm.total = 1;
+      // tableState.pagination.numberOfPages = 1;
+      if (response.data.success) {
+        vm.projects = response.data.entity.list;
+        vm.total = response.data.entity.total;
+        tableState.pagination.numberOfPages = response.data.entity.pages;
+      } else {
+        vm.total = 0;
+        toastr.error(response.data.message);
+      }
     }).catch(function (err) {
       vm.loading = false;
       toastr.error(err.data);

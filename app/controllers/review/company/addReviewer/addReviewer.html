@@ -1,6 +1,7 @@
 <div class="modal-header">
 	<div class="close" ng-click="vm.cancel()">&times;</div>
-	<h4>添加评估人员</h4>
+	<h4 ng-if="vm.type === 'create'">添加评估人员</h4>
+	<h4 ng-if="vm.type === 'edit'">编辑评估人员</h4>
 </div>
 
 <div class="modal-body add-reviewer">

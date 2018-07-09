@@ -8,66 +8,55 @@ angular.module('com.app').controller('ReviewCompanyReportProjectCtrl', function 
   var reviewBC = api.breadCrumbMap.review;
   var report = angular.copy(reviewBC.company.report.root)
   report.params = {projectId: $stateParams.projectId, reportId: $stateParams.reportId}
-  vm.breadCrumbArr = [reviewBC.root, reviewBC.company.root, report, reviewBC.company.report.project];
+  vm.breadCrumbArr = [reviewBC.root, reviewBC.company.root, report, {name: vm.reportId}];
 
 
-  vm.searchObject = {
-    searchKeywords: ''
-  }
-
-  vm.refreshTable = function (flag) {
-    vm.searchObject.timestamp = new Date();
-  }
 
   vm.projects = [];
   vm.loading = true;
-  vm.getProjectList = function (tableState) {
-    var tableParams = {
-      "pageSize": tableState.pagination.number,
-      "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
-    }
-    ReviewService.getReportProjectList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
+  vm.getProjectList = function () {
+    ReviewService.getReportProjectList(vm.reportId).then(function (response) {
       vm.loading = false;
-      vm.projects = [
-        {
-          id: 1, companyId: 'companyId', comType: 'type', reviewReportId: 'reportId', projectId: 'projectId',
-          projectName: 'projectName', score: 7, scoreLevel: 'level', remark: 'remark', advise: 'advise'
-        }
-      ]
-      vm.total = 1;
-      tableState.pagination.numberOfPages = 1;
-      // if (response.data.success) {
-      //   vm.reports = response.data.entity.list;
-      //   vm.total = response.data.entity.total;
-      //   tableState.pagination.numberOfPages = response.data.entity.pages;
-      // } else {
-      //   vm.total = 0;
-      //   toastr.error(response.data.message);
-      // }
+      if (response.data.success) {
+        vm.projects = response.data.entity;
+      } else {
+        toastr.error(response.data.message);
+      }
     }).catch(function (err) {
       vm.loading = false;
       toastr.error(err.data);
     })
   }
+  vm.getProjectList()
 
-
-  vm.edit = function (item) {
-    var modalInstance = $uibModal.open({
-      animation: true,
-      size: 'md',
-      backdrop: 'static',
-      templateUrl: 'controllers/review/company/report/project/edit/edit.html',
-      controller: 'CompanyReportProjectEditCtrl as vm',
-      resolve: {
-        project: function () {return angular.copy(item);},
+  vm.submit = function () {
+    ReviewService.editReportProject(vm.projects).then(function (response) {
+      if (response.data.success) {
+        toastr.success('报告 ' + vm.reportId + ' 项目更新成功');
+        toastr.error(response.data.message);
       }
-    });
-
-    modalInstance.result.then(function () {
-      vm.refreshTable();
-      toastr.success("报告修改成功！");
+    }).catch(function (err) {
+      toastr.error(err.data);
     })
   }
+
+  // vm.edit = function (item) {
+  //   var modalInstance = $uibModal.open({
+  //     animation: true,
+  //     size: 'md',
+  //     backdrop: 'static',
+  //     templateUrl: 'controllers/review/company/report/project/edit/edit.html',
+  //     controller: 'CompanyReportProjectEditCtrl as vm',
+  //     resolve: {
+  //       project: function () {return angular.copy(item);},
+  //     }
+  //   });
+
+  //   modalInstance.result.then(function () {
+  //     vm.refreshTable();
+  //     toastr.success("报告修改成功！");
+  //   })
+  // }
 
 
 });
