@@ -7,6 +7,9 @@
 
 .review-project-table.pt-table {
   tbody tr {
+    &:nth-child(2n) {
+      background-color: #fff;
+    }
     &:hover {
       background-color: transparent;
     }
@@ -15,6 +18,7 @@
     }
   }
   .input {
+    min-width: 100%;
     width: 100%;
   }
   textarea.input {

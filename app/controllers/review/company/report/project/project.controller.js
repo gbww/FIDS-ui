@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ReviewCompanyReportProjectCtrl', function ($stateParams, $uibModal, api, ReviewService, toastr, dialog) {
+angular.module('com.app').controller('ReviewCompanyReportProjectCtrl', function ($stateParams, $filter, $uibModal, api, ReviewService, toastr, dialog) {
   var vm = this;
 
   vm.reportId = $stateParams.reportId
@@ -12,18 +12,28 @@ angular.module('com.app').controller('ReviewCompanyReportProjectCtrl', function 
 
 
 
-  vm.projects = [];
+  vm.projects = {};
   vm.loading = true;
   vm.getProjectList = function () {
     ReviewService.getReportProjectList(vm.reportId).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
-        vm.projects = response.data.entity;
+        angular.forEach(response.data.entity.sort(function (a, b) {
+          return a.projectName.split('.')[0] - b.projectName.split('.')[0]
+        }), function (item) {
+          if (!vm.projects[item.projectName]) vm.projects[item.projectName] = []
+          vm.projects[item.projectName].push(item)
+        })
+
+        angular.forEach(vm.projects, function (val, key) {
+          val.sort(function (a, b) {
+            return a.numberRegulation.replace(/\*/g, '') - b.numberRegulation.replace(/\*/g, '')
+          })
+        })
       } else {
         toastr.error(response.data.message);
       }
     }).catch(function (err) {
-      vm.loading = false;
       toastr.error(err.data);
     })
   }
@@ -34,7 +44,11 @@ angular.module('com.app').controller('ReviewCompanyReportProjectCtrl', function 
   }
 
   vm.submit = function () {
-    ReviewService.editReportProject(vm.projects).then(function (response) {
+    var res = [];
+    angular.forEach(vm.projects, function (val, key) {
+      res = res.concat(val)
+    })
+    ReviewService.editReportProject(res).then(function (response) {
       if (response.data.success) {
         toastr.success('报告 ' + vm.reportId + ' 项目更新成功');
       } else {

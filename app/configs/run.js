@@ -21,7 +21,7 @@ angular.module('com.app').run(function() {
     },
     meridiemParse: /凌晨|早上|上午|中午|下午|晚上/,
     meridiemHour: function (h, meridiem) {
-      let hour = h;
+      var hour = h;
       if (hour === 12) {
         hour = 0;
       }
@@ -36,7 +36,7 @@ angular.module('com.app').run(function() {
       }
     },
     meridiem: function (hour, minute, isLower) {
-      const hm = hour * 100 + minute;
+      var hm = hour * 100 + minute;
       if (hm < 600) {
         return '凌晨';
       } else if (hm < 900) {
@@ -62,13 +62,13 @@ angular.module('com.app').run(function() {
         return this.minutes() === 0 ? '[昨天]Ah[点整]' : '[昨天]LT';
       },
       nextWeek: function () {
-        let startOfWeek, prefix;
+        var startOfWeek, prefix;
         startOfWeek = moment().startOf('week');
         prefix = this.diff(startOfWeek, 'days') >= 7 ? '[下]' : '[本]';
         return this.minutes() === 0 ? prefix + 'dddAh点整' : prefix + 'dddAh点mm';
       },
       lastWeek: function () {
-        let startOfWeek, prefix;
+        var startOfWeek, prefix;
         startOfWeek = moment().startOf('week');
         prefix = this.unix() < startOfWeek.unix() ? '[上]' : '[本]';
         return this.minutes() === 0 ? prefix + 'dddAh点整' : prefix + 'dddAh点mm';
