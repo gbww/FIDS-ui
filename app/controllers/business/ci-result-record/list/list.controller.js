@@ -111,7 +111,7 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       templateUrl: 'controllers/business/distribute/act/act.html',
       controller: 'CiDistributeActionCtrl as vm',
       resolve: {
-        sampleId: function () {return item.receiveSampleId;},
+        reportId: function () {return item.reportId;},
         checkItems: function () {return [item];},
         departments: ['$rootScope', '$q', 'PrivilegeService', function ($rootScope, $q, PrivilegeService) {
           $rootScope.loading = true;

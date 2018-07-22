@@ -84,7 +84,7 @@ angular.module('com.app').controller('SampleDetailInfoCtrl', function ($state, $
     if (vm.file) {
       var formData = new FormData();
       formData.append('file', vm.file);
-      formData.append('receiveSampleId', vm.sample.receiveSampleId);
+      formData.append('reportId', vm.sample.reportId);
       SampleService.uploadSampleAppendix(formData).catch(function (err) {
         toastr.error(err.data);
       })

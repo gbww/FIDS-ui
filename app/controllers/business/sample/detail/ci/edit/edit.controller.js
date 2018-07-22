@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('EditSampleCiCtrl', function ($rootScope, $uibModalInstance, SampleService, toastr, sampleId, checkItem, units, organizations) {
+angular.module('com.app').controller('EditSampleCiCtrl', function ($rootScope, $uibModalInstance, SampleService, toastr, reportId, checkItem, units, organizations) {
 	var vm = this;
 	$rootScope.loading = false;
 	vm.checkItem = angular.copy(checkItem);
@@ -8,7 +8,7 @@ angular.module('com.app').controller('EditSampleCiCtrl', function ($rootScope, $
   vm.characterArr = units;
 
   vm.ok = function () {
-  	SampleService.updateSampleCi(sampleId, [vm.checkItem]).then(function (response) {
+  	SampleService.updateSampleCi(reportId, [vm.checkItem]).then(function (response) {
   		if (response.data.success) {
 		  	$uibModalInstance.close(vm.checkItem);
   		} else {

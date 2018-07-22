@@ -97,7 +97,7 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       templateUrl: 'controllers/business/distribute/act/act.html',
       controller: 'CiDistributeActionCtrl as vm',
       resolve: {
-        sampleId: function () {return item.receiveSampleId;},
+        reportId: function () {return item.reportId;},
         checkItems: function () {return [item];},
         departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;
@@ -132,13 +132,13 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       return;
     }
 
-    var testRoom = '', testUser = '', sampleId = '';
+    var testRoom = '', testUser = '', reportId = '';
     for (var i=0,len=vm.selectedItems.length; i<len; i++) {
       if (i == 0) {
-        sampleId = vm.selectedItems[i].receiveSampleId;
+        reportId = vm.selectedItems[i].reportId;
         // testRoom = vm.selectedItems[i].testRoom;
         // testUser = vm.selectedItems[i].testUser;
-      } else if (sampleId !== vm.selectedItems[i].receiveSampleId) {
+      } else if (reportId !== vm.selectedItems[i].reportId) {
         // toastr.error('请确认所选检测项属于同一抽样单！');
         // return;
       // } else if (testRoom !== vm.selectedItems[i].testRoom || testUser !== vm.selectedItems[i].testUser) {
@@ -154,7 +154,7 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       templateUrl: 'controllers/business/distribute/act/act.html',
       controller: 'CiDistributeActionCtrl as vm',
       resolve: {
-        sampleId: function () {return sampleId;},
+        reportId: function () {return reportId;},
         checkItems: function () {return angular.copy(vm.selectedItems);},
         departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;

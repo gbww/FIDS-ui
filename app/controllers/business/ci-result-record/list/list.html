@@ -174,7 +174,7 @@
           <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)">
         </td>
         <td>
-          <a ui-sref="app.business.itemToCheck.detail({status: vm.status, id: item.receiveSampleId})">{{ item.reportId }}</a>
+          <a ui-sref="app.business.itemToCheck.detail({status: vm.status, id: item.reportId})">{{ item.reportId }}</a>
         </td>
         <td>{{ item.receiveSampleId }}</td>
         <td>{{ item.sample.sampleName }}</td>

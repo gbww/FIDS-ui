@@ -105,7 +105,7 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
     if (vm.type === 'sh') {
       var data = {
         approvePersonName: vm.report.approvalUser,
-        receiveSampleId: vm.report.receiveSampleId,
+        reportId: vm.report.reportId,
         reportProcessId: vm.report.reportProcessId,
         pass: vm.pass === 'true' ? true : false,
         comment: vm.comment,
@@ -126,7 +126,7 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
     } else if (vm.type === 'pz') {
       var data = {
         pass: vm.pass === 'true' ? true : false,
-        receiveSampleId: vm.report.receiveSampleId,
+        reportId: vm.report.reportId,
         reportProcessId: vm.report.reportProcessId,
         comment: vm.comment,
       };

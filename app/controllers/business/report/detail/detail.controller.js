@@ -208,7 +208,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
   vm.updateDrawUser = function () {
     var data = {
       processId: vm.report.reportProcessId,
-      receiveSampleId: vm.report.receiveSampleId,
+      reportId: vm.report.reportId,
       newDrawUser: vm.report.drawUser
     };
     var reportData = angular.copy(vm.report);
@@ -229,7 +229,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
     var data = {
       examinePersonName: vm.report.examineUser,
       reportProcessId: vm.report.reportProcessId,
-      receiveSampleId: vm.report.receiveSampleId,
+      reportId: vm.report.reportId,
       comment: vm.comment,
     };
     ReportService.updateReport(vm.report).then(function () {
@@ -256,7 +256,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
     if (vm.file) {
       var formData = new FormData();
       formData.append('file', vm.file);
-      formData.append('receiveSampleId', vm.report.receiveSampleId);
+      formData.append('reportId', vm.report.reportId);
       SampleService.uploadSampleAppendix(formData).catch(function (err) {
         toastr.error(err.data);
       })
@@ -326,7 +326,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
       templateUrl: 'controllers/business/report/detail/edit/edit.html',
       controller: 'EditReportCiCtrl as vm',
       resolve: {
-        sampleId: function () { return vm.report.receiveSampleId; },
+        reportId: function () { return vm.report.reportId; },
         checkItem: function () { return ci; },
         units: ['$rootScope', '$q', 'UnitService', function ($rootScope, $q, UnitService) {
           $rootScope.loading = true;
@@ -369,7 +369,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
     var result = dialog.confirm('确认从接样单中删除检测项 ' + ci.name + ' ?');
     result.then(function (res) {
       if (res) {
-        SampleService.deleteSampleCi(vm.report.receiveSampleId, [ci.id]).then(function (response) {
+        SampleService.deleteSampleCi(vm.report.reportId, [ci.id]).then(function (response) {
           if (response.data.success) {
             getSampleCi();
             toastr.success('接样单检测项删除成功！');

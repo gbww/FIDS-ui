@@ -9,7 +9,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root];
   vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1 && api.permissionArr.indexOf('CHECKITEM-CATALOG-SELECT-1') != -1;
 
-  vm.clonedSampleId = $cookies.get('clonedSampleId');
+  vm.clonedReportId = $cookies.get('clonedReportId');
   vm.searchObject = {}
 
   vm.refreshTable = function (flag) {
@@ -173,8 +173,8 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   vm.clone = function (sample, event) {
     event.stopPropagation();
-    vm.clonedSampleId = sample.receiveSampleId
-    $cookies.put('clonedSampleId', sample.receiveSampleId);
+    vm.clonedReportId = sample.reportId
+    $cookies.put('clonedReportId', sample.reportId);
     toastr.success('复制成功！')
     $('.btn-group').removeClass('open');
   }
@@ -182,7 +182,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   // 离开抽样单页面时，清空复制信息
   $scope.$on('$stateChangeStart', function (event, toState) {
     if (toState.name.indexOf('sample') == -1) {
-      $cookies.remove('clonedSampleId');
+      $cookies.remove('clonedReportId');
     }
   })
 
@@ -193,10 +193,10 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.delete = function (sample, event) {
     event.stopPropagation();
     $('.btn-group').removeClass('open');
-    var result = dialog.confirm('确认删除接样单 ' + sample.receiveSampleId + ' ?');
+    var result = dialog.confirm('确认删除接样单 ' + sample.reportId + ' ?');
     result.then(function (res) {
       if (res) {
-        SampleService.deleteSample([sample.receiveSampleId]).then(function (response) {
+        SampleService.deleteSample([sample.reportId]).then(function (response) {
           if (response.data.success) {
             vm.refreshTable('delete');
             toastr.success('接样单删除成功！');
@@ -238,7 +238,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.checkItems = [];
   vm.getSampleCi = function () {
     vm.ciLoading = true;
-    SampleService.getSampleCiList(vm.selectedSample.receiveSampleId).then(function (response) {
+    SampleService.getSampleCiList(vm.selectedSample.reportId).then(function (response) {
       vm.ciLoading = false;
       if (response.data.success) {
         vm.checkItems = response.data.entity;
@@ -302,7 +302,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       });
     }
     $rootScope.loading = true;
-    SampleService.recordSampleCi(vm.selectedSample.receiveSampleId, data).then(function (response) {
+    SampleService.recordSampleCi(vm.selectedSample.reportId, data).then(function (response) {
       $rootScope.loading = false;
       if (response.data.success) {
         vm.getSampleCi();
@@ -315,7 +315,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   vm.appendCI = function () {
     $rootScope.loading = true;
-    SampleService.getSampleCiList(vm.clonedSampleId).then(function (response) {
+    SampleService.getSampleCiList(vm.clonedReportId).then(function (response) {
       $rootScope.loading = false;
       if (response.data.success) {
         var checkItems = response.data.entity;
@@ -415,7 +415,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       templateUrl: 'controllers/business/sample/detail/ci/edit/edit.html',
       controller: 'EditSampleCiCtrl as vm',
       resolve: {
-        sampleId: function () {return vm.selectedSample.receiveSampleId;},
+        reportId: function () {return vm.selectedSample.reportId;},
         checkItem: function () {return ci;},
         units: ['$rootScope', '$q', 'UnitService', function ($rootScope, $q, UnitService) {
           $rootScope.loading = true;
@@ -458,7 +458,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     var result = dialog.confirm('确认从接样单中删除检测项 ' + ci.name + ' ?');
     result.then(function (res) {
       if (res) {
-        SampleService.deleteSampleCi(vm.selectedSample.receiveSampleId, [ci.id]).then(function (response) {
+        SampleService.deleteSampleCi(vm.selectedSample.reportId, [ci.id]).then(function (response) {
           if (response.data.success) {
             vm.getSampleCi();
             toastr.success('接样单检测项删除成功！');
@@ -485,7 +485,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
         angular.forEach(vm.selectedItems, function (item) {
           ids.push(item.id)
         });
-        SampleService.deleteSampleCi(vm.selectedSample.receiveSampleId, ids).then(function (response) {
+        SampleService.deleteSampleCi(vm.selectedSample.reportId, ids).then(function (response) {
           if (response.data.success) {
             vm.getSampleCi();
             vm.selectedItems = [];
@@ -510,7 +510,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       templateUrl: 'controllers/business/distribute/act/act.html',
       controller: 'CiDistributeActionCtrl as vm',
       resolve: {
-        sampleId: function () {return vm.selectedSample.receiveSampleId;},
+        reportId: function () {return vm.selectedSample.reportId;},
         checkItems: function () {return [item];},
         departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;
@@ -563,7 +563,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       templateUrl: 'controllers/business/distribute/act/act.html',
       controller: 'CiDistributeActionCtrl as vm',
       resolve: {
-        sampleId: function () {return vm.selectedSample.receiveSampleId;},
+        reportId: function () {return vm.selectedSample.reportId;},
         checkItems: function () {return angular.copy(vm.selectedItems);},
         departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;

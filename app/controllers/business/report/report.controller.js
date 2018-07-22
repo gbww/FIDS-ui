@@ -201,7 +201,7 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     var result = dialog.confirm('确认启动报告 ' + report.reportId + ' 流程？');
     result.then(function (res) {
       if (res) {
-        ReportService.startProcess(report.receiveSampleId).then(function (response) {
+        ReportService.startProcess(report.reportId).then(function (response) {
           if (response.data.success) {
             toastr.success('报告 ' + report.reportId + ' 流程已启动!')
             vm.refreshTable();
@@ -214,14 +214,14 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
 
   vm.export = function (report) {
     var link = document.createElement('a');
-    link.href = '/api/v1/ahgz/report/export?receiveSampleId=' + report.receiveSampleId;
+    link.href = '/api/v1/ahgz/report/export?reportId=' + report.reportId;
     link.download = report.reportId;
     link.click();
   }
 
   vm.preview = function (report) {
-    vm.printedIds = [report.receiveSampleId];
-    window.DEFAULT_URL = '/api/v1/ahgz/report/preview?type=pdf&receiveSampleId=' + report.receiveSampleId;
+    vm.printedIds = [report.reportId];
+    window.DEFAULT_URL = '/api/v1/ahgz/report/preview?type=pdf&reportId=' + report.reportId;
 
     vm.previewModal = $uibModal.open({
       animation: true,
@@ -232,10 +232,10 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
   }
 
   vm.print = function (report) {
-    vm.printedIds = [report.receiveSampleId];
+    vm.printedIds = [report.reportId];
     $rootScope.loading = true;
     var iframe = document.createElement('iframe');
-    window.DEFAULT_URL = '/api/v1/ahgz/report/preview?type=pdf&receiveSampleId=' + report.receiveSampleId;
+    window.DEFAULT_URL = '/api/v1/ahgz/report/preview?type=pdf&reportId=' + report.reportId;
     // iframe.style.display = 'none';
     iframe.style.opacity = '0';
     iframe.style.height = '1px';
@@ -379,7 +379,7 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     if (vm.allSelected){
       vm.selectedItems = [];
       angular.forEach(vm.reports, function (item, idx) {
-        vm.selectedItems.push(item.receiveSampleId);
+        vm.selectedItems.push(item.reportId);
         vm.itemSelected[idx] = true;
       });
     } else {
@@ -392,14 +392,14 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
 
   vm.selectItem = function (event, idx, item) {
     if(event.target.checked){
-      vm.selectedItems.push(item.receiveSampleId);
+      vm.selectedItems.push(item.reportId);
       vm.itemSelected[idx] = true;
       if(vm.selectedItems.length == vm.reports.length){
         vm.allSelected = true;
       }
     } else {
       for (var i=0,len=vm.selectedItems.length; i<len; i++){
-        if (item.receiveSampleId == vm.selectedItems[i]) {
+        if (item.reportId == vm.selectedItems[i]) {
           vm.selectedItems.splice(i, 1);
           break;
         }

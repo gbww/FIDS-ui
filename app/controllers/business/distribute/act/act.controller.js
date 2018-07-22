@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('CiDistributeActionCtrl', function ($rootScope, $scope, $uibModalInstance, SampleService, PrivilegeService, sampleId, checkItems, departments) {
+angular.module('com.app').controller('CiDistributeActionCtrl', function ($rootScope, $scope, $uibModalInstance, SampleService, PrivilegeService, reportId, checkItems, departments) {
   var vm = this;
   $rootScope.loading = false;
 
@@ -56,7 +56,7 @@ angular.module('com.app').controller('CiDistributeActionCtrl', function ($rootSc
         status: 1
     	});
     })
-  	SampleService.updateSampleCi(sampleId, data).then(function (response) {
+  	SampleService.updateSampleCi(reportId, data).then(function (response) {
   		if (response.data.success) {
 		  	$uibModalInstance.close(vm.checkItem);
   		} else {

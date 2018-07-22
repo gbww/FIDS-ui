@@ -173,7 +173,7 @@
             <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, report)">
           </td>
           <td>
-            <a href ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'ck', taskId: report.task ? report.task.id : null})" ng-if="vm.hasCheckAuth">{{ report.reportId }}</a>
+            <a href ui-sref="app.business.report.inspection({status: vm.status, id: report.reportId, type: 'ck', taskId: report.task ? report.task.id : null})" ng-if="vm.hasCheckAuth">{{ report.reportId }}</a>
             <span ng-if="!vm.hasCheckAuth"></span>
           </td>
           <td>{{ report.sampleName }}</td>
@@ -201,19 +201,19 @@
                 <i class="icon icon-launch"></i>
                 <span>启动流程</span>
               </button>
-              <button class="btn btn-default" ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bj'})" ng-if="report.reportProcessId && (vm.status === 5 || report.reportStatus > 2)" role-auth="REPORT-EDIT-1">
+              <button class="btn btn-default" ui-sref="app.business.report.detail({status: vm.status, id: report.reportId, type: 'bj'})" ng-if="report.reportProcessId && (vm.status === 5 || report.reportStatus > 2)" role-auth="REPORT-EDIT-1">
                 <i class="fa fa-edit"></i>
                 <span>编辑</span>
               </button>
-              <button class="btn btn-default" ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bz', taskId: report.task.id})" ng-if="vm.status !== 5 && report.reportStatus === 0" role-auth="REPORT-TASK-EDIT-DO-1">
+              <button class="btn btn-default" ui-sref="app.business.report.detail({status: vm.status, id: report.reportId, type: 'bz', taskId: report.task.id})" ng-if="vm.status !== 5 && report.reportStatus === 0" role-auth="REPORT-TASK-EDIT-DO-1">
                 <i class="fa fa-edit"></i>
                 <span>编制</span>
               </button>
-              <button class="btn btn-default" ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'sh', taskId: report.task.id})" ng-if="vm.status !== 5 && report.reportStatus === 1" role-auth="REPORT-TASK-EXAMINE-DO-1">
+              <button class="btn btn-default" ui-sref="app.business.report.inspection({status: vm.status, id: report.reportId, type: 'sh', taskId: report.task.id})" ng-if="vm.status !== 5 && report.reportStatus === 1" role-auth="REPORT-TASK-EXAMINE-DO-1">
                 <i class="fa fa-edit"></i>
                 <span>审核</span>
               </button>
-              <button class="btn btn-default" ui-sref="app.business.report.inspection({status: vm.status, id: report.receiveSampleId, type: 'pz', taskId: report.task.id})" ng-if="vm.status !== 5 && report.reportStatus === 2" role-auth="REPORT-TASK-APPROVE-DO-1">
+              <button class="btn btn-default" ui-sref="app.business.report.inspection({status: vm.status, id: report.reportId, type: 'pz', taskId: report.task.id})" ng-if="vm.status !== 5 && report.reportStatus === 2" role-auth="REPORT-TASK-APPROVE-DO-1">
                 <i class="fa fa-edit"></i>
                 <span>批准</span>
               </button>
@@ -221,7 +221,7 @@
                 <i class="caret"></i>
               </button>
               <ul class="dropdown-menu" ng-if="report.reportProcessId && !(vm.status === 5 && vm.reportStatus === 0)">
-                <li ui-sref="app.business.report.detail({status: vm.status, id: report.receiveSampleId, type: 'bj'})" ng-if="vm.status !== 5 && (report.reportStatus === 0 || report.reportStatus === 1 || report.reportStatus === 2)" role-auth="REPORT-TASK-EDIT-DO-1">
+                <li ui-sref="app.business.report.detail({status: vm.status, id: report.reportId, type: 'bj'})" ng-if="vm.status !== 5 && (report.reportStatus === 0 || report.reportStatus === 1 || report.reportStatus === 2)" role-auth="REPORT-TASK-EDIT-DO-1">
                   <a href>
                     <i class="fa fa-edit"></i>
                     <span>编辑</span>

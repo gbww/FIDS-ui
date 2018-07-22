@@ -141,7 +141,7 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
   vm.getSampleCi = function () {
     vm.ciLoading = true;
     vm.finishCount = 0;
-    SampleService.getSampleCiList(vm.selectedSample.receiveSampleId).then(function (response) {
+    SampleService.getSampleCiList(vm.selectedSample.reportId).then(function (response) {
       vm.ciLoading = false;
       if (response.data.success) {
         angular.forEach(response.data.entity, function (item) {
@@ -164,7 +164,7 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
       templateUrl: 'controllers/business/distribute/act/act.html',
       controller: 'CiDistributeActionCtrl as vm',
       resolve: {
-        sampleId: function () {return vm.selectedSample.receiveSampleId;},
+        reportId: function () {return vm.selectedSample.reportId;},
         checkItems: function () {return [item];},
         departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;
@@ -217,7 +217,7 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
       templateUrl: 'controllers/business/distribute/act/act.html',
       controller: 'CiDistributeActionCtrl as vm',
       resolve: {
-        sampleId: function () {return vm.selectedSample.receiveSampleId;},
+        reportId: function () {return vm.selectedSample.reportId;},
         checkItems: function () {return angular.copy(vm.selectedItems);},
         departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;

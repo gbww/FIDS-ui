@@ -49,17 +49,17 @@ angular.module('com.app').factory('ReportService', function ($http) {
 			})
     },
 
-    getReportInfo: function (receiveSampleId) {
-      return $http.get(baseUrl + '/' + receiveSampleId);
+    getReportInfo: function (reportId) {
+      return $http.get(baseUrl + '/' + reportId);
     },
 
-    getReportCi: function (receiveSampleId) {
-      return $http.get(baseUrl + '/list/' + receiveSampleId);
+    getReportCi: function (reportId) {
+      return $http.get(baseUrl + '/list/' + reportId);
     },
 
-    updateReportCi: function (receiveSampleId, data) {
+    updateReportCi: function (reportId, data) {
       return $http({
-        url: baseUrl + '/item/' + receiveSampleId,
+        url: baseUrl + '/item/' + reportId,
         method: 'POST',
         data: data
       });
@@ -89,7 +89,7 @@ angular.module('com.app').factory('ReportService', function ($http) {
         url: baseUrl + '/status/muti',
         method: 'GET',
         params: {
-          receiveSampleIdList: ids,
+          reportIdList: ids,
           reportStatus: status
         }
       })
@@ -116,12 +116,12 @@ angular.module('com.app').factory('ReportService', function ($http) {
 
 
     // 启动报告流程
-    startProcess: function (receiveSampleId) {
+    startProcess: function (reportId) {
       return $http({
         url: baseUrl + '/process',
         method: 'POST',
         params: {
-          receiveSampleId: receiveSampleId
+          reportId: reportId
         }
       })
     },
@@ -170,8 +170,8 @@ angular.module('com.app').factory('ReportService', function ($http) {
       return $http.get(baseUrl + '/process/task/' + processId + '/comments/all');
     },
 
-    getReportData: function (receiveSampleId) {
-      return $http.get(baseUrl + '/preview?receiveSampleId=' + receiveSampleId + '&type=pdf');
+    getReportData: function (reportId) {
+      return $http.get(baseUrl + '/preview?reportId=' + reportId + '&type=pdf');
     }
 
   }

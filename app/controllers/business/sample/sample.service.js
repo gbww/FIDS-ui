@@ -74,33 +74,33 @@ angular.module('com.app').factory('SampleService', function ($http) {
 		 *  接样单检测项
 		 */
 
-		getSampleCiList: function (sampleId) {
-			return $http.get(baseUrl + '/sample/items/' + sampleId);
+		getSampleCiList: function (reportId) {
+			return $http.get(baseUrl + '/sample/items/' + reportId);
 		},
 
 		getSampleCiInfo: function (id) {
 			return $http.get(baseUrl + '/sample/items/item/' + id);
 		},
 
-		recordSampleCi: function (sampleId, data) {
+		recordSampleCi: function (reportId, data) {
 			return $http({
-				url: baseUrl + '/sample/item/add/' + sampleId,
+				url: baseUrl + '/sample/item/add/' + reportId,
 				method: 'POST',
 				data: data
 			})
 		},
 
-		updateSampleCi: function (sampleId, data) {
+		updateSampleCi: function (reportId, data) {
 			return $http({
-				url: baseUrl + '/sample/item/update/' + sampleId,
+				url: baseUrl + '/sample/item/update/' + reportId,
 				method: 'POST',
 				data: data
 			})
 		},
 
-		deleteSampleCi: function (sampleId, data) {
+		deleteSampleCi: function (reportId, data) {
 			return $http({
-				url: baseUrl + '/sample/items/' + sampleId + '/delete',
+				url: baseUrl + '/sample/items/' + reportId + '/delete',
 				method: 'POST',
 				data: data
 			})

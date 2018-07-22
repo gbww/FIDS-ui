@@ -3,7 +3,7 @@
 angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $state, $cookies, $uibModal, api, toastr, SampleService) {
   var vm = this;
 
-  vm.clonedSampleId = $cookies.get('clonedSampleId');
+  vm.clonedReportId = $cookies.get('clonedReportId');
 
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.sample.root, businessBC.sample.create];
@@ -42,7 +42,7 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $
 
   vm.paste = function () {
     $rootScope.loading = true;
-    SampleService.getSampleInfo(vm.clonedSampleId).then(function (response) {
+    SampleService.getSampleInfo(vm.clonedReportId).then(function (response) {
       $rootScope.loading = false;
       if (response.data.success) {
         vm.sample = response.data.entity
