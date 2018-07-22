@@ -12,9 +12,9 @@ angular.module('com.app').controller('ReviewCompanyReportProjectCtrl', function 
 
 
 
-  vm.projects = {};
   vm.loading = true;
   vm.getProjectList = function () {
+    vm.projects = {};
     ReviewService.getReportProjectList(vm.reportId).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
@@ -22,7 +22,9 @@ angular.module('com.app').controller('ReviewCompanyReportProjectCtrl', function 
           return a.projectName.split('.')[0] - b.projectName.split('.')[0]
         }), function (item) {
           if (!vm.projects[item.projectName]) vm.projects[item.projectName] = []
-          vm.projects[item.projectName].push(item)
+          vm.projects[item.projectName].push(angular.merge(item, {
+            scoreList: [0, item.standardScore, '']
+          }))
         })
 
         angular.forEach(vm.projects, function (val, key) {
@@ -39,6 +41,17 @@ angular.module('com.app').controller('ReviewCompanyReportProjectCtrl', function 
   }
   vm.getProjectList()
 
+  vm.changeScore = function (projectName, idx) {
+    var item = vm.projects[projectName][idx];
+    if (item.score === 0) {
+      item.scoreLevel = '不符合'
+    } else if (item.score === item.standardScore) {
+      item.scoreLevel = '符合'
+    } else {
+      item.scoreLevel = '合理缺项'
+    }
+  }
+
   vm.showInfo = function (evt) {
     $(evt.target).tooltip('show')
   }
@@ -46,7 +59,12 @@ angular.module('com.app').controller('ReviewCompanyReportProjectCtrl', function 
   vm.submit = function () {
     var res = [];
     angular.forEach(vm.projects, function (val, key) {
-      res = res.concat(val)
+      res = res.concat(val.map(function (item) {
+        if (item.score === '') {
+          item.score = null
+        }
+        return item
+      }))
     })
     ReviewService.editReportProject(res).then(function (response) {
       if (response.data.success) {

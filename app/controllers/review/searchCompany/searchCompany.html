@@ -1,0 +1,79 @@
+<div class="inner-container search-company">
+  <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+
+  <div class="pt-2">
+    <div class="search-box">
+      <span>请输入企业名称查询：</span>
+      <input class="input" ng-model="vm.query" ng-keyup="vm.search($event)"></input>
+    </div>
+
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">企业名称：</label>
+        <div class="col-sm-8">
+          <a href ui-sref="app.review.searchCompany.report({companyId: vm.company.id})">{{ vm.company.comName || '--' }}</a>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">企业类型：</label>
+        <div class="col-sm-8">
+          <span>{{ vm.company.comType || '--' }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">法人/负责人：</label>
+        <div class="col-sm-8">
+          <span>{{ vm.company.comPrincipal || '--' }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">社会信用代码：</label>
+        <div class="col-sm-8">
+          <span>{{ vm.company.comCreditCode || '--' }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">许可/登记证号：</label>
+        <div class="col-sm-8">
+          <span>{{ vm.company.comLicence || '--' }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">生产/经营地址：</label>
+        <div class="col-sm-8">
+          <span>{{ vm.company.comAddress || '--' }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">规模大小：</label>
+        <div class="col-sm-8">
+          <span>{{ vm.company.comScale || '--' }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">规模评分：</label>
+        <div class="col-sm-8">
+          <span>{{ vm.company.comScaleScore || '--' }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">品种业态：</label>
+        <div class="col-sm-8">
+          <span>{{ vm.company.comVariety || '--' }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">品种业态评分：</label>
+        <div class="col-sm-8">
+          <span>{{ vm.company.comVarietyScore || '--' }}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label">电话：</label>
+        <div class="col-sm-8">
+          <span>{{ vm.company.comTelephone || '--' }}</span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

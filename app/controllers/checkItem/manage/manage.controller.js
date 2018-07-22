@@ -90,7 +90,10 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
   	if (angular.equals(treeNode, vm.selectedNode)) return;
   	if (treeNode.isCatalog == '0') {
   		vm.selectedNode = treeNode;
-  		vm.getCatalogCheckItems(treeNode.id);
+      vm.getCatalogCheckItems(treeNode.id);
+      vm.allSelected = false;
+      vm.itemSelected = [];
+      vm.selectedItems = [];
   	} else {
   		vm.selectedNode = null;
   	}
@@ -430,5 +433,66 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
       toastr.error(err.data);
     });
   }
+
+  vm.copy = function () {
+    toastr.success('复制成功！')
+    vm.copiedItems = vm.selectedItems
+  }
+
+  vm.paste = function () {
+  	hideContextMenu();
+    var node = vm.tree.getSelectedNodes()[0];
+    var promiseArr = [];
+    angular.forEach(vm.copiedItems, function (item) {
+      var data = angular.merge({}, item, {
+        catalogId: node.id,
+        checkItemId: item.id
+      });
+      promiseArr.push(CheckItemService.recordCatalogCi(data));
+    })
+    $q.all(promiseArr).then(function () {
+      vm.getCatalogCheckItems(node.id);
+      toastr.success('添加成功！');
+    });
+  }
+
+  // 单选、复选
+  vm.itemSelected = [];
+  vm.selectedItems = [];
+  vm.selectAll = function () {
+    if (vm.allSelected){
+      vm.selectedItems = [];
+      angular.forEach(vm.checkItems, function (item, idx) {
+        vm.selectedItems.push(item);
+        vm.itemSelected[idx] = true;
+      });
+    } else {
+      vm.selectedItems = [];
+      angular.forEach(vm.checkItems, function (item, idx) {
+        vm.itemSelected[idx] = false;
+      });
+    }
+  }
+
+  vm.selectItem = function (event, idx, item) {
+    if(event.target.checked){
+      vm.selectedItems.push(item);
+      vm.itemSelected[idx] = true;
+      if(vm.selectedItems.length == vm.checkItems.length){
+        vm.allSelected = true;
+      }
+    } else {
+      for (var i=0,len=vm.selectedItems.length; i<len; i++){
+        if (item.id == vm.selectedItems[i].id) {
+          vm.selectedItems.splice(i, 1);
+          break;
+        }
+      };
+      vm.itemSelected[idx] = false;
+      vm.allSelected = false;
+    }
+  }
+
+  $scope.$on('destroy')
 
 });

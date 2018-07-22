@@ -26,6 +26,13 @@ angular.module('com.app').constant('api', {
           project: {name: '项目', url: 'app.review.company.report.project'}
         }
       },
+      searchCompany: {
+        root: {name: '企业查询', url: 'app.review.searchCompany'},
+        report: {
+          root: {name: '企业报告', url: 'app.review.searchCompany.report'},
+          project: {name: '项目', url: 'app.review.searchCompany.report.project'}
+        }
+      },
       project: {name: '项目明细', url: 'app.review.project'}
     },
     client: {

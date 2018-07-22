@@ -12,9 +12,19 @@
 				<div id="inspectTree" class="ztree" ng-show="!vm.initial"></div>
 			</div>
 			<div class="check-info" ng-class="{'no-padding': !vm.hasCheckItemAuth}">
+				<div class="toolbar">
+					<button class="btn btn-default-dark" ng-click="vm.copy()" ng-disabled="vm.selectedItems.length === 0">
+						<i class="fa fa-clone"></i>
+						<span>复制</span>
+				  </button>
+				</div>
 				<table class="pt-table">
 					<thead>
 						<tr>
+							<th style="width: 60px;">
+								<input type="checkbox" ng-click="vm.selectAll()" ng-model="vm.allSelected">
+								序号
+							</th>
 							<th>名称</th>
 							<th>检测方法</th>
 							<th>单位</th>
@@ -30,9 +40,13 @@
 					</thead>
 					<tbody>
 						<tr ng-if="vm.checkItems.length == 0">
-							<td colspan="11" class="text-center">暂无检测项</td>
+							<td colspan="12" class="text-center">暂无检测项</td>
 						</tr>
 						<tr ng-repeat="item in vm.checkItems track by item.id">
+							<td>
+								<input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)">
+								{{ $index + 1 }}
+							</td>
 							<td>{{ item.name }}</td>
 							<td>{{ item.method }}</td>
 							<td>{{ item.unit }}</td>
@@ -75,6 +89,7 @@
 			<ul id="file" class="context-menu">
 				<li ng-click="vm.addSiblingNode()" role-auth="CHECKITEM-CATALOG-ADD-1">添加同级目录</li>
 				<li ng-click="vm.addCheckItem()" role-auth="CHECKITEM-MAPPING-ADD-1">添加检测项</li>
+				<li ng-click="vm.paste()" role-auth="CHECKITEM-MAPPING-ADD-1" ng-show="vm.copiedItems.length > 0">添加复制的检测项</li>
 				<li custom-file-btn role-auth="CHECKITEM-IMPORT-1">导入检测项</li>
 				<li ng-click="vm.editNode()" role-auth="CHECKITEM-CATALOG-UPDATE-1">重命名</li>
 				<li ng-click="vm.deleteNode()" role-auth="CHECKITEM-CATALOG-RECURSION-DELETE-1">删除</li>

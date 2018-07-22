@@ -26,15 +26,6 @@ angular.module('com.app').controller('ReviewCompanyCtrl', function ($rootScope, 
     }
     ReviewService.getCompanyList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
       vm.loading = false;
-      vm.companys = [
-        {
-          id: 1, comName: 'name', comType: '食品销售', comPrincipal: 'principal', comCreditCode: 'creditCode',
-          comLicence: 'licence', comAddress: 'address', comScale: 'scale3', comScaleScore: 3,
-          comVariety: 'variety5', comVarietyScore: 5, comTelephone: '1234', updatedAt: new Date()
-        }
-      ]
-      vm.total = 1;
-      tableState.pagination.numberOfPages = 1;
       if (response.data.success) {
         vm.companys = response.data.entity.list;
         vm.total = response.data.entity.total;

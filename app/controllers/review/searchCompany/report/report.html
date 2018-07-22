@@ -1,0 +1,102 @@
+<div class="inner-container report-list">
+    <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
+  
+    <div class="pt-2">
+      <table class="pt-table" st-table="vm.reports" st-pipe="vm.getReportList">
+        <thead st-search-watch="vm.searchObject">
+          <tr>
+            <th>
+              <div>报告编号</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>评估产品类型</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>评估活动场所</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>检查日期</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>结束日期</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>企业代表</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>审核结果</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>得分</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>得分的风险结果</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>复核人</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>批准人</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th>
+              <div>状态</div>
+              <adjust-line></adjust-line>
+            </th>
+            <th style="width: 120px">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-if="vm.loading">
+            <td colspan="13" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+          </tr>
+          <tr ng-if="!vm.loading && vm.reports.length == 0">
+            <td colspan="13" class="text-center">暂无评审报告</td>
+          </tr>
+          <tr ng-repeat="item in vm.reports track by item.reviewReportId" ng-if="!vm.loading">
+            <td>
+              <a href ui-sref="app.review.searchCompany.report.project({companyId: vm.companyId, reportId: item.reviewReportId})">{{ item.reviewReportId }}</a>
+            </td>
+            <td>{{ item.evaluateProductType }}</td>
+            <td>{{ item.evaluateStage }}</td>
+            <td>{{ item.checkDate | date:'medium' }}</td>
+            <td>{{ item.endDate | date:'medium' }}</td>
+            <td>{{ item.companyRepresent }}</td>
+            <td>{{ item.reviewResult }}</td>
+            <td>{{ item.score }}</td>
+            <td>{{ item.fastResult }}</td>
+            <td>{{ item.fuheUser }}</td>
+            <td>{{ item.pizhunUser }}</td>
+            <td>{{ item.reportStatus }}</td>
+            <td class="dropdown-col">
+              <div class="btn-group">
+                <button class="btn btn-default" ng-click="vm.editReviewer(item.reviewReportId)">
+                  <i class="fa fa-edit"></i>
+                  <span>查看评审员</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="13">
+              <div st-idp st-total-count="vm.total"></div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  
+  

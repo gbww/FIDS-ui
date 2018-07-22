@@ -1,0 +1,50 @@
+<div class="modal-header">
+	<div class="close" ng-click="vm.cancel()">&times;</div>
+	<h4>查看评估人员</h4>
+</div>
+
+<div class="modal-body add-reviewer">
+	<table class="pt-table border-table no-vertical-line">
+		<thead>
+			<tr>
+				<th>姓名</th>
+				<th>职位</th>
+				<th>联系方式</th>
+				<th>首次会议</th>
+				<th>现场评估</th>
+				<th>末次会议</th>
+				<th>身份</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="item in vm.userArr track by $index">
+				<td>
+					<input class="input" ng-model="item.name" />
+				</td>
+				<td>
+					<input class="input" ng-model="item.position" />
+				</td>
+				<td>
+					<input class="input" ng-model="item.telephone" />
+				</td>
+				<td>
+					<input class="input" ng-model="item.firstMeeting" />
+				</td>
+				<td>
+					<input class="input" ng-model="item.liveMeeting" />
+				</td>
+				<td>
+					<input class="input" ng-model="item.lastMeeting" />
+				</td>
+				<td>
+					<select class="input" ng-model="item.identity" ng-options="option for option in vm.identityArr"></select>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div class="modal-footer">
+	<button class="btn btn-2x btn-default-dark" ng-click="vm.cancel()">确认</button>
+	<button class="btn btn-2x btn-default-light" ng-click="vm.cancel()">取消</button>
+</div>

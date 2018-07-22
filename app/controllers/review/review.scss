@@ -30,3 +30,22 @@
   text-align: center;
   padding: 5px 0;
 }
+
+.search-company {
+  .search-box {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 18px;
+    margin-bottom: 20px;
+    .input {
+      width: 300px;
+      height: 30px
+    }
+  }
+  form {
+    width: 70%;
+    label.control-label {
+      padding-top: 0;
+    }
+  }
+}
