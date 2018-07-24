@@ -66,7 +66,12 @@ angular.module('com.app').factory('SampleService', function ($http) {
 			})
 		},
 
-
+		deleteSampleAppendix: function (reportId) {
+			return $http({
+				url: baseUrl + '/attachment/delete?reportId=' + reportId,
+				method: 'DELETE'
+			})
+		},
 
 
 		

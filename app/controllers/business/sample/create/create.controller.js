@@ -55,6 +55,7 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $
         delete vm.sample.approva;
         delete vm.sample.reportProcessId;
         delete vm.sample.devices;
+        delete vm.sample.appendix;
       } else {
         toastr.error(response.data.message);
       }

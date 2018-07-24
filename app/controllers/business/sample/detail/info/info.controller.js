@@ -88,6 +88,10 @@ angular.module('com.app').controller('SampleDetailInfoCtrl', function ($state, $
       SampleService.uploadSampleAppendix(formData).catch(function (err) {
         toastr.error(err.data);
       })
+    } else if (vm.initSample.appendix) {
+      SampleService.deleteSampleAppendix(vm.sample.reportId).catch(function (err) {
+        toastr.error(err.data);
+      })
     }
 
     if (!angular.equals(vm.sample, vm.initSample)) {

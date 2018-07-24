@@ -36,6 +36,14 @@ angular.module('com.app').factory('CiDistributeService', function ($http) {
           status: status
         }
 			})
+    },
+    
+		distributeSampleCi: function (data) {
+			return $http({
+				url: baseUrl + '/sample/item/distribute',
+				method: 'POST',
+				data: data
+			})
 		},
   }
 })
