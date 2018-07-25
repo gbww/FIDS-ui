@@ -37,6 +37,8 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       orderBy = 'test_user';
     } else if (orderBy === 'updatedAt') {
       orderBy = 'updated_at';
+    } else if (orderBy === 'finishDate') {
+      orderBy = 'finish_date'
     }
 
     var tableParams = {
