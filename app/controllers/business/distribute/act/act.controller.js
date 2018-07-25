@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('CiDistributeActionCtrl', function ($rootScope, $scope, $uibModalInstance, CiDistributeService, PrivilegeService, reportId, checkItems, departments) {
+angular.module('com.app').controller('CiDistributeActionCtrl', function ($rootScope, $scope, $uibModalInstance, CiDistributeService, PrivilegeService, checkItems, departments) {
   var vm = this;
   $rootScope.loading = false;
 

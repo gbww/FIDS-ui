@@ -97,7 +97,6 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       templateUrl: 'controllers/business/distribute/act/act.html',
       controller: 'CiDistributeActionCtrl as vm',
       resolve: {
-        reportId: function () {return item.reportId;},
         checkItems: function () {return [item];},
         departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;
@@ -132,21 +131,6 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       return;
     }
 
-    var testRoom = '', testUser = '', reportId = '';
-    for (var i=0,len=vm.selectedItems.length; i<len; i++) {
-      if (i == 0) {
-        reportId = vm.selectedItems[i].reportId;
-        // testRoom = vm.selectedItems[i].testRoom;
-        // testUser = vm.selectedItems[i].testUser;
-      } else if (reportId !== vm.selectedItems[i].reportId) {
-        // toastr.error('请确认所选检测项属于同一抽样单！');
-        // return;
-      // } else if (testRoom !== vm.selectedItems[i].testRoom || testUser !== vm.selectedItems[i].testUser) {
-      //   toastr.error('请确认所选检测项分配的检测室检测人员为同一人！');
-      //   return;
-      }
-    }
-
     var modalInstance = $uibModal.open({
       animation: true,
       size: 'md',
@@ -154,7 +138,6 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       templateUrl: 'controllers/business/distribute/act/act.html',
       controller: 'CiDistributeActionCtrl as vm',
       resolve: {
-        reportId: function () {return reportId;},
         checkItems: function () {return angular.copy(vm.selectedItems);},
         departments: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
           $rootScope.loading = true;

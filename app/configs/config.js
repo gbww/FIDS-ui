@@ -9,7 +9,7 @@ angular.module('com.app').config(function($httpProvider, stConfig, toastrConfig)
   }
 
   // smart-table
-  stConfig.pagination.itemsByPage = 10;
+  stConfig.pagination.itemsByPage = 25;
   stConfig.sort.skipNatural = true;
 
   angular.extend(toastrConfig, {

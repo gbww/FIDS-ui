@@ -29,6 +29,7 @@ angular.module('com.app').factory('CiResultRecordService', function ($http) {
 					status: status,
 					reportId: searchObject.reportId,
 					receiveSampleId: searchObject.receiveSampleId,
+					sampleName: searchObject.sampleName,
 					name: searchObject.name,
 					method: searchObject.method,
         }

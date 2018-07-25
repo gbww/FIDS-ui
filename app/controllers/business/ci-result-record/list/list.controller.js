@@ -85,6 +85,7 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
     angular.merge(vm.query, {
       reportId: null,
       receiveSampleId: null,
+      sampleName: null,
       name: null,
       method: null
     });
@@ -98,6 +99,7 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
     angular.merge(vm.query, {
       reportId: null,
       receiveSampleId: null,
+      sampleName: null,
       name: null,
       method: null
     });
