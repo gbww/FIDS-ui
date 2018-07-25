@@ -13,7 +13,11 @@ angular.module('com.app').controller('CiDistributeActionCtrl', function ($rootSc
     PrivilegeService.getOrganizationUsers(vm.testRoomId).then(function (response) {
       if (response.data.success) {
         vm.users = response.data.entity;
-        if (vm.users.length > 0) {
+        vm.testUser = vm.checkItem.testUser;
+        var users = vm.users.map(function (user) {
+          return user.name
+        })
+        if (vm.users.length > 0 && users.indexOf(vm.testUser) === -1) {
           vm.testUser = vm.users[0].name;
         }
       } else {

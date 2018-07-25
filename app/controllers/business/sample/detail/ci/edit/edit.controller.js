@@ -21,7 +21,10 @@ angular.module('com.app').controller('EditSampleCiCtrl', function ($rootScope, $
     PrivilegeService.getOrganizationUsers(vm.testRoomId).then(function (response) {
       if (response.data.success) {
         vm.users = response.data.entity;
-        if (vm.users.length > 0) {
+        var users = vm.users.map(function (user) {
+          return user.name
+        })
+        if (vm.users.length > 0 && users.indexOf(vm.checkItem.testUser) === -1) {
           vm.checkItem.testUser = vm.users[0].name;
         }
       } else {
