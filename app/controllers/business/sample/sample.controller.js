@@ -502,6 +502,24 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     })
   }
 
+  vm.release = function (reportId, event) {
+    event.stopPropagation();
+    var result = dialog.confirm('确认下发报告编号为 ' + reportId + ' 的接样单检测项?');
+    result.then(function (res) {
+      if (res) {
+        SampleService.setSampleStatus(reportId, -1).then(function (response) {
+          if (response.data.success) {
+            vm.refreshTable()
+          } else {
+            toastr.error(response.data.message)
+          }
+        }).catch(function (err) {
+          toastr.error(err.data)
+        })
+      }
+    })
+  }
+
   vm.distribute = function (item) {
     var modalInstance = $uibModal.open({
       animation: true,

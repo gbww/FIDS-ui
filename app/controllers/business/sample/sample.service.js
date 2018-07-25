@@ -43,6 +43,10 @@ angular.module('com.app').factory('SampleService', function ($http) {
 			})
 		},
 
+		setSampleStatus: function (id, status) {
+			return $http.get(baseUrl + '/sample/' + id + '/status/' + status)
+		},
+
 		getSampleInfo: function (id) {
 			return $http.get(baseUrl + '/sample/' + id);
 		},

@@ -10,8 +10,14 @@
 			<ul class="statusBar clearfix">
         <li ng-class="{'active': vm.status === 0}">
           <a ng-click="vm.searchStatus(0)">
+	        	<i class="fa fa-edit"></i>
+            <span>未下发</span>
+          </a>
+        </li>
+        <li ng-class="{'active': vm.status === -1}">
+          <a ng-click="vm.searchStatus(-1)">
 	        	<i class="icon icon-todo-list"></i>
-            <span>未完成</span>
+            <span>下发未完成</span>
           </a>
         </li>
         <li ng-class="{'active': vm.status === 1}">
@@ -145,6 +151,9 @@
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">
+								<li ng-click="vm.release(sample.reportId, $event)" ng-if="sample.status === 0">
+									<a href><i class="icon icon-distribute"></i><span>下发</span></a>
+								</li>
 								<li ng-click="vm.clone(sample, $event)" role-auth="SAMPLE-ADD-1">
 									<a href><i class="fa fa-clone"></i><span>复制</span></a>
 								</li>
