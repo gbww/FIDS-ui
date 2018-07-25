@@ -13,8 +13,7 @@ angular.module('com.app').controller('CiDistributeActionCtrl', function ($rootSc
     PrivilegeService.getOrganizationUsers(vm.testRoomId).then(function (response) {
       if (response.data.success) {
         vm.users = response.data.entity;
-        vm.testUser = vm.checkItem.testUser;
-        if (vm.users.length > 0 && !vm.testUser) {
+        if (vm.users.length > 0) {
           vm.testUser = vm.users[0].name;
         }
       } else {
@@ -28,7 +27,6 @@ angular.module('com.app').controller('CiDistributeActionCtrl', function ($rootSc
     angular.forEach(vm.departments, function (department) {
       if (department.name == vm.checkItem.testRoom) {
         vm.testRoomId = department.id;
-        vm.getDepartmentUsers(vm.testRoomId);
       }
     })
   } else {
