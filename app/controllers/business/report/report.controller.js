@@ -299,6 +299,16 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     if (vm.previewModal) {
       vm.previewModal.close();
     }
+    var isReportReady = true
+    angular.forEach(vm.printedIds, function (printedId) {
+      angular.forEach(vm.reports, function (report) {
+        if (report.reportId === printedId && report.reportStatus < 3) {
+          isReportReady = false
+          return
+        }
+      })
+    })
+    if (!isReportReady) return
     var result = dialog.confirm('是否已完成报告的所有打印工作?');
     result.then(function (res) {
       if (res) {
