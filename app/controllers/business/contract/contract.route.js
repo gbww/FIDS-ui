@@ -4,7 +4,7 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 
 	$stateProvider.state('app.business.contract', {
 		url: '/contract',
-		params: {type: null, status: null},
+		params: {type: null, status: null, pageSize: null, pageNum: null, orderBy: null, reverse: null, sampleName: null},
 		templateUrl: 'controllers/business/contract/contract.html',
 		controller: 'ContractCtrl as vm'
 	});
@@ -21,7 +21,7 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 	});
 
 	$stateProvider.state('app.business.contract.detail', {
-		url: '/:type/:status/:id',
+		url: '/:type/:status/:pageNum/:pageSize/:orderBy/:reverse/:sampleName/:id',
 		views: {
 			'@app.business': {
 				templateUrl: 'controllers/business/contract/detail/detail.html',

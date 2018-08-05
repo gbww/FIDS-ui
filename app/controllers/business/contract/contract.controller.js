@@ -6,21 +6,25 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.contract.root];
 
-  vm.searchObject = {
-    searchKeywords: null
-  }
+  vm.searchObject = {}
 
   vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
     if (flag == 'delete') {
       vm.searchObject.totalCount = vm.total - 1;
-    } else if (flag == 'toggle') {
-      vm.searchObject.toggle = true;
+    } else if (flag == 'reset') {
+      vm.searchObject.reset = true;
     }
   }
 
+  vm.pageNum = parseInt($stateParams.pageNum) || null
+  vm.pageSize = parseInt($stateParams.pageSize) || null
+  vm.orderBy = $stateParams.orderBy || null
+  vm.reverse = $stateParams.reverse === 'true'
+  vm.query = $stateParams.sampleName || ''
   vm.type = $stateParams.type || 'enterprise';
   vm.statusFilter = $stateParams.status || 'all';
+
   vm.contracts = [];
   vm.loading = true;
   vm.getContractList = function (tableState) {
@@ -42,7 +46,14 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
     } else if (vm.statusFilter === 'done') {
       isHandle = '1';
     }
-    ContractService.getContractList(tableParams, vm.searchObject.searchKeywords, vm.type, isHandle).then(function (response) {
+
+    vm.pageNum = tableParams.pageNum
+    vm.pageSize = tableParams.pageSize
+    vm.orderBy = tableState.sort.predicate
+    vm.reverse = tableState.sort.reverse
+    vm.sampleName = vm.query
+
+    ContractService.getContractList(tableParams, vm.query, vm.type, isHandle).then(function (response) {
       vm.loading = false;
       total = response.data.entity.total;
       var tempContracts = [];
@@ -98,23 +109,23 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
     } else {
       vm.type = 'pb';
     }
-    vm.refreshTable('toggle');
+    vm.refreshTable('reset');
   }
 
   vm.searchStatus = function (filter) {
     if (vm.statusFilter != filter) {
       vm.statusFilter = filter;
-      vm.refreshTable('toggle');
+      vm.refreshTable('reset');
     }
   }
 
   vm.search=function(){
-    vm.searchObject.searchKeywords = vm.query;
+    vm.refreshTable('reset')
   }
   vm.eventSearch=function(e){
     var keycode = window.event?e.keyCode:e.which;
     if(keycode==13){
-      vm.searchObject.searchKeywords = vm.query;
+      vm.search()
     }
   }
 

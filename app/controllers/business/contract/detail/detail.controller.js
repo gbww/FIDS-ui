@@ -7,7 +7,12 @@ angular.module('com.app').controller('ContractDetailCtrl', function ($scope, $st
   var contract = angular.copy(businessBC.contract.root);
   contract.params = {
     type: $stateParams.type,
-    status: $stateParams.status
+    status: $stateParams.status,
+    pageSize: $stateParams.pageSize,
+    pageNum: $stateParams.pageNum,
+    orderBy: $stateParams.orderBy,
+    reverse: $stateParams.reverse,
+    sampleName: $stateParams.sampleName,
   };
   vm.breadCrumbArr = [businessBC.root, contract, businessBC.contract.detail];
 

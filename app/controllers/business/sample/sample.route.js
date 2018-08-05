@@ -4,7 +4,9 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 
 	$stateProvider.state('app.business.sample', {
 		url: '/sample',
-		params: {status: null},
+		params: {status: null, pageSize: null, pageNum: null, orderBy: null, reverse: null,
+			reportId: null, sampleName: null, entrustedUnit: null, inspectedUnit: null, productionUnit: null, receiveSampleId: null, executeStandard: null
+		},
 		templateUrl: 'controllers/business/sample/sample.html',
 		controller: 'SampleCtrl as vm'
 	});
@@ -20,7 +22,7 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 	});
 
 	$stateProvider.state('app.business.sample.detail', {
-		url: '/:status/:id',
+		url: '/:status/:pageNum/:pageSize/:orderBy/:reverse/:reportId/:sampleName/:entrustedUnit/:inspectedUnit/:productionUnit/:receiveSampleId/:executeStandard/:id',
 		views: {
 			'@app.business': {
 				templateUrl: 'controllers/business/sample/detail/detail.html',

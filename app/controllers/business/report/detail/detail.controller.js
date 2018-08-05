@@ -14,7 +14,22 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
   var businessBC = api.breadCrumbMap.business;
   var report = angular.copy(businessBC.report.root);
   report.params = {
-    status: vm.status
+    status: vm.status,
+    pageSize: $stateParams.pageSize,
+    pageNum: $stateParams.pageNum,
+    orderBy: $stateParams.orderBy,
+    reverse: $stateParams.reverse,
+    reportId: $stateParams.reportId,
+    sampleName: $stateParams.sampleName,
+    entrustedUnit: $stateParams.entrustedUnit,
+    inspectedUnit: $stateParams.inspectedUnit,
+    productionUnit: $stateParams.productionUnit,
+    receiveSampleId: $stateParams.receiveSampleId,
+    executeStandard: $stateParams.executeStandard,
+    sampleType: $stateParams.sampleType,
+    checkType: $stateParams.checkType,
+    startTime: $stateParams.startTime,
+    endTime: $stateParams.endTime
   }
   var detail = angular.copy(businessBC.report.detail);
   if (vm.type === 'bz') {

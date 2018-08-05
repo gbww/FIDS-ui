@@ -3,13 +3,16 @@
 angular.module('com.app').config(function ($stateProvider) {
 	$stateProvider.state('app.business.report', {
 		url: '/report',
-		params: {status: null},
+		params: {status: null, pageSize: null, pageNum: null, orderBy: null, reverse: null,
+			reportId: null, sampleName: null, entrustedUnit: null, inspectedUnit: null, productionUnit: null, receiveSampleId: null, executeStandard: null,
+    	sampleType: null, checkType: null, startTime: null, endTime: null
+		},
 		templateUrl: 'controllers/business/report/report.html',
 		controller: 'ReportCtrl as vm'
 	});
 
 	$stateProvider.state('app.business.report.inspection', {
-		url: '/inspection/:status/:type/:id/:taskId',
+		url: '/inspection/:status/:type/:pageNum/:pageSize/:orderBy/:reverse/:reportId/:sampleName/:entrustedUnit/:inspectedUnit/:productionUnit/:receiveSampleId/:executeStandard/:sampleType/:checkType/:startTime/:endTime/:id/:taskId',
 		views: {
 			'@app.business': {
 				templateUrl: 'controllers/business/report/inspection/inspection.html',
@@ -69,7 +72,7 @@ angular.module('com.app').config(function ($stateProvider) {
 	});
 
 	$stateProvider.state('app.business.report.detail', {
-		url: '/:status/:type/:id/:taskId',
+		url: '/:status/:type/:pageNum/:pageSize/:orderBy/:reverse/:reportId/:sampleName/:entrustedUnit/:inspectedUnit/:productionUnit/:receiveSampleId/:executeStandard/:sampleType/:checkType/:startTime/:endTime/:id/:taskId',
 		views: {
 			'@app.business': {
 				templateUrl: 'controllers/business/report/detail/detail.html',

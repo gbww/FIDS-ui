@@ -10,25 +10,30 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1 && api.permissionArr.indexOf('CHECKITEM-CATALOG-SELECT-1') != -1;
 
   vm.clonedReportId = $cookies.get('clonedReportId');
-  vm.searchObject = {}
 
+  vm.searchObject = {}
   vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
     if (flag == 'delete') {
       vm.searchObject.totalCount = vm.total - 1;
-    } else if (flag == 'toggle') {
-      vm.searchObject.toggle = true;
+    } else if (flag == 'reset') {
+      vm.searchObject.reset = true;
     }
   }
 
+  vm.pageNum = parseInt($stateParams.pageNum) || null
+  vm.pageSize = parseInt($stateParams.pageSize) || null
+  vm.orderBy = $stateParams.orderBy || null
+  vm.reverse = $stateParams.reverse === 'true'
+
   vm.searchConditions = {
-    reportId: null,
-    sampleName: null,
-    entrustedUnit: null,
-    inspectedUnit: null,
-    productionUnit: null,
-    receiveSampleId: null,
-    executeStandard: null
+    reportId: $stateParams.reportId || null,
+    sampleName: $stateParams.sampleName || null,
+    entrustedUnit: $stateParams.entrustedUnit || null,
+    inspectedUnit: $stateParams.inspectedUnit || null,
+    productionUnit: $stateParams.productionUnit || null,
+    receiveSampleId: $stateParams.receiveSampleId || null,
+    executeStandard: $stateParams.executeStandard || null
   };
   vm.reportIdArr = [], vm.sampleNameArr = [], vm.entrustedUnitArr = [], vm.inspectedUnitArr = [],
   vm.productionUnitArr = [], vm.sampleIdArr = [], vm.exeStandardArr =[];
@@ -58,7 +63,19 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-  	SampleService.getSampleList(tableParams, vm.searchObject, vm.status).then(function (response) {
+
+    vm.pageNum = tableParams.pageNum
+    vm.pageSize = tableParams.pageSize
+    vm.orderBy = tableState.sort.predicate
+    vm.reverse = tableState.sort.reverse
+    vm.reportId = vm.searchConditions.reportId
+    vm.sampleName = vm.searchConditions.sampleName
+    vm.entrustedUnit = vm.searchConditions.entrustedUnit
+    vm.inspectedUnit = vm.searchConditions.inspectedUnit
+    vm.productionUnit = vm.searchConditions.productionUnit
+    vm.receiveSampleId = vm.searchConditions.receiveSampleId
+    vm.executeStandard = vm.searchConditions.executeStandard
+  	SampleService.getSampleList(tableParams, vm.searchConditions, vm.status).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.samples = response.data.entity.list;
@@ -108,7 +125,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.searchStatus = function (filter) {
     if (vm.status != filter) {
       vm.status = filter;
-      vm.refreshTable('toggle');
+      vm.refreshTable('reset');
     }
   }
 
@@ -138,7 +155,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   }
 
   vm.search=function(){
-    vm.searchObject = angular.copy(vm.searchConditions);
+    vm.refreshTable('reset')
   }
 
   vm.eventSearch=function(e){
@@ -187,7 +204,11 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   })
 
   vm.goDetail = function (id) {
-    $state.go('app.business.sample.detail.info', {status: vm.status, id: id});
+    $state.go('app.business.sample.detail.info', {
+      status: vm.status, id: id, pageSize: vm.pageSize, pageNum: vm.pageNum, orderBy: vm.orderBy, reverse: vm.reverse,
+      reportId: vm.reportId, sampleName: vm.sampleName, entrustedUnit: vm.entustedUnit, inspectedUnit: vm.inspectedUnit,
+      productionUnit: vm.productionUnit, receiveSampleId: vm.receiveSampleId, executeStandard: vm.executeStandard
+    });
   }
 
   vm.delete = function (sample, event) {

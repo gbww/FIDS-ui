@@ -29,6 +29,24 @@ angular.module('smart-table').run(['$templateCache', function ($templateCache) {
 
 
 }])
+    .directive('stSetTable', function () {
+        return {
+            restrict: 'A',
+            require: '^^stTable',
+            scope: {
+                stPageSize: '=',
+                stPage: '=',
+                stOrderBy: '=',
+                stReverse: '='
+            },
+            link: function (scope, element, attrs, ctrl) {
+                ctrl.tableState().pagination.number = scope.stPageSize;
+                ctrl.tableState().pagination.start = (scope.stPage - 1) * scope.stPageSize;
+                if (scope.stOrderBy) ctrl.tableState().sort.predicate = scope.stOrderBy;
+                ctrl.tableState().sort.reverse = scope.stReverse;
+            }
+        }
+    })
 
     //表格刷新的时候，只要st-search-watch监听的对象发生改变，就触发pipe方法
     .directive('stSearchWatch', function () {
@@ -46,10 +64,10 @@ angular.module('smart-table').run(['$templateCache', function ($templateCache) {
                         if (newValue.totalCount && (newValue.totalCount <= tableState.pagination.start)) {
                             tableState.pagination.start = 0;
                         }
-                        // 当切换重新请求时，跳转到第一页
-                        if (newValue.toggle) {
+                        // 当切换重新请求或者查询时，跳转到第一页
+                        if (newValue.reset) {
                             tableState.pagination.start = 0;
-                            delete scope.stSearchWatch.toggle;
+                            delete scope.stSearchWatch.reset;
                         }
                         ctrl.pipe();
                         console.log('st-search-object');
@@ -80,6 +98,7 @@ angular.module('smart-table').run(['$templateCache', function ($templateCache) {
                 }, function () {
                     scope.currentPage = Math.floor(ctrl.tableState().pagination.start / ctrl.tableState().pagination.number) + 1;
                     scope.numPages = ctrl.tableState().pagination.numberOfPages;
+                    scope.stItemsByPage = ctrl.tableState().pagination.number
                 }, true);
 
 

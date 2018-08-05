@@ -16,8 +16,8 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
     vm.itemSelected = [];
     vm.selectedItems = [];
     vm.searchObject.timestamp = new Date();
-    if (flag === 'toggle') {
-      vm.searchObject.toggle = true;
+    if (flag === 'reset') {
+      vm.searchObject.reset = true;
     }
   };
 
@@ -72,14 +72,14 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       vm.itemSelected = [];
       vm.selectedItems = [];
       vm.status = filter;
-      vm.refreshTable('toggle');
+      vm.refreshTable('reset');
     }
   }
 
   vm.eventSearch=function(e){
     var keycode = window.event?e.keyCode:e.which;
     if(keycode==13){
-      vm.refreshTable();
+      vm.search();
     }
   }
   vm.back = function () {
@@ -94,7 +94,7 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
   }
 
   vm.search = function () {
-    vm.searchObject = angular.copy(vm.query);
+    vm.refreshTable('reset')
   }
 
   vm.reset = function () {

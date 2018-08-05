@@ -13,8 +13,8 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
     vm.itemSelected = [];
     vm.selectedItems = [];
     vm.searchObject.timestamp = new Date();
-    if (flag == 'toggle') {
-      vm.searchObject.toggle = true;
+    if (flag == 'reset') {
+      vm.searchObject.reset = true;
     }
   }
 
@@ -52,7 +52,7 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
 
 
   vm.search=function(){
-    vm.searchObject = angular.copy(vm.searchConditions);
+    vm.searchObject = angular.merge({}, vm.searchConditions, {reset: true});
   }
 
   vm.eventSearch=function(e){
@@ -68,7 +68,7 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       vm.itemSelected = [];
       vm.selectedItems = [];
       vm.status = filter;
-      vm.refreshTable('toggle');
+      vm.refreshTable('reset');
     }
   }
 

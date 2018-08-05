@@ -12,7 +12,22 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
   var businessBC = api.breadCrumbMap.business;
   var report = angular.copy(businessBC.report.root);
   report.params = {
-    status: vm.status
+    status: vm.status,
+    pageSize: $stateParams.pageSize,
+    pageNum: $stateParams.pageNum,
+    orderBy: $stateParams.orderBy,
+    reverse: $stateParams.reverse,
+    reportId: $stateParams.reportId,
+    sampleName: $stateParams.sampleName,
+    entrustedUnit: $stateParams.entrustedUnit,
+    inspectedUnit: $stateParams.inspectedUnit,
+    productionUnit: $stateParams.productionUnit,
+    receiveSampleId: $stateParams.receiveSampleId,
+    executeStandard: $stateParams.executeStandard,
+    sampleType: $stateParams.sampleType,
+    checkType: $stateParams.checkType,
+    startTime: $stateParams.startTime,
+    endTime: $stateParams.endTime
   }
   vm.breadCrumbArr = [businessBC.root, report, businessBC.report.inspection];
 

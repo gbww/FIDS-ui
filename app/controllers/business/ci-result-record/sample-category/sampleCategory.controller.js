@@ -9,8 +9,11 @@ angular.module('com.app').controller('CiResultSampleCategoryCtrl', function (CiR
   };
 
   vm.searchObject = {};
-  vm.refreshTable = function () {
+  vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
+    if (flag == 'reset') {
+      vm.searchObject.reset = true;
+    }
   }
 
   vm.status = 0;
@@ -72,13 +75,13 @@ angular.module('com.app').controller('CiResultSampleCategoryCtrl', function (CiR
 
 
   vm.search=function(){
-    vm.refreshTable();
+    vm.refreshTable('reset');
   }
   
   vm.eventSearch=function(e){
     var keycode = window.event?e.keyCode:e.which;
     if(keycode==13){
-      vm.refreshTable();
+      vm.search();
     }
   }
 });
