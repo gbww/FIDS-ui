@@ -1,19 +1,19 @@
 .ci-result-record-sample {
-  .pt-table tbody tr {
+  .pt-table .fa-bell {
     &.outdate {
-      box-shadow: inset 3px 0 #000000;
+      color: #000000;
     }
     &.major {
-      box-shadow: inset 3px 0 #ff0000;
+      color: #ff0000;
     }
     &.minor {
-      box-shadow: inset 3px 0 #b538b5;
+      color: #b538b5;
     }
     &.warn {
-      box-shadow: inset 3px 0 #d49c00;
+      color: #d49c00;
     }
     &.common {
-      box-shadow: inset 3px 0 #00ab00;
+      color: #00ab00;
     }
   }
 }

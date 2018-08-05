@@ -42,14 +42,19 @@ angular.module('com.app').controller('CiResultSampleCategoryCtrl', function (CiR
 
           if (interval <= 0) {
             sample.emergency = 0
+            sample.status = '已过期'
           } else if (interval <= 1) {
             sample.emergency = 1
+            sample.status = '紧急'
           } else if (interval <= 3) {
             sample.emergency = 2
+            sample.status = '急迫'
           } else if (interval <= 7) {
             sample.emergency = 3
+            sample.status = '告警'
           } else {
             sample.emergency = 4
+            sample.status = '一般'
           }
           return sample
         })

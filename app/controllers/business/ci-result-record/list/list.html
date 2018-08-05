@@ -99,6 +99,10 @@
           <adjust-line></adjust-line>
         </th>
         <th>
+          <div>执行标准</div>
+          <adjust-line></adjust-line>
+        </th>
+        <th>
           <div>检测项名称</div>
           <adjust-line></adjust-line>
         </th>
@@ -171,12 +175,12 @@
     </thead>
     <tbody>
       <tr ng-if="vm.loading">
-        <td colspan="19" class="text-center">
+        <td colspan="20" class="text-center">
           <i class="fa fa-pulse fa-spinner"></i>
         </td>
       </tr>
       <tr ng-if="!vm.loading && vm.checkItems.length == 0">
-        <td colspan="19" class="text-center">暂无检测项</td>
+        <td colspan="20" class="text-center">暂无检测项</td>
       </tr>
       <tr ng-repeat="item in vm.checkItems track by item.id" ng-if="!vm.loading">
         <td>
@@ -187,6 +191,7 @@
         </td>
         <td>{{ item.receiveSampleId }}</td>
         <td>{{ item.sample.sampleName }}</td>
+        <td>{{ item.sample.executeStandard }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.method }}</td>
         <td>{{ item.unit }}</td>
@@ -246,7 +251,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="19">
+        <td colspan="20">
           <div st-idp st-total-count="vm.total"></div>
         </td>
       </tr>

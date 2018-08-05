@@ -28,6 +28,7 @@ angular.module('com.app').controller('SampleCreateCtrl', function ($rootScope, $
 
   var initSample = {
     sampleType: '食品',
+    sampleCirculate: '生产日期',
     status: 0
   }
   // 抽样单
