@@ -207,6 +207,13 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
     $("#batchRecordModal").modal('show');
   }
 
+  vm.export = function () {
+    var link = document.createElement('a');
+    link.href = '/api/v1/ahgz/receive/sampleItem/writeExcel';
+    link.download = parseInt(Math.random() * 1000000);
+    link.click();
+  }
+
   // 单选、复选
   vm.itemSelected = [];
   vm.selectedItems = [];
