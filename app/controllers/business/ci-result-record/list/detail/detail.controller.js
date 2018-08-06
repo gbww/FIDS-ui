@@ -8,8 +8,17 @@ angular.module('com.app').controller('CiSampleDetailCtrl', function ($stateParam
   var businessBC = api.breadCrumbMap.business;
   var itemToCheck = angular.copy(businessBC.itemToCheck.root);
   itemToCheck.params = {
-    status: vm.status
-  }
+    pageSize: $stateParams.pageSize,
+    pageNum: $stateParams.pageNum,
+    orderBy: $stateParams.orderBy,
+    status: vm.status,
+    reverse: $stateParams.reverse,
+    reportId: $stateParams.reportId,
+    sampleName: $stateParams.sampleName,
+    name: $stateParams.name,
+    method: $stateParams.method,
+    receiveSampleId: $stateParams.receiveSampleId
+  };
   vm.breadCrumbArr = [businessBC.root, itemToCheck, businessBC.itemToCheck.detail];
 
   vm.showReport = true;

@@ -28,13 +28,15 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 
 	$stateProvider.state('app.business.itemToCheck.list', {
 		url: '/list',
-		params: {status: null},
+		params: {status: null, pageSize: null, pageNum: null, orderBy: null, reverse: null,
+			reportId: null, sampleName: null, name: null, receiveSampleId: null, method: null
+		},
 		templateUrl: 'controllers/business/ci-result-record/list/list.html',
 		controller: 'CiResultListCtrl as vm'
 	});
 
 	$stateProvider.state('app.business.itemToCheck.detail', {
-		url: '/:status/:id',
+		url: '/:status/:pageNum/:pageSize/:orderBy/:reverse/:reportId/:receiveSampleId/:sampleName/:name/:method/:id',
 		views: {
 			'@app.business': {
 				templateUrl: 'controllers/business/ci-result-record/list/detail/detail.html',

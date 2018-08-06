@@ -173,12 +173,12 @@
         </th>
       </tr>
     </thead>
-    <tbody>
+    <tbody st-set-table st-page-size="vm.pageSize" st-page="vm.pageNum" st-order-by="vm.orderBy" st-reverse="vm.reverse">
       <tr ng-if="vm.loading">
         <td colspan="20" class="text-center">
           <i class="fa fa-pulse fa-spinner"></i>
         </td>
-      </tr>
+      </tr
       <tr ng-if="!vm.loading && vm.checkItems.length == 0">
         <td colspan="20" class="text-center">暂无检测项</td>
       </tr>
@@ -187,7 +187,10 @@
           <input type="checkbox" ng-checked="vm.itemSelected[$index]" ng-click="vm.selectItem($event, $index, item)">
         </td>
         <td>
-          <a ui-sref="app.business.itemToCheck.detail({status: vm.status, id: item.reportId})">{{ item.reportId }}</a>
+          <a ui-sref="app.business.itemToCheck.detail({
+            status: vm.status, id: item.reportId, pageSize: vm.pageSize, pageNum: vm.pageNum, orderBy: vm.orderBy, reverse: vm.reverse,
+            reportId: vm.reportId, sampleName: vm.sampleName, name: vm.name, method: vm.method, receiveSampleId: vm.receiveSampleId
+          })">{{ item.reportId }}</a>
         </td>
         <td>{{ item.receiveSampleId }}</td>
         <td>{{ item.sample.sampleName }}</td>

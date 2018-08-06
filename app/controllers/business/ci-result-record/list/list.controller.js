@@ -7,7 +7,10 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
 
   vm.query = {
     reportId: $stateParams.reportId || null,
-    receiveSampleId: $stateParams.receiveSampleId || null
+    receiveSampleId: $stateParams.receiveSampleId || null,
+    sampleName: $stateParams.sampleName || null,
+    name: $stateParams.entrustedUnit || null,
+    method: $stateParams.inspectedUnit || null
   };
   vm.searchObject = {};
 
@@ -20,6 +23,12 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       vm.searchObject.reset = true;
     }
   };
+
+
+  vm.pageNum = parseInt($stateParams.pageNum) || null
+  vm.pageSize = parseInt($stateParams.pageSize) || null
+  vm.orderBy = $stateParams.orderBy || null
+  vm.reverse = $stateParams.reverse === 'true'
 
   vm.status = parseInt($stateParams.status) ||1;
   vm.checkItems = [];
@@ -47,6 +56,15 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
 
+    vm.pageNum = tableParams.pageNum
+    vm.pageSize = tableParams.pageSize
+    vm.orderBy = tableState.sort.predicate
+    vm.reverse = tableState.sort.reverse
+    vm.reportId = vm.query.reportId
+    vm.receiveSampleId = vm.query.receiveSampleId
+    vm.sampleName = vm.query.sampleName
+    vm.name = vm.query.name
+    vm.method = vm.query.method
   	CiResultRecordService.getUserCi(tableParams, vm.status, vm.query).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
