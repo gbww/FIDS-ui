@@ -14,6 +14,8 @@ angular.module('com.app').controller('ReviewProjectCtrl', function ($uibModal, a
     vm.searchObject.timestamp = new Date();
     if (flag == 'delete') {
       vm.searchObject.totalCount = vm.total - 1;
+    } else if (flag === 'reset') {
+      vm.searchObject.reset = true
     }
   }
 
@@ -24,7 +26,7 @@ angular.module('com.app').controller('ReviewProjectCtrl', function ($uibModal, a
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
     }
-    ReviewService.getProjectList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
+    ReviewService.getProjectList(tableParams, vm.query).then(function (response) {
       vm.loading = false;
       // vm.projects = [
       //   {
@@ -49,12 +51,12 @@ angular.module('com.app').controller('ReviewProjectCtrl', function ($uibModal, a
   }
 
   vm.search=function(){
-    vm.searchObject.searchKeywords = vm.query;
+    vm.refreshTable('reset')
   }
   vm.eventSearch=function(e){
     var keycode = window.event?e.keyCode:e.which;
     if(keycode==13){
-      vm.searchObject.searchKeywords = vm.query;
+      vm.search()
     }
   }
 

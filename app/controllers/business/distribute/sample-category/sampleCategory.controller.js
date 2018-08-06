@@ -9,8 +9,8 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
     vm.searchObject.timestamp = new Date();
     if (flag == 'delete') {
       vm.searchObject.totalCount = vm.total - 1;
-    } else if (flag == 'toggle') {
-      vm.searchObject.toggle = true;
+    } else if (flag == 'reset') {
+      vm.searchObject.reset = true;
     }
   }
 
@@ -45,7 +45,7 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-  	CiDistributeService.getUndistributeSamples(tableParams, vm.searchObject).then(function (response) {
+  	CiDistributeService.getUndistributeSamples(tableParams, vm.searchConditions).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.samples = response.data.entity.list;
@@ -118,7 +118,7 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
   }
 
   vm.search=function(){
-    vm.searchObject = angular.copy(vm.searchConditions);
+    vm.refreshTable('reset')
   }
 
   vm.eventSearch=function(e){

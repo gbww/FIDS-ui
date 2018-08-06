@@ -7,14 +7,14 @@ angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal,
   var checkItemBC = api.breadCrumbMap.checkItem;
   vm.breadCrumbArr = [checkItemBC.root, checkItemBC.list];
 
-  vm.searchObject = {
-    searchKeywords: ''
-  }
+  vm.searchObject = {}
 
   vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
     if (flag == 'delete') {
       vm.searchObject.totalCount = vm.total - 1;
+    } else if (flag === 'reset') {
+      vm.searchObject.reset = true;
     }
   }
 
@@ -25,7 +25,7 @@ angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal,
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
     }
-    CheckItemService.getCheckItemList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
+    CheckItemService.getCheckItemList(tableParams, vm.query).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.checkItems = response.data.entity.list;
@@ -42,12 +42,12 @@ angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal,
   }
 
   vm.search=function(){
-    vm.searchObject.searchKeywords = vm.query;
+    vm.refreshTable('reset')
   }
   vm.eventSearch=function(e){
     var keycode = window.event?e.keyCode:e.which;
     if(keycode==13){
-      vm.searchObject.searchKeywords = vm.query;
+      vm.search()
     }
   }
 

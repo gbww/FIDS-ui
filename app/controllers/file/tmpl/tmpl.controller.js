@@ -6,14 +6,14 @@ angular.module('com.app').controller('TmplListCtrl', function ($uibModal, api, T
   var funcBC = api.breadCrumbMap.func;
   vm.breadCrumbArr = [funcBC.root, funcBC.template];
 
-  vm.searchObject = {
-    searchKeywords: ''
-  }
+  vm.searchObject = {}
 
   vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
     if (flag == 'delete') {
       vm.searchObject.totalCount = vm.total - 1;
+    } else if (flag === 'reset') {
+      vm.searchObject.reset = true
     }
   }
 
@@ -24,7 +24,7 @@ angular.module('com.app').controller('TmplListCtrl', function ($uibModal, api, T
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
     }
-    TemplateService.getTemplateList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
+    TemplateService.getTemplateList(tableParams, vm.query).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         vm.tmpls = response.data.entity.list;
@@ -41,12 +41,12 @@ angular.module('com.app').controller('TmplListCtrl', function ($uibModal, api, T
   }
 
   vm.search=function(){
-    vm.searchObject.searchKeywords = vm.query;
+    vm.refreshTable('reset')
   }
   vm.eventSearch=function(e){
     var keycode = window.event?e.keyCode:e.which;
     if(keycode==13){
-      vm.searchObject.searchKeywords = vm.query;
+      vm.search()
     }
   }
 

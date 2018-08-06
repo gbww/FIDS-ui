@@ -34,7 +34,7 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-  	CiDistributeService.getUndistributeCi(tableParams, vm.searchObject, vm.status).then(function (response) {
+  	CiDistributeService.getUndistributeCi(tableParams, vm.searchConditions, vm.status).then(function (response) {
       vm.ciLoading = false;
       if (response.data.success) {
         vm.checkItems = response.data.entity.list || [];
@@ -52,7 +52,7 @@ angular.module('com.app').controller('CheckItemDistributeListCtrl', function ($r
 
 
   vm.search=function(){
-    vm.searchObject = angular.merge({}, vm.searchConditions, {reset: true});
+    vm.refreshTable('reset')
   }
 
   vm.eventSearch=function(e){

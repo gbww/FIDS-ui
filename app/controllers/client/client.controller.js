@@ -6,14 +6,14 @@ angular.module('com.app').controller('ClientCtrl', function ($uibModal, api, dia
 
   vm.breadCrumbArr = [api.breadCrumbMap.client.root];
 
-  vm.searchObject = {
-    searchKeywords: ''
-  }
+  vm.searchObject = {}
 
   vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
     if (flag == 'delete') {
       vm.searchObject.totalCount = vm.total - 1;
+    } else if (flag === 'reset') {
+      vm.searchObject.reset = true;
     }
   }
 
@@ -33,7 +33,7 @@ angular.module('com.app').controller('ClientCtrl', function ($uibModal, api, dia
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     };
 
-    ClientService.getClientList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
+    ClientService.getClientList(tableParams, vm.query).then(function (response) {
     	vm.loading = false;
       if (response.data.success) {
         angular.forEach(response.data.entity.list, function (client) {
@@ -60,7 +60,7 @@ angular.module('com.app').controller('ClientCtrl', function ($uibModal, api, dia
   }
 
   vm.search=function(){
-    vm.searchObject.searchKeywords = vm.query;
+    vm.refreshTable('reset')
   }
 
   vm.eventSearch=function(e){

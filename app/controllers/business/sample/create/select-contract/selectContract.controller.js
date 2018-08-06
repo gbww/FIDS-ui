@@ -3,12 +3,13 @@
 angular.module('com.app').controller('SelectContractCtrl', function ($scope, $uibModalInstance, ContractService, toastr) {
   var vm = this;
 
-	vm.searchObject = {
-    searchKeywords: ''
-  }
+	vm.searchObject = {}
 
-  vm.refreshTable = function () {
+  vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
+    if (flag == 'reset') {
+      vm.searchObject.reset = true;
+    }
   }
 
   vm.loading = true;
@@ -18,7 +19,7 @@ angular.module('com.app').controller('SelectContractCtrl', function ($scope, $ui
       "pageSize": tableState.pagination.number,
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
     }
-  	ContractService.getContractList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
+  	ContractService.getContractList(tableParams, vm.query).then(function (response) {
       vm.loading = false;
       var tempContracts = [];
   		if (response.data.success) {
@@ -41,12 +42,12 @@ angular.module('com.app').controller('SelectContractCtrl', function ($scope, $ui
 
 
   vm.search=function(){
-    vm.searchObject.searchKeywords = vm.query;
+    vm.refreshTable('reset')
   }
   vm.eventSearch=function(e){
     var keycode = window.event?e.keyCode:e.which;
     if(keycode==13){
-      vm.searchObject.searchKeywords = vm.query;
+      vm.search()
     }
   }
 

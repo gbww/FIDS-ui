@@ -6,14 +6,14 @@ angular.module('com.app').controller('QuotationController', function (api, toast
 
   vm.breadCrumbArr = [api.breadCrumbMap.quotation.root];
 
-  vm.searchObject = {
-    searchKeywords: ''
-  }
+  vm.searchObject = {}
 
   vm.refreshTable = function (flag) {
     vm.searchObject.timestamp = new Date();
     if (flag == 'delete') {
       vm.searchObject.totalCount = vm.total - 1;
+    } else if (flag === 'reset') {
+      vm.searchObject.reset = true
     }
   }
 
@@ -33,7 +33,7 @@ angular.module('com.app').controller('QuotationController', function (api, toast
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     };
 
-    QuotationService.getQuotationList(tableParams, vm.searchObject.searchKeywords).then(function (response) {
+    QuotationService.getQuotationList(tableParams, vm.query).then(function (response) {
     	vm.loading = false;
       if (response.data.success) {
         vm.quotations = response.data.entity.list;
@@ -50,7 +50,7 @@ angular.module('com.app').controller('QuotationController', function (api, toast
   }
 
   vm.search=function(){
-    vm.searchObject.searchKeywords = vm.query;
+    vm.refreshTable('reset')
   }
 
   vm.eventSearch=function(e){
