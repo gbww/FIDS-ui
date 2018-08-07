@@ -24,7 +24,7 @@ angular.module('com.app').directive('adjustLine', function () {
         event.stopPropagation();
         scope.drag = true;
         scope.initWidth = $parent.width();
-        scope.initNextWidth = $parent.width();
+        scope.initNextWidth = $next.width();
         scope.initX = event.clientX;
       };
 

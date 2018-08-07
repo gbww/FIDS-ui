@@ -272,7 +272,7 @@
           <button class="close" ng-click="vm.close()">&times;</button>
           <h4>批量录入检测结果</h4>
         </div>
-        <div class="modal-body">
+        <form name="form" class="modal-body">
           <table class="pt-table editable-table">
             <thead>
               <tr>
@@ -297,7 +297,7 @@
                   <adjust-line></adjust-line>
                 </th>
                 <th>
-                  <div>标准值</div>
+                  <div class="item-required">标准值</div>
                   <adjust-line></adjust-line>
                 </th>
                 <th>
@@ -317,11 +317,11 @@
                   <adjust-line></adjust-line>
                 </th>
                 <th>
-                  <div>结果</div>
+                  <div class="item-required">结果</div>
                   <adjust-line></adjust-line>
                 </th>
                 <th>
-                  <div>实测值</div>
+                  <div class="item-required">实测值</div>
                   <adjust-line></adjust-line>
                 </th>
                 <th>操作</th>
@@ -341,7 +341,10 @@
                   <div custom-select class-name="inline" avail-arr="vm.characterArr" model="item" key="unit"></div>
                 </td>
                 <td>
-                  <div custom-select mode="append" class-name="inline" avail-arr="vm.characterArr" model="item" key="standardValue"></div>
+                  <div custom-select mode="append" name="{{'standardValue'+$index}}" class-name="inline" avail-arr="vm.characterArr" model="item" key="standardValue"></div>
+				          <div ng-if="form['standardValue'+$index].$dirty" ng-messages="form['standardValue'+$index].$error">
+					          <label class="error-messages" ng-message="required"><i></i>不能为空</label>
+				          </div>
                 </td>
                 <td>
                   <input ng-model="item.detectionLimit" />
@@ -360,10 +363,15 @@
                   <span ng-if="item.status == 2">检测完成</span>
                 </td>
                 <td>
-                  <div custom-select avail-arr="vm.resultArr" model="item" key="itemResult"></div>
+                  <div name="{{'itemResult' + $index}}" custom-select avail-arr="vm.resultArr" model="item" key="itemResult"></div>
+				          <div ng-if="form['itemResult' + $index].$dirty" ng-messages="form['itemResult' + $index].$error">
+					          <label class="error-messages" ng-message="required"><i></i>不能为空</label>
+				          </div>
                 </td>
                 <td>
-                  <input ng-model="item.measuredValue" />
+                  <input name="{{'measuredValue' + $index}}" ng-model="item.measuredValue" required />
+				          <div ng-if="form['measuredValue' + $index].$dirty" ng-messages="form['measuredValue' + $index].$error">
+					          <label class="error-messages" ng-message="required"><i></i>不能为空</label>
                 </td>
                 <td>
                   <a href ng-click="vm.patch(item, $index)">填充</a>
@@ -371,9 +379,9 @@
               </tr>
             </tbody>
           </table>
-        </div>
+        </form>
         <div class="modal-footer">
-          <button class="btn btn-2x btn-default-dark" ng-click="vm.batchOk()">确认</button>
+          <button class="btn btn-2x btn-default-dark" ng-click="vm.batchOk()" ng-disabled="form.$invalid">确认</button>
           <button class="btn btn-2x btn-default-light" ng-click="vm.batchClose()">取消</button>
         </div>
       </div>

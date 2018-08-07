@@ -30,13 +30,22 @@
 					<input class="input" ng-model="item.telephone" />
 				</td>
 				<td>
-					<input class="input" ng-model="item.firstMeeting" />
+					<input type="radio" ng-model="item.firstMeeting" id="{{'first-yes-'+$index}}" value="1" />
+					<label for="{{'first-yes-'+$index}}">是</label>
+					<input type="radio" ng-model="item.firstMeeting" id="{{'first-no-'+$index}}" value="0" />
+					<label for="{{'first-no-'+$index}}">否</label>
 				</td>
 				<td>
-					<input class="input" ng-model="item.liveMeeting" />
+					<input type="radio" ng-model="item.liveMeeting" id="{{'live-yes-'+$index}}" value="1" />
+					<label for="{{'live-yes-'+$index}}">是</label>
+					<input type="radio" ng-model="item.liveMeeting" id="{{'live-no-'+$index}}" value="0" />
+					<label for="{{'live-no-'+$index}}">否</label>
 				</td>
 				<td>
-					<input class="input" ng-model="item.lastMeeting" />
+					<input type="radio" ng-model="item.lastMeeting" id="{{'last-yes-'+$index}}" value="1" />
+					<label for="{{'last-yes-'+$index}}">是</label>
+					<input type="radio" ng-model="item.lastMeeting" id="{{'last-no-'+$index}}" value="0" />
+					<label for="{{'last-no-'+$index}}">否</label>
 				</td>
 				<td>
 					<select class="input" ng-model="item.identity" ng-options="option for option in vm.identityArr"></select>

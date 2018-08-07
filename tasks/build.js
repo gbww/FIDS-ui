@@ -251,7 +251,7 @@ gulp.task('buildHome', function () {
     .pipe(plugins.useref())
     // .pipe(plugins.if(isAppJs, plugins.es6()))
     .pipe(plugins.if(isAppJs, plugins.ngAnnotate()))
-    // .pipe(plugins.if(isJs, plugins.uglify()))
+    .pipe(plugins.if(isJs, plugins.uglify()))
     .pipe(plugins.if('*.css', plugins.csso()))
     // 避免index.html被加上后缀
     .pipe(indexHtmlFilter)
