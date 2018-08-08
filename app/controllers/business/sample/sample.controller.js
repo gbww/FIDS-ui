@@ -205,7 +205,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   vm.goDetail = function (id) {
     $state.go('app.business.sample.detail.info', {
-      status: vm.status, id: id, pageSize: vm.pageSize, pageNum: vm.pageNum, orderBy: vm.orderBy, reverse: vm.reverse,
+      status: vm.status, id: id, pageSize: vm.pageSize, pageNum: vm.pageNum, orderBy: vm.orderBy, reverse: vm.reverse.toString(),
       reportId: vm.reportId, sampleName: vm.sampleName, entrustedUnit: vm.entustedUnit, inspectedUnit: vm.inspectedUnit,
       productionUnit: vm.productionUnit, receiveSampleId: vm.receiveSampleId, executeStandard: vm.executeStandard
     });

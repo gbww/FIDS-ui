@@ -175,7 +175,7 @@
           <td>
             <a href ui-sref="app.business.report.inspection({
               status: vm.status, id: report.reportId, type: 'ck', taskId: report.task ? report.task.id : null,
-              pageNum: vm.pageNum, pageSize: vm.pageSize, orderBy: vm.orderBy, reverse: vm.reverse,
+              pageNum: vm.pageNum, pageSize: vm.pageSize, orderBy: vm.orderBy, reverse: vm.reverse.toString(),
               reportId: vm.reportId, sampleName: vm.sampleName, entrustedUnit: vm.entrustedUnit, inspectedUnit: vm.inspectedUnit,
               productionUnit: vm.productionUnit, receiveSampleId: vm.receiveSampleId, executeStandard: vm.executeStandard,
               sampleType: vm.sampleType, checkType: vm.checkType, startTime: vm.startTime, endTime: vm.endTime
@@ -209,7 +209,7 @@
               </button>
               <button class="btn btn-default" ui-sref="app.business.report.detail({
                 status: vm.status, id: report.reportId, type: 'bj',
-                pageNum: vm.pageNum, pageSize: vm.pageSize, orderBy: vm.orderBy, reverse: vm.reverse,
+                pageNum: vm.pageNum, pageSize: vm.pageSize, orderBy: vm.orderBy, reverse: vm.reverse.toString(),
                 reportId: vm.reportId, sampleName: vm.sampleName, entrustedUnit: vm.entrustedUnit, inspectedUnit: vm.inspectedUnit,
                 productionUnit: vm.productionUnit, receiveSampleId: vm.receiveSampleId, executeStandard: vm.executeStandard,
                 sampleType: vm.sampleType, checkType: vm.checkType, startTime: vm.startTime, endTime: vm.endTime
@@ -219,7 +219,7 @@
               </button>
               <button class="btn btn-default" ui-sref="app.business.report.detail({
                 status: vm.status, id: report.reportId, type: 'bz', taskId: report.task.id,
-                pageNum: vm.pageNum, pageSize: vm.pageSize, orderBy: vm.orderBy, reverse: vm.reverse,
+                pageNum: vm.pageNum, pageSize: vm.pageSize, orderBy: vm.orderBy, reverse: vm.reverse.toString(),
                 reportId: vm.reportId, sampleName: vm.sampleName, entrustedUnit: vm.entrustedUnit, inspectedUnit: vm.inspectedUnit,
                 productionUnit: vm.productionUnit, receiveSampleId: vm.receiveSampleId, executeStandard: vm.executeStandard,
                 sampleType: vm.sampleType, checkType: vm.checkType, startTime: vm.startTime, endTime: vm.endTime
@@ -229,7 +229,7 @@
               </button>
               <button class="btn btn-default" ui-sref="app.business.report.inspection({
                 status: vm.status, id: report.reportId, type: 'sh', taskId: report.task.id,
-                pageNum: vm.pageNum, pageSize: vm.pageSize, orderBy: vm.orderBy, reverse: vm.reverse,
+                pageNum: vm.pageNum, pageSize: vm.pageSize, orderBy: vm.orderBy, reverse: vm.reverse.toString(),
                 reportId: vm.reportId, sampleName: vm.sampleName, entrustedUnit: vm.entrustedUnit, inspectedUnit: vm.inspectedUnit,
                 productionUnit: vm.productionUnit, receiveSampleId: vm.receiveSampleId, executeStandard: vm.executeStandard,
                 sampleType: vm.sampleType, checkType: vm.checkType, startTime: vm.startTime, endTime: vm.endTime
@@ -239,7 +239,7 @@
               </button>
               <button class="btn btn-default" ui-sref="app.business.report.inspection({
                 status: vm.status, id: report.reportId, type: 'pz', taskId: report.task.id,
-                pageNum: vm.pageNum, pageSize: vm.pageSize, orderBy: vm.orderBy, reverse: vm.reverse,
+                pageNum: vm.pageNum, pageSize: vm.pageSize, orderBy: vm.orderBy, reverse: vm.reverse.toString(),
                 reportId: vm.reportId, sampleName: vm.sampleName, entrustedUnit: vm.entrustedUnit, inspectedUnit: vm.inspectedUnit,
                 productionUnit: vm.productionUnit, receiveSampleId: vm.receiveSampleId, executeStandard: vm.executeStandard,
                 sampleType: vm.sampleType, checkType: vm.checkType, startTime: vm.startTime, endTime: vm.endTime

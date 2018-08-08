@@ -192,7 +192,7 @@
         </td>
         <td>
           <a ui-sref="app.business.itemToCheck.detail({
-            status: vm.status, id: item.reportId, pageSize: vm.pageSize, pageNum: vm.pageNum, orderBy: vm.orderBy, reverse: vm.reverse,
+            status: vm.status, id: item.reportId, pageSize: vm.pageSize, pageNum: vm.pageNum, orderBy: vm.orderBy, reverse: vm.reverse.toString(),
             reportId: vm.reportId, sampleName: vm.sampleName, name: vm.name, method: vm.method, receiveSampleId: vm.receiveSampleId
           })">{{ item.reportId }}</a>
         </td>

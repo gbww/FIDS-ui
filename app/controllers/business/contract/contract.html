@@ -92,7 +92,7 @@
             <td>
               <a href ui-sref="app.business.contract.detail.info(
                 {type: contract.type, status: vm.statusFilter, pageSize: vm.pageSize, pageNum: vm.pageNum,
-                  orderBy: vm.orderBy, reverse: vm.reverse, sampleName: vm.sampleName, id: contract.id})">
+                  orderBy: vm.orderBy, reverse: vm.reverse.toString(), sampleName: vm.sampleName, id: contract.id})">
                 {{ contract.id }}
               </a>
             </td>

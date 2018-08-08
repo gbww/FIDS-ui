@@ -252,7 +252,7 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
     }).then(function (response) {
       if (response.data.success) {
         toastr.success('报告修改成功！');
-        $state.go('app.business.report', { status: vm.status + 1 });
+        $state.go('app.business.report', { status: vm.status });
       } else {
         toastr.error(response.data.message);
       }
