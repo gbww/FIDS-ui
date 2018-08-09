@@ -11,7 +11,8 @@
       <div class="form-group">
         <label class="col-sm-3 control-label">企业名称：</label>
         <div class="col-sm-8">
-          <a href ui-sref="app.review.searchCompany.report({companyId: vm.company.id})">{{ vm.company.comName || '--' }}</a>
+          <a href ui-sref="app.review.searchCompany.report({companyId: vm.company.id})" ng-if="vm.company.comName">{{ vm.company.comName }}</a>
+          <span ng-if="!vm.company.comName">--</span>
         </div>
       </div>
       <div class="form-group">
