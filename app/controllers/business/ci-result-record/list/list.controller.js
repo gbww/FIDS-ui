@@ -209,7 +209,16 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
 
   vm.export = function () {
     var link = document.createElement('a');
-    link.href = '/api/v1/ahgz/receive/sampleItem/writeExcel';
+    var order = vm.orderBy ? [vm.orderBy, vm.reverse].join(' ') : null
+    var name = api.userInfo.name
+    var href = '/api/v1/ahgz/receive/sampleItem/writeExcel?username=' + name + '&status=' + vm.status + '&pageSize=' + vm.pageSize + '&pageNum=' + vm.pageNum
+    if (order) href += '&order=' + order
+    angular.forEach(vm.query, function (val, key) {
+      if (val) {
+        href += '&' + key + '=' + val
+      }
+    })
+    link.href = href;
     link.download = parseInt(Math.random() * 1000000);
     link.click();
   }
