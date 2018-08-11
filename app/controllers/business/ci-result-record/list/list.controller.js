@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('CiResultListCtrl', function ($stateParams, $uibModal, api, CiResultRecordService, UnitService, toastr) {
+angular.module('com.app').controller('CiResultListCtrl', function ($stateParams, $uibModal, api, CiResultRecordService, UnitService, toastr, dialog) {
   var vm = this;
   vm.hasRecordAuth = api.permissionArr.indexOf('SAMPLE-UPDATEITEMRESULT-1') != -1;
   vm.isSampleDetail = !!$stateParams.reportId;
@@ -321,9 +321,9 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
 
   vm.batchOk = function () {
     var res = angular.copy(vm.selectedItemsCopy)
-    angular.forEach(res, function (item) {
-      angular.merge(item, {status: 2})
-    })
+    // angular.forEach(res, function (item) {
+    //   angular.merge(item, {status: 2})
+    // })
     CiResultRecordService.batchRecordCiResult(res).then(function (response) {
   		if (response.data.success) {
         vm.batchClose()
@@ -334,6 +334,33 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
   	}).catch(function (err) {
   		toastr.error(err.data);
   	})
+  }
+
+  vm.batchPush = function (items) {
+    if (!items && vm.selectedItems.length === 0) {
+      toastr.warning('请选择检测项！');
+      return;
+    }
+
+    var data = items ? items : vm.selectedItems.map(function (item) {
+      return item.id
+    })
+
+    var result = dialog.confirm('确认下发?');
+    result.then(function (res) {
+      if (res) {
+        CiResultRecordService.batchDistribute(data).then(function (response) {
+  		    if (response.data.success) {
+            toastr.success('下发成功！')
+            vm.refreshTable()
+  		    } else {
+  			    toastr.error(response.data.message);
+  		    }
+  	    }).catch(function (err) {
+  		    toastr.error(err.data);
+        })
+      }
+    })
   }
 
 });

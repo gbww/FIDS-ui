@@ -16,7 +16,6 @@ angular.module('com.app').controller('CiResultSampleCategoryCtrl', function (CiR
     }
   }
 
-  vm.status = 0;
   vm.samples = [];
   vm.loading = true;
   vm.getSampleList = function (tableState) {
@@ -34,7 +33,7 @@ angular.module('com.app').controller('CiResultSampleCategoryCtrl', function (CiR
       "pageNum": Math.floor(tableState.pagination.start / tableState.pagination.number) + 1,
       "order": orderBy ? [orderBy, reverse].join(' ') : null
     }
-    CiResultRecordService.getUserSample(tableParams, vm.status, vm.query).then(function (response) {
+    CiResultRecordService.getUserSample(tableParams, vm.query).then(function (response) {
       vm.loading = false;
       if (response.data.success) {
         var now = new Date().getTime()

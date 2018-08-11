@@ -4,14 +4,13 @@ angular.module('com.app').factory('CiResultRecordService', function ($http) {
 	var baseUrl = '/api/v1/ahgz/receive';
   return {
     // 获取检测人员的检测项sample集合
-		getUserSample: function (tableParams, status, searchObject) {
+		getUserSample: function (tableParams, searchObject) {
 			return $http({
 				url: baseUrl + '/sampleItem/sample',
 				params: {
           pageSize: tableParams.pageSize,
           pageNum: tableParams.pageNum,
           order: tableParams.order,
-					status: status,
 					reportId: searchObject.reportId,
 					receiveSampleId: searchObject.receiveSampleId
         }
@@ -48,5 +47,13 @@ angular.module('com.app').factory('CiResultRecordService', function ($http) {
 				data: data
 			})
 		},
+
+		batchDistribute: function (data) {
+			return $http({
+				url: baseUrl + '/sample/item/result/finish',
+				method: 'POST',
+				data: data
+			})
+		}
   }
 })

@@ -19,7 +19,7 @@ angular.module('com.app').controller('RecordCiResultCtrl', function ($uibModalIn
         standardValue: vm.checkItem.standardValue,
         measuredValue: vm.checkItem.measuredValue,
         itemResult: vm.checkItem.itemResult,
-        status: 2
+        // status: 2
       });
     });
     CiResultRecordService.batchRecordCiResult(data).then(function (response) {

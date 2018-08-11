@@ -9,6 +9,10 @@
       <i class="fa fa-edit"></i>
       <span>批量录入</span>
     </button>
+    <button class="btn btn-default-light" ng-click="vm.batchPush()" role-auth="SAMPLE-UPDATEITEMRESULT-1">
+      <i class="icon icon-distribute"></i>
+      <span>批量下发</span>
+    </button>
     <button class="btn btn-default-light" ng-click="vm.export()">
       <i class="fa fa-file-excel-o"></i>
       <span>导出</span>
@@ -245,6 +249,12 @@
                   <span>重新分配</span>
                 </a>
               </li>
+              <li ng-click="vm.batchPush([item.id])">
+                <a href>
+                  <i class="icon icon-distribute"></i>
+                  <span>下发</span>
+                </a>
+              </li>
             </ul>
           </div>
         </td>
@@ -269,7 +279,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button class="close" ng-click="vm.close()">&times;</button>
+          <button class="close" ng-click="vm.batchClose()">&times;</button>
           <h4>批量录入检测结果</h4>
         </div>
         <form name="form" class="modal-body">
