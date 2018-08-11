@@ -13,7 +13,6 @@
     }
     .table-wrapper {
 			position: relative;
-      padding: 5px 10px;
       height: 350px;
       overflow: hidden;
       >div {
@@ -28,7 +27,8 @@
 			}
       .statusBar {
 				position: absolute;
-				top: 0px;
+        top: 0px;
+        right: 100px;
         border-radius: 3px;
         background-color: #eee;
         padding: 1px;
