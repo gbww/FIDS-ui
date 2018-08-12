@@ -24,6 +24,8 @@ angular.module('com.app').factory('ReportService', function ($http) {
         appendix = '/list/print';
       } else if (reportStatus === 4) {
         appendix = '/list/finish';
+      } else if (!tableParams.order) {
+        tableParams.order = 'report_process_id'
       }
 
 			return $http({

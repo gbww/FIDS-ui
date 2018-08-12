@@ -187,7 +187,7 @@
           <td>{{ report.receiveDate }}</td>
           <td>{{ report.finishDate }}</td>
           <td>{{ report.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-          <td>
+          <td ng-class="{isDeclined: report.reportProcessId && report.reportStatus == 0 && report.isExamine === 1}">
             <i class="icon" ng-class="{'initial icon-status-edit': !report.reportProcessId || report.reportStatus==0,
 								'handling icon-status-update': report.reportProcessId && report.reportStatus==1,
 								'approving icon-status-distribute': report.reportProcessId && report.reportStatus==2,
@@ -195,7 +195,8 @@
 								'done icon-status-success': report.reportProcessId && report.reportStatus==4}">
             </i>
             <span ng-if="!report.reportProcessId">尚未启动流程</span>
-            <span ng-if="report.reportProcessId && report.reportStatus == 0">待编制</span>
+            <span ng-if="report.reportProcessId && report.reportStatus == 0 && report.isExamine === 0">待编制</span>
+            <span ng-if="report.reportProcessId && report.reportStatus == 0 && report.isExamine === 1">待编制 (被驳回)</span>
             <span ng-if="report.reportProcessId && report.reportStatus == 1">待审核</span>
             <span ng-if="report.reportProcessId && report.reportStatus == 2">待批准</span>
             <span ng-if="report.reportProcessId && report.reportStatus == 3">待打印</span>

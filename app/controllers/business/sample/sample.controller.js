@@ -19,6 +19,9 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     } else if (flag == 'reset') {
       vm.searchObject.reset = true;
     }
+    vm.allSelectedSample = false;
+    vm.itemSelectedSample = [];
+    vm.selectedItemsSample = [];
   }
 
   vm.pageNum = parseInt($stateParams.pageNum) || null
@@ -523,12 +526,33 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     })
   }
 
-  vm.release = function (reportId, event) {
+  vm.release = function (reportId, flag, event) {
     event.stopPropagation();
-    var result = dialog.confirm('确认下发报告编号为 ' + reportId + ' 的接样单检测项?');
+    var result = dialog.confirm('确认' + (flag ? '下发' : '撤回') + '报告编号为 ' + reportId + ' 的接样单?');
     result.then(function (res) {
       if (res) {
-        SampleService.setSampleStatus(reportId, -1).then(function (response) {
+        SampleService.setSampleStatus(reportId, flag ? -1 : 0).then(function (response) {
+          if (response.data.success) {
+            vm.refreshTable()
+          } else {
+            toastr.error(response.data.message)
+          }
+        }).catch(function (err) {
+          toastr.error(err.data)
+        })
+      }
+    })
+  }
+
+  vm.batchRelease = function (flag) {
+    if (vm.selectedItemsSample.length === 0) {
+      toastr.warning('请选择接样单！', '警告');
+      return;
+    }
+    var result = dialog.confirm('确认' + (flag ? '下发' : '撤回') + ' ?');
+    result.then(function (res) {
+      if (res) {
+        SampleService.batchSetSampleStatus(vm.selectedItemsSample, flag ? -1 : 0).then(function (response) {
           if (response.data.success) {
             vm.refreshTable()
           } else {
@@ -630,7 +654,44 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     });
   }
 
-  // 单选、复选
+  // 抽样单单选、复选
+  vm.itemSelectedSample = [];
+  vm.selectedItemsSample = [];
+  vm.selectAllSample = function () {
+    if (vm.allSelectedSample){
+      vm.selectedItemsSample = [];
+      angular.forEach(vm.samples, function (item, idx) {
+        vm.selectedItemsSample.push(item.reportId);
+        vm.itemSelectedSample[idx] = true;
+      });
+    } else {
+      vm.selectedItemsSample = [];
+      angular.forEach(vm.samples, function (item, idx) {
+        vm.itemSelectedSample[idx] = false;
+      });
+    }
+  }
+
+  vm.selectItemSample = function (event, idx, id) {
+    if(event.target.checked){
+      vm.selectedItemsSample.push(id);
+      vm.itemSelectedSample[idx] = true;
+      if(vm.selectedItemsSample.length == vm.samples.length){
+        vm.allSelectedSample = true;
+      }
+    } else {
+      for (var i=0,len=vm.selectedItemsSample.length; i<len; i++){
+        if (id == vm.selectedItemsSample[i].reportId) {
+          vm.selectedItemsSample.splice(i, 1);
+          break;
+        }
+      };
+      vm.itemSelectedSample[idx] = false;
+      vm.allSelectedSample = false;
+    }
+  }
+
+  // 检测项单选、复选
   vm.itemSelected = [];
   vm.selectedItems = [];
   vm.selectAll = function () {

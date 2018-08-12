@@ -46,6 +46,13 @@ angular.module('com.app').factory('SampleService', function ($http) {
 		setSampleStatus: function (id, status) {
 			return $http.get(baseUrl + '/sample/' + id + '/status/' + status)
 		},
+		batchSetSampleStatus: function (ids, status) {
+			return $http({
+				url: baseUrl + '/sample/status/' + status,
+				method: 'POST',
+				data: ids
+			})
+		},
 
 		getSampleInfo: function (id) {
 			return $http.get(baseUrl + '/sample/' + id);

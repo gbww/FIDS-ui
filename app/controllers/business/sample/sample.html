@@ -6,6 +6,14 @@
 				<i class="fa fa-plus"></i>
 				<span>接样单录入</span>
 			</button>
+			<button class="btn btn-default-light" ng-click="vm.batchRelease(true)" ng-if="vm.status === 0">
+				<i class="icon icon-distribute"></i>
+				<span>批量下发</span>
+			</button>
+			<button class="btn btn-default-light" ng-click="vm.batchRelease(false)" ng-if="vm.status === -1">
+				<i class="fa fa-reply"></i>
+				<span>批量撤回</span>
+			</button>
 
 			<ul class="statusBar clearfix">
         <li ng-class="{'active': vm.status === 0}">
@@ -83,6 +91,10 @@
 		<table class="pt-table" st-table="vm.samples" st-pipe="vm.getSampleList">
 			<thead st-search-watch="vm.searchObject">
 				<tr>
+					<th style="width: 60px;">
+						<input type="checkbox" ng-click="vm.selectAllSample()" ng-model="vm.allSelectedSample">
+						序号
+					</th>
 					<th>
 						<div st-sort="reportId">报告编号<i class="fa fa-sort"></i></div>
 						<adjust-line></adjust-line>
@@ -128,6 +140,10 @@
 				<tr ng-repeat="sample in vm.samples track by $index" ng-if="!vm.loading"
 						ng-click="vm.selectSample(sample)"
 						ng-class="{'selected': vm.selectedSample.reportId == sample.reportId}">
+					<td>
+						<input type="checkbox" ng-checked="vm.itemSelectedSample[$index]" ng-click="vm.selectItemSample($event, $index, sample.reportId)">
+						{{ $index + 1 }}
+					</td>
 					<td>{{ sample.reportId }}</td>
 					<td>{{ sample.sampleName }}</td>
 					<td>{{ sample.entrustedUnit }}</td>
@@ -151,8 +167,11 @@
 								<i class="caret"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<li ng-click="vm.release(sample.reportId, $event)" ng-if="sample.status === 0">
+								<li ng-click="vm.release(sample.reportId, true, $event)" ng-if="sample.status === 0">
 									<a href><i class="icon icon-distribute"></i><span>下发</span></a>
+								</li>
+								<li ng-click="vm.release(sample.reportId, false, $event)" ng-if="sample.status === -1">
+									<a href><i class="fa fa-reply"></i><span>撤回</span></a>
 								</li>
 								<li ng-click="vm.clone(sample, $event)" role-auth="SAMPLE-ADD-1">
 									<a href><i class="fa fa-clone"></i><span>复制</span></a>

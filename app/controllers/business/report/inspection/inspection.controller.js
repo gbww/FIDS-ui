@@ -80,7 +80,7 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
         var data = $filter('orderBy')(response.data.entity, 'time', false);
         var res = '';
         angular.forEach(data, function (item) {
-          res += item.time + '  ' + item.message + '\n'
+          res += item.time + '  ' + item.message + '\r\n'
         })
         vm.comments = res;
         // var commentDict = {};
@@ -133,7 +133,7 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
         return ReportService.runExamineTask(vm.taskId, data);
       }).then(function (response) {
         if (response.data.success) {
-          $state.go('app.business.report', { status: vm.status + 1 });
+          $state.go('app.business.report', { status: vm.status });
         } else {
           toastr.error(response.data.message);
         }
@@ -147,7 +147,7 @@ angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScop
       };
       ReportService.runApproveTask(vm.taskId, data).then(function (response) {
         if (response.data.success) {
-          $state.go('app.business.report', { status: vm.status + 1 });
+          $state.go('app.business.report', { status: vm.status });
         } else {
           toastr.error(response.data.message);
         }
