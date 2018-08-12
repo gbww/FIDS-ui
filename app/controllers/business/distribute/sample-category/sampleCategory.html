@@ -98,7 +98,7 @@
       <tr ng-if="!vm.loading && vm.samples.length === 0">
         <td colspan="7" class="text-center">待检测接样单</td>
       </tr>
-      <tr ng-repeat="sample in vm.samples track by $index" ng-if="!vm.loading" ng-click="vm.selectSample(sample)" ng-class="{'selected': vm.selectedSample.receiveSampleId == sample.receiveSampleId}">
+      <tr ng-repeat="sample in vm.samples track by $index" ng-if="!vm.loading" ng-click="vm.selectSample(sample)" ng-class="{'selected': vm.selectedSample.reportId == sample.reportId}">
         <td>{{ sample.reportId }}</td>
         <td>{{ sample.receiveSampleId }}</td>
         <td>{{ sample.sampleName }}</td>
