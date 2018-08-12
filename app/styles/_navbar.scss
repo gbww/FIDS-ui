@@ -32,11 +32,12 @@
     }
     span{
       display: inline-block;
-      color: #acc;
+      color: #efefef;
       font-family: -webkit-pictograph;
       font-size: 20px;
       font-weight: bold;
       vertical-align: middle;
+      text-shadow: 1px 0px 0px #fff;
     }
   }
 
@@ -137,6 +138,7 @@
             span:before{
               content: '';
               display: inline-block;
+              margin-bottom: 2px;
               margin-right: 8px;
               width: 6px;
               height: 6px;

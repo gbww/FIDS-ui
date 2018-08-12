@@ -32,7 +32,7 @@ angular.module('com.app').config(function ($stateProvider) {
 						var users = response.data.entity;
 						if (users.length === 0) {
 							$rootScope.loading = false;
-							toastr.warning('请先新建批准人！');
+							toastr.warning('请先新建批准人！', '警告');
 							deferred.reject();
 						} else {
 							deferred.resolve(users);
@@ -116,7 +116,7 @@ angular.module('com.app').config(function ($stateProvider) {
 						var users = response.data.entity;
 						if (users.length === 0) {
 							$rootScope.loading = false;
-							toastr.warning('请先新建审核人！');
+							toastr.warning('请先新建审核人！', '警告');
 							deferred.reject();
 						} else {
 							deferred.resolve(users);

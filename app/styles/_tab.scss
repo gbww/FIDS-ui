@@ -15,8 +15,8 @@
     }
     li{
       border-top: 3px solid transparent;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      // border-top-left-radius: 5px;
+      // border-top-right-radius: 5px;
       float: left;
       &.active{
         border-top: 3px solid $hover-blue-color;
@@ -49,7 +49,7 @@
     -ms-flex: 1 0 auto;
     background-color: #FFFFFF;
     padding: 10px;
-    border-radius: 5px;
+    // border-radius: 5px;
     @include box-shadow(3px 4px 8px rgba(0, 0, 0, 0.1), -3px -1px 8px rgba(0, 0, 0, 0.1));
 		@include flex(flex, column);
     &:after{

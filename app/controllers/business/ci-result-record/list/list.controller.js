@@ -200,7 +200,7 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
 
   vm.batch = function () {
     if (vm.selectedItems.length === 0) {
-      toastr.warning('请选择检测项！');
+      toastr.warning('请选择检测项！', '警告');
       return;
     }
     vm.selectedItemsCopy = angular.copy(vm.selectedItems)
@@ -338,7 +338,7 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
 
   vm.batchPush = function (items) {
     if (!items && vm.selectedItems.length === 0) {
-      toastr.warning('请选择检测项！');
+      toastr.warning('请选择检测项！', '警告');
       return;
     }
 

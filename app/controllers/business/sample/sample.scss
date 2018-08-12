@@ -47,6 +47,9 @@
         color: #ccc;
       }
     }
+    a {
+      margin-top: 3px;
+    }
   }
 }
 .business-sample-detail-list, .business-report-detail-list {
@@ -76,13 +79,11 @@
   .toggle-header {
     background-color: #f8f8f8;
     padding: 5px 10px;
-    border-radius: 5px;
     margin-bottom: 10px;
-    @include box-shadow(0 1px 3px #aaa);
+    @include box-shadow(0 0px 3px #aaa);
     cursor: pointer;
   }
   .toggle-body {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 0 3px;
   }
 }

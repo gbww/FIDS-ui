@@ -194,7 +194,7 @@ angular.module('com.app').controller('CheckItemDistributeSampleCtrl', function (
 
   vm.batchDistribute = function () {
     if (vm.selectedItems.length === 0) {
-      toastr.warning('请选择检测项！');
+      toastr.warning('请选择检测项！', '警告');
       return;
     }
 

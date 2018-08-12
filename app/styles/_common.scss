@@ -110,7 +110,7 @@ a:visited, a:active {
       @include flex(flex, column);
       padding: 10px;
       min-height: 100%;
-      @include animation(scaleIn 0.8s ease-in-out);
+      // @include animation(scaleIn 0.8s ease-in-out);
     }
   }
 }
@@ -172,9 +172,8 @@ input[type="radio"] {
 
 .input {
   min-width: 120px;
-  height: 26px;
+  height: 25px;
   padding: 3px 8px;
-  border-radius: 3px;
   color: #333;
   &.search {
     vertical-align: middle;
@@ -205,7 +204,6 @@ input[type="radio"] {
 .pt,
 .pt-2 {
   padding: 8px;
-  border-radius: 5px;
   background-color: #FFFFFF;
   color: #555;
   @include box-shadow(3px 4px 8px rgba(0, 0, 0, 0.1), -3px -1px 8px rgba(0, 0, 0, 0.1));
@@ -245,7 +243,7 @@ input[type="radio"] {
   }
   input:not([type='checkbox']) {
     width: 240px;
-    height: 23px;
+    height: 25px;
     color: #333;
     vertical-align: middle;
     padding-left: 25px;
@@ -257,7 +255,6 @@ input[type="radio"] {
     width: 240px;
     height: 23px;
     color: #333;
-    border-radius: 4px;
     text-indent: 8px;
     vertical-align: middle;
     &+select,
@@ -273,7 +270,6 @@ input[type="radio"] {
     margin-right: 0;
   }
   ul.statusBar {
-    border-radius: 3px;
     background-color: #c1c9ce;
     display: inline-block;
     margin-right: 10px;
@@ -282,7 +278,6 @@ input[type="radio"] {
     height: 23px;
     li {
       float: left;
-      border-radius: 3px;
       height: 21px;
       line-height: 21px;
       cursor: pointer;

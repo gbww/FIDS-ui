@@ -6,6 +6,9 @@
 	.modal-dialog {
 		margin-top: 100px;
 	}
+	.modal-content {
+		border-radius: 0;
+	}
 	.modal-header, .modal-body, .modal-footer {
 		padding: 8px 10px;
 	}
@@ -72,5 +75,8 @@ form {
 	}
 	.form-group .col {
 		padding: 0;
+	}
+	.form-control {
+		border-radius: 0;	
 	}
 }

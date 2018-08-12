@@ -3,7 +3,7 @@
 .p-login {
   height: 100%;
   background-color: #119E95;
-  background: url(./images/login/bg.svg) no-repeat center center;
+  background: url(./images/login/bg.jpg) no-repeat center center;
   background-size: cover;
   .login-form {
     position: absolute;
@@ -14,11 +14,12 @@
     -webkit-transform: translate(-50%, -50%);
     width: 290px;
     height: 400px;
-    background-color: #fff;
+    background-color: #4795c3;
+    color: #fff;
     border-radius: 5px;
     padding-top: 30px;
     overflow: hidden;
-    box-shadow: 0 0 7px rgba(42, 105, 105, 0.65);
+    box-shadow: 0 0 17px rgba(42, 105, 105, 0.65);
     .form-group{
       margin-bottom: 20px;
     }
@@ -32,7 +33,7 @@
         font-size: 20px;
         font-weight: bold;
         vertical-align: middle;
-        color: #686868;
+        text-shadow: 0px 0px 1px #fff;
       }
     }
     form{
@@ -45,6 +46,7 @@
       display: -moz-flex;
       width: 100%;
       height: 32px;
+      color: #686868;
       line-height: 32px;
       background-color: #E7ECF0;
       border: 1px solid transparent;
@@ -77,14 +79,17 @@
         }
       }
     }
+    input:-webkit-autofill, input:hover:-webkit-autofill, input:focus:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px white inset; 
+    }
     #preserve{
       outline: 0;
+      vertical-align: sub;
       &:hover, &:focus{
         outline: 0;
       }
       +label{
         font-weight: 400;
-        vertical-align: top;
         margin: 0;
         cursor: pointer;
       }
@@ -103,15 +108,12 @@
       text-align: center;
       font-size: 16px;
       color: #fff;
-      border: none;
+      border: 1px solid #aaa;
       border-radius: 2px;
-      background-color: #119E95;
-      background: -moz-linear-gradient(left, #119E95, #39B3EF);
-      background: -webkit-linear-gradient(left, #119E95, #39B3EF);
-      background: -o-linear-gradient(left, #119E95, #39B3EF);
-      filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#119E95, endColorstr=#39B3EF);
+      background-color: #8bd000;
       &:focus, &:hover{
-        box-shadow: 0 3px 5px rgba(30, 179, 186, 0.5);
+        box-shadow: 0 1px 5px rgba(30, 179, 186, 0.5);
+        border-color: #ccc;
       }
     }
   }

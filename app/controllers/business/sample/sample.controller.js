@@ -495,7 +495,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   vm.batchDelete = function () {
     if (vm.selectedItems.length === 0) {
-      toastr.warning('请选择检测项！');
+      toastr.warning('请选择检测项！', '警告');
       return;
     }
 
@@ -580,7 +580,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
 
   vm.batchDistribute = function () {
     if (vm.selectedItems.length === 0) {
-      toastr.warning('请选择检测项！');
+      toastr.warning('请选择检测项！', '警告');
       return;
     }
 

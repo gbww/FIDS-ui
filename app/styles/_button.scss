@@ -6,7 +6,7 @@
   font-size: 13px;
   line-height: 1.33;
   border: none;
-  border-radius: 3px;
+  border-radius: 0px;
   touch-action: manipulation;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -23,6 +23,7 @@
 
 .btn-default-light{
   color: #444;
+  min-width: 50px;
   background-color: transparent;
   border: 1px solid #d9d9d9;
   &:focus{
@@ -41,6 +42,7 @@
 }
 .btn-default-dark{
   color: #FFFFFF;
+  min-width: 50px;
   background-color: $blue-color;
   border: 1px solid $blue-color;
   &:focus{

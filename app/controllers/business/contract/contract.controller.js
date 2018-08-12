@@ -182,7 +182,7 @@ angular.module('com.app').controller('ContractCtrl', function ($scope, $state, $
 
     modalInstance.result.then(function (res) {
       if (res.approve == 'false') {
-        toastr.warning('您已驳回合同审批！');
+        toastr.warning('您已驳回合同审批！', '警告');
       } else {
         toastr.success('您已通过合同审批！');
       }
