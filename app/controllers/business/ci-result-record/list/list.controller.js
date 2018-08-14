@@ -209,7 +209,21 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
 
   vm.export = function () {
     var link = document.createElement('a');
-    var order = vm.orderBy ? [vm.orderBy, vm.reverse].join(' ') : null
+    var orderBy = vm.orderBy
+    if (orderBy === 'reportId') {
+      orderBy = 'report_id';
+    } else if (orderBy === 'receiveSampleId') {
+      orderBy = 'receive_sample_id';
+    } else if (orderBy === 'testRoom') {
+      orderBy = 'test_room';
+    } else if (orderBy === 'testUser') {
+      orderBy = 'test_user';
+    } else if (orderBy === 'updatedAt') {
+      orderBy = 'updated_at';
+    } else if (orderBy === 'finishDate') {
+      orderBy = 'finish_date'
+    }
+    var order = orderBy ? [orderBy, vm.reverse ? 'desc' : 'asc'].join(' ') : null
     var name = api.userInfo.name
     var href = '/api/v1/ahgz/receive/sampleItem/writeExcel?username=' + name + '&status=' + vm.status + '&pageSize=' + vm.pageSize + '&pageNum=' + vm.pageNum
     if (order) href += '&order=' + order
