@@ -124,7 +124,7 @@
 						<adjust-line></adjust-line>
 					</th>
 					<th>
-						<div st-sort="createdAt">创建时间<i class="fa fa-sort"></i></div>
+						<div st-sort="finishDate">要求完成时间<i class="fa fa-sort"></i></div>
 						<adjust-line></adjust-line>
 					</th>
 					<th style="width:100px">操作</th>
@@ -151,7 +151,7 @@
 					<td>{{ sample.productionUnit }}</td>
 					<td>{{ sample.receiveSampleId }}</td>
 					<td>{{ sample.executeStandard }}</td>
-					<td>{{ sample.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+					<td>{{ sample.finishDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
 					<td class="dropdown-col">
 						<div class="btn-group">
 							<button class="btn btn-default" ng-click="vm.goDetail(sample.reportId)" role-auth="SAMPLE-UPDATESAMPLE-1">

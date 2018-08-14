@@ -66,34 +66,6 @@
               <label for="env">环境</label>
             </td>
           </tr>
-          <tr ng-show="vm.report.sampleType === '食品'">
-            <td class="item-title">
-              <span>食品大类</span>
-            </td>
-            <td>
-              <input class="input" name="dl" ng-model="vm.report.foodDalei">
-            </td>
-            <td class="item-title">
-              <span>食品亚类</span>
-            </td>
-            <td>
-              <input class="input" name="yl" ng-model="vm.report.foodYalei">
-            </td>
-          </tr>
-          <tr ng-show="vm.report.sampleType === '食品'">
-            <td class="item-title">
-              <span>食品次亚类</span>
-            </td>
-            <td>
-              <input class="input" name="cyl" ng-model="vm.report.foodCiyalei">
-            </td>
-            <td class="item-title">
-              <span>食品细类</span>
-            </td>
-            <td>
-              <input class="input" name="xl" ng-model="vm.report.foodXilei">
-            </td>
-          </tr>
           <tr>
             <td class="item-title">
               <span ng-class="{'item-required': (vm.report.reportStatus === 0 && vm.type === 'bz') || vm.report.reportStatus > 0}">报告模板</span>
@@ -174,13 +146,10 @@
               <input class="input" name="sampleName" ng-model="vm.report.sampleName">
             </td>
             <td class="item-title">
-              <span>样品管理类别</span>
+              <span>样品类型</span>
             </td>
             <td>
-              <input type="radio" id="jy" ng-model="vm.sampleManager.managerType" value="检样">
-              <label for="jy">检样</label>&emsp;
-              <input type="radio" id="ly" ng-model="vm.sampleManager.managerType" value="留样">
-              <label for="ly">留样</label>&emsp;
+              <div custom-select avail-arr="vm.reportLxArr" model="vm.report" key="sampleLeixing"></div>
             </td>
           </tr>
           <tr>
@@ -235,16 +204,16 @@
           </tr>
           <tr>
             <td class="item-title">
-              <span>样品类型</span>
-            </td>
-            <td>
-              <div custom-select avail-arr="vm.reportLxArr" model="vm.report" key="sampleLeixing"></div>
-            </td>
-            <td class="item-title">
               <span>样品状态</span>
             </td>
             <td>
               <div custom-select avail-arr="vm.reportStatusArr" model="vm.report" key="sampleStatus"></div>
+            </td>
+            <td class="item-title">
+              <span>商标</span>
+            </td>
+            <td>
+              <input class="input" name="sampleTrademark" ng-model="vm.report.sampleTrademark">
             </td>
           </tr>
           <tr>
@@ -287,20 +256,6 @@
             </td>
             <td>
               <div custom-select avail-arr="vm.closedStatusArr" model="vm.report" key="closedStatus"></div>
-            </td>
-          </tr>
-          <tr>
-            <td class="item-title">
-              <span>商标</span>
-            </td>
-            <td>
-              <input class="input" name="sampleTrademark" ng-model="vm.report.sampleTrademark">
-            </td>
-            <td class="item-title">
-              <span>样品废弃状态</span>
-            </td>
-            <td>
-              <input class="input" ng-model="vm.sampleManager.status" />
             </td>
           </tr>
           <tr>
@@ -580,10 +535,6 @@
                 <adjust-line></adjust-line>
               </th>
               <th>
-                <div>默认价格</div>
-                <adjust-line></adjust-line>
-              </th>
-              <th>
                 <div>状态</div>
                 <adjust-line></adjust-line>
               </th>
@@ -616,7 +567,7 @@
           </thead>
           <tbody>
             <tr ng-if="vm.checkItems.length==0 ">
-              <td colspan="16 " class="text-center ">暂无检测项</td>
+              <td colspan="15 " class="text-center ">暂无检测项</td>
             </tr>
             <tr ng-repeat="item in vm.checkItems track by item.id">
               <td>{{ item.name }}</td>
@@ -626,7 +577,6 @@
               <td>{{ item.detectionLimit }}</td>
               <td>{{ item.quantitationLimit }}</td>
               <td>{{ item.device }}</td>
-              <td>{{ item.defaultPrice }}</td>
               <td>
                 <span ng-if="item.status==0 ">未录入</span>
                 <span ng-if="item.status==1 ">待检测</span>

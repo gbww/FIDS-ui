@@ -11,21 +11,19 @@
 				<tr>
 					<th>角色名称</th>
 					<th>描述</th>
-					<th>创建时间</th>
 					<th style="width: 140px;">操作</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr ng-if="vm.loading">
-					<td colspan="4" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+					<td colspan="3" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 				</tr>
 				<tr ng-if="!vm.loading && vm.roles.length == 0">
-					<td colspan="4" class="text-center">暂无角色</td>
+					<td colspan="3" class="text-center">暂无角色</td>
 				</tr>
 				<tr ng-repeat="role in vm.roles track by $index" ng-if="!vm.loading">
 					<td>{{ role.name }}</td>
 					<td>{{ role.description }}</td>
-					<td>{{ role.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
 					<td class="dropdown-col">
 						<div class="btn-group" role-auth="ROLE-EDIT-1 ROLE-DELETE-1">
 							<button class="btn btn-default" ng-click="vm.editEntity(role.id)" role-auth="ROLE-EDIT-1">
@@ -48,7 +46,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="4">
+					<td colspan="3">
 						<div st-idp st-total-count="vm.total"></div>
 					</td>
 				</tr>

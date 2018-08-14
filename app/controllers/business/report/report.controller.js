@@ -77,6 +77,14 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
       orderBy = 'report_id'
     } else if (orderBy == 'createdAt') {
       orderBy = 'created_at'
+    } else if (orderBy === 'sampleName') {
+      orderBy = 'sample_name'
+    } else if (orderBy === 'entrustedUnit') {
+      orderBy = 'entrusted_unit'
+    } else if (orderBy === 'receiveDate') {
+      orderBy = 'receive_date'
+    } else if (orderBy === 'finishDate') {
+      orderBy = 'finish_date'
     }
     var tableParams = {
       "pageSize": tableState.pagination.number,
@@ -236,10 +244,17 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
 
 
   vm.export = function (report) {
-    var link = document.createElement('a');
-    link.href = '/api/v1/ahgz/report/export?reportId=' + report.reportId;
-    link.download = report.reportId;
-    link.click();
+    // var link = document.createElement('a');
+    // link.href = '/api/v1/ahgz/report/export?reportId=' + report.reportId;
+    // link.download = report.reportId;
+    // link.click();
+    ReportService.exportReport(report.reportId).then(function (res) {
+      if (res.data.length > 0) {
+        var blobType = 'application/pdf;charset=utf-8';
+        var blob = new Blob([res.data])
+        saveAs(blob, report.reportId + '.pdf')
+      } 
+    })
   }
 
   vm.preview = function (report) {
@@ -315,7 +330,21 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     xhr.send(JSON.stringify(vm.selectedItems));
   }
 
+  vm.finishPrint = function (report) {
+    var result = dialog.confirm('确认已完成报告的打印工作?');
+    result.then(function (res) {
+      if (res) {
+        ReportService.batchUpdateReportStatus([report.reportId], '4').then(function (response) {
+          if (response.data.success) {
+            vm.refreshTable();
+          }
+        });
+      }
+    });
+  }
+
   function afterPrint () {
+    return
     if (document.getElementById('printIframe')) {
       document.body.removeChild(document.getElementById('printIframe'));
     }

@@ -18,18 +18,17 @@
         <th>描述</th>
         <th>所在部门</th>
         <th>职责</th>
-        <th>创建时间</th>
         <th style="width: 140px;">操作</th>
       </tr>
     </thead>
     <tbody>
       <tr ng-if="vm.loading">
-        <td colspan="8" class="text-center">
+        <td colspan="7" class="text-center">
           <i class="fa fa-pulse fa-spinner"></i>
         </td>
       </tr>
       <tr ng-if="!vm.loading && vm.users.length == 0">
-        <td colspan="8" class="text-center">暂无用户</td>
+        <td colspan="7" class="text-center">暂无用户</td>
       </tr>
       <tr ng-repeat="user in vm.users track by $index" ng-if="!vm.loading">
         <td>{{ user.username }}</td>
@@ -38,7 +37,6 @@
         <td>{{ user.description }}</td>
         <td>{{ user.organization.name }}</td>
         <td>{{ user.role.name }}</td>
-        <td>{{ user.createdAt | date:'yyyy-MM-dd HH:mm:ss' }}</td>
         <td class="dropdown-col">
           <div class="btn-group" role-auth="USER-EDIT-1 USER-DELETE-1">
             <button class="btn btn-default" ng-click="vm.edit(user)" role-auth="USER-EDIT-1">
@@ -68,7 +66,7 @@
     </tbody>
     <tfoot>
       <tr>
-        <td colspan="8">
+        <td colspan="7">
           <div st-idp st-total-count="vm.total"></div>
         </td>
       </tr>

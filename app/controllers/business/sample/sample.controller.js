@@ -51,8 +51,8 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     var reverse = tableState.sort.reverse ? 'desc' : 'asc';
     if (orderBy == 'reportId') {
       orderBy = 'report_id';
-    } else if (orderBy == 'createdAt') {
-      orderBy = 'created_at';
+    } else if (orderBy == 'finishDate') {
+      orderBy = 'finish_date';
     } else if (orderBy == 'entrustedUnit') {
       orderBy = 'entrusted_unit';
     } else if (orderBy == 'inspectedUnit') {

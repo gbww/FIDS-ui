@@ -26,10 +26,6 @@
 					<adjust-line></adjust-line>	
 				</th>
 				<th>
-					<div st-sort="createdAt">创建时间<i class="fa fa-sort"></i></div>
-					<adjust-line></adjust-line>	
-				</th>
-				<th>
 					<div>备注</div>
 					<adjust-line></adjust-line>	
 				</th>
@@ -38,17 +34,16 @@
 		</thead>
 		<tbody>
 			<tr ng-if="vm.loading">
-				<td colspan="7" class="text-center"><i class="fa fa-pluse fa-spinner"></i></td>
+				<td colspan="6" class="text-center"><i class="fa fa-pluse fa-spinner"></i></td>
 			</tr>
 			<tr ng-if="!vm.loading && vm.links.length === 0">
-				<td colspan="7" class="text-center">暂无联系人</td>
+				<td colspan="6" class="text-center">暂无联系人</td>
 			</tr>
 			<tr ng-repeat="link in vm.links track by $index" ng-if="!vm.loading">
 				<td>{{ link.linkmanName }}</td>
 				<td>{{ link.linkmanPosition }}</td>
 				<td>{{ link.linkmanTelephone }}</td>
 				<td>{{ link.linkmanEmail }}</td>
-				<td>{{ link.createdAt }}</td>
 				<td>{{ link.linkmanRemark }}</td>
 				<td class="dropdown-col">
 					<div class="btn-group">

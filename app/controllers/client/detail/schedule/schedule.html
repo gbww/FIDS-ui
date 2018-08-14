@@ -13,11 +13,10 @@
 				<div class="div-pt-cell" style="width: 4%">
 					<i class="fa fa-arrow-circle-o-right" style="opacity: 0"></i>
 				</div>
-				<div class="div-pt-cell" style="width: 15%">日程名称</div>
-				<div class="div-pt-cell" style="width: 15%">地址</div>
-				<div class="div-pt-cell" style="width: 15%">起止时间</div>
-				<div class="div-pt-cell" style="width: 15%">执行人</div>
-				<div class="div-pt-cell" style="width: 20%">创建时间</div>
+				<div class="div-pt-cell" style="width: 20%">日程名称</div>
+				<div class="div-pt-cell" style="width: 20%">地址</div>
+				<div class="div-pt-cell" style="width: 20%">起止时间</div>
+				<div class="div-pt-cell" style="width: 20%">执行人</div>
 				<div class="div-pt-cell">操作</div>
 			</div>
 		</div>
@@ -30,14 +29,13 @@
 				<div class="div-pt-cell" style="width: 4%">
 					<i class="fa" ng-class="{'fa-arrow-circle-o-right': !vm.show[schedule.id], 'fa-arrow-circle-o-down': vm.show[schedule.id]}" ng-click="vm.getReport(schedule)"></i>
 				</div>
-				<div class="div-pt-cell" style="width: 15%">{{ schedule.schedulerName }}</div>
-				<div class="div-pt-cell" style="width: 15%">{{ schedule.schedulerAddress || '--' }}</div>
-				<div class="div-pt-cell" style="width: 15%">
+				<div class="div-pt-cell" style="width: 20%">{{ schedule.schedulerName }}</div>
+				<div class="div-pt-cell" style="width: 20%">{{ schedule.schedulerAddress || '--' }}</div>
+				<div class="div-pt-cell" style="width: 20%">
 					<div>{{ schedule.schedulerStartTime }}</div>
 					<div>{{ schedule.schedulerEndTime }}</div>
 				</div>
-				<div class="div-pt-cell" style="width: 15%">{{ schedule.executor }}</div>
-				<div class="div-pt-cell" style="width: 20%">{{ schedule.createdAt }}</div>
+				<div class="div-pt-cell" style="width: 20%">{{ schedule.executor }}</div>
 				<div class="div-pt-cell">
 					<div class="btn-group">
 						<button class="btn btn-default" ng-click="vm.edit(schedule)">
