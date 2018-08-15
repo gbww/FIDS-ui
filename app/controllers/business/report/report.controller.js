@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateParams, $q, $uibModal, $interval, api, toastr, dialog, ReportService) {
+angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateParams, $cookies, $q, $uibModal, $interval, api, toastr, dialog, ReportService) {
   var vm = this;
   vm.hasCheckAuth = api.permissionArr.indexOf('REPORT-DETAIL-1') != -1;
 
@@ -244,17 +244,27 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
 
 
   vm.export = function (report) {
-    // var link = document.createElement('a');
-    // link.href = '/api/v1/ahgz/report/export?reportId=' + report.reportId;
-    // link.download = report.reportId;
-    // link.click();
-    ReportService.exportReport(report.reportId).then(function (res) {
-      if (res.data.length > 0) {
-        var blobType = 'application/pdf;charset=utf-8';
-        var blob = new Blob([res.data])
-        saveAs(blob, report.reportId + '.pdf')
-      } 
-    })
+    var xhr;
+    if (window.XMLHttpRequest) {
+      xhr = new XMLHttpRequest();
+    } else {
+      xhr = new ActiveXObject('Microsoft.XMLHTTP');
+    }
+    xhr.onload = function () {
+      var data = new Uint8Array(xhr.response);
+      var blob = new Blob([data], {type: 'application/pdf;charset=utf-8'})
+      var downloadUrl = window.URL.createObjectURL(blob);  
+      var anchor = document.createElement("a");  
+      anchor.href = downloadUrl;  
+      anchor.download = report.reportId + ".pdf";  
+      anchor.click();  
+      window.URL.revokeObjectURL(data);
+    };
+
+    xhr.open('GET', '/api/v1/ahgz/report/export?reportId=' + report.reportId);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + $cookies.get('token'))
+    xhr.responseType = 'arraybuffer';
+    xhr.send();
   }
 
   vm.preview = function (report) {

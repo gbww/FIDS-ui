@@ -174,16 +174,6 @@ angular.module('com.app').factory('ReportService', function ($http) {
 
     getReportData: function (reportId) {
       return $http.get(baseUrl + '/preview?reportId=' + reportId + '&type=pdf');
-    },
-
-    exportReport: function (reportId) {
-      return $http({
-        url: baseUrl + '/export?reportId=' + reportId,
-        method: 'GET',
-        headers: {
-          'Content-type': 'application/pdf'
-        }
-      });
     }
 
   }
