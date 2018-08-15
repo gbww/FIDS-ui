@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal, api, CheckItemService, PrivilegeService, toastr, Upload, dialog) {
+angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal, $cookies, api, CheckItemService, PrivilegeService, toastr, Upload, dialog) {
   var vm = this;
   vm.hasUpdateAuth = api.permissionArr.indexOf('CHECKITEM-UPDATE-1') != -1;
 
@@ -168,6 +168,9 @@ angular.module('com.app').controller('DBCheckItemListCtrl', function ($uibModal,
     }
     Upload.upload({
       url: '/api/v1/ahgz/checkitems/import',
+      headers: {
+        Authorization: 'Bearer ' + $cookies.get('token')
+      },
       data: {
         file: event.target.files[0]
       }

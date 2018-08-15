@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ContractDetailInfoCtrl', function ($rootScope, $state, $stateParams, $scope, $q, toastr, ContractService) {
+angular.module('com.app').controller('ContractDetailInfoCtrl', function ($rootScope, $state, $stateParams, $cookies, toastr, ContractService) {
   var vm = this;
   vm.status = $stateParams.status;
   vm.appendix = [];
@@ -70,10 +70,32 @@ angular.module('com.app').controller('ContractDetailInfoCtrl', function ($rootSc
 
   vm.downloadFile = function (filepath) {
     var filename = filepath.substring(filepath.lastIndexOf('\\')+1);
-    var link = document.createElement('a');
-    link.href = '/api/v1/ahgz/contract/' + vm.contract.id + '/appendix?filename=' + filename;
-    link.download = filename;
-    link.click();
+    // var link = document.createElement('a');
+    // link.href = '/api/v1/ahgz/contract/' + vm.contract.id + '/appendix?filename=' + filename;
+    // link.download = filename;
+    // link.click();
+
+    var xhr;
+    if (window.XMLHttpRequest) {
+      xhr = new XMLHttpRequest();
+    } else {
+      xhr = new ActiveXObject('Microsoft.XMLHTTP');
+    }
+    xhr.onload = function () {
+      var data = new Uint8Array(xhr.response);
+      var blob = new Blob([data], {type: 'application/octet-stream;charset=utf-8'})
+      var downloadUrl = window.URL.createObjectURL(blob);  
+      var anchor = document.createElement("a");  
+      anchor.href = downloadUrl;  
+      anchor.download = filename;  
+      anchor.click();  
+      window.URL.revokeObjectURL(data);
+    };
+
+    xhr.open('GET', '/api/v1/ahgz/contract/' + vm.contract.id + '/appendix?filename=' + filename);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + $cookies.get('token'))
+    xhr.responseType = 'arraybuffer';
+    xhr.send();
   };
 
   vm.files = [];

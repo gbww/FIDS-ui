@@ -242,14 +242,17 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     });
   }
 
+  function getXhr () {
+    if (window.XMLHttpRequest) {
+      return new XMLHttpRequest();
+    } else {
+      return new ActiveXObject('Microsoft.XMLHTTP');
+    }
+  }
+
 
   vm.export = function (report) {
-    var xhr;
-    if (window.XMLHttpRequest) {
-      xhr = new XMLHttpRequest();
-    } else {
-      xhr = new ActiveXObject('Microsoft.XMLHTTP');
-    }
+    var xhr = getXhr();
     xhr.onload = function () {
       var data = new Uint8Array(xhr.response);
       var blob = new Blob([data], {type: 'application/pdf;charset=utf-8'})
@@ -269,49 +272,63 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
 
   vm.preview = function (report) {
     vm.printedIds = [report.reportId];
-    window.DEFAULT_URL = '/api/v1/ahgz/report/preview?type=pdf&reportId=' + report.reportId;
+    $rootScope.loading = true;
 
-    vm.previewModal = $uibModal.open({
-      animation: true,
-      windowClass: 'pdf-preview',
-      templateUrl: 'controllers/business/report/preview/preview.html',
-      controller: 'PDFPreviewCtrl as vm',
-    });
+    var xhr = getXhr();
+    xhr.open('GET', '/api/v1/ahgz/report/preview?type=pdf&reportId=' + report.reportId);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + $cookies.get('token'))
+    xhr.responseType = 'arraybuffer';
+    xhr.send();
+    xhr.onload = function () {
+      $rootScope.loading = false;
+      window.DEFAULT_URL = new Uint8Array(xhr.response);
+
+      vm.previewModal = $uibModal.open({
+        animation: true,
+        windowClass: 'pdf-preview',
+        templateUrl: 'controllers/business/report/preview/preview.html',
+        controller: 'PDFPreviewCtrl as vm',
+      });
+    }
   }
 
   vm.print = function (report) {
     vm.printedIds = [report.reportId];
     $rootScope.loading = true;
-    var iframe = document.createElement('iframe');
-    window.DEFAULT_URL = '/api/v1/ahgz/report/preview?type=pdf&reportId=' + report.reportId;
-    // iframe.style.display = 'none';
-    iframe.style.opacity = '0';
-    iframe.style.height = '1px';
-    iframe.id = 'printIframe';
-    iframe.src = 'http://' + location.host + '/pdfjs/web/viewer.html';
-    document.body.appendChild(iframe);
-    var iwin = document.getElementById('printIframe').contentWindow;
+    
+    var xhr = getXhr();
+    xhr.onload = function () {
+      window.DEFAULT_URL = new Uint8Array(xhr.response);
+      var iframe = document.createElement('iframe');
+      // iframe.style.display = 'none';
+      iframe.style.opacity = '0';
+      iframe.style.height = '1px';
+      iframe.id = 'printIframe';
+      iframe.src = 'http://' + location.host + '/pdfjs/web/viewer.html';
+      document.body.appendChild(iframe);
+      var iwin = document.getElementById('printIframe').contentWindow;
 
-    var interval = $interval(function () {
-      var isReady = iwin.PDFViewerApplication && iwin.PDFViewerApplication.pdfViewer && iwin.PDFViewerApplication.pdfViewer._pageViewsReady;
-      if (isReady) {
-        $rootScope.loading = false;
-        iwin.print();
-        $interval.cancel(interval);
-      }
-    }, 100)
+      var interval = $interval(function () {
+        var isReady = iwin.PDFViewerApplication && iwin.PDFViewerApplication.pdfViewer && iwin.PDFViewerApplication.pdfViewer._pageViewsReady;
+        if (isReady) {
+          $rootScope.loading = false;
+          iwin.print();
+          $interval.cancel(interval);
+        }
+      }, 100)
+    };
+
+    xhr.open('GET', '/api/v1/ahgz/report/preview?type=pdf&reportId=' + report.reportId);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + $cookies.get('token'))
+    xhr.responseType = 'arraybuffer';
+    xhr.send();
   }
 
   vm.batchPrint = function () {
     vm.printedIds = angular.copy(vm.selectedItems);
     $rootScope.loading = true;
 
-    var xhr;
-    if (window.XMLHttpRequest) {
-      xhr = new XMLHttpRequest();
-    } else {
-      xhr = new ActiveXObject('Microsoft.XMLHTTP');
-    }
+    var xhr = getXhr();
     xhr.onload = function () {
       window.DEFAULT_URL = new Uint8Array(xhr.response);
       var iframe = document.createElement('iframe');
@@ -335,6 +352,7 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     };
 
     xhr.open('POST', '/api/v1/ahgz/report/preview');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + $cookies.get('token'))
     xhr.setRequestHeader('Content-type', 'application/json')
     xhr.responseType = 'arraybuffer';
     xhr.send(JSON.stringify(vm.selectedItems));

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('ReviewSearchCompanyReportCtrl', function ($state, $stateParams, $uibModal, api, ReviewService, toastr, dialog) {
+angular.module('com.app').controller('ReviewSearchCompanyReportCtrl', function ($rootScope, $stateParams, $uibModal, $cookies, api, ReviewService, toastr) {
   var vm = this;
   vm.companyId = $stateParams.companyId
 
@@ -74,6 +74,32 @@ angular.module('com.app').controller('ReviewSearchCompanyReportCtrl', function (
     }).catch(function (err) {
       toastr.error(err.data)
     })
+  }
+
+  vm.preview = function (id) {
+    $rootScope.loading = true;
+
+    var xhr;
+    if (window.XMLHttpRequest) {
+      xhr = new XMLHttpRequest();
+    } else {
+      xhr = new ActiveXObject('Microsoft.XMLHTTP');
+    }
+    xhr.open('GET', '/api/v1/ahgz/company/review/report/preview?reviewReportId=' + id);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + $cookies.get('token'))
+    xhr.responseType = 'arraybuffer';
+    xhr.send();
+    xhr.onload = function () {
+      $rootScope.loading = false;
+      window.DEFAULT_URL = new Uint8Array(xhr.response);
+
+      vm.previewModal = $uibModal.open({
+        animation: true,
+        windowClass: 'pdf-preview',
+        templateUrl: 'controllers/business/report/preview/preview.html',
+        controller: 'PDFPreviewCtrl as vm',
+      });
+    }
   }
 
 });

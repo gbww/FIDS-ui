@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('CiResultListCtrl', function ($stateParams, $uibModal, api, CiResultRecordService, UnitService, toastr, dialog) {
+angular.module('com.app').controller('CiResultListCtrl', function ($stateParams, $uibModal, $cookies, api, CiResultRecordService, UnitService, toastr, dialog) {
   var vm = this;
   vm.hasRecordAuth = api.permissionArr.indexOf('SAMPLE-UPDATEITEMRESULT-1') != -1;
   vm.isSampleDetail = !!$stateParams.reportId;
@@ -208,7 +208,6 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
   }
 
   vm.export = function () {
-    var link = document.createElement('a');
     var orderBy = vm.orderBy
     if (orderBy === 'reportId') {
       orderBy = 'report_id';
@@ -232,9 +231,33 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
         href += '&' + key + '=' + val
       }
     })
-    link.href = href;
-    link.download = parseInt(Math.random() * 1000000);
-    link.click();
+
+    var xhr;
+    if (window.XMLHttpRequest) {
+      xhr = new XMLHttpRequest();
+    } else {
+      xhr = new ActiveXObject('Microsoft.XMLHTTP');
+    }
+    xhr.onload = function () {
+      var data = new Uint8Array(xhr.response);
+      var blob = new Blob([data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'})
+      var downloadUrl = window.URL.createObjectURL(blob);  
+      var anchor = document.createElement("a");  
+      anchor.href = downloadUrl;  
+      anchor.download = parseInt(Math.random() * 1000000) + '.xlsx';
+      anchor.click();  
+      window.URL.revokeObjectURL(data);
+    };
+
+    xhr.open('GET', href);
+    xhr.setRequestHeader('Authorization', 'Bearer ' + $cookies.get('token'))
+    xhr.responseType = 'arraybuffer';
+    xhr.send();
+
+    // var link = document.createElement('a');
+    // link.href = href;
+    // link.download = parseInt(Math.random() * 1000000);
+    // link.click();
   }
 
   // 单选、复选
