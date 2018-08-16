@@ -214,22 +214,27 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
     });
   }
 
+  function confirmDelete (sample) {
+    SampleService.deleteSample([sample.reportId]).then(function (response) {
+      if (response.data.success) {
+        vm.refreshTable('delete');
+        toastr.success('接样单删除成功！');
+      } else {
+        toastr.error(response.data.message);
+      }
+    }).catch(function (error) {
+      toastr.error(error.data.message)
+    });
+  }
+
   vm.delete = function (sample, event) {
     event.stopPropagation();
     $('.btn-group').removeClass('open');
+    vm.action = 'deleteSample'
     var result = dialog.confirm('确认删除接样单 ' + sample.reportId + ' ?');
     result.then(function (res) {
       if (res) {
-        SampleService.deleteSample([sample.reportId]).then(function (response) {
-          if (response.data.success) {
-            vm.refreshTable('delete');
-            toastr.success('接样单删除成功！');
-          } else {
-            toastr.error(response.data.message);
-          }
-        }).catch(function (error) {
-          toastr.error(error.data.message)
-        });
+        confirmDelete(sample)
       }
     })
   }

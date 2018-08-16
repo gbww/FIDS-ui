@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('SampleAddDbCiCtrl', function ($scope, $uibModal, $uibModalInstance, CheckItemService, toastr) {
+angular.module('com.app').controller('SampleAddDbCiCtrl', function ($scope, $uibModal, $uibModalInstance, CheckItemService, eventService, toastr) {
   var vm = this;
 
   vm.searchObject = {}
@@ -125,5 +125,16 @@ angular.module('com.app').controller('SampleAddDbCiCtrl', function ($scope, $uib
   vm.cancel = function () {
     $uibModalInstance.dismiss();
   }
+
+  function keyEvent (evt) {
+    var keyCode = evt.keyCode || evt.which
+    if (keyCode === 13) {
+      vm.ok()
+    }
+  }
+  eventService.addEvent(document, 'keydown', keyEvent)
+  $scope.$on('$destroy', function () {
+    eventService.removeEvent(document, 'keydown', keyEvent)
+  });
 
 });

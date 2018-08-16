@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('TemplateEditCtrl', function ($uibModalInstance, TemplateService, toastr, Upload, template) {
+angular.module('com.app').controller('TemplateEditCtrl', function ($uibModalInstance, $cookies, toastr, Upload, template) {
   var vm = this;
 	vm.template = template;
 
@@ -13,6 +13,9 @@ angular.module('com.app').controller('TemplateEditCtrl', function ($uibModalInst
 		Upload.upload({
 			url: '/api/v1/ahgz/template/' + vm.template.id,
 			method: 'PUT',
+      headers: {
+        Authorization: 'Bearer ' + $cookies.get('token')
+      },
   		data: {
         name: vm.template.name,
         category: vm.template.category,

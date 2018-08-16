@@ -26,4 +26,25 @@ angular.module('com.app').factory('tokenService', function tokenService($cookies
 			cancelPromises.length = 0;
 		}
 	}
-});;
+}).factory('eventService', function () {
+	return {
+		addEvent: function (ele, type, cb) {
+			if (ele.addEventListener) {
+				ele.addEventListener(type, cb)
+			} else if (ele.attachEvent) {
+				ele.attachEvent('on'+type, cb)
+			} else {
+				ele['on'+type] = cb
+			}
+		},
+		removeEvent: function (ele, type, cb) {
+			if (ele.removeEventListener) {
+				ele.removeEventListener(type, cb)
+			} else if (ele.attachEvent) {
+				ele.detachEvent('on'+type, cb)
+			} else {
+				ele['on'+type] = null
+			}
+		}
+	}
+});

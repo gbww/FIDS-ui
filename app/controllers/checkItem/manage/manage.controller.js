@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootScope, $scope, $state, $uibModal, $q, $filter, api, CheckItemService, PrivilegeService, toastr, dialog, Upload) {
+angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootScope, $scope, $uibModal, $q, $filter, $cookies, api, CheckItemService, PrivilegeService, toastr, dialog, Upload) {
   var vm = this;
   vm.hasUpdateAuth = api.permissionArr.indexOf('CHECKITEM-MAPPING-ADD-1') != -1;
 
@@ -418,6 +418,9 @@ angular.module('com.app').controller('DBCheckItemManageCtrl', function ($rootSco
 
     Upload.upload({
       url: '/api/v1/ahgz/checkitemscatalog/item/mapping/import',
+      headers: {
+        Authorization: 'Bearer ' + $cookies.get('token')
+      },
       data: {
         catalogId: catalogId,
         file: event.target.files[0]

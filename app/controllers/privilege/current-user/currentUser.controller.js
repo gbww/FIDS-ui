@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($uibModal, $timeout, api, toastr, PrivilegeService, Upload, dialog) {
+angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($uibModal, $timeout, $cookies, api, toastr, PrivilegeService, Upload) {
   var vm = this;
 
   var privilegeBC = api.breadCrumbMap.privilege;
@@ -76,6 +76,9 @@ angular.module('com.app').controller('PrivilegeCurrentUserCtrl', function ($uibM
       }
     	Upload.upload({
         url: '/api/v1/user/sign/upload',
+        headers: {
+          Authorization: 'Bearer ' + $cookies.get('token')
+        },
         data: {
           file: vm.image
         }
