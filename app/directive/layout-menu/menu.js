@@ -29,6 +29,7 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
 
     vm.isFileActive = $state.includes('app.file');
     vm.isTemplateActive = $state.includes('app.file.template');
+    vm.isFrTemplateActive = $state.includes('app.file.frtemplate');
 
     vm.isReviewActive = $state.includes('app.review');
     vm.isCompanyActive = $state.includes('app.review.company');
