@@ -25,23 +25,36 @@
 			</div>
 		</div>
 
-		<!-- <div class="form-group">
+		<div class="form-group">
 			<label class="col-sm-3 control-label category">类别</label>
 			<div class="col-sm-8">
-				<input type="radio" id="cover" ng-model="vm.template.category" value="0"><label for="cover">报告封面</label>&emsp;&emsp;
-				<input type="radio" id="report" ng-model="vm.template.category" value="1"><label for="report">报告内容</label>&emsp;&emsp;
-				<input type="radio" id="both" ng-model="vm.template.category" value="2"><label for="both">报告封面&内容</label>
+				<input type="radio" id="jasper" ng-model="vm.template.type" value="0" ng-change="vm.changeType()"><label for="jasper">jasper模板</label>&emsp;&emsp;
+				<input type="radio" id="fr" ng-model="vm.template.type" value="1" ng-change="vm.changeType()"><label for="fr">帆软模板</label>&emsp;&emsp;
 			</div>
-		</div> -->
+		</div>
+
+		<div class="form-group" ng-if="vm.template.type === '1'">
+			<label class="col-sm-3 control-label item-required">角色</label>
+			<div class="col-sm-8">
+				<multiple-autocomplete ng-model="vm.selectedRoles" name="roles" object-property="name" suggestions-arr="vm.roles" required="true"></multiple-autocomplete>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3" ng-if="form.roles.$dirty" ng-messages="form.roles.$error">
+				<label class="error-messages" ng-message="required"><i></i>不能为空</label>
+			</div>
+		</div>
+
+		
 
 		<div class="form-group">
 			<a class="btn btn-default-light" custom-file-btn>
 				<span class="item-required"><i class="fa fa-plus"></i>上传文件</span>
 			</a>
 			<span>{{ vm.filename }}</span>
-			<input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.addFile" ngf-pattern="/\.jasper?$/">
+			<input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.addFile" ngf-pattern="/\.jasper?$/" ng-if="vm.template.type === '0'">
+			<input type="file" class="select-file" ngf-select name="file" ng-model="vm.file" custom-file-change="vm.addFile" ngf-pattern="/\.cpt?$/" ng-if="vm.template.type === '1'">
 			<div class="col-sm-9 col-sm-offset-3" ng-if="form.file.$dirty" ng-messages="form.file.$error">
-				<label class="error-messages" ng-message="pattern">请添加后缀为.jasper文件</label>
+				<label class="error-messages" ng-message="pattern" ng-if="vm.template.type === '0'">请添加后缀为.jasper的文件</label>
+				<label class="error-messages" ng-message="pattern" ng-if="vm.template.type === '1'">请添加后缀为.cpt的文件</label>
 			</div>
 		</div>
 	</form>

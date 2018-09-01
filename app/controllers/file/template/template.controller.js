@@ -56,7 +56,22 @@ angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, ap
   		size: 'md',
   		backdrop: 'static',
   		templateUrl: 'controllers/file/template/upload/upload.html',
-  		controller: 'TemplateUploadCtrl as vm'
+      controller: 'TemplateUploadCtrl as vm',
+      resolve: {
+        roles: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
+          var deferred = $q.defer();
+          PrivilegeService.getRoleList().then(function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              deferred.reject()
+            }
+          }).catch(function () {
+            deferred.reject()
+          })
+          return deferred.promise;
+        }]
+      }
   	});
 
   	modalInstance.result.then(function () {
@@ -73,7 +88,32 @@ angular.module('com.app').controller('TemplateListCtrl', function ($uibModal, ap
       templateUrl: 'controllers/file/template/edit/edit.html',
       controller: 'TemplateEditCtrl as vm',
       resolve: {
-        template: function () {return angular.copy(item);}
+        data: ['$q', function ($q) {
+          var deferred = $q.defer();
+          TemplateService.getTemplateInfo(item.name).then(function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+             deferred.reject()
+            }
+          }).catch(function () {
+            deferred.reject()
+          })
+          return deferred.promise;
+        }],
+        roles: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
+          var deferred = $q.defer();
+          PrivilegeService.getRoleList().then(function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              deferred.reject()
+            }
+          }).catch(function () {
+            deferred.reject()
+          })
+          return deferred.promise;
+        }]
       }
     });
 

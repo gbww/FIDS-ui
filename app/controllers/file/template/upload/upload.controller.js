@@ -1,12 +1,18 @@
 'use strict';
 
-angular.module('com.app').controller('TemplateUploadCtrl', function ($uibModalInstance, $cookies, toastr, Upload) {
+angular.module('com.app').controller('TemplateUploadCtrl', function ($uibModalInstance, $cookies, toastr, Upload, roles) {
   var vm = this;
-
+  vm.roles = roles;
+  vm.selectedRoles = []
 
   vm.template = {
-    category: '0'
+    category: '0',
+    type: '0'
   };
+
+  vm.changeType = function () {
+    vm.filename = null
+  }
 
   vm.addFile = function (event) {
     var selectedFile = event.target.files[0];
@@ -14,17 +20,22 @@ angular.module('com.app').controller('TemplateUploadCtrl', function ($uibModalIn
   }
 
   vm.ok = function () {
+    var data = {
+      name: vm.template.name,
+      category: vm.template.category,
+      description: vm.template.description,
+      type: parseInt(vm.template.type),
+      file: vm.file
+    }
+    if (data.type === 1) {
+      data.roleIdList = vm.selectedRoles.map(function (role) {return role.id}).join(';')
+    }
   	Upload.upload({
   		url: '/api/v1/ahgz/template/upload',
       headers: {
         Authorization: 'Bearer ' + $cookies.get('token')
       },
-  		data: {
-        name: vm.template.name,
-        category: vm.template.category,
-        description: vm.template.description,
-  			file: vm.file
-  		}
+  		data: data
   	}).then(function (response) {
   		if (response.data.success) {
 		  	$uibModalInstance.close();

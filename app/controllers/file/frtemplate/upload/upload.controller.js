@@ -24,7 +24,7 @@ angular.module('com.app').controller('FrTemplateUploadCtrl', function ($uibModal
         name: vm.template.name,
         category: vm.template.category,
         description: vm.template.description,
-        roleIdList: vm.selectedRoles.map(function (role) {return role.id}).join(','),
+        roleIdList: vm.selectedRoles.map(function (role) {return role.id}).join(';'),
   			file: vm.file
   		}
   	}).then(function (response) {

@@ -88,7 +88,20 @@ angular.module('com.app').controller('FrTemplateListCtrl', function ($uibModal, 
       templateUrl: 'controllers/file/frtemplate/edit/edit.html',
       controller: 'TemplateEditCtrl as vm',
       resolve: {
-        template: function () {return angular.copy(item);}
+        template: function () {return angular.copy(item);},
+        roles: ['$q', 'PrivilegeService', function ($q, PrivilegeService) {
+          var deferred = $q.defer();
+          PrivilegeService.getRoleList().then(function (response) {
+            if (response.data.success) {
+              deferred.resolve(response.data.entity);
+            } else {
+              deferred.reject()
+            }
+          }).catch(function () {
+            deferred.reject()
+          })
+          return deferred.promise;
+        }]
       }
     });
 

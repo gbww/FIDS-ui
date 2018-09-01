@@ -1,8 +1,9 @@
 'use strict';
 
-angular.module('com.app').controller('TemplateEditCtrl', function ($uibModalInstance, $cookies, toastr, Upload, template) {
+angular.module('com.app').controller('TemplateEditCtrl', function ($uibModalInstance, $cookies, toastr, Upload, template, roles) {
   var vm = this;
 	vm.template = template;
+	vm.roles = roles;
 
   vm.addFile = function (event) {
     var selectedFile = event.target.files[0];

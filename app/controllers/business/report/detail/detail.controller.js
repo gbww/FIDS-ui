@@ -311,7 +311,9 @@ angular.module('com.app').controller('ReportDetailCtrl', function ($rootScope, $
           angular.merge(templateData, {
             templateId: vm.templateId,
             templateName: item.name,
-            templateDesc: item.description
+            templateDesc: item.description,
+            type: item.type,
+            visitUrl: item.visitUrl
           })
         }
       });
