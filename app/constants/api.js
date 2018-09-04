@@ -5,6 +5,9 @@ angular.module('com.app').constant('api', {
     dashboard: {
       root: {name: '概览'}
     },
+    statistic: {
+      root: {name: '统计查询'}
+    },
     checkItem: {
       root: {name: '项目库'},
       list: {name: '检测项管理', url: 'app.checkItem.list'},

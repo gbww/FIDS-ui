@@ -1,7 +1,12 @@
 'use strict';
 
-angular.module('com.app').controller('LayoutMenuController', function LayoutMenuController($scope, $state) {
+angular.module('com.app').controller('LayoutMenuController', function LayoutMenuController($scope, $state, $stateParams, api) {
   var vm = this;
+  vm.frTemplates = api.frTemplates
+
+  angular.forEach(vm.frTemplates, function (template) {
+    vm['is' + template.name + 'Active'] = ($stateParams.name === template.name && $stateParams.visitUrl)
+  })
 
   vm.open = function (module) {
     $("#accordion").children('.panel').children('ul').collapse('hide');
@@ -31,6 +36,8 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
     vm.isTemplateActive = $state.includes('app.file.template');
     vm.isFrTemplateActive = $state.includes('app.file.frtemplate');
 
+    vm.isStatisticActive = $state.includes('app.statistic')
+
     vm.isReviewActive = $state.includes('app.review');
     vm.isCompanyActive = $state.includes('app.review.company');
     vm.isSearchCompanyActive = $state.includes('app.review.searchCompany');
@@ -54,5 +61,8 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
   vm.highLightMenu();
   $scope.$on('$stateChangeSuccess', function() {
   	vm.highLightMenu();
+    angular.forEach(vm.frTemplates, function (template) {
+      vm['is' + template.name + 'Active'] = ($stateParams.name === template.name && $stateParams.visitUrl)
+    })
   });
 });

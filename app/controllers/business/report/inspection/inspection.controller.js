@@ -1,12 +1,13 @@
 'use strict';
 
-angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScope, $state, $stateParams, $q, $filter, api, toastr, ReportService, users, templates) {
+angular.module('com.app').controller('ReportInspectionCtrl', function ($rootScope, $state, $stateParams, $q, $filter, api, toastr, ReportService, principalInspectors, users, templates) {
   var vm = this;
   $rootScope.loading = false;
 
   vm.status = $stateParams.status;
   vm.type = $stateParams.type;
   vm.taskId = $stateParams.taskId;
+  vm.principalInspectors = principalInspectors;
   vm.users = users;
 
   var businessBC = api.breadCrumbMap.business;

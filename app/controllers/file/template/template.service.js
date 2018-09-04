@@ -14,17 +14,10 @@ angular.module('com.app').factory('TemplateService', function ($http) {
 			});
 		},
 
-		filterTemplate: function (filter, value) {
-			var data = {};
-			if (filter == 'type') {
-				data = {type: value}
-			} else if (filter == 'category') {
-				data = {category: value}
-			}
+		filterTemplate: function () {
 			return $http({
 				url: '/api/v1/ahgz/templates',
-				method: 'GET',
-				params: data
+				method: 'GET'
 			});
 		},
 

@@ -20,6 +20,22 @@ angular.module('com.app').config(function ($stateProvider) {
 			}
 		},
 		resolve: {
+			principalInspectors: ['$rootScope', '$q', '$stateParams', 'PrivilegeService', 'toastr', function ($rootScope, $q, $stateParams, PrivilegeService, toastr) {
+				$rootScope.loading = true;
+				var deferred = $q.defer();
+				PrivilegeService.getAllTypeUser('主检人').then(function (response) {
+					if (response.data.success) {
+						if (response.data.entity.length === 0) {
+							toastr.warning('暂无主检人！', '警告');
+						}
+						deferred.resolve(response.data.entity);
+					}
+				}).catch(function () {
+					deferred.resolve([]);
+					$rootScope.loading = false;
+				})
+				return deferred.promise;
+			}],
 			users: ['$rootScope', '$q', '$stateParams', 'PrivilegeService', 'toastr', function ($rootScope, $q, $stateParams, PrivilegeService, toastr) {
 				if ($stateParams.type === 'ck') {
 					return [];
@@ -54,7 +70,7 @@ angular.module('com.app').config(function ($stateProvider) {
 					if (response.data.success) {
 						var templates = [];
 						angular.forEach(response.data.entity.list, function (item) {
-							templates.push(item)
+							if (item.type === 0) templates.push(item)
 						})
 						if (templates.length === 0) {
 							deferred.resolve([]);
@@ -138,7 +154,7 @@ angular.module('com.app').config(function ($stateProvider) {
 					if (response.data.success) {
 						var templates = [];
 						angular.forEach(response.data.entity.list, function (item) {
-							templates.push(item)
+							if (item.type === 0) templates.push(item)
 						})
 						if (templates.length === 0) {
 							deferred.resolve([]);

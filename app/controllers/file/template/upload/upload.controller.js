@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('TemplateUploadCtrl', function ($uibModalInstance, $cookies, toastr, Upload, roles) {
+angular.module('com.app').controller('TemplateUploadCtrl', function ($uibModalInstance, $cookies, toastr, api, Upload, roles) {
   var vm = this;
   vm.roles = roles;
   vm.selectedRoles = []
@@ -28,7 +28,11 @@ angular.module('com.app').controller('TemplateUploadCtrl', function ($uibModalIn
       file: vm.file
     }
     if (data.type === 1) {
-      data.roleIdList = vm.selectedRoles.map(function (role) {return role.id}).join(';')
+      var selectedRoleIds = vm.selectedRoles.map(function (role) {return role.id})
+      if (selectedRoleIds.indexOf(api.userInfo.role.id) === -1) {
+        selectedRoleIds.push(api.userInfo.role.id)
+      }
+      data.roleIdList = selectedRoleIds.join(';')
     }
   	Upload.upload({
   		url: '/api/v1/ahgz/template/upload',

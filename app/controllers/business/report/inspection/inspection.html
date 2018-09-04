@@ -216,7 +216,10 @@
           </tr>
           <tr>
             <td class="item-title">主检人</td>
-            <td>{{ vm.report.principalInspector }}</td>
+            <td>
+              <span ng-if="vm.type !== 'sh'">{{ vm.report.principalInspector }}</span>
+              <select class="input" name="approvalUser" ng-model="vm.report.principalInspector" ng-options="option.name as option.name for option in vm.principalInspectors" ng-if="vm.type === 'sh'"></select>
+            </td>
             <td class="item-title">编制人</td>
             <td>{{ vm.report.drawUser }}</td>
           </tr>

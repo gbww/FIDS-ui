@@ -125,7 +125,9 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
             }
           });
         } else {
-          tempReports = response.data.entity.list;
+          tempReports = response.data.entity.list.map(function (item) {
+            return item.report
+          });
         }
 
         vm.reports = tempReports;
