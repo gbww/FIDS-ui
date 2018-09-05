@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('com.app').controller('StatisticCtrl', function (api, $stateParams) {
+angular.module('com.app').controller('StatisticCtrl', function (api, $stateParams, $sce) {
   var vm = this;
   vm.breadCrumbArr = [api.breadCrumbMap.statistic.root, {name: $stateParams.name}];
 
@@ -11,5 +11,5 @@ angular.module('com.app').controller('StatisticCtrl', function (api, $stateParam
     minHeight: vm.height
   }
 
-  vm.url = $stateParams.visitUrl
+  vm.url = $sce.trustAsResourceUrl($stateParams.visitUrl);
 })

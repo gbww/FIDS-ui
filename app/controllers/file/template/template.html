@@ -31,6 +31,10 @@
 						<adjust-line></adjust-line>
 					</th>
 					<th>
+						<div>类型</div>
+						<adjust-line></adjust-line>
+					</th>
+					<th>
 						<div>上传时间</div>
 						<adjust-line></adjust-line>
 					</th>
@@ -39,14 +43,15 @@
 			</thead>
 			<tbody>
 				<tr ng-if="vm.loading">
-					<td colspan="4" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
+					<td colspan="5" class="text-center"><i class="fa fa-pulse fa-spinner"></i></td>
 				</tr>
 				<tr ng-if="!vm.loading && vm.templates.length == 0">
-					<td colspan="4" class="text-center">暂无模板</td>
+					<td colspan="5" class="text-center">暂无模板</td>
 				</tr>
 				<tr ng-repeat="item in vm.templates track by item.id" ng-if="!vm.loading">
 					<td>{{ item.name }}</td>
 					<td>{{ item.description }}</td>
+					<td>{{ item.type === 0 ? 'jasper模版' : 'cpt模板' }}</td>
 					<td>{{ item.createdAt | date:'medium' }}</td>
 					<td class="dropdown-col">
 						<div class="btn-group" role-auth="TEMPLATE-UPDATE-1 TEMPLATE-DELETE-1">
@@ -68,7 +73,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="4">
+					<td colspan="5">
 						<div st-idp st-total-count="vm.total"></div>
 					</td>
 				</tr>
