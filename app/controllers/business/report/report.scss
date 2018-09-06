@@ -38,7 +38,10 @@
 			}
 		}
 	}
-	.isDeclined {
+	.isDeclined, {
 		color: $unhealthy;
+	}
+	.qualified {
+		color: $healthy;
 	}
 }

@@ -119,14 +119,14 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
         if (vm.status === 0 || vm.status === 1 || vm.status === 2) {
           angular.forEach(response.data.entity.list, function (item) {
             if (!vm.showHandled) {
-              tempReports.push(angular.merge({}, item.report, {task: item.task[0]}));
+              tempReports.push(angular.merge({}, item.report, {task: item.task[0], qualified: item.qualified}));
             } else {
-              tempReports.push(item.report);
+              tempReports.push(angular.merge({}, item.report, {qualified: item.qualified}));
             }
           });
         } else {
           tempReports = response.data.entity.list.map(function (item) {
-            return item.report
+            return angular.merge({}, item.report, {qualified: item.qualified})
           });
         }
 

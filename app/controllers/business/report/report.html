@@ -155,6 +155,10 @@
             <adjust-line></adjust-line>
           </th>
           <th>
+            <div>是否合格</div>
+            <adjust-line></adjust-line>
+          </th>
+          <th>
             <div>状态</div>
             <adjust-line></adjust-line>
           </th>
@@ -163,12 +167,12 @@
       </thead>
       <tbody st-set-table st-page-size="vm.pageSize" st-page="vm.pageNum" st-order-by="vm.orderBy" st-reverse="vm.reverse">
         <tr ng-if="vm.loading">
-          <td colspan="8" class="text-center">
+          <td colspan="9" class="text-center">
             <i class="fa fa-pluse fa-spinner"></i>
           </td>
         </tr>
         <tr ng-if="!vm.loading && vm.reports.length === 0">
-          <td colspan="8" class="text-center">暂无报告</td>
+          <td colspan="9" class="text-center">暂无报告</td>
         </tr>
         <tr ng-repeat="report in vm.reports track by $index" ng-if="!vm.loading">
           <td>
@@ -188,6 +192,10 @@
           <td>{{ report.entrustedUnit }}</td>
           <td>{{ report.receiveDate }}</td>
           <td>{{ report.finishDate }}</td>
+          <td ng-class="{isDeclined: !report.qualified}">
+            <i class="icon" ng-class="{'done icon-status-success': report.qualified, 'icon-status-failed': !report.qualified}"></i>
+            <span>{{ report.qualified ? '合格' : '不合格' }}</span>
+          </td>
           <td ng-class="{isDeclined: report.reportProcessId && report.reportStatus == 0 && report.isExamine === 1}">
             <i class="icon" ng-class="{'initial icon-status-edit': !report.reportProcessId || report.reportStatus==0,
 								'handling icon-status-update': report.reportProcessId && report.reportStatus==1,
@@ -290,7 +298,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="8">
+          <td colspan="9">
             <div st-idp st-total-count="vm.total"></div>
           </td>
         </tr>
