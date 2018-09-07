@@ -374,13 +374,13 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
   }
 
   function afterPrint () {
-    return
     if (document.getElementById('printIframe')) {
       document.body.removeChild(document.getElementById('printIframe'));
     }
     if (vm.previewModal) {
       vm.previewModal.close();
     }
+    return
     var isReportReady = true
     angular.forEach(vm.printedIds, function (printedId) {
       angular.forEach(vm.reports, function (report) {
