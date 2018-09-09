@@ -82,9 +82,9 @@
         </ul>
       </div>
 
-      <div class="panel" ng-if="vm.frTemplates.length > 0">
+      <div class="panel">
         <div data-parent="#accordion" data-toggle="collapse" data-target="#statisticManage" aria-expanded="{{vm.isStatisticActive}}">
-          <a>
+          <a ng-click="vm.createDropmenu()">
             <i class="icon icon-filecenter"></i>
             <span>统计查询</span>
             <i class="fa fa-chevron-right"></i>

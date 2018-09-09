@@ -1,12 +1,24 @@
 'use strict';
 
-angular.module('com.app').controller('LayoutMenuController', function LayoutMenuController($scope, $state, $stateParams, api) {
+angular.module('com.app').controller('LayoutMenuController', function LayoutMenuController($scope, $state, $stateParams, TemplateService) {
   var vm = this;
-  vm.frTemplates = api.frTemplates
+  vm.frTemplates = []
 
   angular.forEach(vm.frTemplates, function (template) {
     vm['is' + template.name + 'Active'] = ($stateParams.name === template.name && $stateParams.visitUrl)
   })
+
+  vm.createDropmenu = function () {
+    TemplateService.getFrTemplates().then(function (response) {
+			if (response.data.success) {
+        vm.frTemplates = response.data.entity.list
+        angular.forEach(vm.frTemplates, function (template) {
+          vm['is' + template.name + 'Active'] = ($stateParams.name === template.name && $stateParams.visitUrl)
+        })
+			}
+		}).catch(function () {
+		});
+  }
 
   vm.open = function (module) {
     $("#accordion").children('.panel').children('ul').collapse('hide');

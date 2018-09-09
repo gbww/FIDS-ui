@@ -2,6 +2,9 @@
 
 angular.module('com.app').factory('TemplateService', function ($http) {
 	return {
+		getFrTemplates: function () {
+			return $http.get('/api/v1/ahgz/templates/fr')
+		},
 		getTemplateList: function (tableParams, searchName) {
 			return $http({
 				url: '/api/v1/ahgz/templates',

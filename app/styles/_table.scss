@@ -325,6 +325,9 @@
     &:hover{
       background-color: transparent;
     }
+    td {
+      border-right: 0;
+    }
     &:nth-child(2n){
       background-color: #fff;
       td{

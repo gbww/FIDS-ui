@@ -56,23 +56,6 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
           deferred.reject();
         })
         return deferred.promise;
-      }],
-      frTemplate: ['$q', 'TemplateService', 'api', function ($q, TemplateService, api) {
-        var deferred = $q.defer()
-        TemplateService.filterTemplate().then(function (response) {
-					if (response.data.success) {
-						var templates = [];
-						angular.forEach(response.data.entity.list, function (item) {
-							if (item.type === 1) templates.push(item)
-            })
-            api.frTemplates = templates
-            deferred.resolve(templates);
-					}
-				}).catch(function () {
-					deferred.resolve([]);
-				});
-
-				return deferred.promise;
       }]
     }
   });
