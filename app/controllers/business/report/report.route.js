@@ -28,7 +28,7 @@ angular.module('com.app').config(function ($stateProvider) {
 						if (response.data.entity.length === 0) {
 							toastr.warning('暂无主检人！', '警告');
 						}
-						deferred.resolve(response.data.entity);
+						deferred.resolve(response.data.entity.map(function (item) {return item.name}));
 					}
 				}).catch(function () {
 					deferred.resolve([]);
