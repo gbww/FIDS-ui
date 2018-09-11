@@ -219,7 +219,7 @@
             <td>
               <span ng-if="vm.type !== 'sh'">{{ vm.report.principalInspector }}</span>
               <!-- <select class="input" name="approvalUser" ng-model="vm.report.principalInspector" ng-options="option.name as option.name for option in vm.principalInspectors" ng-if="vm.type === 'sh'"></select> -->
-				      <div custom-select class-name="form-control" avail-arr="vm.principalInspectors" model="vm.report" key="principalInspector" ng-if="vm.type === 'sh'"></div>
+				      <div custom-select avail-arr="vm.principalInspectors" model="vm.report" key="principalInspector" ng-if="vm.type === 'sh'"></div>
             </td>
             <td class="item-title">编制人</td>
             <td>{{ vm.report.drawUser }}</td>
