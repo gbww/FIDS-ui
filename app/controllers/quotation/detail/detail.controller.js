@@ -8,13 +8,49 @@ angular.module('com.app').controller('QuotationDetailController', function ($sta
   var detail = quotationBC.detail;
   vm.breadCrumbArr = [quotationBC.root, quotationBC.detail];
 
+  vm.showClient = true
+
+  vm.positions = [
+    {label: '右下角', value: 'bottomRight'},
+    {label: '右上角', value: 'topRight'},
+    {label: '左下角', value: 'bottomLeft'},
+    {label: '左上角', value: 'topLeft'},
+    {label: '自定义', value: 'custom'},
+  ]
+
+  vm.position = {
+    stampPosition: vm.positions[0].value,
+    left: '96%',
+    top: '96%'
+  }
+
+  vm.changePosition = function () {
+    if (vm.position.stampPosition === 'bottomRight') {
+      vm.position.left = '96%'
+      vm.position.top = '96%'
+    } else if (vm.position.stampPosition === 'topRight') {
+      vm.position.left = '96%'
+      vm.position.top = '6%'
+    } else if (vm.position.stampPosition === 'bottomLeft') {
+      vm.position.left = '6%'
+      vm.position.top = '96%'
+    } else if (vm.position.stampPosition === 'topLeft') {
+      vm.position.left = '6%'
+      vm.position.top = '6%'
+    }
+  }
+
+  vm.quotation = {
+    items: []
+  }
+
   vm.step = 1;
 
   if (vm.type === 'create') {
     detail.name = '新建报价单';
     vm.itemArr = [{
       name: null,
-      gg: null,
+      specification: null,
       quantity: null,
       unit: null,
       price: null,
@@ -28,7 +64,7 @@ angular.module('com.app').controller('QuotationDetailController', function ($sta
   vm.addItem = function () {
     vm.itemArr.push({
       name: null,
-      gg: null,
+      specification: null,
       quantity: null,
       unit: null,
       price: null,
@@ -44,14 +80,26 @@ angular.module('com.app').controller('QuotationDetailController', function ($sta
     }
   }
 
+  vm.computeTotalPrice = function (idx) {
+    if (vm.itemArr[idx].quantity && vm.itemArr[idx].price)
+    vm.itemArr[idx].total = parseFloat((vm.itemArr[idx].quantity * vm.itemArr[idx].price).toFixed(2))
+  }
 
+
+  vm.addFile = function (event) {
+    var selectedFile = event.target.files[0];
+    vm.filename = selectedFile.name;
+  }
 
   var options = {
-    items: ['undo', 'redo', 'cut', 'copy', 'paste', 'formatblock', 'fontname', 'fontsize', 'forecolor', 'bold', 'italic', 'lineheight', 'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', 'table'],
+    items: ['undo', 'redo', 'cut', 'copy', 'paste', 'formatblock', 'fontname', 'fontsize', 'forecolor',
+             'bold', 'italic', 'lineheight', 'justifyleft', 'justifycenter', 'justifyright', 'justifyfull', 'table'],
   }
 
   vm.editorTop = KindEditor.create('#tmpl-top', options);
   vm.editorBottom = KindEditor.create('#tmpl-bottom', options);
+
+
 
   vm.preview = function () {
     var win = window.open('', '预览');

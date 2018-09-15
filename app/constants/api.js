@@ -43,6 +43,10 @@ angular.module('com.app').constant('api', {
       root: {name: '客户管理', url: 'app.client'},
       detail: {name: '客户详情'}
     },
+    quotation: {
+      root: {name: '报价单管理', url: 'app.quotation'},
+      detail: {name: '报价单详情'}
+    },
     device: {
       root: {name: '设备管理', url: 'app.device'},
       detect: {name: '检验设备'}

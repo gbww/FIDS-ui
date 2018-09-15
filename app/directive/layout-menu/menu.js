@@ -30,6 +30,8 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
       $state.go('app.unit');
     } else if (module == 'device') {
       $state.go('app.device');
+    } else if (module == 'quotation') {
+      $state.go('app.quotation')
     }
   }
 
@@ -49,6 +51,7 @@ angular.module('com.app').controller('LayoutMenuController', function LayoutMenu
     vm.isFrTemplateActive = $state.includes('app.file.frtemplate');
 
     vm.isStatisticActive = $state.includes('app.statistic')
+    vm.isQuotationActive = $state.includes('app.quotation')
 
     vm.isReviewActive = $state.includes('app.review');
     vm.isCompanyActive = $state.includes('app.review.company');

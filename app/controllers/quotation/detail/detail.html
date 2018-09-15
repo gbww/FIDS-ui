@@ -1,7 +1,11 @@
 <div class="inner-container quotation-detail">
   <bread-crumb link-data="vm.breadCrumbArr"></bread-crumb>
   <div class="pt-2">
-    <div class="step-1" ng-show="vm.step===1">
+      <div class="toggle-header">
+        <i class="fa" ng-class="{'fa-caret-up': vm.showClient, 'fa-caret-down': !vm.showClient}"></i>
+        <span>客户信息</span>
+      </div>
+      <div class="toggle-body" ng-show="vm.showClient">
       <form name="form" novalidate>
         <table class="form-table">
           <tr>
@@ -9,13 +13,13 @@
               <span class="item-required">客户名称</span>
             </td>
             <td>
-              <input class="input">
+              <input class="input" ng-model="vm.quotation.client">
             </td>
             <td class="item-title">
               <span class="item-required">联系人</span>
             </td>
             <td>
-              <input class="input">
+              <input class="input" ng-model="vm.quotation.user">
             </td>
           </tr>
           <tr>
@@ -23,13 +27,13 @@
               <span>客户电话</span>
             </td>
             <td>
-              <input class="input">
+              <input class="input" ng-model="vm.quotation.telephone">
             </td>
             <td class="item-title">
               <span>客户传真</span>
             </td>
             <td>
-              <input class="input">
+              <input class="input" ng-model="vm.quotation.fax">
             </td>
           </tr>
           <tr>
@@ -37,13 +41,13 @@
               <span>客户邮箱</span>
             </td>
             <td>
-              <input class="input">
+              <input class="input" ng-model="vm.quotation.email">
             </td>
             <td class="item-title">
               <span>客户地址</span>
             </td>
             <td>
-              <input class="input">
+              <input class="input" ng-model="vm.quotation.address">
             </td>
           </tr>
           <tr>
@@ -51,13 +55,13 @@
               <span>报价人</span>
             </td>
             <td>
-              <input class="input">
+              <input class="input" ng-model="vm.quotation.offerer">
             </td>
             <td class="item-title">
               <span>报价日期</span>
             </td>
             <td>
-              <input class="input">
+              <input class="input" ng-model="vm.quotation.date">
             </td>
           </tr>
         </table>
@@ -83,19 +87,19 @@
                 <input class="input" ng-model="item.name">
               </td>
               <td>
-                <input class="input" ng-model="item.gg">
+                <input class="input" ng-model="item.specification">
               </td>
               <td>
-                <input class="input" ng-model="item.quantity">
+                <input type="number" class="input" ng-model="item.quantity" ng-blur="vm.computeTotalPrice($index)">
               </td>
               <td>
                 <input class="input" ng-model="item.unit">
               </td>
               <td>
-                <input class="input" ng-model="item.price">
+                <input type="number" class="input" ng-model="item.price" ng-blur="vm.computeTotalPrice($index)">
               </td>
               <td>
-                <input class="input" ng-model="item.total">
+                <input type="number" class="input" ng-model="item.total">
               </td>
               <td>
                 <input class="input" ng-model="item.remark">
@@ -108,25 +112,53 @@
           </tbody>
         </table>
       </form>
-      <div class="btn-area text-center">
-        <button class="btn btn-2x btn-default-dark" ng-click="vm.step=2">下一步</button>
-        <button class="btn btn-2x btn-default-light" ui-sref="app.quotation">取消</button>
       </div>
-    </div>
-    <div class="step-2" ng-show="vm.step===2">
-      <p>报价单顶部</p>
-      <div class="top">
-        <textarea id="tmpl-top" style="width:100%;height:200px;"></textarea>
-      </div></br>
-      <p>报价单底部</p>
-      <div class="bottom">
-        <textarea id="tmpl-bottom" style="width:100%;height:200px;"></textarea>
+
+      <div class="toggle-header" ng-click="vm.showTop = !vm.showTop">
+        <i class="fa" ng-class="{'fa-caret-up': vm.showTop, 'fa-caret-down': !vm.showTop}"></i>
+        <span>报价单顶部</span>
       </div>
+      <div class="toggle-body" ng-show="vm.showTop">
+        <div class="top">
+          <textarea id="tmpl-top" style="width:100%;height:200px;"></textarea>
+        </div>
+      </div>
+
+      <div class="toggle-header" ng-click="vm.showBottom = !vm.showBottom">
+        <i class="fa" ng-class="{'fa-caret-up': vm.showBottom, 'fa-caret-down': !vm.showBottom}"></i>
+        <span>报价单底部</span>
+      </div>
+      <div class="toggle-body" ng-show="vm.showBottom">
+        <div class="bottom">
+          <textarea id="tmpl-bottom" style="width:100%;height:200px;"></textarea>
+        </div>
+      </div>
+
+      <div class="toggle-header" ng-click="vm.showStamp = !vm.showStamp">
+        <i class="fa" ng-class="{'fa-caret-up': vm.showStamp, 'fa-caret-down': !vm.showStamp}"></i>
+        <span>公司印章设置</span>
+      </div>
+      <div class="toggle-body" ng-show="vm.showStamp">
+			  <a class="btn btn-default-light" custom-file-btn>
+				  <span class="item-required"><i class="fa fa-plus"></i>上传图片</span>
+			  </a>
+			  <span>{{ vm.filename }}</span>
+        <input type="file" class="select-file" ngf-select name="stamp" ng-model="vm.stamp" custom-file-change="vm.addFile" ngf-pattern="/\.(png|PNG|jpg|JPG)?$/">
+        <div class="stamp-position">
+          <span>印章位置：</span>
+          <select class="input" ng-model="vm.position.stampPosition" ng-options="option.value as option.label for option in vm.positions" ng-change="vm.changePosition()"></select>
+          <span>左边距离：</span>
+          <input class="input" ng-model="vm.position.left" ng-disabled="vm.position.stampPosition !== 'custom'" />
+          <span>顶部距离：</span>
+          <input class="input" ng-model="vm.position.top" ng-disabled="vm.position.stampPosition !== 'custom'" />
+        </div>
+
+      </div>
+
       <div class="btn-area text-center">
         <button class="btn btn-2x btn-default-dark" ng-click="vm.preview()">预览</button>
         <button class="btn btn-2x btn-default-dark" ng-click="vm.ok(form)">确认</button>
         <button class="btn btn-2x btn-default-light" ui-sref="app.quotation">取消</button>
       </div>
-    </div>
   </div>
 </div>

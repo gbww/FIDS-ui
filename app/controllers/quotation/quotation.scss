@@ -5,6 +5,25 @@
       min-width: 100%;
     } 
   }
+  .toggle-header {
+    background-color: #f8f8f8;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    @include box-shadow(0 0px 3px #aaa);
+    cursor: pointer;
+  }
+  .toggle-body {
+    padding: 0 3px;
+  }
+  .select-file{
+    display: none !important;
+  }
+  .stamp-position {
+    float: right;
+  }
+  .select-wrapper {
+    width: initial;
+  }
 }
 
 .quotation-preview-content {

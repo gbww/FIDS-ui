@@ -14,11 +14,4 @@ angular.module('com.app').config(function ($stateProvider, $urlRouterProvider) {
 		controller: 'TemplateListCtrl as vm'
 	});
 
-	$stateProvider.state('app.file.frtemplate', {
-		url: '/frtemplate',
-		templateUrl: 'controllers/file/template/template.html',
-		controller: 'FrTemplateListCtrl as vm'
-	});
-
-
 });
