@@ -40,11 +40,7 @@ angular.module('com.app').controller('QuotationDetailController', function ($sta
     }
   }
 
-  vm.quotation = {
-    items: []
-  }
-
-  vm.step = 1;
+  vm.quotation = {}
 
   if (vm.type === 'create') {
     detail.name = '新建报价单';
@@ -100,6 +96,25 @@ angular.module('com.app').controller('QuotationDetailController', function ($sta
   vm.editorBottom = KindEditor.create('#tmpl-bottom', options);
 
 
+  vm.clientTable = function () {
+    var str = '<table class="client-info-table"><tr><td>客户名称</td><td>' + vm.quotation.client + '</td><td></td><td>联系人</td><td>' + vm.quotation.user + '</td></tr>' +
+            '<tr><td>客户电话</td><td>' + vm.quotation.telephone + '</td><td>客户传真</td><td></td><td>' + vm.quotation.fax + '</td></tr>' +
+            '<tr><td>客户邮箱</td><td>' + vm.quotation.email + '</td><td>客户地址</td><td></td><td>' + vm.quotation.address + '</td></tr>' +
+            '<tr><td>报价人</td><td>' + vm.quotation.offerer + '</td><td>报价日期</td><td></td><td>' + vm.quotation.date + '</td></tr>'
+    return str
+  }
+  vm.productTable = function () {
+    var str = '<table class="product-info-table">' +
+            '<tr><th>品名</td><th>规格</td><th>数量</td><th>单位</td><th>单价</td><th>金额</td></tr>'; 
+    for (var i=0, len=vm.itemArr.length; i<len; i++) {
+      var item = vm.itemArr[i]
+      str += '<tr><td>' + item.name + '</td><td>' + item.specification + '</td><td>' + item.quantity +
+            '</td><td>' + item.unit + '</td><td>' + item.price + '</td><td>' + item.total + '</td></tr>'
+    }
+    str += '<tr><td>备注</td><td colspan="5"></td></tr></table>'
+    return str
+  }
+
 
   vm.preview = function () {
     var win = window.open('', '预览');
@@ -107,9 +122,25 @@ angular.module('com.app').controller('QuotationDetailController', function ($sta
       '<link rel="stylesheet" type="text/css" href="main.css"></head><body style="background-color:#ccc">');
     win.document.write('<div class="quotation-preview-content"><div><div class="top">');
     win.document.write(vm.editorTop.html());
+    win.document.write('</div><div class="table">')
+    win.document.write(vm.clientTable() + vm.productTable())
     win.document.write('</div><div class="bottom">');
     win.document.write(vm.editorBottom.html());
     win.document.write('</div></div></div></body></html>');
     win.document.close();
+  }
+
+  var LODOP; //声明为全局变量
+	vm.test = function () {	
+    LODOP=getLodop();
+		// var strFormHtml="<body>"+$('iframe').contents().find('body').html()+"</body>";
+		var strFormHtml = $('.wrapper').html();
+		LODOP.PRINT_INIT("测试");	
+    // LODOP.ADD_PRINT_TEXT(50,50,260,39,"打印文本");
+    LODOP.SET_PRINT_PAGESIZE(1,0,0,"A4")
+    LODOP.ADD_PRINT_TABLE('2%', '2%','96%','96%',strFormHtml);
+    LODOP.ADD_PRINT_IMAGE(300, 600, 80, 60, "<img src='http://10.139.7.88:8089/var/lib/docs/gzjy/sign/sign.png'>");
+		LODOP.PREVIEW();
+		// LODOP.PRINT();
   }
 })

@@ -14,6 +14,9 @@
   }
   .toggle-body {
     padding: 0 3px;
+    .top, .bottom {
+      margin-bottom: 10px;
+    }
   }
   .select-file{
     display: none !important;
@@ -23,6 +26,10 @@
   }
   .select-wrapper {
     width: initial;
+  }
+
+  .text-center {
+    padding: 20px 0;
   }
 }
 
@@ -38,5 +45,26 @@
     width: 100%;
     height: 100%;
     padding: 50px;
+  }
+
+  .client-info-table {
+    width: 100%;
+    margin: 10px 0;
+    tr {
+      td {
+        border-bottom: 1px solid #aaa;
+        &:nth-child(1), &:nth-child(1), &:nth-child(4) {
+          width: 100px;
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .product-info-table {
+    width: 100%;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
   }
 }
