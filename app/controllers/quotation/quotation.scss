@@ -49,11 +49,11 @@
 
   .client-info-table {
     width: 100%;
-    margin: 10px 0;
+    margin: 20px 0;
     tr {
       td {
         border-bottom: 1px solid #aaa;
-        &:nth-child(1), &:nth-child(1), &:nth-child(4) {
+        &:nth-child(1), &:nth-child(3), &:nth-child(4) {
           width: 100px;
           border-bottom: 0;
         }
@@ -66,5 +66,16 @@
     margin: 10px 0;
     border: 1px solid #ccc;
     border-collapse: collapse;
+    tr {
+      th, td {
+        border-bottom: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        padding: 5px 5px;
+      }
+      th {
+        font-weight: bold;
+        padding: 5px 8px;
+      }
+    }
   }
 }

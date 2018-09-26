@@ -128,6 +128,16 @@ angular.module('com.app').factory('ReportService', function ($http) {
       })
     },
 
+    batchStartProcess: function (ids) {
+      return $http({
+        url: baseUrl + '/process/muti',
+        method: 'POST',
+        params: {
+          reportIds: ids
+        }
+      })
+    },
+
     // 查看当前用户任务列表
     getUserTask: function (isHandle) {
       return $http({

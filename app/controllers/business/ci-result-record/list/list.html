@@ -275,7 +275,7 @@
     </tfoot>
   </table>
 
-  <div class="modal fade" id="batchRecordModal" role="dialog">
+  <div class="modal fade" style="overflow-x: hidden; overflow-y: auto" id="batchRecordModal" role="dialog">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -290,16 +290,20 @@
                   <div>报告编号</div>
                   <adjust-line></adjust-line>
                 </th>
-                <th style="width: 100px">
-                  <div>抽样单编号</div>
-                  <adjust-line></adjust-line>
-                </th>
                 <th>
                   <div>名称</div>
                   <adjust-line></adjust-line>
                 </th>
                 <th style="width: 80px;">
                   <div>检测方法</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th style="width: 100px">
+                  <div>样品名称</div>
+                  <adjust-line></adjust-line>
+                </th>
+                <th style="width: 100px">
+                  <div>执行标准</div>
                   <adjust-line></adjust-line>
                 </th>
                 <th>
@@ -340,18 +344,19 @@
             <tbody>
               <tr ng-repeat="item in vm.selectedItemsCopy track by item.id" ng-class="{'selected': vm.selectedRow === $index}">
                 <td>{{ item.reportId }}</td>
-                <td>{{ item.receiveSampleId }}</td>
                 <td>
                   <input ng-model="item.name" />
                 </td>
                 <td>
                   <input ng-model="item.method" />
                 </td>
+                <td>{{ item.sample.sampleName }}</td>
+                <td>{{ item.sample.executeStandard }}</td>
                 <td>
-                  <div custom-select class-name="inline" avail-arr="vm.characterArr" model="item" key="unit"></div>
+                  <div custom-select avail-arr="vm.characterArr" model="item" key="unit"></div>
                 </td>
                 <td>
-                  <div custom-select mode="append" name="{{'standardValue'+$index}}" class-name="inline" avail-arr="vm.characterArr" model="item" key="standardValue"></div>
+                  <div custom-select mode="append" name="{{'standardValue'+$index}}" avail-arr="vm.characterArr" model="item" key="standardValue"></div>
 				          <div ng-if="form['standardValue'+$index].$dirty" ng-messages="form['standardValue'+$index].$error">
 					          <label class="error-messages" ng-message="required"><i></i>不能为空</label>
 				          </div>

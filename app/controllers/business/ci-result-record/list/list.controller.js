@@ -328,9 +328,8 @@ angular.module('com.app').controller('CiResultListCtrl', function ($stateParams,
       }
     })
 
-
     modalInstance.result.then(function (res) {
-      vm.selectedRow = null
+     vm.selectedRow = null
       angular.forEach(vm.selectedItemsCopy, function (item, idx) {
         if ((res.direction === 'up' && idx <= index) || (res.direction === 'down' && idx >= index)) {
           // 覆盖式填充

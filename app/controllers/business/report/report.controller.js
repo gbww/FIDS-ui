@@ -244,6 +244,32 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     });
   }
 
+  vm.batchStartProcess = function () {
+    var flag = true
+    var ids = vm.selectedItems.map(function (report) {
+      if (report.reportProcessId) {
+        flag = false
+      }
+      return report.reportId
+    })
+    if (!flag) {
+      toastr.warning('所选项中含有已开始流程的报告！', '警告');
+      return
+    }
+
+    var result = dialog.confirm('确认启动报告流程？');
+    result.then(function (res) {
+      if (res) {
+        ReportService.batchStartProcess(ids.join(';')).then(function (response) {
+          if (response.data.success) {
+            toastr.success('报告流程已启动!')
+            vm.refreshTable();
+          }
+        });
+      }
+    });
+  }
+
   function getXhr () {
     if (window.XMLHttpRequest) {
       return new XMLHttpRequest();
@@ -327,7 +353,17 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
   }
 
   vm.batchPrint = function () {
-    vm.printedIds = angular.copy(vm.selectedItems);
+    var flag = true
+    vm.printedIds = vm.selectedItems.map(function (report) {
+      if (report.reportStatus < 1) {
+        flag = false
+      }
+      return report.reportId
+    })
+    if (!flag) {
+      toastr.warning('所选项中含有尚未开始编制的报告！', '警告');
+      return
+    }
     $rootScope.loading = true;
 
     var xhr = getXhr();
@@ -471,7 +507,7 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     if (vm.allSelected){
       vm.selectedItems = [];
       angular.forEach(vm.reports, function (item, idx) {
-        vm.selectedItems.push(item.reportId);
+        vm.selectedItems.push(item);
         vm.itemSelected[idx] = true;
       });
     } else {
@@ -484,14 +520,14 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
 
   vm.selectItem = function (event, idx, item) {
     if(event.target.checked){
-      vm.selectedItems.push(item.reportId);
+      vm.selectedItems.push(item);
       vm.itemSelected[idx] = true;
       if(vm.selectedItems.length == vm.reports.length){
         vm.allSelected = true;
       }
     } else {
       for (var i=0,len=vm.selectedItems.length; i<len; i++){
-        if (item.reportId == vm.selectedItems[i]) {
+        if (item.reportId == vm.selectedItems[i].reportId) {
           vm.selectedItems.splice(i, 1);
           break;
         }

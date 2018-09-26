@@ -97,33 +97,39 @@ angular.module('com.app').controller('QuotationDetailController', function ($sta
 
 
   vm.clientTable = function () {
-    var str = '<table class="client-info-table"><tr><td>客户名称</td><td>' + vm.quotation.client + '</td><td></td><td>联系人</td><td>' + vm.quotation.user + '</td></tr>' +
-            '<tr><td>客户电话</td><td>' + vm.quotation.telephone + '</td><td>客户传真</td><td></td><td>' + vm.quotation.fax + '</td></tr>' +
-            '<tr><td>客户邮箱</td><td>' + vm.quotation.email + '</td><td>客户地址</td><td></td><td>' + vm.quotation.address + '</td></tr>' +
-            '<tr><td>报价人</td><td>' + vm.quotation.offerer + '</td><td>报价日期</td><td></td><td>' + vm.quotation.date + '</td></tr>'
+    var str = '<table class="client-info-table"><tr><td>客户名称：</td><td>' + vm.quotation.client + '</td><td></td><td>联系人：</td><td>' + vm.quotation.user + '</td></tr>' +
+            '<tr><td>客户电话：</td><td>' + (vm.quotation.telephone || '') + '</td><td></td><td>客户传真：</td><td>' + (vm.quotation.fax || '') + '</td></tr>' +
+            '<tr><td>客户邮箱：</td><td>' + (vm.quotation.email || '') + '</td><td></td><td>客户地址：</td><td>' + (vm.quotation.address || '') + '</td></tr>' +
+            '<tr><td>报价人：</td><td>' + (vm.quotation.offerer || '') + '</td><td></td><td>报价日期：</td><td>' + (vm.quotation.date || '') + '</td></tr>'
     return str
   }
-  vm.productTable = function () {
+  vm.productTable = function (total) {
     var str = '<table class="product-info-table">' +
-            '<tr><th>品名</td><th>规格</td><th>数量</td><th>单位</td><th>单价</td><th>金额</td></tr>'; 
+            '<tr><th>品名</td><th>规格</td><th>数量</td><th>单位</td><th>单价</td><td>金额</td><td>备注</td></tr>'; 
     for (var i=0, len=vm.itemArr.length; i<len; i++) {
       var item = vm.itemArr[i]
-      str += '<tr><td>' + item.name + '</td><td>' + item.specification + '</td><td>' + item.quantity +
-            '</td><td>' + item.unit + '</td><td>' + item.price + '</td><td>' + item.total + '</td></tr>'
+      str += '<tr><td>' + (item.name || '') + '</td><td>' + (item.specification || '') + '</td><td>' + (item.quantity || '') +
+            '</td><td>' + (item.unit || '') + '</td><td>' + (item.price || '') + '</td><td>' + (item.total || '') + '</td><td>' + (item.remark || '') + '</td></tr>'
     }
-    str += '<tr><td>备注</td><td colspan="5"></td></tr></table>'
+    str += '<tr><td colspan="7" style="text-align:right">总计：' + total + '</td></tr>'
+    str += '<tr><td>备注</td><td colspan="6">(' + (vm.quotation.remark || '') + ')</td></tr></table>'
     return str
   }
 
 
   vm.preview = function () {
+    var total = vm.itemArr.map(function (item) {
+      return item.total
+    }).reduce(function (total, sum) {
+      return total + sum
+    })
     var win = window.open('', '预览');
     win.document.write('<html><head><title>预览</title>' +
       '<link rel="stylesheet" type="text/css" href="main.css"></head><body style="background-color:#ccc">');
     win.document.write('<div class="quotation-preview-content"><div><div class="top">');
     win.document.write(vm.editorTop.html());
     win.document.write('</div><div class="table">')
-    win.document.write(vm.clientTable() + vm.productTable())
+    win.document.write(vm.clientTable() + vm.productTable(total))
     win.document.write('</div><div class="bottom">');
     win.document.write(vm.editorBottom.html());
     win.document.write('</div></div></div></body></html>');

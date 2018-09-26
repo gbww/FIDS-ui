@@ -47,7 +47,12 @@
         <span></span>
       </div>
 
-      <button class="btn btn-default-dark" ng-click="vm.batchPrint()" ng-if="vm.selectedItems.length > 0">
+      <button class="btn btn-default-dark" ng-click="vm.batchStartProcess()" ng-if="vm.status === 5 && vm.selectedItems.length > 0">
+        <i class="icon icon-launch"></i>
+        <span>批量启动流程</span>
+      </button>
+
+      <button class="btn btn-default-dark" ng-click="vm.batchPrint()" ng-if="vm.status !== 0 && vm.selectedItems.length > 0">
         <i class="fa fa-print"></i>
         <span>批量打印</span>
       </button>
