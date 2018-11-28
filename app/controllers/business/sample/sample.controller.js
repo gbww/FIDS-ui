@@ -10,7 +10,6 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1 && api.permissionArr.indexOf('CHECKITEM-CATALOG-SELECT-1') != -1;
 
   vm.clonedReportId = $cookies.get('clonedReportId');
-  vm.codeUrl = "http://47.96.92.187:8080/WebReport/ReportServer?reportlet=erweima.cpt&reportId="
 
   vm.searchObject = {}
   vm.refreshTable = function (flag) {
@@ -191,6 +190,20 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   $(document).click(function () {
     $('.btn-group').removeClass('open');
   });
+
+
+  vm.qrcode = function (reportId) {
+    $uibModal.open({
+      animation: true,
+      size: 'md',
+      backdrop: 'static',
+      templateUrl: 'controllers/business/sample/qrcode/qrcode.html',
+      controller: 'QrcodeCtrl as vm',
+      resolve: {
+        reportId: function () {return reportId}
+      }
+    });
+  }
 
   vm.clone = function (sample, event) {
     event.stopPropagation();

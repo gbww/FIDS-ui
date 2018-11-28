@@ -265,16 +265,13 @@
               <button class="btn dropdown-toggle" data-toggle="dropdown" ng-if="report.reportProcessId && !(vm.status === 5 && report.reportStatus === 0)">
                 <i class="caret"></i>
               </button>
-              <ul class="dropdown-menu" ng-if="report.reportProcessId && !(vm.status === 5 && vm.reportStatus === 0)">
+              <ul class="dropdown-menu">
                 <li ui-sref="app.business.report.detail({status: vm.status, id: report.reportId, type: 'bj'})" ng-if="vm.status !== 5 && (report.reportStatus === 0 || report.reportStatus === 1 || report.reportStatus === 2)" role-auth="REPORT-TASK-EDIT-DO-1">
                   <a href>
                     <i class="fa fa-edit"></i>
                     <span>编辑</span>
                   </a>
                 </li>
-								<li>
-									<a href="{{ vm.codeUrl + report.reportId }}" target="_blank"><i class="fa fa-qrcode"></i><span>二维码信息</span></a>
-								</li>
                 <li ng-click="vm.export(report)" ng-if="report.reportStatus > 0">
                   <a href>
                     <i class="fa fa-file-excel-o"></i>
@@ -299,6 +296,9 @@
                     <span>完成打印</span>
                   </a>
                 </li>
+								<li ng-click="vm.qrcode(report.reportId)">
+									<a href><i class="fa fa-qrcode"></i><span>二维码信息</span></a>
+								</li>
               </ul>
             </div>
           </td>

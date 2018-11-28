@@ -14,7 +14,6 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.report.root];
 
-  vm.codeUrl = "http://47.96.92.187:8080/WebReport/ReportServer?reportlet=erweima.cpt&reportId="
   vm.searchObject = {}
 
   vm.refreshTable = function (flag) {
@@ -229,6 +228,19 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
     if (keycode == 13) {
       vm.search()
     }
+  }
+
+  vm.qrcode = function (reportId) {
+    $uibModal.open({
+      animation: true,
+      size: 'md',
+      backdrop: 'static',
+      templateUrl: 'controllers/business/sample/qrcode/qrcode.html',
+      controller: 'QrcodeCtrl as vm',
+      resolve: {
+        reportId: function () {return reportId}
+      }
+    });
   }
 
   vm.startProcess = function (report) {
