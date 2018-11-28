@@ -14,6 +14,7 @@ angular.module('com.app').controller('ReportCtrl', function ($rootScope, $stateP
   var businessBC = api.breadCrumbMap.business;
   vm.breadCrumbArr = [businessBC.root, businessBC.report.root];
 
+  vm.codeUrl = "http://47.96.92.187:8080/WebReport/ReportServer?reportlet=erweima.cpt&reportId="
   vm.searchObject = {}
 
   vm.refreshTable = function (flag) {

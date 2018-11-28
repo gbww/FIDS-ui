@@ -10,6 +10,7 @@ angular.module('com.app').controller('SampleCtrl', function ($rootScope, $scope,
   vm.hasAddItemAuth = api.permissionArr.indexOf('SAMPLE-ADDITEM-1') != -1 && api.permissionArr.indexOf('CHECKITEM-CATALOG-SELECT-1') != -1;
 
   vm.clonedReportId = $cookies.get('clonedReportId');
+  vm.codeUrl = "http://47.96.92.187:8080/WebReport/ReportServer?reportlet=erweima.cpt&reportId="
 
   vm.searchObject = {}
   vm.refreshTable = function (flag) {

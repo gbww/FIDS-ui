@@ -272,6 +272,9 @@
                     <span>编辑</span>
                   </a>
                 </li>
+								<li>
+									<a href="{{ vm.codeUrl + report.reportId }}" target="_blank"><i class="fa fa-qrcode"></i><span>二维码信息</span></a>
+								</li>
                 <li ng-click="vm.export(report)" ng-if="report.reportStatus > 0">
                   <a href>
                     <i class="fa fa-file-excel-o"></i>

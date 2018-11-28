@@ -179,6 +179,9 @@
 								<li ng-click="vm.delete(sample, $event)" role-auth="SAMPLE-DELETESAMPLE-1">
 									<a href><i class="fa fa-trash"></i><span>删除</span></a>
 								</li>
+								<li>
+									<a href="{{ vm.codeUrl + sample.reportId }}" target="_blank"><i class="fa fa-qrcode"></i><span>二维码信息</span></a>
+								</li>
 							</ul>
 						</div>
 					</td>
